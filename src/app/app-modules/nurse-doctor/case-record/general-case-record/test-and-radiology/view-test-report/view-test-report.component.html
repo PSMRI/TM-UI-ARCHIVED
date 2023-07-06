@@ -1,0 +1,36 @@
+<section class="container-fluid" *ngIf="testReport">
+    <section class="row testReport title_background">
+        <h3 md-dialog-title>
+            <span class="pull-left">{{currentLanguageSet?.common?.labTest}}</span>
+            <span class="pull-right">
+        <button md-icon-button class="closeBtn" md-dialog-close (click)="mdDialogRef.close(false)">
+                    <span class="material-icons ">{{currentLanguageSet?.common?.close}}</span>
+            </button>
+            </span>
+        </h3>
+    </section>
+    <div>
+        <table class="table table-responsive table-bordered  m-t-10" aria-describedby="componentListTbl">
+            <tbody>
+                <tr>
+                    <th colspan="3" class='procedureHead' id="procedureName">
+                        <h4><strong>{{testReport?.procedureName}}</strong></h4>
+                    </th>
+                </tr>
+                <tr>
+                    <th id="componentName">{{currentLanguageSet?.labTechnicianData?.componentName}}</th>
+                    <th id="testresult">{{currentLanguageSet?.Reports?.testresult}}</th>
+                    <th id="unit">{{currentLanguageSet?.Prescription?.unit}}</th>
+                </tr>
+                <tr *ngFor='let report of testReport.componentList'>
+                    <td>{{report?.componentName}}</td>
+                    <td>{{report?.testResultValue}}</td>
+                    <td>{{report?.testResultUnit}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <div>
+            <button md-raised-button color="warn" class='pull-right m-b-10' type="button" md-dialog-close (click)="mdDialogRef.close(false)">{{currentLanguageSet?.common?.close}}</button>
+        </div>
+    </div>
+</section>

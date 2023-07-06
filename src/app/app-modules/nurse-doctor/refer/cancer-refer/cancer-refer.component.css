@@ -1,0 +1,19 @@
+.tcell {
+    height: 50px;
+    line-height: 50px;
+}
+
+.mat-expansion-panel-header {
+    background: rgba(37, 55, 70, 0.2);
+}
+
+h5 {
+    font-weight: bold;
+}
+ 
+@media only screen and (max-width: 600px){
+    .referreason{
+      width: 100%;
+    }
+    
+  }

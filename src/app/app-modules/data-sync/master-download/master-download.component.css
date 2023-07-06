@@ -1,0 +1,36 @@
+.example-sidenav-content {
+    display: flex;
+    padding: 20px;
+    align-items: center;
+    justify-content: center;
+}
+
+.example-container {
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    overflow-y: auto;
+}
+
+.progress, .failedMaster {
+    width: 100%;
+}
+
+.download-success i {
+    color: green;
+    margin-left: 5px;
+}
+
+.download-success h4 {
+    display: flex;
+    align-items: center;
+}
+
+.panel-body {
+    overflow: auto;
+    background: #f2f2f0;
+    height: stretch;
+    width: 100%;
+}
+
+.close-btn {
+    cursor: pointer;
+}

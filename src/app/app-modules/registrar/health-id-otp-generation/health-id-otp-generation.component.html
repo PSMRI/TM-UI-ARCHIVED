@@ -1,0 +1,100 @@
+<!-- Enterin Mobile Number for OTP generation-->
+  <div class="title info">
+    <h4>{{currentLanguageSet?.generateABHA}}</h4>
+    <button class="pull-right close-btn" mdDialogClose (click)="closeDialog()" md-icon-button>
+      <md-icon class="md-24">close</md-icon>
+    </button>
+  </div>
+  <div class="overlay" *ngIf="showProgressBar">
+    <div class="overlay-content">
+      <md-spinner></md-spinner>
+    </div>
+  </div>
+<br>
+
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" *ngIf="enablehealthIdOTPForm==false">
+  <label><strong>{{currentLanguageSet?.registeredContactNumberIs}} {{mobileNumber}}</strong></label>
+</div>
+   
+    <div   class="col-xs-12 col-sm-12" [formGroup]="healthIdMobileForm" *ngIf="enablehealthIdOTPForm==false">
+			<div class="row">
+
+        <div  class="col-xs-12 col-sm-12 col-md-12 col-lg-12" >
+          <md-checkbox (change)="enableMobileNo($event)" >{{currentLanguageSet?.alternateNumber}}  </md-checkbox>
+        </div>
+			
+          <div *ngIf="altNum == true" class="col-xs-12 col-sm-12 col-md-12 col-lg-12"  >
+            <md-form-field [style.width]="'100%'">
+              <input
+                defaultNull
+                autocomplete="off"
+                allowText="number"
+                autofocus
+                required
+                mdInput 
+                minlength="10"
+                maxlength="10"
+                [min]="10"
+                placeholder="{{currentLanguageSet?.mobileNumber}}"
+                formControlName="mobileNo"
+                required
+              />
+              <md-error
+              *ngIf="healthIdMobileForm.controls.mobileNo.errors?.required"
+            >
+              {{
+                currentLanguageSet?.benDetailsAlert?.mobNoMandatory
+              }}</md-error
+            >
+            <md-error
+              *ngIf="healthIdMobileForm.controls.mobileNo.errors?.minlength"
+            >
+              {{
+                currentLanguageSet?.benDetailsAlert?.minDigitsRequired
+              }}</md-error
+            >
+              </md-form-field>
+         
+          </div>
+
+			
+			
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<button [disabled]="!healthIdMobileForm.valid && altNum" (click)="getHealthIdOtp()" md-raised-button color="accent" class="pull-right font-regular f-s-18  m-t-8">
+            {{currentLanguageSet?.generateOTP}}
+					</button>
+				</div>
+			</div>
+</div>
+<br>
+<!-- Entering OTP for Health ID Generation-->
+<div *ngIf="enablehealthIdOTPForm==true" class="col-xs-12 col-sm-12" [formGroup]="healthIdOTPForm" >  
+  <div class="row">
+   
+    <div  class="col-xs-12 col-sm-12 col-md-12 col-lg-12" >
+      <md-form-field [style.width]="'100%'">
+        <input
+          defaultNull
+          autocomplete="off"
+          autofocus
+          required
+          mdInput
+          type="text"
+          placeholder="{{currentLanguageSet?.enterOTP}}"
+          formControlName="otp"
+          minlength="6"
+          maxlength="6"
+          (keypress)="numberOnly($event)"
+        required
+        />
+        </md-form-field>
+   
+    </div>
+    <div class="col-sm-12 step-btn m-b-20" style="text-align:right">
+      <button id="cancelButton" md-raised-button type="button" color="primary"
+      (click)="getHealthIdOtp()">{{currentLanguageSet?.resendOTP}}</button>
+          <button id="submitButton"  md-raised-button type="accent" color="accent"
+          [disabled]="!healthIdOTPForm.valid || !(checkOTP())"  (click)="verifyOTPOnSubmit()">{{currentLanguageSet?.common?.submit}}</button>
+    </div>
+  </div>
+</div>

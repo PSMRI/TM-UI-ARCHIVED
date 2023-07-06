@@ -1,0 +1,36 @@
+.select-full-width {
+    width: 100%;
+}
+
+.input-full-width {
+    width: 100%;
+}
+
+.mat-form-field {
+    line-height: unset;
+}
+
+.mat-card-header {
+    justify-content: space-between;
+}
+
+.box {
+    height: 60px;
+}
+
+.radio-button {
+    margin-left: 15px;
+}
+
+.previous-history{
+    display: flex;
+    align-items: baseline;
+}
+
+:host /deep/ .mat-select-placeholder {
+    font-size: 2em;
+ }
+
+ .m-b-10{
+     margin-bottom: 10px;
+ }

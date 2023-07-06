@@ -1,0 +1,47 @@
+h5 {
+  font-weight: bold;
+}
+
+.mat-expansion-panel-header {
+  background: rgba(37, 55, 70, 0.2);
+}
+
+.norecord {
+  text-align: center;
+}
+
+.view-link {
+  text-align: center;
+}
+
+.table {
+  margin-bottom: 0px;
+}
+
+.graph tr td {
+  border: none;
+}
+
+.textarea-full-width {
+  width: 100%;
+}
+
+.abnormal {
+  color: red
+}
+
+img {
+  border: 1px solid black;
+}
+
+md-expansion-panel {
+  margin: 0.5%;
+}
+
+.no_records {
+  border: 0.2px solid gray;
+  display: block;
+  padding: 50px;
+  margin-top: 50px;
+  text-align: center;
+}

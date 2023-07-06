@@ -1,0 +1,135 @@
+<!-- {{ menstrualHistoryForm.value | json }} -->
+<div class="row m-t-10 text-right">
+  <label class="font-history-label m-t-10">{{
+    currentLanguageSet?.historyData?.Previousmenstrualhistory?.previousmenstrualhistory
+  }}</label>
+  <button
+    type="button"
+    md-icon-button
+    mdTooltip="{{currentLanguageSet?.DurationData?.previousDetails}}"
+    id="previousANCMenstrualHistory"
+    class="pull-right"
+    color="primary"
+    (click)="getPreviousMenstrualHistory()"
+  >
+    <md-icon class="md-18">history</md-icon>
+  </button>
+</div>
+<div class="row m-t-10" [formGroup]="menstrualHistoryForm">
+  <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+    <md-select
+      class="select-full-width"
+      name="menstrualCycleStatus"
+      formControlName="menstrualCycleStatus"
+      placeholder="{{
+        currentLanguageSet?.historyData?.ancHistory?.menstrualHistoryANC
+          ?.menstrualCycleStatus
+      }}"
+      (change)="checkMenstrualCycleStatus()"
+    >
+      <md-option
+        *ngFor="let status of masterData?.menstrualCycleStatus"
+        [value]="status"
+        >{{ status.name }}</md-option
+      >
+    </md-select>
+  </div>
+
+  <ng-template [ngIf]="menstrualCycleStatus?.name == 'Active'">
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+      <label class="control-label" for="regularityOfMenstrualCycles"
+        >{{
+          currentLanguageSet?.historyData?.opd_NCD_PNCHistory
+            ?.menstrual?.regularityofMenstrualCycles
+        }}</label
+      >
+      <div class="clearfix"></div>
+      <md-radio-group name="regularity" formControlName="regularity">
+        <md-radio-button color="primary" value="Regular"
+          >{{currentLanguageSet?.common?.regular}}</md-radio-button
+        >
+        <md-radio-button color="primary" value="Irregular"
+          >{{currentLanguageSet?.common?.irregular}}</md-radio-button
+        >
+      </md-radio-group>
+    </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+      <md-select
+        class="select-full-width"
+        name="cycleLength"
+        formControlName="cycleLength"
+        placeholder="{{
+          currentLanguageSet?.historyData?.opd_NCD_PNCHistory
+            ?.menstrual?.lengthofMenstrualCycle
+        }}"
+      >
+        <md-option
+          *ngFor="let cycleLength of masterData?.menstrualCycleLengths"
+          [value]="cycleLength"
+          >{{ cycleLength.menstrualCycleRange }}</md-option
+        >
+      </md-select>
+    </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+      <md-select
+        class="select-full-width "
+        name="bloodFlowDuration"
+        formControlName="bloodFlowDuration"
+        placeholder="{{
+          currentLanguageSet?.historyData?.opd_NCD_PNCHistory
+            ?.menstrual?.menstrualBloodFlowDuration
+        }}"
+      >
+        <md-option
+          *ngFor="
+            let cycleDuration of masterData?.menstrualCycleBloodFlowDuration
+          "
+          [value]="cycleDuration"
+          >{{ cycleDuration.menstrualCycleRange }}</md-option
+        >
+      </md-select>
+    </div>
+  </ng-template>
+
+  <ng-template
+    [ngIf]="
+      menstrualCycleStatus?.name == 'Active' ||
+      menstrualCycleStatus?.name == 'Amenorrhea'
+    "
+  >
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+      <md-select
+        multiple
+        class="select-full-width"
+        name="problemName"
+        formControlName="menstrualProblemList"
+        placeholder="{{
+          currentLanguageSet?.historyData?.opd_NCD_PNCHistory
+            ?.menstrual?.menstrualProblems
+        }}"
+      >
+        <md-option
+          *ngFor="let problem of masterData?.menstrualProblem"
+          [value]="problem"
+          >{{ problem.problemName }}</md-option
+        >
+      </md-select>
+    </div>
+  </ng-template>
+  <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+    <md2-datepicker
+      [openOnFocus]="true"
+      [max]="today"
+      [min]="minimumLMPDate"
+      name="lMPDate"
+      formControlName="lMPDate"
+      placeholder="{{
+        currentLanguageSet?.historyData?.opd_NCD_PNCHistory
+          ?.menstrual?.lastMenstrualPeriod
+      }} "
+      [disabled]="visitType == 'ANC'"
+    ></md2-datepicker>
+  </div>
+</div>

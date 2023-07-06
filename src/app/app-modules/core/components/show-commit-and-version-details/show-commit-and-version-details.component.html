@@ -1,0 +1,33 @@
+<div class="row title">
+  <h4>Version Details</h4>
+  <button class="pull-right exit" [mdDialogClose]="true" md-icon-button>
+    <md-icon class="md-24">close</md-icon>
+  </button>
+</div>
+<div class="container-fluid">
+  <md-dialog-content>
+    <div class="table-responsive">
+      <table aria-describedby="Version Details" class="table table-striped">
+        <thead>
+          <tr>
+            <th id="empty"></th>
+            <th id="api">API</th>
+            <th id="ui">UI</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="table-hover">
+            <th id="vesrion">Version</th>
+            <td> {{input.commitDetailsAPI.version}}</td>
+            <td>{{input.commitDetailsUI.version}} </td>
+          </tr>
+          <tr class="table-hover">
+            <th id="commit">Commit</th>
+            <td> {{input.commitDetailsAPI.commit}}</td>
+            <td>{{input.commitDetailsUI.commit}} </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </md-dialog-content>
+</div>

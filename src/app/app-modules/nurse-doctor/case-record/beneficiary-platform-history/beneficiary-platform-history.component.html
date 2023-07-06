@@ -1,0 +1,335 @@
+<div class="row m-t-20 m-b-20">
+  <div class="col-xs-12">
+    <md-tab-group>
+      <md-tab *ngFor="let service of serviceOnState" label={{service.serviceName}}>
+        <div>
+          <md-drawer-container class="example-container m-t-10" *ngIf="!service.serviceLoaded" autosize>
+            <div class="example-sidenav-content">
+              <button type="button" md-raised-button color='primary' class="btn-green" (click)='getServiceHistory(service.serviceID)'>
+              {{current_language_set?.common?.load}} {{service.serviceName}} {{current_language_set?.historyData?.history}}
+            </button>
+            </div>
+          </md-drawer-container>
+          <div *ngIf="historyOfMMU?.length > 0 && hideMMUFetch && service.serviceID == '2'" class="m-t-20">
+            <md-input-container id="filterbox" class="pull-right">
+              <input autocomplete="off" mdInput placeholder="{{current_language_set?.nurseData?.visitDetailsForm?.visitCategory}}" #filterMMU (keyup)="filterMMUHistory(filterMMU.value)">
+              <md-icon mdSuffix>search</md-icon>
+            </md-input-container>
+          </div>
+          <section class="m-t-20 overflow" *ngIf="hideMMUFetch && service.serviceID == '2'">
+            <table class="table table-responsive table-bordered" aria-describedby="visitDetailsForm">
+              <thead>
+                <tr>
+                  <th style="width: 10%;" id="visitnommu">{{current_language_set?.previousvisit?.visitnommu}}</th>
+                  <th style="width: 20%;" id="date">{{current_language_set?.casesheet?.date}}</th>
+                  <th style="width: 10%;" id="visitreasonmmu">{{current_language_set?.previousvisit?.visitreasonmmu}}</th>
+                  <th style="width: 20%;" id="visitcategorymmu">{{current_language_set?.previousvisit?.visitcategorymmu}}</th>
+                  <th style="width: 10%;" id="visitcodemmu">{{current_language_set?.previousvisit?.visitcodemmu}}</th>
+                  <th style="width: 10%;" id="previewmmu">{{current_language_set?.previousvisit?.previewmmu}}</th>
+                  <th style="width: 10%;" id="printpreviewmmu">{{current_language_set?.previousvisit?.printpreviewmmu}}</th>
+                </tr>
+              </thead>
+              <tbody *ngIf="historyOfMMU?.length==0">
+                <tr>
+                  <td colspan="7">
+                    <h4 class='norecord'>{{current_language_set?.common?.noVisitFound}}</h4>
+                  </td>
+                </tr>
+                </tbody>
+                <tbody *ngIf="historyOfMMU?.length > 0">
+                  <ng-container *ngFor="let visit of previousMMUHistoryPagedList; let i = index">
+                    <tr>
+                      <td style="width:300px;max-width:120px; word-break: normal; vertical-align:middle">
+                        {{visit?.benVisitNo}}</td>
+                      <td style="width:300px;max-width:120px; word-break: normal; vertical-align:middle">
+                        {{visit?.benVisitDate | date: 'dd/MM/yyyy'}}</td>
+                      <td style="width:110px; word-break: normal; vertical-align:middle ">{{visit?.VisitReason}}</td>
+                      <td style="width:150px; word-break: normal; vertical-align:middle">{{visit?.VisitCategory}}</td>
+                      <td style="max-width:150px; word-break: normal; vertical-align:middle">{{visit?.visitCode}}</td>
+                      <td style="width:110px; word-break: normal; vertical-align:middle ">
+                        <span class="material-icons cursorPointer" (click)="getVisitDetails('MMU',visit)">visibility</span>
+                        <!-- <em class="material-icons cursorPointer" (click)="getVisitDetails('MMU',visit)">visibility</em> -->
+                      </td>
+                      <td style="width:110px; word-break: normal; vertical-align:middle ">
+                        <md-icon class='cursorPointer' (click)="getVisitDetails('MMU',visit,true)">print</md-icon>
+                      </td>
+                    </tr>
+                  </ng-container>
+                </tbody>
+                <tfoot>
+                  <tr *ngIf="historyOfMMU?.length> 0">
+                    <td colspan="2">
+                      <div class="totalCount"> {{current_language_set?.common?.totalCount}} : {{ historyOfMMU.length }}</div>
+                    </td>
+                    <td colspan="5">
+                      <pagination class="pull-right" [boundaryLinks]="true" (pageChanged)="previousMMUHistoryPageChanged($event)" *ngIf="filteredMMUHistory.length" [totalItems]="filteredMMUHistory.length" [itemsPerPage]="previousMMUHistoryRowsPerPage" [maxSize]="previousMMUHistoryRowsPerPage"
+                        [rotate]="rotate" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"></pagination>
+
+                    </td>
+                  </tr>
+                </tfoot>
+            </table>
+          </section>
+
+          <div *ngIf="historyOfTM?.length > 0 && hideTMFetch && service.serviceID == '4'" class="m-t-20">
+            <md-input-container id="filterbox" class="pull-right">
+              <input autocomplete="off" mdInput placeholder="{{current_language_set?.nurseData?.visitDetailsForm?.visitCategory}}" #filterTM (keyup)="filterTMHistory(filterTM.value)">
+              <md-icon mdSuffix>search</md-icon>
+            </md-input-container>
+          </div>
+          <section class="m-t-20 overflow" *ngIf="hideTMFetch && service.serviceID == '4'">
+            <table class="table table-responsive table-bordered" aria-describedby="visitCategory">
+              <thead>
+                <tr>
+                  <th style="width: 10%;" id="visitnommu">{{current_language_set?.previousvisit?.visitnommu}}</th>
+                  <th style="width: 10%;" id="date">{{current_language_set?.common?.date}}</th>
+                  <th style="width: 10%;" id="visitreasonmmu">{{current_language_set?.previousvisit?.visitreasonmmu}}</th>
+                  <th style="width: 15%;" id="visitcategorymmu">{{current_language_set?.previousvisit?.visitcategorymmu}}</th>
+                  <th style="width: 20%;" id="visitdetailsmmu">{{current_language_set?.previousvisit?.visitDetails}}</th>
+                  <th style="width: 10%;" id="visitcodemmu">{{current_language_set?.previousvisit?.visitcodemmu}}</th>
+                  <th style="width: 15%;" id="medicationmmu">{{current_language_set?.previousvisit?.medicationmmu}}</th>
+                  <th style="width: 10%;" id="previewmmu">{{current_language_set?.previousvisit?.previewmmu}}</th>
+                  <th style="width: 10%;" id="printpreviewmmu">{{current_language_set?.previousvisit?.printpreviewmmu}}</th>
+                </tr>
+              </thead>
+              <tbody *ngIf="historyOfTM?.length==0">
+                <tr>
+                  <td colspan="7">
+                    <h4 class='norecord'>{{current_language_set?.common?.noVisitFound}}</h4>
+                  </td>
+                </tr>
+                </tbody>
+                <tbody *ngIf="historyOfTM?.length > 0">
+                  <ng-container *ngFor="let visit of previousTMHistoryPagedList; let i = index">
+                    <tr>
+                      <td style="width:300px;max-width:120px; word-break: normal; vertical-align:middle">
+                        {{visit?.benVisitNo}}</td>
+                      <td style="width:300px;max-width:120px; word-break: normal; vertical-align:middle">
+                        {{visit?.benVisitDate | date: 'dd/MM/yyyy'}}</td>
+                      <td style="width:110px; word-break: normal; vertical-align:middle ">{{visit?.VisitReason}}</td>
+                      <td style="width:150px; word-break: normal; vertical-align:middle">{{visit?.VisitCategory}}</td>
+                      <td
+                      style="width:110px; word-break: normal; vertical-align:middle "
+                    >
+                    <ng-container *ngIf="visit.benPreviousData">
+                      <tr>
+                        <ng-container *ngIf="visit.benPreviousData.nurseData">
+                          <td>
+                            <ng-container *ngIf="visit.benPreviousData.nurseData.vitals.benAnthropometryDetail && visit.benPreviousData.nurseData.vitals.benPhysicalVitalDetail">
+                              <tr>
+                                <th>
+                                  Height :
+                                </th>
+                                <td>
+                                  {{ visit.benPreviousData?.nurseData?.vitals?.benAnthropometryDetail?.height_cm || 'NA' }}
+                                </td>
+                              </tr>
+                              <tr>
+                                <th>
+                                  Weight : 
+                                </th>
+                                <td>
+                                  {{ visit.benPreviousData?.nurseData?.vitals?.benAnthropometryDetail?.weight_Kg || 'NA' }}
+                                </td>
+                              </tr>
+                              <tr>
+                                <th>
+                                  SBP : 
+                                </th>
+                                <td>
+                                  {{ visit.benPreviousData?.nurseData?.vitals?.benPhysicalVitalDetail?.averageSystolicBP || 'NA' }}
+                                </td>
+                              </tr>
+                              <tr>
+                                <th>
+                                  DBP : 
+                                </th>
+                                <td>
+                                  {{ visit.benPreviousData?.nurseData?.vitals?.benPhysicalVitalDetail?.averageDiastolicBP || 'NA' }}
+                                </td>
+                              </tr>
+                              <tr>
+                                <th>
+                                  RBS :
+                                </th>
+                                <td>
+                                  {{ visit.benPreviousData?.nurseData?.vitals?.benPhysicalVitalDetail?.rbsTestResult || 'NA' }}
+                                </td>
+                              </tr>
+                            </ng-container>
+                          </td>
+                        </ng-container>
+                      </tr>
+                    </ng-container>
+                    </td>
+                      <td style="max-width:150px; word-break: normal; vertical-align:middle">{{visit?.visitCode}}</td>
+                      <td
+                      style="width:110px; word-break: normal; vertical-align:middle "
+                     >
+                       <ng-container *ngIf="visit.benPreviousData">
+                         <tr>
+                           <ng-container *ngIf="visit.benPreviousData.doctorData">
+                             <td>
+                               <ng-container *ngFor="let medicationmmu of visit.benPreviousData?.doctorData?.prescription">
+                                 <tr *ngIf="medicationmmu.drugName !== null">
+                                   {{ medicationmmu.drugName }} {{ medicationmmu.drugStrength }},
+                                 </tr>
+                                 <tr *ngIf="medicationmmu.drugName === null" >
+                                  
+                                 </tr>
+                               </ng-container>
+                             </td>
+                           </ng-container>
+                         </tr>
+                       </ng-container>
+                     </td>
+                      <td style="width:110px; word-break: normal; vertical-align:middle ">
+                        <span class="material-icons cursorPointer" (click)="getVisitDetails('TM',visit)">visibility</span>
+                        <!-- <em class="material-icons cursorPointer" (click)="getVisitDetails('TM',visit)">visibility</em> -->
+                      </td>
+                      <td style="width:110px; word-break: normal; vertical-align:middle ">
+                        <md-icon class='cursorPointer' (click)="getVisitDetails('TM',visit,true)">print</md-icon>
+                      </td>
+                    </tr>
+                  </ng-container>
+                </tbody>
+                <tfoot>
+                  <tr *ngIf="historyOfTM?.length> 0">
+                    <td colspan="2">
+                      <div class="totalCount"> {{current_language_set?.common?.totalCount}} : {{ historyOfTM.length }}</div>
+                    </td>
+                    <td colspan="5">
+                      <pagination class="pull-right" [boundaryLinks]="true" (pageChanged)="previousTMHistoryPageChanged($event)" *ngIf="historyOfTM.length" [totalItems]="historyOfTM.length" [itemsPerPage]="previousTMHistoryRowsPerPage" [maxSize]="previousTMHistoryRowsPerPage"
+                        [rotate]="rotate" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"></pagination>
+
+                    </td>
+                  </tr>
+                </tfoot>
+            </table>
+          </section>
+        </div>
+        <div *ngIf="historyOfMCTS?.length > 0 && hideMCTSFetch && service.serviceID == '6'" class="m-t-20">
+          <md-input-container id="filterbox" class="pull-right">
+            <input autocomplete="off" mdInput placeholder="{{current_language_set?.previousvisit?.calltypemcts}}" #filterMCTS (keyup)="filterMCTSHistory(filterMCTS.value)">
+            <md-icon mdSuffix>search</md-icon>
+          </md-input-container>
+        </div>
+        <section class="m-t-20 overflow" *ngIf="hideMCTSFetch && service.serviceID == '6'">
+          <table class="table table-responsive table-bordered" aria-describedby="calltypemcts">
+            <thead>
+              <tr>
+                <th style="width: 10%;" id="calltypemcts">{{current_language_set?.previousvisit?.calltypemcts}}</th>
+                <th style="width: 10%;" id="calldatetimemcts">{{current_language_set?.previousvisit?.calldatetimemcts}}</th>
+                <th style="width: 10%;" id="dataupdatemcts">{{current_language_set?.previousvisit?.dataupdatemcts}}</th>
+                <th style="width: 10%;" id="callstatusmcts">{{current_language_set?.previousvisit?.callstatusmcts}}</th>
+                <th style="width: 10%;" id="callgrouptypemcts">{{current_language_set?.previousvisit?.callgrouptypemcts}}</th>
+                <th style="width: 20%;" id="SMSadvicemcts">{{current_language_set?.previousvisit?.SMSadvicemcts}}</th>
+                <th style="width: 20%;" id="remarks">{{current_language_set?.common?.remarks}}</th>
+                <th style="width: 10%;" id="actions">{{current_language_set?.previousvisit?.actions}}</th>
+              </tr>
+            </thead>
+            <tbody *ngIf="historyOfMCTS?.length==0">
+              <tr>
+                <td colspan="8">
+                  <h4 class='norecord'>{{current_language_set?.common?.noCallDetailsFound}}</h4>
+                </td>
+              </tr>
+              </tbody>
+              <tbody *ngIf="historyOfMCTS?.length > 0">
+                <ng-container *ngFor="let call of previousMCTSHistoryPagedList; let i = index">
+                  <tr>
+                    <td>{{call?.mctsOutboundCall?.displayOBCallType}}</td>
+                    <td>{{call?.createdDate}}</td>
+                    <!--| utcDate |date: 'dd-MM-yyyy hh:mm a'-->
+                    <td>{{call?.changeLog?.split('|').join(',')}}</td>
+                    <td>{{call?.callType?.callGroupType}}</td>
+                    <td>{{call?.callType?.callType}}</td>
+                    <td>{{call?.smsAdvice}}</td>
+                    <td>{{call?.remark}}</td>
+                    <td>
+                      <button md-raised-button color="primary"  class="md-small" (click)='getPatientMCTSCallHistory(call)'>{{current_language_set?.common?.viewQnA}}</button>
+                    </td>
+                  </tr>
+                </ng-container>
+              </tbody>
+              <tfoot>
+                <tr *ngIf="historyOfMCTS?.length> 0">
+                  <td colspan="2">
+                    <div class="totalCount"> {{current_language_set?.common?.totalCount}} : {{ historyOfMCTS.length }}</div>
+                  </td>
+                  <td colspan="6">
+                    <pagination class="pull-right" [boundaryLinks]="true" (pageChanged)="previousMCTSHistoryPageChanged($event)" *ngIf="filteredMCTSHistory.length" [totalItems]="filteredMCTSHistory.length" [itemsPerPage]="previousMCTSHistoryRowsPerPage" [maxSize]="previousMCTSHistoryRowsPerPage"
+                      [rotate]="rotate" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"></pagination>
+
+                  </td>
+                </tr>
+              </tfoot>
+          </table>
+        </section>
+        <div *ngIf="historyOf104?.length > 0 && hide104Fetch && service.serviceID == '3'" class="m-t-20">
+          <md-input-container id="filterbox" class="pull-right">
+            <input autocomplete="off" mdInput placeholder="{{current_language_set?.previousvisit?.ChiefComplaint104}}" #filter104 (keyup)="filter104History(filter104.value)">
+            <md-icon mdSuffix>search</md-icon>
+          </md-input-container>
+        </div>
+        <section class="m-t-20 overflow" *ngIf="hide104Fetch && service.serviceID == '3'">
+          <table class="table table-responsive table-bordered" aria-describedby="ChiefComplaint104">
+            <thead>
+              <tr>
+                <th id="id">{{current_language_set?.common?.id}}</th>
+                <th id="name104">{{current_language_set?.previousvisit?.name104}}</th>
+                <th id="age104">{{current_language_set?.previousvisit?.age104}}</th>
+                <th id="ChiefComplaint104">{{current_language_set?.previousvisit?.ChiefComplaint104}}</th>
+                <th id="symptoms">{{current_language_set?.ExaminationData?.cancerScreeningExamination?.symptoms?.symptoms}}</th>
+                <th id="provisionalSelected104">{{current_language_set?.previousvisit?.provisionalSelected104}}</th>
+                <th id="recommendedaction104">{{current_language_set?.previousvisit?.recommendedaction104}}</th>
+                <th id="actionByHao">{{current_language_set?.previousvisit?.actionByHao}}</th>
+                <th id="actionByMo">{{current_language_set?.previousvisit?.actionByMo}}</th>
+                <th id="actionByCoPd">{{current_language_set?.previousvisit?.actionByCoPd}}</th>
+                <th id="date">{{current_language_set?.common?.date}}</th>
+              </tr>
+            </thead>
+            <tbody *ngIf="historyOf104?.length==0">
+              <tr>
+                <td colspan="11">
+                  <h4 class='norecord'>{{current_language_set?.common?.noCallDetailsFound}}</h4>
+                </td>
+              </tr>
+              </tbody>
+              <tbody *ngIf="historyOf104?.length > 0">
+                <ng-container *ngFor="let case of previous104HistoryPagedList; let i = index">
+
+                  <tr >
+                    <td>{{case?.requestID ? case?.requestID : case?.benHistoryID}}</td>
+                    <td>{{case?.patientName}}</td>
+                    <td>{{case?.patientAge}}</td>
+                    <td class="cursorPointer"   mdTooltip={{case?.diseaseSummaryID}}>{{case?.diseaseSummary}}</td>
+                      <td>{{case?.algorithm}}</td>
+                      <td class="cursorPointer"   mdTooltip={{case?.selecteDiagnosisID}}>{{case?.selecteDiagnosis}}</td>
+                        <td>{{case?.addedAdvice}}</td>
+                        <td>{{case?.actionByHAO}}</td>
+                        <td>{{case?.actionByMO}}</td>
+                        <td>{{case?.actionByCO}}</td>
+                        <td>{{case?.createdDate}}</td>
+                        <!--| utcDate |date: 'dd-MM-yyyy hh:mm a'-->
+                        </tr>
+                </ng-container>
+              </tbody>
+              <tfoot>
+                <tr *ngIf="historyOf104?.length> 0">
+                  <td colspan="3">
+                    <div class="totalCount"> {{current_language_set?.common?.totalCount}} : {{ historyOf104.length }}</div>
+                  </td>
+                  <td colspan="8">
+                    <pagination class="pull-right" [boundaryLinks]="true" (pageChanged)="previous104HistoryPageChanged($event)" *ngIf="filtered104History.length" [totalItems]="filtered104History.length" [itemsPerPage]="previous104HistoryRowsPerPage" [maxSize]="previous104HistoryRowsPerPage"
+                      [rotate]="rotate" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"></pagination>
+
+                  </td>
+                </tr>
+              </tfoot>
+          </table>
+        </section>
+      </md-tab>
+    </md-tab-group>
+  </div>
+</div>

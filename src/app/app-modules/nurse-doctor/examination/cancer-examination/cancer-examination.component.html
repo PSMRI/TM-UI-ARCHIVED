@@ -1,0 +1,37 @@
+<md-accordion [formGroup]="cancerForm">
+  <md-expansion-panel expanded="true">
+    <md-expansion-panel-header>
+      <h5> {{current_language_set?.ExaminationData?.cancerScreeningExamination?.symptoms?.symptoms}}</h5>
+    </md-expansion-panel-header>
+    <doctor-signs-and-symptoms [signsForm]="cancerForm.controls.signsForm"></doctor-signs-and-symptoms>
+  </md-expansion-panel>
+
+  <md-expansion-panel>
+    <md-expansion-panel-header>
+      <h5>{{current_language_set?.ExaminationData?.cancerScreeningExamination?.oral?.oralExamamination}}</h5>
+    </md-expansion-panel-header>
+    <cancer-oral-examination [oralExaminationForm]="cancerForm.controls.oralExaminationForm" ></cancer-oral-examination>
+  </md-expansion-panel>
+
+  <md-expansion-panel *ngIf="showBreastExamination || female">
+    <md-expansion-panel-header>
+      <h5>{{current_language_set?.ExaminationData?.cancerScreeningExamination?.breast?.breastExamination}}</h5>
+    </md-expansion-panel-header>
+    <doctor-breast-examination [breastExaminationForm]="cancerForm.controls.breastExaminationForm" id="breastExamination"></doctor-breast-examination>
+  </md-expansion-panel>
+
+  <md-expansion-panel>
+    <md-expansion-panel-header>
+      <h5>{{current_language_set?.ExaminationData?.cancerScreeningExamination?.abdominal?.abdominalExamination}}</h5>
+    </md-expansion-panel-header>
+    <doctor-abdominal-examination [abdominalExaminationForm]="cancerForm.controls.abdominalExaminationForm" ></doctor-abdominal-examination>
+  </md-expansion-panel>
+
+  <md-expansion-panel *ngIf="female">
+    <md-expansion-panel-header>
+      <h5>{{current_language_set?.ExaminationData?.cancerScreeningExamination?.gynecological?.gynecologicalExamination}}</h5>
+    </md-expansion-panel-header>
+    <doctor-gynecological-examination [gynecologicalExaminationForm]="cancerForm.controls.gynecologicalExaminationForm" ></doctor-gynecological-examination>
+  </md-expansion-panel>
+
+</md-accordion>

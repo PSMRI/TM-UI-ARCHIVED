@@ -1,0 +1,21 @@
+.form-input-text {
+ width: 100%;
+}
+
+.form-radio-btn {
+    margin-right: 15px;
+}
+
+.image-placeholder{
+    text-align: center;
+}
+
+img {
+    margin-top: 5px;
+    height: 200px;
+    width: 200px;
+}
+
+.custom-cell {
+    height: 50px;
+}

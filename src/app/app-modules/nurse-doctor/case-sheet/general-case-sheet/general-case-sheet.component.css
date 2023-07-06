@@ -1,0 +1,51 @@
+@media print {
+  body {
+    background: white;
+    font-size: 14px;
+  }
+  .non-printable {
+    display: none;
+  }
+  .page-break:last-child {
+    page-break-after: auto;
+  }
+  @page {
+    margin: 1.3cm;
+  }
+}
+
+.container {
+  background: white;
+}
+
+.example-fab.mat-mini-fab {
+  position: fixed;
+  right: 20px;
+  z-index: 3;
+}
+
+.back {
+  bottom: 30px;
+}
+
+.print {
+  bottom: 80px;
+}
+
+.upward {
+  bottom: 130px;
+}
+
+.select {
+  bottom: 180px;
+}
+
+.m-b-10 {
+  margin-bottom: 10px;
+}
+
+.iemr-tooltip {
+  background: yellowgreen;
+  color: brown;
+  display: none;
+}

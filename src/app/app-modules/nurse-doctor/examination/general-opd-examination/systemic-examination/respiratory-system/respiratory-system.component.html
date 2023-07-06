@@ -1,0 +1,92 @@
+<!-- {{respiratorySystemForm.value | json}} -->
+<div class="row m-t-20" [formGroup]='respiratorySystemForm'>
+  <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+    <md-select class="select-full-width" name='trachea' formControlName="trachea" placeholder="{{current_language_set?.ExaminationData?.ANC_OPD_PNCExamination?.systemic?.respiratoryANC_OPD_PNC?.trachea}}">
+      <md-option *ngFor="let trachea of selectTrachea" [value]="trachea.name">
+        {{trachea.name}}
+      </md-option>
+    </md-select>
+  </div>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <md-form-field class="input-full-width" class="textarea-full-width">
+      <textarea mdInput allowText="textAreaValidator" defaultNull mdTextareaAutosize name='inspection' formControlName="inspection" placeholder="{{current_language_set?.ExaminationData?.ANC_OPD_PNCExamination?.systemic?.respiratoryANC_OPD_PNC?.inspection}}" maxlength="300"></textarea>
+    </md-form-field>
+  </div>
+
+  <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+    <label class="control-label" for="respiratorySystem">{{current_language_set?.ExaminationData?.ANC_OPD_PNCExamination?.systemic?.respiratoryANC_OPD_PNC?.signsDistress}}</label>
+    <div class="clearfix"></div>
+    <md-radio-group name='signsOfRespiratoryDistress' formControlName="signsOfRespiratoryDistress">
+      <md-radio-button color='primary' value="Present">{{current_language_set?.common?.present}}</md-radio-button>
+      <md-radio-button color='primary' value="Absent">{{current_language_set?.common?.absent}}</md-radio-button>
+    </md-radio-group>
+  </div>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <md-form-field class="input-full-width" class="textarea-full-width">
+      <textarea mdInput allowText="textAreaValidator" defaultNull mdTextareaAutosize name='palpation' formControlName="palpation" placeholder="{{current_language_set?.ExaminationData?.ANC_OPD_PNCExamination?.systemic?.respiratoryANC_OPD_PNC?.palpation}}" maxlength="300"></textarea>
+    </md-form-field>
+  </div>
+
+  <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+    <md-select class="select-full-width" name='auscultation_BreathSounds' formControlName="auscultation_BreathSounds" placeholder="{{current_language_set?.ExaminationData?.ANC_OPD_PNCExamination?.systemic?.respiratoryANC_OPD_PNC?.breathsounds}}">
+      <md-option *ngFor="let breathSound of selectBreathSounds" [value]="breathSound.name">
+        {{breathSound.name}}
+      </md-option>
+    </md-select>
+  </div>
+
+  <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+    <label class="control-label" for="respiratorySystem">{{current_language_set?.ExaminationData?.ANC_OPD_PNCExamination?.systemic?.respiratoryANC_OPD_PNC?.stridor}}</label>
+    <div class="clearfix"></div>
+    <md-radio-group name='auscultation_Stridor' formControlName="auscultation_Stridor">
+      <md-radio-button color='primary' value="Present">{{current_language_set?.common?.present}}</md-radio-button>
+      <md-radio-button color='primary' value="Absent">{{current_language_set?.common?.absent}}</md-radio-button>
+    </md-radio-group>
+  </div>
+
+  <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+    <label class="control-label" for="respiratorySystem">{{current_language_set?.ExaminationData?.ANC_OPD_PNCExamination?.systemic?.respiratoryANC_OPD_PNC?.crepitations}}</label>
+    <div class="clearfix"></div>
+    <md-radio-group name='auscultation_Crepitations' formControlName="auscultation_Crepitations">
+      <md-radio-button color='primary' value="Present">{{current_language_set?.common?.present}}</md-radio-button>
+      <md-radio-button color='primary' value="Absent">{{current_language_set?.common?.absent}}</md-radio-button>
+    </md-radio-group>
+  </div>
+
+  <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+    <label class="control-label" for="respiratorySystem">{{current_language_set?.ExaminationData?.ANC_OPD_PNCExamination?.systemic?.respiratoryANC_OPD_PNC?.wheezing}}</label>
+    <div class="clearfix"></div>
+    <md-radio-group name='auscultation_Wheezing' formControlName="auscultation_Wheezing">
+      <md-radio-button color='primary' value="Present">{{current_language_set?.common?.present}}</md-radio-button>
+      <md-radio-button color='primary' value="Absent">{{current_language_set?.common?.absent}}</md-radio-button>
+    </md-radio-group>
+  </div>
+
+  <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+    <label class="control-label" for="respiratorySystem">{{current_language_set?.ExaminationData?.ANC_OPD_PNCExamination?.systemic?.respiratoryANC_OPD_PNC?.pleuralRub}}</label>
+    <div class="clearfix"></div>
+    <md-radio-group name='auscultation_PleuralRub' formControlName="auscultation_PleuralRub">
+      <md-radio-button color='primary' value="Present">{{current_language_set?.common?.present}}</md-radio-button>
+      <md-radio-button color='primary' value="Absent">{{current_language_set?.common?.absent}}</md-radio-button>
+    </md-radio-group>
+  </div>
+
+  <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+    <label class="control-label" for="respiratorySystem">{{current_language_set?.ExaminationData?.ANC_OPD_PNCExamination?.systemic?.respiratoryANC_OPD_PNC?.conductedSounds}}</label>
+    <div class="clearfix"></div>
+    <md-radio-group name='auscultation_ConductedSounds' formControlName="auscultation_ConductedSounds">
+      <md-radio-button color='primary' value="Present">{{current_language_set?.common?.present}}</md-radio-button>
+      <md-radio-button color='primary' value="Absent">{{current_language_set?.common?.absent}}</md-radio-button>
+    </md-radio-group>
+  </div>
+
+  <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+    <md-select class="select-full-width" name='percussion' formControlName="percussion" placeholder="{{current_language_set?.ExaminationData?.ANC_OPD_PNCExamination?.systemic?.respiratoryANC_OPD_PNC?.percussion}}">
+      <md-option *ngFor="let percussion of selectPercussion" [value]="percussion.name">
+        {{percussion.name}}
+      </md-option>
+    </md-select>
+  </div>
+</div>

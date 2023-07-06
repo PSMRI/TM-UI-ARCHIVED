@@ -1,0 +1,6 @@
+<div class="row m-t-10">
+    <div class="col-xs-12">
+        <nurse-general-opd-examination *ngIf="showGeneralOPD" [mode]="examinationMode" [visitCategory]='visitCategory' [patientExaminationForm] = 'patientExaminationForm'></nurse-general-opd-examination>
+        <cancer-examination *ngIf="showCancer" [mode]="examinationMode" [examinationForm] = 'patientExaminationForm'></cancer-examination>
+    </div>
+</div>

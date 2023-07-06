@@ -1,0 +1,65 @@
+<!-- {{patientANCImmunizationForm.value | json}} -->
+<div [formGroup]="patientANCImmunizationForm" class="m-t-20">
+  <div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box" *ngIf='enableTTStatus_1_2 || enableTTStatus_1_2_b'>
+      <md-select class="input-full-width" name='tT_1Status' formControlName="tT_1Status" placeholder="{{current_language_set?.ancData?.ancImmune?.tt1Status}}" (change)='checkTT_1Status(tT_1Status)'>
+        <md-option *ngFor="let immunizationStatus_1 of selectImmunizationStatus" [value]="immunizationStatus_1">
+          {{immunizationStatus_1}}
+        </md-option>
+      </md-select>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box" *ngIf="tT_1Status == 'Received'">
+      <md2-datepicker [openOnFocus]="true" name='dateReceivedForTT_1' formControlName="dateReceivedForTT_1" placeholder="{{current_language_set?.ancData?.ancImmune?.dateReceived}}" [max]='today' [min]='dob' (change)='checkTT_1Date(dateReceivedForTT_1)'></md2-datepicker>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box" *ngIf="tT_1Status == 'Received'">
+      <label class="control-label" for="facilityName">{{current_language_set?.ancData?.ancImmune?.facilityName}}</label>
+      <div class="clearfix"></div>
+      <md-radio-group name='facilityNameOfTT_1' formControlName="facilityNameOfTT_1">
+        <md-radio-button color="primary" class="radio-btn" value="Govt Facility">{{current_language_set?.ancData?.ancImmune?.govtFacility}}</md-radio-button>
+        <md-radio-button color="primary" class="radio-btn" value="Pvt Facility"> {{current_language_set?.ancData?.ancImmune?.pvtFacility}}</md-radio-button>
+      </md-radio-group>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box" *ngIf="(enableTTStatus_1_2 && tT_1Status != null) || (enableTTStatus_1_2_b && tT_1Status != null)">
+      <md-select class="input-full-width" name='tT_2Status' formControlName="tT_2Status" placeholder="{{current_language_set?.ancData?.ancImmune?.tt2Status}}" (change)='checkTT_2Status(tT_2Status)'>
+        <md-option *ngFor="let immunizationStatus_2 of selectImmunizationStatus" [value]="immunizationStatus_2">
+          {{immunizationStatus_2}}
+        </md-option>
+      </md-select>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box" *ngIf="(tT_2Status == 'Received' && enableTTStatus_1_2) || (tT_2Status == 'Received' && enableTTStatus_1_2_b) ">
+      <md2-datepicker [openOnFocus]="true" name='dateReceivedForTT_2' formControlName="dateReceivedForTT_2" placeholder="{{current_language_set?.ancData?.ancImmune?.dateReceived}}" [max]='today' [min]='tT_1Date' (change)='checkTT_2Date(dateReceivedForTT_2)'></md2-datepicker>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box" *ngIf="(tT_2Status == 'Received' && enableTTStatus_1_2) || (tT_2Status == 'Received' && enableTTStatus_1_2_b) ">
+      <label class="control-label" for="facilityName">{{current_language_set?.ancData?.ancImmune?.facilityName}}</label>
+      <div class="clearfix"></div>
+      <md-radio-group name='facilityNameOfTT_2' formControlName="facilityNameOfTT_2">
+        <md-radio-button color="primary" class="radio-btn" value="Govt Facility">{{current_language_set?.ancData?.ancImmune?.govtFacility}}</md-radio-button>
+        <md-radio-button color="primary" class="radio-btn" value="Pvt Facility"> {{current_language_set?.ancData?.ancImmune?.pvtFacility}}</md-radio-button>
+      </md-radio-group>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box" *ngIf="(enableTTStatus_1_2_b && tT_1Status != null  && tT_2Status != null) || (enableTTStatus_1_2 && tT_1Status == 'NA' && tT_2Status != null)">
+      <md-select class="input-full-width" name='tT_3Status' formControlName="tT_3Status" placeholder="{{current_language_set?.ancData?.ancImmune?.ttBoosterStatus}}" (change)='checkTT_3Status(tT_3Status)'>
+        <md-option *ngFor="let immunizationStatus_3 of selectImmunizationStatus" [value]="immunizationStatus_3">
+          {{immunizationStatus_3}}
+        </md-option>
+      </md-select>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box" *ngIf="(tT_3Status == 'Received' && enableTTStatus_1_2_b) || (tT_3Status == 'Received' && enableTTStatus_1_2 && tT_1Status == 'NA' && tT_2Status != null)">
+      <md2-datepicker [openOnFocus]="true" name='dateReceivedForTT_3' formControlName="dateReceivedForTT_3" placeholder="{{current_language_set?.ancData?.ancImmune?.dateReceived}}" [max]='today' [min]='tT_3Date'></md2-datepicker>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box" *ngIf="(tT_3Status == 'Received' && enableTTStatus_1_2_b) || (tT_3Status == 'Received' && enableTTStatus_1_2 && tT_1Status == 'NA' && tT_2Status != null)">
+      <label class="control-label" for="facilityName">{{current_language_set?.ancData?.ancImmune?.facilityName}}</label>
+      <div class="clearfix"></div>
+      <md-radio-group name='facilityNameOfTT_3' formControlName="facilityNameOfTT_3">
+        <md-radio-button color="primary" class="radio-btn" value="Govt Facility">{{current_language_set?.ancData?.ancImmune?.govtFacility}}</md-radio-button>
+        <md-radio-button color="primary" class="radio-btn" value="Pvt Facility"> {{current_language_set?.ancData?.ancImmune?.pvtFacility}}</md-radio-button>
+      </md-radio-group>
+    </div>
+  </div>
+</div>

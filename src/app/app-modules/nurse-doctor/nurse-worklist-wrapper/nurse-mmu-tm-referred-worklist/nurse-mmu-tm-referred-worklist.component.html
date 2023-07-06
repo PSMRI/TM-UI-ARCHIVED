@@ -1,0 +1,172 @@
+
+<div class="container-fluid">
+  <div class="row m-t-10">
+    <div class="col-xs-8 col-sm-6 col-md-4">
+      <div class="sw">
+        <input
+          type="search"
+          class="search"
+          autocomplete="off"
+          placeholder="{{ currentLanguageSet?.common?.inTableSearch }}"
+          name="filterTerm"
+          [(ngModel)]="filterTerm"
+          (keyup)="filterBeneficiaryList(filterTerm)"
+        />
+        <button class="go" (click)="filterBeneficiaryList(filterTerm)">
+          <span class="material-icons">search</span>
+        </button>
+      </div>
+    </div>
+    <div class="col-xs-4 col-sm-6 col-md-8">
+      <button
+        md-button
+        id="caseSheetButton"
+        style="display:none;"
+        [disabled]="true"
+        class="btn btn-link pull-right"
+      >
+      {{currentLanguageSet?.bendetails?.emergencyCaseSheet}}
+      </button>
+      <button
+        id="refresh"
+        md-raised-button
+        class="pull-right btn-green"
+        color="primary"
+        (click)="getNurseWorklist()"
+      >
+        {{ currentLanguageSet?.common?.refresh }}
+      </button>
+    </div>
+  </div>
+  <div class="row m-t-10 m-b-40">
+    <div class="col-sm-12">
+      <md-card>
+        <section class="table-responsive">
+          <table class="table table-striped " aria-describedby="mmurefferedWorklist">
+            <thead>
+              <tr>
+                <th id="sno">{{currentLanguageSet?.coreComponents?.sno}}</th>
+                <th id="beneficiaryID">{{ currentLanguageSet?.bendetails?.beneficiaryID }}</th>
+                <th id="beneficiaryName">{{ currentLanguageSet?.bendetails?.beneficiaryName }}</th>
+                <th id="gender">{{ currentLanguageSet?.bendetails?.gender }}</th>
+                <th id="age">{{ currentLanguageSet?.bendetails?.age }}</th>
+                <th id="status">{{ currentLanguageSet?.bendetails?.status }}</th>
+                <th id="fatherName">{{ currentLanguageSet?.bendetails?.fatherName }}</th>
+                <th id="district">{{ currentLanguageSet?.bendetails?.district }}</th>
+                <th id="phoneNo">{{ currentLanguageSet?.bendetails?.phoneNo }}</th>
+                <th id="image">{{ currentLanguageSet?.bendetails?.image }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <ng-template
+                [ngIf]="
+                  filteredBeneficiaryList && filteredBeneficiaryList.length == 0
+                "
+              >
+                  <tr *ngFor="let row of blankTable">
+                    <td colspan="10" *ngIf="row == 3">
+                      <h4 class="norecord">{{currentLanguageSet?.common?.noRecordFound}}</h4>
+                    </td>
+                  <td *ngIf="row != 3">&nbsp;</td>
+                  <td *ngIf="row != 3">&nbsp;</td>
+                  <td *ngIf="row != 3">&nbsp;</td>
+                  <td *ngIf="row != 3">&nbsp;</td>
+                  <td *ngIf="row != 3">&nbsp;</td>
+                  <td *ngIf="row != 3">&nbsp;</td>
+                  <td *ngIf="row != 3">&nbsp;</td>
+                  <td *ngIf="row != 3">&nbsp;</td>
+                  <td *ngIf="row != 3">&nbsp;</td>
+                  <td *ngIf="row != 3">&nbsp;</td>
+                  <td *ngIf="row != 3">&nbsp;</td>
+                </tr>
+              </ng-template>
+              <tr *ngFor="let beneficiary of pagedList" class="table-hover">
+                <td
+                  [ngClass]="{
+                    visitStatus: true,
+                    'first-visit': beneficiary.benVisitNo == 1,
+                    revisit: beneficiary.benVisitNo != 1
+                  }"
+                >
+                  {{ filteredBeneficiaryList.indexOf(beneficiary) + 1 }}
+                </td>
+                <td (click)="loadNursePatientDetails(beneficiary)">
+                  {{ beneficiary?.beneficiaryID }}
+                </td>
+                <td (click)="loadNursePatientDetails(beneficiary)">
+                  {{ beneficiary?.benName | titlecase }}
+                </td>
+                <td (click)="loadNursePatientDetails(beneficiary)">
+                  {{ beneficiary.genderName | titlecase }}
+                </td>
+                <td (click)="loadNursePatientDetails(beneficiary)">
+                  {{ beneficiary.age }}
+                </td>
+                <td (click)="loadNursePatientDetails(beneficiary)">
+                  {{ beneficiary.benVisitNo == 1 ? "First visit" : "Revisit" }}
+                </td>
+                <td (click)="loadNursePatientDetails(beneficiary)">
+                  {{ beneficiary.fatherName | titlecase }}
+                </td>
+                <td (click)="loadNursePatientDetails(beneficiary)">
+                  {{ beneficiary.districtName | titlecase }} /
+                  {{ beneficiary.villageName | titlecase }}
+                </td>
+                <td (click)="loadNursePatientDetails(beneficiary)">
+                  {{ beneficiary.preferredPhoneNum }}
+                </td>
+                <td
+                  (click)="patientImageView(beneficiary.beneficiaryRegID)"
+                  tooltip="{{currentLanguageSet?.tc?.image}}"
+                >
+                  <img alt="" src="assets/images/Avatar-Profile_30X30.png " />
+                </td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="2">
+                  <div
+                    class="totalCount"
+                    *ngIf="filteredBeneficiaryList.length > 0"
+                  >
+                    {{ currentLanguageSet?.common?.totalCount }} :
+                    {{ filteredBeneficiaryList.length }}
+                  </div>
+                </td>
+                <td colspan="3">
+                  <ul
+                    class="description"
+                    *ngIf="filteredBeneficiaryList.length > 0"
+                  >
+                    <li>
+                      <div class="revisit-marker"></div>
+                      <p>{{ currentLanguageSet?.common?.TCPending }}</p>
+                    </li>
+                  </ul>
+                </td>
+                <td colspan="5">
+                  <pagination
+                    class="pull-right"
+                    [boundaryLinks]="true"
+                    (pageChanged)="pageChanged($event)"
+                    *ngIf="filteredBeneficiaryList.length"
+                    [totalItems]="filteredBeneficiaryList.length"
+                    [itemsPerPage]="rowsPerPage"
+                    [maxSize]="rowsPerPage"
+                    [rotate]="rotate"
+                    [(ngModel)]="currentPage"
+                    previousText="&lsaquo;"
+                    nextText="&rsaquo;"
+                    firstText="&laquo;"
+                    lastText="&raquo;"
+                  ></pagination>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </section>
+      </md-card>
+    </div>
+  </div>
+</div>

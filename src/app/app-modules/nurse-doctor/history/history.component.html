@@ -1,0 +1,18 @@
+<div class="row m-t-10">
+  <div class="col-xs-12">
+    <nurse-cancer-history
+      *ngIf="showCancer"
+      [mode]="mode"
+      [pregnancyStatus]="pregnancyStatus"
+      [patientHistoryForm]="patientHistoryForm"
+    ></nurse-cancer-history>
+    <nurse-general-opd-history
+      *ngIf="showGeneralOPD"
+      [mode]="mode"
+      [visitCategory]="visitCategory"
+      [primeGravidaStatus]="primeGravidaStatus"
+      [pregnancyStatus]="pregnancyStatus"
+      [patientHistoryForm]="patientHistoryForm"
+    ></nurse-general-opd-history>
+  </div>
+</div>

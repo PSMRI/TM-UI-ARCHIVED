@@ -1,0 +1,23 @@
+.scrolling-content {
+  max-height: 75vh;
+  overflow: auto;
+}
+
+.title .exit {
+  cursor: pointer;
+}
+
+.title {
+  margin: 0px 0px 10px;
+  padding: 5px 6px 5px;
+  color: black;
+  font-size: 18px;
+  line-height: 32px;
+  font-weight: 400;
+  background: rgba(37, 55, 70, 0.2) !important;
+  /* background: #0277bd; */
+}
+
+.title h4 {
+  display: inline-block;
+}

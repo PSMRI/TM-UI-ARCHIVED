@@ -1,0 +1,6 @@
+<div md-dialog-content>
+  <md-form-field class="textarea-full-width">
+    <textarea mdInput mdTextareaAutosize mdAutosizeMinRows="5" #message [maxlength]="data.length" placeholder="Type your data" [(ngModel)]="data.observations"></textarea>
+    <md-hint align="end">{{message.value.length}} / {{data.length}}</md-hint>
+  </md-form-field>
+</div>

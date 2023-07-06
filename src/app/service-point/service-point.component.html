@@ -1,0 +1,64 @@
+<app-header [showRoles]="false"></app-header>
+
+<div class="container" style="margin-top: 5%;">
+  <section>
+    <div class="col-md-3 col-sm-3 col-3"></div>
+    <div class="col-md-6 col-sm-6 col-6">
+      <md-card class="m-b-100">
+        <md-card-header>
+          <img src="assets/images/Swasthya.png" alt="Logo" style="margin: auto auto;">
+        </md-card-header>
+        <md-card-content>
+          <form #f='ngForm'>        
+            <div class="form-group m-t-50">
+              <md-select required [style.width]="'100%'" placeholder="{{current_language_set?.spoke_selection?.spoke}}"
+                name="van" [(ngModel)]="vanID" van="ngModel" (change)='getServiceLineDetails()'>
+                <md-option *ngFor="let van of vansList" [value]="van.vanID"> {{ van.vanNoAndType }}</md-option>
+              </md-select>
+              <md-select [style.width]=" '100%' " class="alignField"
+              placeholder="{{current_language_set?.ro?.locInfo?.state}}" [(ngModel)]="stateID" name="stateID" stateID="ngModel" [required]="true" (change)="fetchDistrictsOnStateSelection(stateID)">
+              <md-option *ngFor="let state of statesList" [value]="state.stateID" (click)="setStateName(state.stateName)">{{state.stateName }}
+
+              </md-option>
+
+            </md-select>
+                  <md-select [style.width]=" '100%' " class="alignField"
+
+                  placeholder="{{current_language_set?.ro?.locInfo?.district_Town_City}}" [(ngModel)]="districtID" name="districtID" districtID="ngModel"   [required]="true" (change)="fetchSubDistrictsOnDistrictSelection(districtID)">
+
+                  <md-option *ngFor="let district of districtList" [value]="district" >{{district.districtName }}
+
+                  </md-option>
+
+                 </md-select>
+                <md-select [style.width]=" '100%' " class="alignField"
+
+                placeholder={{current_language_set?.ro?.locInfo?.taluk}} [(ngModel)]="blockID" name="blockID" blockID="ngModel" [required]="true" (change)="onSubDistrictChange(blockID)">
+
+                <md-option *ngFor="let taluk of subDistrictList" [value]="taluk" >{{taluk.blockName }}
+
+                </md-option>
+
+              </md-select>
+              <md-select [style.width]=" '100%' " class="alignField"
+
+                placeholder="{{current_language_set?.ro?.locInfo?.street}}" [(ngModel)]="districtBranchID" name="districtBranchID" districtBranchID="ngModel" [required]="true" >
+
+                <md-option *ngFor="let street of villageList" [value]="street" >{{street.villageName }}
+                </md-option>
+              </md-select>
+            </div>
+            <md-card-actions align="center">
+              <button md-raised-button color="primary" class="pull-right p-l-r-38 font-regular f-s-18"
+                [disabled]="!f.valid"
+                (click)="saveLocationDataToStorage()">{{current_language_set?.spoke_selection?.continue}}</button>
+            </md-card-actions>
+          </form>
+        </md-card-content>
+      </md-card>
+    </div>
+    <div class="col-md-3 col-sm-3 col-3"></div>
+  </section>
+</div>
+
+<app-footer></app-footer>

@@ -1,0 +1,73 @@
+.select-full-width {
+    width: 100%;
+}
+
+.input-full-width {
+    width: 100%;
+}
+
+h5 {
+    font-weight: bold;
+}
+
+.mat-expansion-panel-header {
+    background: rgba(37, 55, 70, 0.2);
+}
+
+.mat-form-field {
+    line-height: unset;
+}
+
+.box {
+    height: 60px;
+}
+
+.abnormal {
+    color: red
+}
+
+input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0;
+}
+
+md-expansion-panel {
+    margin: 0.5%;
+}
+
+.control-label {
+    font-weight: normal;
+}
+
+/* .md2-datepicker-arrow {} */
+
+ul {
+    list-style: none;
+    padding: 0px;
+}
+
+ul li {
+    display: inline-block;
+    padding: 0 8px;
+}
+
+ul li div i, ul li p {
+    display: inline-block;
+}
+
+ul li div i {
+    height: 15px;
+    width: 15px;
+}
+
+.marker {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.marker span {
+    margin-left: 5px;
+}

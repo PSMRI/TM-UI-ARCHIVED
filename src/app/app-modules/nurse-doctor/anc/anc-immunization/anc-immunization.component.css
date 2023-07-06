@@ -1,0 +1,11 @@
+.box {
+  height: 60px;
+}
+
+.input-full-width {
+  width: 100%;
+}
+
+.control-label {
+  font-weight: normal;
+}

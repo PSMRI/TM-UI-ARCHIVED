@@ -1,0 +1,51 @@
+<md-accordion [formGroup]='generalCaseRecordForm'>
+
+  <md-expansion-panel expanded="true">
+    <md-expansion-panel-header>
+      <h5>{{current_language_set?.Significantfindingsdetails?.previoussignificantfindings}}</h5>
+    </md-expansion-panel-header>
+    <app-previous-significiant-findings></app-previous-significiant-findings>
+  </md-expansion-panel>
+
+  <md-expansion-panel>
+    <md-expansion-panel-header>
+      <h5>{{current_language_set?.previousvisit?.Previousvisitdetails}}</h5>
+    </md-expansion-panel-header>
+    <app-previous-visit-details [currentVitals]="currentVitals"></app-previous-visit-details>
+  </md-expansion-panel>
+
+  <md-expansion-panel>
+    <md-expansion-panel-header>
+      <h5>{{current_language_set?.Find?.findings}}</h5>
+    </md-expansion-panel-header>
+    <app-findings [caseRecordMode]="caseRecordMode" [generalFindingsForm]="generalCaseRecordForm.controls.generalFindingsForm"></app-findings>
+  </md-expansion-panel>
+
+  <md-expansion-panel>
+    <md-expansion-panel-header>
+      <h5>{{current_language_set?.casesheet?.diagnosis}}</h5>
+    </md-expansion-panel-header>
+    <app-diagnosis [caseRecordMode]="caseRecordMode" [generalDiagnosisForm]="generalCaseRecordForm.controls.generalDiagnosisForm" [visitCategory]='visitCategory'></app-diagnosis>
+  </md-expansion-panel>
+
+  <md-expansion-panel>
+    <md-expansion-panel-header>
+      <h5>{{current_language_set?.nurseData?.investigationsDetails?.investigations}}</h5>
+    </md-expansion-panel-header>
+    <app-doctor-investigations [caseRecordMode]="caseRecordMode" [visitCategory]='visitCategory' [generalDoctorInvestigationForm]="generalCaseRecordForm.controls.generalDoctorInvestigationForm"></app-doctor-investigations>
+  </md-expansion-panel>
+
+  <md-expansion-panel>
+    <md-expansion-panel-header>
+      <h5>{{current_language_set?.casesheet?.prescribe}}</h5>
+    </md-expansion-panel-header>
+    <app-prescription [caseRecordMode]="caseRecordMode" [drugPrescriptionForm]="generalCaseRecordForm.controls.drugPrescriptionForm"></app-prescription>
+  </md-expansion-panel>
+
+  <md-expansion-panel>
+    <md-expansion-panel-header>
+      <h5>{{current_language_set?.common?.report}}</h5>
+    </md-expansion-panel-header>
+    <app-test-and-radiology></app-test-and-radiology>
+  </md-expansion-panel>
+</md-accordion>

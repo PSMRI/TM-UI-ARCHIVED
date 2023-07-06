@@ -1,0 +1,23 @@
+<div class="title">
+  <h4>{{currentLanguageSet?.coreComponents?.filesClickToDownload}}</h4>
+  <button md-icon-button mdDialogClose tooltip="{{currentLanguageSet?.common?.close}}" class="pull-right exit width-20px">
+    <md-icon>close</md-icon>
+  </button>
+</div>
+<div class="container-fluid">
+  <table class="table" aria-describedby="FilesDownload">
+    <tr *ngIf="fileIds[0] == null">
+      <td class="td-style">
+        <h4 style="text-align: center;">{{currentLanguageSet?.common?.noRecordsFound}}</h4>
+      </td>
+    </tr>
+    <ng-container *ngIf="fileIds[0] != null">
+    <tr *ngFor="let fileID of fileIds; let i = index" class="list-style">
+      <td class="td-style"></td>
+      <td class="td-style"></td>
+      <td style="text-align: right;" class="td-style" >{{i+1}}.</td>
+      <td (click)="openFileContent(fileID)" style="text-align: left" class="td-style">File_{{fileID}}</td>
+    </tr>
+    </ng-container>
+  </table>
+</div>

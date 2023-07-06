@@ -1,0 +1,31 @@
+.select-full-width {
+    width: 100%;
+}
+
+.radio-btn {
+    margin-right: 10px;
+}
+
+.input-full-width {
+    width: 100%;
+}
+
+h5 {
+    font-weight: bold;
+}
+
+.mat-expansion-panel-header {
+    background: rgba(37, 55, 70, 0.2);
+}
+
+.control-label {
+    font-weight: normal;
+}
+
+.mat-form-field {
+    line-height: unset;
+}
+
+.box {
+    height: 60px;
+}

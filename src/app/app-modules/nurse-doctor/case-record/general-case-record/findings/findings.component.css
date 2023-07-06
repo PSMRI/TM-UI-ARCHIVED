@@ -1,0 +1,13 @@
+.input-full-width {
+    width: 100%;
+}
+
+.autocomplete{
+    padding: 0px 16px;
+    width: 100%;
+    border-bottom: 1px solid lightgray;
+}
+
+.box{
+    height: 60px;
+}

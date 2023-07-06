@@ -1,0 +1,11 @@
+table tfoot:last-child td {
+  border: none;
+}
+
+.totalCount {
+  line-height: 52px;
+}
+
+.norecord {
+  text-align: center;
+}

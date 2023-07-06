@@ -1,0 +1,11 @@
+#fingerPrint {
+    padding: 0px;
+}
+
+.mat-form-field {
+    line-height: unset;
+}
+
+.box {
+    height: 60px;
+}

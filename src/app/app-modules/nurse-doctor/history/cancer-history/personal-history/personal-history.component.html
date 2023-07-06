@@ -1,0 +1,496 @@
+<!--{{cancerPatientPerosnalHistoryForm.value | json}} -->
+<div [formGroup]="cancerPatientPerosnalHistoryForm">
+  <div class="row m-t-10">
+    <div class="col-xs-12 text-right">
+      <label class="font-history-label">{{
+        currentLanguageSet?.historyData?.personalhistory?.personaldiethistory
+      }}</label>
+      <button
+        md-icon-button
+        mdTooltip="{{currentLanguageSet?.alerts?.previousHistoryDetailsAlert?.previousDiet}}"
+        id="previousCancerPersonalDietHistory"
+        color="primary"
+        (click)="getPreviousCancerPersonalDietHistory()"
+      >
+        <md-icon class="md-18">history</md-icon>
+      </button>
+      <label class="font-history-label">{{
+        currentLanguageSet?.historyData?.personalhabit?.personalhabithistroy
+      }}</label>
+      <button
+        md-icon-button
+        mdTooltip="{{currentLanguageSet?.alerts?.previousHistoryDetailsAlert?.previousHabit}}"
+        color="primary"
+        id="PreviousCancerPersonalHabitHistory"
+        (click)="getPreviousCancerPersonalHabitHistory()"
+      >
+        <md-icon class="md-18">history</md-icon>
+      </button>
+    </div>
+  </div>
+
+  <div class="row m-t-10">
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box m-t-3">
+      <md-select
+        class="input-full-width"
+        placeholder="{{
+          currentLanguageSet?.historyData?.cancerScreeningHistory?.personal?.tobaccoUse
+        }}"
+        name="tobaccoUse"
+        formControlName="tobaccoUse"
+        (change)="checkTobaccoUseStatus(tobaccoUse)"
+      >
+        <md-option
+          *ngFor="let tobaccousage of templateTobaccoUseStatus"
+          [value]="tobaccousage.habitValue"
+        >
+          {{ tobaccousage.habitValue }}
+        </md-option>
+      </md-select>
+    </div>
+
+    <div
+      class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box m-t-3"
+      *ngIf="tobaccoUse && tobaccoUse != 'Never Used'"
+    >
+      <md-form-field class=" input-full-width ">
+        <input
+          autocomplete="off"
+          mdInput
+          defaultNull
+          allowText="number"
+          placeholder="{{
+            currentLanguageSet?.historyData?.cancerScreeningHistory?.personal?.startAge
+          }}"
+          maxlength="3"
+          name="startAge_year"
+          formControlName="startAge_year"
+          (change)="checkStartAge($event)"
+        />
+      </md-form-field>
+    </div>
+
+    <div
+      class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box m-t-3"
+      *ngIf="
+        tobaccoUse &&
+        tobaccoUse != 'Never Used' &&
+        tobaccoUse != 'Currently Using'
+      "
+    >
+      <md-form-field class=" input-full-width ">
+        <input
+          autocomplete="off"
+          mdInput
+          defaultNull
+          allowText="number"
+          placeholder="{{
+            currentLanguageSet?.historyData?.cancerScreeningHistory?.personal?.stopAge
+          }}"
+          maxlength="3"
+          name="endAge_year"
+          formControlName="endAge_year"
+          (change)="checkStopAge($event)"
+        />
+      </md-form-field>
+    </div>
+
+    <div
+      class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box m-t-3"
+      *ngIf="tobaccoUse && tobaccoUse != 'Never Used'"
+    >
+      <md-select
+        class="input-full-width"
+        multiple
+        placeholder="{{
+          currentLanguageSet?.historyData?.cancerScreeningHistory?.personal?.typeofTobaccoProductsused
+        }} "
+        name="typeOfTobaccoProductList"
+        formControlName="typeOfTobaccoProductList"
+        (change)="tobaccoSelected()"
+      >
+        <md-option
+          *ngFor="let typeOfTobaccoProducts of templateTobaccoProductUsed"
+          [value]="typeOfTobaccoProducts.habitValue"
+        >
+          {{ typeOfTobaccoProducts.habitValue }}
+        </md-option>
+      </md-select>
+    </div>
+
+    <div
+      class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box m-t-3"
+      *ngIf="doSmokeCigarettes || doSmokeBeedi"
+    >
+      <md-form-field class=" input-full-width ">
+        <input
+          autocomplete="off"
+          mdInput
+          defaultNull
+          allowText="number"
+          placeholder="{{
+            currentLanguageSet?.historyData?.cancerScreeningHistory?.personal?.cigarettes
+          }}"
+          maxlength="2"
+          name="quantityPerDay"
+          formControlName="quantityPerDay"
+        />
+      </md-form-field>
+    </div>
+
+    <div
+      class="col-xs-12 col-sm-6 col-md-3 col-lg-4 box m-t-3"
+      *ngIf="doSmokeCigarettes"
+    >
+      <label class="control-label" for="drug">{{
+        currentLanguageSet?.historyData?.cancerScreeningHistory?.personal?.cigarette
+      }}</label>
+      <div class="clearfix"></div>
+      <md-radio-group
+        name="isFilteredCigaerette"
+        formControlName="isFilteredCigaerette"
+      >
+        <md-radio-button color="primary" class="radio-button" [value]="true"
+          >{{
+            currentLanguageSet?.historyData?.cancerScreeningHistory?.personal?.filtered
+          }}
+        </md-radio-button>
+        <md-radio-button color="primary" class="radio-button" [value]="false"
+          >{{
+            currentLanguageSet?.historyData?.cancerScreeningHistory?.personal?.nonFiltered
+          }}
+        </md-radio-button>
+      </md-radio-group>
+    </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box m-t-3">
+      <label class="control-label" for="drug"
+        >{{
+          currentLanguageSet?.historyData?.cancerScreeningHistory?.personal?.exposuretoSecondHandsmoke
+        }}</label
+      >
+      <div class="clearfix"></div>
+      <md-radio-group
+        name="isCigaretteExposure"
+        formControlName="isCigaretteExposure"
+      >
+        <md-radio-button color="primary" class="radio-button" [value]="true"
+          >
+          {{currentLanguageSet?.common?.yes}}</md-radio-button
+        >
+        <md-radio-button color="primary" class="radio-button" [value]="false"
+          >
+          {{currentLanguageSet?.common?.no}}</md-radio-button
+        >
+      </md-radio-group>
+    </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box m-t-3">
+      <label class="control-label" for="drug">
+        {{
+          currentLanguageSet?.historyData?.cancerScreeningHistory?.personal?.habitofBetelnutchewing
+        }}
+      </label>
+      <div class="clearfix"></div>
+      <md-radio-group
+        name="isBetelNutChewing"
+        formControlName="isBetelNutChewing"
+        (change)="checkBetelQuid()"
+      >
+        <md-radio-button color="primary" class="radio-button" [value]="true"
+          >
+          {{currentLanguageSet?.common?.yes}}</md-radio-button
+        >
+        <md-radio-button color="primary" class="radio-button" [value]="false"
+          >
+          {{currentLanguageSet?.common?.no}}</md-radio-button
+        >
+      </md-radio-group>
+    </div>
+
+    <div
+      class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box m-t-3"
+      *ngIf="isBetelNutChewing"
+    >
+      <md-form-field class=" input-full-width ">
+        <input
+          autocomplete="off"
+          mdInput
+          defaultNull
+          [min]="1"
+          allowText="number"
+          placeholder="{{
+            currentLanguageSet?.historyData?.cancerScreeningHistory?.personal?.durationofbetelquidinmouth
+          }}"
+          maxlength="2"
+          name="durationOfBetelQuid"
+          formControlName="durationOfBetelQuid"
+          (keypress)="minimumvaluenonZeroBetelQuid($event)"
+          (change)="minimumvaluenonZeroBetelQuid($event)"
+          (focus)="minimumvaluenonZeroBetelQuid($event)"
+        />
+      </md-form-field>
+    </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box m-t-3">
+      <md-select
+        class="input-full-width"
+        placeholder="{{
+          currentLanguageSet?.historyData?.cancerScreeningHistory?.personal?.alcoholuse
+        }}"
+        name="alcoholUse"
+        formControlName="alcoholUse"
+        (change)="checkUsageOfAlcohol()"
+      >
+        <md-option
+          *ngFor="let alcoholUsage of templateAlcoholUseStatus"
+          [value]="alcoholUsage.habitValue"
+        >
+          {{ alcoholUsage.habitValue }}
+        </md-option>
+      </md-select>
+    </div>
+
+    <div
+      class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box m-t-3"
+      *ngIf="alcoholUse && alcoholUse != 'Never Used'"
+    >
+      <label class="control-label" for="drug"
+        >{{
+          currentLanguageSet?.historyData?.cancerScreeningHistory?.personal?.alcoholconsumed
+        }}</label
+      >
+      <div class="clearfix"></div>
+      <md-radio-group
+        name="ssAlcoholUsed"
+        formControlName="ssAlcoholUsed"
+        (change)="checkLastAlcoholUsage()"
+      >
+        <md-radio-button color="primary" class="radio-button" [value]="true"
+          >
+          {{currentLanguageSet?.common?.yes}}</md-radio-button
+        >
+        <md-radio-button color="primary" class="radio-button" [value]="false"
+          >
+          {{currentLanguageSet?.common?.no}}</md-radio-button
+        >
+      </md-radio-group>
+    </div>
+
+    <div
+      class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box m-t-3"
+      *ngIf="alcoholUse && alcoholUse != 'Never Used' && ssAlcoholUsed"
+    >
+      <md-select
+        class="input-full-width "
+        placeholder="{{
+          currentLanguageSet?.historyData?.cancerScreeningHistory?.personal?.frequency
+        }}"
+        name="frequencyOfAlcoholUsed"
+        formControlName="frequencyOfAlcoholUsed"
+      >
+        <md-option
+          *ngFor="let frequencyOfAlcoholIntake of templateFrequecyOfAlcohol"
+          [value]="frequencyOfAlcoholIntake.habitValue"
+        >
+          {{ frequencyOfAlcoholIntake.habitValue }}
+        </md-option>
+      </md-select>
+    </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box m-t-3 ">
+      <md-select
+        class="input-full-width "
+        placeholder="{{
+          currentLanguageSet?.historyData?.cancerScreeningHistory?.personal?.dietType
+        }}"
+        name="dietType"
+        formControlName="dietType"
+      >
+        <md-option
+          *ngFor="let diet of templateDietTypes"
+          [value]="diet.habitValue"
+        >
+          {{ diet.habitValue }}
+        </md-option>
+      </md-select>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box m-t-3 ">
+      <md-form-field class=" input-full-width ">
+        <input
+          autocomplete="off"
+          mdInput
+          defaultNull
+          allowText="number "
+          placeholder="{{
+            currentLanguageSet?.historyData?.cancerScreeningHistory?.personal?.weeklyintakeofOutsidemeal
+          }} "
+          maxlength="2 "
+          name="intakeOfOutsidePreparedMeal"
+          formControlName="intakeOfOutsidePreparedMeal"
+        />
+      </md-form-field>
+    </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box m-t-3 ">
+      <md-form-field class=" input-full-width ">
+        <input
+          autocomplete="off"
+          mdInput
+          defaultNull
+          allowText="number "
+          (keypress)="preventFruitConsumption($event)"
+          (change)="checkFruitConsumption()"
+          placeholder="{{
+            currentLanguageSet?.historyData?.cancerScreeningHistory?.personal?.fruitconsumption
+          }} "
+          maxlength="1"
+          name="fruitConsumptionDays"
+          formControlName="fruitConsumptionDays"
+        />
+      </md-form-field>
+    </div>
+
+    <div
+      class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box m-t-3 "
+      *ngIf="fruitConsumptionDays && fruitConsumptionDays != '0'"
+    >
+      <md-form-field class=" input-full-width ">
+        <input
+          autocomplete="off"
+          mdInput
+          defaultNull
+          allowText="number "
+          (change)="fruitConsumptionPerDayCheck($event)"
+          placeholder="{{
+            currentLanguageSet?.historyData?.cancerScreeningHistory?.personal?.quantityconsumed
+          }}"
+          maxlength="2"
+          name="fruitQuantityPerDay"
+          formControlName="fruitQuantityPerDay"
+        />
+      </md-form-field>
+    </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box m-t-3 ">
+      <md-form-field class=" input-full-width ">
+        <input
+          autocomplete="off"
+          mdInput
+          defaultNull
+          allowText="number "
+          (keypress)="preventVegetableConsumption($event)"
+          (change)="checkVegetableConsumption()"
+          placeholder="{{
+            currentLanguageSet?.historyData?.cancerScreeningHistory?.personal?.vegetableconsumption
+          }}"
+          maxlength="1 "
+          name="vegetableConsumptionDays"
+          formControlName="vegetableConsumptionDays"
+        />
+      </md-form-field>
+    </div>
+
+    <div
+      class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box m-t-3 "
+      *ngIf="vegetableConsumptionDays && vegetableConsumptionDays != '0'"
+    >
+      <md-form-field class=" input-full-width ">
+        <input
+          autocomplete="off"
+          mdInput
+          defaultNull
+          allowText="number "
+          (change)="vegetableConsumptionPerDayCheck($event)"
+          placeholder="{{
+            currentLanguageSet?.historyData?.cancerScreeningHistory?.personal?.quantityconsumed
+          }} "
+          maxlength="2 "
+          name="vegetableQuantityPerDay"
+          formControlName="vegetableQuantityPerDay"
+        />
+      </md-form-field>
+    </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box m-t-3 ">
+      <md-select
+        class="input-full-width "
+        multiple
+        placeholder="{{
+          currentLanguageSet?.historyData?.cancerScreeningHistory?.personal?.typeofoilconsumed
+        }} "
+        (change)="oilSelected()"
+        name="typeOfOilConsumedList"
+        formControlName="typeOfOilConsumedList"
+      >
+        <md-option
+          *ngFor="let oil of templateOilConsumed"
+          [value]="oil.habitValue"
+        >
+          {{ oil.habitValue }}
+        </md-option>
+      </md-select>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box m-t-3">
+      <md-select
+        class="input-full-width"
+        placeholder="{{
+          currentLanguageSet?.historyData?.cancerScreeningHistory?.personal?.physicalActivityType
+        }} "
+        name="physicalActivityType"
+        formControlName="physicalActivityType"
+      >
+        <md-option
+          *ngFor="let activity of templatePhysicalActivityType"
+          [value]="activity.habitValue"
+        >
+          {{ activity.habitValue }}
+        </md-option>
+      </md-select>
+    </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box m-t-3">
+      <label class="control-label" for="drug"
+        >{{
+          currentLanguageSet?.historyData?.cancerScreeningHistory?.personal?.historyofexposuretoradiation
+        }}</label
+      >
+      <div class="clearfix"></div>
+      <md-radio-group
+        name="ssRadiationExposure"
+        formControlName="ssRadiationExposure"
+      >
+        <md-radio-button color="primary" class="radio-button" [value]="true"
+          >
+          {{currentLanguageSet?.common?.yes}}</md-radio-button
+        >
+        <md-radio-button color="primary" class="radio-button" [value]="false"
+          >
+          {{currentLanguageSet?.common?.no}}</md-radio-button
+        >
+      </md-radio-group>
+    </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box m-t-3">
+      <label class="control-label" for="drug"
+        >{{
+          currentLanguageSet?.historyData?.cancerScreeningHistory?.personal?.historyofthyroiddisorder
+        }}</label
+      >
+      <div class="clearfix"></div>
+      <md-radio-group
+        name="isThyroidDisorder"
+        formControlName="isThyroidDisorder"
+      >
+        <md-radio-button color="primary" class="radio-button" [value]="true"
+          >
+          {{currentLanguageSet?.common?.yes}}</md-radio-button
+        >
+        <md-radio-button color="primary" class="radio-button" [value]="false"
+          >
+          {{currentLanguageSet?.common?.no}}</md-radio-button
+        >
+      </md-radio-group>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,261 @@
+<div class="m-t-10" [formGroup]="generalDiagnosisForm">
+  <section>
+    <div class="row">
+      <div class="col-xs-12 col-sm-6">
+        <header class="mat-expansion-panel-header m-t-5">
+          <h4>{{ current_language_set?.casesheet?.provisionalDiag }}</h4>
+        </header>
+        <ng-container formArrayName="provisionalDiagnosisList">
+          <div
+            *ngFor="
+              let diagnosis of generalDiagnosisForm.controls[
+                'provisionalDiagnosisList'
+              ]['controls'];
+              let i = index;
+              let isLast = last
+            "
+            class="m-t-20"
+          >
+            <ng-container [formGroupName]="i">
+              <div class="col-xs-12 col-sm-9 box">
+                <md-form-field class="input-full-width">
+                  <input
+                    mdInput allowText="inputFieldValidator"
+                    appDiagnosisSearch
+                    [diagnosisListForm]="diagnosis"
+                    required
+                    name="viewProvisionalDiagnosisProvided"
+                    formControlName="viewProvisionalDiagnosisProvided"
+                    maxlength="100"
+                    minlength="3"
+                    [previousSelected]="
+                      generalDiagnosisForm?.value?.provisionalDiagnosisList
+                    "
+                    required
+                  />
+                  <md-icon
+                    class="search-btn"
+                    *ngIf="
+                      !diagnosis.controls['viewProvisionalDiagnosisProvided']
+                        .disabled
+                    "
+                    mdSuffix
+                    appDiagnosisSearch
+                    [diagnosisListForm]="diagnosis"
+                    [previousSelected]="
+                      generalDiagnosisForm?.value?.provisionalDiagnosisList
+                    "
+                    >search</md-icon
+                  >
+                </md-form-field>
+              </div>
+              <div class="col-xs-12 col-sm-3 box pull-right">
+                <button
+                  md-mini-fab
+                  type="button"
+                  color="warn"
+                  *ngIf=" (diagnosis.controls['viewProvisionalDiagnosisProvided']
+                  .disabled ||
+                (i != 0)) || (i==0 && generalDiagnosisForm.controls['provisionalDiagnosisList'].controls[i].controls.viewProvisionalDiagnosisProvided.value !== null && generalDiagnosisForm.controls['provisionalDiagnosisList'].controls[i].controls.viewProvisionalDiagnosisProvided.value !== '')"
+                
+                  (click)="removeProvisionalDiagnosis(i, diagnosis)"
+                >
+                  <md-icon>close</md-icon>
+                </button>
+                <button
+                  md-mini-fab
+                  type="button"
+                  class="pull-right"
+                  color="primary"
+                  *ngIf="isLast"
+                  [disabled]="checkProvisionalDiagnosisValidity(diagnosis)"
+                  (click)="addProvisionalDiagnosis()"
+                >
+                  <md-icon>add</md-icon>
+                </button>
+              </div>
+            </ng-container>
+          </div>
+        </ng-container>
+      </div>
+
+      <div class="col-xs-12 col-sm-6">
+        <header class="mat-expansion-panel-header m-t-5">
+          <h4>{{ current_language_set?.common?.confirmDiagnosis }}</h4>
+        </header>
+        <ng-container formArrayName="confirmatoryDiagnosisList">
+          <div
+            *ngFor="
+              let confirmatoryDiagnosis of generalDiagnosisForm.controls[
+                'confirmatoryDiagnosisList'
+              ]['controls'];
+              let i = index;
+              let isLast = last
+            "
+            class="m-t-20"
+          >
+            <ng-container [formGroupName]="i">
+              <div class="col-xs-12 col-sm-9 box">
+                <md-form-field class="input-full-width">
+                  <input
+                    mdInput
+                    appConfirmatoryDiagnosis
+                    [diagnosisListForm]="confirmatoryDiagnosis"
+                    required
+                    name="viewConfirmatoryDiagnosisProvided"
+                    formControlName="viewConfirmatoryDiagnosisProvided"
+                    maxlength="100"
+                    minlength="3"
+                    [previousSelected]="
+                      generalDiagnosisForm?.value?.confirmatoryDiagnosisList
+                    "
+                  />
+                  <md-icon
+                    class="search-btn"
+                    *ngIf="
+                      !confirmatoryDiagnosis.controls[
+                        'viewConfirmatoryDiagnosisProvided'
+                      ].disabled
+                    "
+                    mdSuffix
+                    appConfirmatoryDiagnosis
+                    [diagnosisListForm]="confirmatoryDiagnosis"
+                    [previousSelected]="
+                      generalDiagnosisForm?.value?.confirmatoryDiagnosisList
+                    "
+                    >search</md-icon
+                  >
+                </md-form-field>
+              </div>
+              <div class="col-xs-12 col-sm-3 box pull-right">
+                <button
+                  md-mini-fab
+                  type="button"
+                  color="warn"
+                  *ngIf="
+                    i != 0 ||
+                    (i == 0 &&
+                      (confirmatoryDiagnosis.touched ||
+                        confirmatoryDiagnosis.controls[
+                          'viewConfirmatoryDiagnosisProvided'
+                        ].disabled))
+                  "
+                  (click)="
+                    removeConfirmatoryDiagnosis(i, confirmatoryDiagnosis)
+                  "
+                >
+                  <md-icon>close</md-icon>
+                </button>
+                <button
+                  md-mini-fab
+                  type="button"
+                  class="pull-right"
+                  color="primary"
+                  *ngIf="isLast"
+                  [disabled]="
+                    checkConfirmatoryDiagnosisValidity(confirmatoryDiagnosis)
+                  "
+                  (click)="addConfirmatoryDiagnosis()"
+                >
+                  <md-icon>add</md-icon>
+                </button>
+              </div>
+            </ng-container>
+          </div>
+        </ng-container>
+      </div>
+
+    </div>
+
+    <div class="row">
+      <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 ">
+        <div class="form-group">
+          <label class="control-label" for="deathDuringPNCCaseRecord">{{
+            current_language_set?.casesheet?.matDeath
+          }}</label>
+          <div class="clearfix"></div>
+          <md-radio-group
+            name="isMaternalDeath"
+            id-="isMaternalDeath"
+            formControlName="isMaternalDeath"
+            (change)="checkWithDeathDetails()"
+          >
+            <md-radio-button color="primary" [value]="true">{{
+              current_language_set?.common?.yes
+            }}</md-radio-button>
+            <md-radio-button color="primary" [value]="false">{{
+              current_language_set?.common?.no
+            }}</md-radio-button>
+          </md-radio-group>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+        <header class="mat-expansion-panel-header">
+          <h4>{{ current_language_set?.DiagnosisDetails?.specialistdignosis }}</h4>
+        </header>
+        <md-form-field class="input-full-width">
+          <textarea
+            [readonly]="!specialist"
+            mdInput allowText="textAreaValidator"
+            defaultNull
+            mdTextareaAutosize
+            maxlength="300"
+            name="specialistAdvice"
+            formControlName="specialistDiagnosis"
+            readonly
+            
+          >
+          </textarea>
+        </md-form-field>
+      </div>
+  
+    </div>
+
+    <div class="row" *ngIf="isMaternalDeath">
+      <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+        <md-form-field class="input-full-width">
+          <input
+            autocomplete="off"
+            mdInput
+            defaultNull
+            allowText="alphaspace"
+            name="placeOfDeath"
+            id="placeOfDeath"
+            formControlName="placeOfDeath"
+            maxlength="50"
+            placeholder="{{ current_language_set?.casesheet?.placeOfDeath }}"
+          />
+        </md-form-field>
+      </div>
+
+      <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+        <md-form-field class="input-full-width">
+          <input
+            autocomplete="off"
+            mdInput
+            defaultNull
+            allowText="alphaspace"
+            name="causeOfDeath"
+            id="causeOfDeath"
+            formControlName="causeOfDeath"
+            maxlength="50"
+            placeholder="{{ current_language_set?.casesheet?.causeOfDeath }}"
+          />
+        </md-form-field>
+      </div>
+
+      <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+        <md2-datepicker
+          [openOnFocus]="true"
+          name="dateOfDeath"
+          id="dateOfDeath"
+          formControlName="dateOfDeath"
+          placeholder="{{ current_language_set?.casesheet?.dateOfDeath }}"
+          [max]="today"
+          [min]="minimumDeathDate"
+          ng-readonly="true"
+        ></md2-datepicker>
+      </div>
+    </div>
+  </section>
+</div>

@@ -1,0 +1,19 @@
+.mat-expansion-panel-header{
+    background: rgba(37,55,70,0.2);
+}
+
+.mat-form-field {
+    line-height: unset;
+}
+
+.input-full-width {
+    width: 100%;
+}
+
+.box {
+    height: 60px;
+}
+
+.hbx{
+    margin-bottom: 1%;
+}

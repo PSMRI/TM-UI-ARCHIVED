@@ -1,0 +1,159 @@
+<!-- {{ comorbidityConcurrentConditionsForm.value | json }} -->
+<div class="row m-t-10" [formGroup]="comorbidityConcurrentConditionsForm">
+  <div class="col-xs-12" formArrayName="comorbidityConcurrentConditionsList">
+    <div class="row text-right">
+      <label class="font-history-label m-t-10">{{
+        currentLanguageSet?.historyData?.ancHistory?.combordityANC_OPD_NCD_PNC
+          ?.PreviousDetails
+      }}</label>
+      <button
+        type="button"
+        md-icon-button
+        mdTooltip="{{currentLanguageSet?.DurationData?.previousDetails}}"
+        id="previousANCComorbidityHistory"
+        class="pull-right"
+        color="primary"
+        (click)="getPreviousComorbidityHistory()"
+      >
+        <md-icon class="md-18">
+          history</md-icon
+        >
+      </button>
+    </div>
+    <div
+      class="row multi-row-select"
+      *ngFor="
+        let comorbidityConcurrentConditions of comorbidityConcurrentConditionsForm
+          .controls['comorbidityConcurrentConditionsList']['controls'];
+        let i = index;
+        let isLast = last;
+        let isOdd = odd
+      "
+      [ngClass]="{ odd: !isOdd }"
+    >
+      <ng-container [formGroupName]="i">
+        <div class="col-xs-12 col-sm-6 col-md-3 box">
+          <md-select
+            class="select-full-width"
+            placeholder="{{
+              currentLanguageSet?.historyData?.ancHistory
+                ?.combordityANC_OPD_NCD_PNC?.comorbidConditions
+            }}"
+            formControlName="comorbidConditions"
+            name="comorbidConditions"
+            (change)="
+              filterComorbidityConcurrentConditionsType(
+                $event.value,
+                i,
+                comorbidityConcurrentConditions
+              )
+            "
+          required="{{ComorbidStatus}}">
+            <md-option
+              *ngFor="let comorbidCondition of comorbiditySelectList[i]"
+              [value]="comorbidCondition"
+              >{{ comorbidCondition.comorbidCondition }}</md-option
+            >
+          </md-select>
+        </div>
+
+        <div
+          class="col-xs-12 col-sm-6 col-md-3 box"
+          *ngIf="
+            comorbidityConcurrentConditions.value.comorbidConditions
+              ?.comorbidCondition == 'Other'
+          "
+        >
+          <md-form-field class="input-full-width">
+            <input
+              autocomplete="off"
+              mdInput
+              defaultNull
+              placeholder="{{
+                currentLanguageSet?.historyData?.opd_NCD_PNCHistory?.obstetric
+                  ?.others
+              }}"
+              maxlength="50"
+              allowText="alphaspace"
+              name="otherComorbidCondition"
+              formControlName="otherComorbidCondition"
+            />
+          </md-form-field>
+        </div>
+
+        <div class="col-xs-12 col-sm-6 col-md-2 box">
+          <md-form-field class="input-full-width">
+            <input
+              autocomplete="off"
+              mdInput
+              defaultNull
+              placeholder="{{ currentLanguageSet?.DurationData?.duration }}"
+              maxlength="2"
+              allowText="number"
+              name="timePeriodAgo"
+              formControlName="timePeriodAgo"
+              [disableFormControl]="
+                !comorbidityConcurrentConditions.value.comorbidConditions ||
+                comorbidityConcurrentConditions.value.comorbidConditions
+                  ?.comorbidCondition == 'None'
+              "
+              (change)="validateDuration(comorbidityConcurrentConditions)"
+             >
+          </md-form-field>
+        </div>
+
+        <div class="col-xs-12 col-sm-6 col-md-2 box">
+          <md-select
+            class="select-full-width"
+            placeholder="{{ currentLanguageSet?.DurationData?.durationUnit }}"
+            name="timePeriodUnit"
+            formControlName="timePeriodUnit"
+            [disableFormControl]="
+              !comorbidityConcurrentConditions.value.timePeriodAgo ||
+              comorbidityConcurrentConditions.value.comorbidConditions
+                ?.comorbidCondition == 'None'
+            "
+            (change)="validateDuration(comorbidityConcurrentConditions)"
+           >
+            <md-option value="Days">Day(s)</md-option>
+            <md-option value="Weeks">Week(s)</md-option>
+            <md-option value="Months">Month(s)</md-option>
+            <md-option value="Years">Year(s)</md-option>
+          </md-select>
+        </div>
+        <div class="col-sm-2 col-md-2 box action-btn-container pull-right">
+          <button
+            md-mini-fab
+            color="warn"
+            id="removeComorbidityConcurrentConditions"
+            *ngIf="
+              i != 0 || (i == 0 && comorbidityConcurrentConditions.touched)
+            "
+            (click)="
+              removeComorbidityConcurrentConditions(
+                i,
+                comorbidityConcurrentConditions
+              )
+            "
+          >
+            <md-icon class="md-18">
+              close</md-icon
+            >
+          </button>
+          <button
+            md-mini-fab
+            color="primary"
+            *ngIf="isLast"
+            [disabled]="checkValidity(comorbidityConcurrentConditions)"
+            id="addComorbidityConcurrentConditions"
+            (click)="addComorbidityConcurrentConditions()"
+          >
+            <md-icon class="md-18">
+              add</md-icon
+            >
+          </button>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>

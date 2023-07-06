@@ -1,0 +1,371 @@
+<div class="title" color="primary">
+    <h4>{{currentLanguageSet?.benPreviousVisitDetails}}
+    </h4>
+    <button class="pull-right exit" [mdDialogClose]="false" md-icon-button>
+      <md-icon class="md-24">close</md-icon>
+    </button>
+  </div>
+  <div class="container-fluid">
+    <md-dialog-content>
+      <div class="">
+        <table class="table table-bordered table-responsive" aria-describedby="visitDetailsForm"
+      >
+        <thead>
+          <tr>
+            <th style="width: 5%" id="visitno">
+              {{ currentLanguageSet?.previousvisit?.visitnommu }}
+            </th>
+            <th style="width: 5%" id="date">
+              {{ currentLanguageSet?.casesheet?.date }}
+            </th>
+            <th style="width: 5%" id="visitcategory">
+              {{ currentLanguageSet?.previousvisit?.visitcategorymmu }}
+            </th>
+            <th style="width: 5%" id="visitcode">
+              {{ currentLanguageSet?.previousvisit?.visitcodemmu }}
+            </th>
+            <th style="width: 15%" id="vitalDetails">
+              Vital Details
+            </th>
+            <th style="width: 15%" id="diagnosis">
+              Diagnosis
+            </th>
+            <th style="width: 30%" id="investigations">
+              Investigations
+            </th>
+            <th style="width: 30%" id="presciption" >
+              prescription
+            </th>
+            
+          </tr>
+        </thead>
+        <tbody *ngIf="previousVisitData?.length == 0">
+          <tr>
+            <td colspan="8">
+              <h4 class="norecord" style="text-align: center;">
+                {{ currentLanguageSet?.common?.noVisitFound }}
+              </h4>
+            </td>
+          </tr>
+        </tbody>
+        <tbody *ngIf="previousVisitData?.length > 0">
+          <ng-container
+            *ngFor="
+              let visit of previousHistoryPagedList;
+              let i = index
+            "
+          >
+            <tr>
+              <td
+                style="
+                  width: 300px;
+                  max-width: 120px;
+                  word-break: normal;
+                  vertical-align: middle;
+                "
+              >
+                {{ visit?.benVisitNo }}
+              </td>
+              <td
+                style="
+                  width: 300px;
+                  max-width: 120px;
+                  word-break: normal;
+                  vertical-align: middle;
+                "
+              >
+                {{ visit?.benVisitDate | date: "dd/MM/yyyy" }}
+              </td>
+                <td
+                  style="
+                    width: 150px;
+                    word-break: normal;
+                    vertical-align: middle;
+                  "
+                >
+                  {{ visit?.VisitCategory }}
+                </td>
+                <td
+                  style="
+                    max-width: 150px;
+                    word-break: normal;
+                    vertical-align: middle;
+                  "
+                >
+                  {{ visit?.visitCode }}
+                </td>
+                <td
+                  style="
+                    width: 110px;
+                    word-break: normal;
+                    vertical-align: middle;
+                  "
+                >
+                <ng-container *ngIf="visit.benPreviousData">
+                  <tr>
+                    <ng-container *ngIf="visit.benPreviousData.nurseData">
+                      <td>
+                        <ng-container *ngIf="visit.benPreviousData.nurseData.vitals.benAnthropometryDetail">
+                          <tr>
+                            <th>
+                              Height :
+                            </th>
+                            <td>
+                              {{ visit.benPreviousData?.nurseData?.vitals?.benAnthropometryDetail?.height_cm || 'NA' }}
+                            </td>
+                          </tr>
+                          <tr>
+                            <th>
+                              Weight : 
+                            </th>
+                            <td>
+                              {{ visit.benPreviousData?.nurseData?.vitals?.benAnthropometryDetail?.weight_Kg || 'NA' }}
+                            </td>
+                          </tr>
+                          <tr>
+                            <th>
+                              BMI : 
+                            </th>
+                            <td>
+                              {{ visit.benPreviousData?.nurseData?.vitals?.benAnthropometryDetail?.bMI || 'NA' }}
+                            </td>
+                          </tr>
+                          <tr>
+                            <th>
+                              Temperature (F) : 
+                            </th>
+                            <td>
+                              {{ visit.benPreviousData?.nurseData?.vitals?.benAnthropometryDetail?.temperature || 'NA' }}
+                            </td>
+                          </tr>
+                          <tr>
+                            <th>
+                              Pulse Rate (bpm) : 
+                            </th>
+                            <td>
+                              {{ visit.benPreviousData?.nurseData?.vitals?.benAnthropometryDetail?.pulseRate || 'NA' }}
+                            </td>
+                          </tr>
+                        </ng-container>
+                      </td>
+                    </ng-container>
+                  </tr>
+                </ng-container>
+                </td>
+                <td
+                  style="
+                    width: 110px;
+                    word-break: normal;
+                    vertical-align: middle;
+                  "
+                > 
+                <ng-container *ngIf="visit.benPreviousData">
+                  <tr>
+                    <ng-container *ngIf="visit.benPreviousData.doctorData">
+                      <td>
+                        <ng-container *ngIf="visit.benPreviousData.doctorData.diagnosis">
+                          <tr>
+                            <th>
+                              Diagnosis Provided :
+                            </th>
+                            <td>
+                              {{ visit.benPreviousData?.doctorData?.diagnosis?.diagnosisProvided || 'NA' }}
+                            </td>
+                          </tr>
+                          <!-- <tr>
+                            <th>
+                              SCT code : 
+                            </th>
+                            <td>
+                              {{ visit.benPreviousData?.doctorData?.diagnosis?.diagnosisProvided_SCTCode || 'NA' }}
+                            </td>
+                          </tr> -->
+                          <tr>
+                            <th>
+                              Provisional Diagnosis List : 
+                            </th>
+                            <td>
+                              <ng-container *ngIf="visit.benPreviousData?.doctorData?.diagnosis?.provisionalDiagnosisList" >
+                                <ng-container *ngFor="let provisionalDiagnosis of visit.benPreviousData?.doctorData?.diagnosis?.provisionalDiagnosisList">
+                                  <ng-container *ngIf="provisionalDiagnosis.term !== '' "> 
+                                    {{ provisionalDiagnosis.term }}, 
+                                  </ng-container>
+                                </ng-container>
+                                <ng-container *ngIf="visit.benPreviousData?.doctorData?.diagnosis?.provisionalDiagnosisList.length == 0">
+                                  NA
+                                </ng-container>
+                              </ng-container>
+                            </td>
+                          </tr>
+                        </ng-container>
+                      </td>
+                    </ng-container>
+                  </tr>
+                </ng-container>
+                </td>
+                <td *ngIf="visit.benPreviousData"
+                style="
+                  width: 110px;
+                  word-break: normal;
+                  vertical-align: middle;
+                "
+              >
+              <!-- {{ visit.benPreviousData.doctorData.LabReport | json }} -->
+              <ng-container *ngIf="visit.benPreviousData.doctorData">
+                
+                <tr>
+                  <ng-container *ngIf="visit.benPreviousData.doctorData.LabReport">
+                    <td>
+                      <ng-container *ngFor="let investigation of visit.benPreviousData.doctorData.LabReport">
+                        <tr>
+                        <strong>{{ investigation?.procedureName }} : </strong>
+                          <!-- <th>
+                            
+                          </th> -->
+                          <ng-container *ngFor="let component of investigation.componentList">
+                                <li>Component Name : {{ component?.componentName || '-' }}, Test Result : {{ component?.testResultValue || '-' }} {{ component.testResultUnit }}</li>
+                              <!-- <td>
+                                {{ component?.componentName || '-' }}
+                              </td>
+                            </tr>
+                            <tr>
+                              <th>
+                                Test Result : 
+                              </th>
+                              <td>
+                                <ng-container>
+                                  {{ component?.testResultValue || '-' }} {{ component.testResultUnit }}
+                                </ng-container>
+                              </td> -->
+                            </ng-container>
+                        </tr>
+                      </ng-container>
+                    </td>
+                  </ng-container>
+                </tr>
+              </ng-container>
+              </td>
+              <td
+              style="
+                width: 110px;
+                word-break: normal;
+                vertical-align: middle;
+              "
+            >
+              <ng-container *ngIf="visit.benPreviousData">
+                <tr>
+                  <ng-container *ngIf="visit.benPreviousData.doctorData">
+                    <td>
+                      <ng-container *ngFor="let presciption of visit.benPreviousData?.doctorData?.prescription">
+                        <tr>
+                          <strong>{{ presciption.drugName }} {{ presciption.drugStrength }} : </strong>
+                          <!-- <th> -->
+                          <!-- </th> -->
+                          <!-- <td> -->
+                            <ng-container>
+                                <li>Dose : {{ presciption.dose || '-' }}</li> 
+                                <li>Frequency : {{ presciption.frequency || '-' }}</li> 
+                                <li>Duration : {{ presciption.duration || '-' }} - {{ presciption.unit || '-' }}</li>
+                              <!-- <td>
+                                
+                              </td> -->
+                            </ng-container>
+                            <!-- <tr>
+                              <th>
+                                Frequency : 
+                              </th>
+                              <td>
+                                <ng-container >
+                                  {{ presciption.frequency || '-' }}
+                                </ng-container>
+                              </td>
+                            </tr>
+                            <tr>
+                              <th>
+                                Duration : 
+                              </th>
+                              <td>
+                                <ng-container >
+                                  {{ presciption.duration || '-' }} - {{ presciption.unit || '-' }}
+                                </ng-container>
+                              </td>
+                            </tr> -->
+                          <!-- </td> -->
+                        </tr>
+                        <!-- <tr>
+                          <th>
+                            Drug Type : 
+                          </th>
+                          <td>
+                            {{ presciption.drugType || 'NA' }}
+                          </td>
+                        </tr>
+                        <tr>
+                          <th>
+                            Dose : 
+                          </th>
+                          <td>
+                            <ng-container>
+                              {{ presciption.dose || 'NA' }}
+                            </ng-container>
+                          </td>
+                        </tr>
+                        <tr>
+                          <th>
+                            Frequency : 
+                          </th>
+                          <td>
+                            <ng-container >
+                              {{ presciption.freq || 'NA' }}
+                            </ng-container>
+                          </td>
+                        </tr>
+                        <tr>
+                          <th>
+                            Duration : 
+                          </th>
+                          <td>
+                            <ng-container >
+                              {{ presciption.durValue || 'NA' }} - {{ presciption.durUnit || 'NA' }}
+                            </ng-container>
+                          </td>
+                        </tr> -->
+                      </ng-container>
+                    </td>
+                  </ng-container>
+                </tr>
+              </ng-container>
+            </td>
+            </tr>
+          </ng-container>
+        </tbody>
+        <tfoot>
+          <tr *ngIf="previousVisitData?.length > 0">
+            <td colspan="2">
+              <div class="totalCount">
+                {{ currentLanguageSet?.common?.totalCount }} :
+                {{ previousVisitData.length }}
+              </div>
+            </td>
+            <td colspan="6">
+              <pagination
+                class="pull-right"
+                [boundaryLinks]="true"
+                (pageChanged)="previousHistoryPageChanged($event)"
+                *ngIf="previousVisitData.length"
+                [totalItems]="previousVisitData.length"
+                [itemsPerPage]="previousHistoryRowsPerPage"
+                [maxSize]="previousHistoryActivePage"
+                [rotate]="rotate"
+                previousText="&lsaquo;"
+                nextText="&rsaquo;"
+                firstText="&laquo;"
+                lastText="&raquo;"
+              ></pagination>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+      </div>
+  </md-dialog-content>
+  </div>

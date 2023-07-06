@@ -1,0 +1,57 @@
+<div class="row title" [ngClass]="{ warn: errMsg != undefined,connected: deviceConnected != false }">
+  <h4 >{{current_language_set?.bluetooth}}</h4>
+  
+  <button class="pull-right exit" [mdDialogClose]="true" md-icon-button>
+    <md-icon class="md-24">close</md-icon>
+  </button>
+  <button tooltip="Disconnect device" md-button type="button"
+  (click)="disconnectBluetoothDevice()" style="border: 2px solid white; margin-left: 350px" >{{current_language_set?.disconnect}}</button>
+</div>
+<div class="container-fluid">
+  <md-dialog-content>
+    <div *ngIf="spinner" class="deviceConnect">
+      {{current_language_set?.pleaseWaitFetchingRequiredData}}  
+    </div>
+    <div *ngIf="!spinner">
+      <div *ngIf="apiAvailable">
+        <div *ngIf="deviceConnected" >
+          <div class="table-responsive deviceTestStatus" *ngFor="let key of infoDetails">
+            <p>
+              {{ key.name }}&nbsp;&nbsp;
+              <!-- {{ key.status != undefined ? (key.status ? "YES" : "NO") : "" }} -->
+              <span *ngIf="key.status" class="glyphicon glyphicon-ok" style="color:green"> </span>
+              <span *ngIf="key.status != undefined  && !key.status" class="glyphicon glyphicon-remove" style="color:red"></span>
+            </p>
+            <!-- <div > -->
+        &nbsp;&nbsp;&nbsp;&nbsp;
+              <button *ngIf=" key.pairStatus == 'NP' " md-button class="background-primary "  (click)="pairDevice(key)" >
+                {{current_language_set?.pair}} 
+                </button>
+                <button *ngIf=" key.pairStatus == 'P' " md-button class="background-yellow " >
+                  {{current_language_set?.pairing}} 
+                  </button>
+                  <button *ngIf=" key.pairStatus == 'PC' " md-button class="background-green "   >
+                    {{current_language_set?.paired}}
+                    </button>
+                    <button *ngIf=" key.pairStatus == 'R' " md-button class="background-red "  (click)="pairDevice(key)" >
+                      {{current_language_set?.retry}}
+                </button>
+          </div>
+        </div>
+        <div class="table-responsive deviceConnect" *ngIf="!deviceConnected">
+          <button md-button class="background-primary " (click)="getBluetoothDevice()" style="margin-bottom:10px">
+            {{current_language_set?.searchBletoothDevice}} 
+          </button>
+          <div class="table-responsive" *ngFor="let device of bluetoothDevices" >
+              <button md-button class="deviceList " (click)="connectBluetoothDevice(device)">
+                  {{ device }}
+              </button>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="!apiAvailable" class="deviceConnect">
+        {{current_language_set?.IOTsdkNotUp}}  
+      </div>
+    </div>
+  </md-dialog-content>
+</div>

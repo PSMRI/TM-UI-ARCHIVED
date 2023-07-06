@@ -1,0 +1,107 @@
+.stepper {
+  margin-bottom: 100px;
+}
+
+.mat-stepper-horizontal {
+  padding: 0px;
+  background: #f2f2f0 !important;
+}
+
+.mat-horizontal-stepper-header-container {
+  background: #f2f2f0 !important;
+}
+
+.step-btn button {
+  float: right;
+  margin-left: 5px;
+}
+
+md-card {
+  min-height: 425px;
+}
+
+.example-sidenav-fab-container {
+  width: 100%;
+  overflow: auto;
+}
+
+.example-sidenav-fab-container md-sidenav {
+  max-width: 250px;
+}
+
+.example-sidenav-fab-container .mat-sidenav-content, .example-sidenav-fab-container md-sidenav {
+  display: flex;
+}
+
+.example-scrolling-content {
+  flex: auto;
+  /* overflow: auto; */
+  background: #f2f2f0 !important;
+  min-height: 500px;
+}
+
+.sidenav {
+  padding: 20px;
+}
+
+.content {
+  padding: 20px 0px;
+}
+
+.example-fab.mat-mini-fab {
+  position: fixed;
+  left: 20px;
+  bottom: 50px;
+  z-index: 3;
+}
+
+.previousIcon {
+  position: fixed;
+  left: 65px;
+  bottom: 50px;
+  z-index: 3;
+  height: 40px;
+  width: 40px;
+}
+@media only screen and (max-width: 700px) {
+  .container-fluid {
+    padding: 0px !important;
+  }
+
+  .example-sidenav-fab-container{
+    height: stretch;
+  }
+
+  .example-sidenav-fab-container md-sidenav {
+    max-width: unset;
+    width: 50%;
+  }
+
+  .example-sidenav-fab-container .content {
+    height: stretch;
+  }
+}
+
+.m-b-40{
+  margin-bottom: 40px;
+}
+
+.overlay {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  z-index: 1001;
+  /* Sit on top */
+  left: 0;
+  top: 0;
+  background-color: rgb(0, 0, 0);
+  /* Black fallback color */
+  background-color: rgba(0, 0, 0, 0.3);
+  /* Black w/opacity */
+}
+.overlay:root {
+  padding: 0px;
+}

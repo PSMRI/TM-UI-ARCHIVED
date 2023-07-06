@@ -1,0 +1,114 @@
+<!-- {{ developmentHistoryForm.value | json }}  -->
+<div class="row m-t-20" [formGroup]="developmentHistoryForm">
+  <div class="col-xs-12 text-right">
+    <label class="font-history-label m-t-10">{{
+      currentLanguageSet?.historyData?.opd_NCD_PNCHistory?.development
+        ?.previousDevelopmentalHistory
+    }}</label>
+    <button
+      type="button"
+      md-icon-button
+      mdTooltip="{{currentLanguageSet?.DurationData?.previousDetails}}"
+      id="previousDevelopmentalHistory"
+      class="pull-right"
+      color="primary"
+      (click)="getPreviousDevelopmentalHistory()"
+    >
+      <md-icon class="md-18">history</md-icon>
+    </button>
+  </div>
+  <div>
+    <div class="col-xs-12 col-sm-6 col-md-6 box">
+      <md-select
+        multiple
+        class="select-full-width"
+        name="grossMotorMilestone"
+        formControlName="grossMotorMilestones"
+        placeholder="{{
+          currentLanguageSet?.historyData?.opd_NCD_PNCHistory?.development
+            ?.grossMotorMilestone
+        }}"
+      >
+        <md-option
+          *ngFor="let grossMotorMilestone of masterData?.grossMotorMilestones"
+          [value]="grossMotorMilestone.gMMilestone"
+          >{{ grossMotorMilestone.gMMilestone }}</md-option
+        >
+      </md-select>
+    </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-6 box">
+      <md-select
+        multiple
+        class="select-full-width"
+        name="fineMotorMilestone"
+        formControlName="fineMotorMilestones"
+        placeholder="{{
+          currentLanguageSet?.historyData?.opd_NCD_PNCHistory?.development
+            ?.fineMotorMilestone
+        }}"
+      >
+        <md-option value="Changes object from one to another hand"
+          >Changes object from one to another hand</md-option
+        >
+        <md-option value="Holding object with Palm"
+          >Holding object with Palm</md-option
+        >
+        <md-option value="Pincer's Grasp">Pincer's Grasp</md-option>
+      </md-select>
+    </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-6 box">
+      <md-select
+        multiple
+        class="select-full-width"
+        name="socialMilestone"
+        formControlName="socialMilestones"
+        placeholder="{{
+          currentLanguageSet?.historyData?.opd_NCD_PNCHistory?.development
+            ?.socialMilestone
+        }}"
+      >
+        <md-option value="Social smile">Social smile</md-option>
+        <md-option value="Cooing">Cooing</md-option>
+        <md-option value="Stranger Anxiety">Stranger Anxiety</md-option>
+      </md-select>
+    </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-6 box">
+      <md-select
+        multiple
+        class="select-full-width"
+        name="languageMilestone"
+        formControlName="languageMilestones"
+        placeholder="{{
+          currentLanguageSet?.historyData?.opd_NCD_PNCHistory?.development
+            ?.languageMilestone
+        }}"
+      >
+        <md-option value="Monosyllables">Monosyllables</md-option>
+        <md-option value="Bi syllables">Bi syllables</md-option>
+        <md-option value="Words">Words</md-option>
+      </md-select>
+    </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-6 box">
+      <md-select
+        multiple
+        class="select-full-width"
+        name="developmentalProblems"
+        formControlName="developmentProblems"
+        placeholder="{{
+          currentLanguageSet?.historyData?.opd_NCD_PNCHistory?.development
+            ?.developmentalProblems
+        }}"
+      >
+        <md-option value="Nil">Nil</md-option>
+        <md-option value="Cerebral Palsy">Cerebral Palsy</md-option>
+        <md-option value="ADHD">ADHD</md-option>
+        <md-option value="Autism">Autism</md-option>
+        <md-option value="Learning Disorders">Learning Disorders</md-option>
+      </md-select>
+    </div>
+  </div>
+</div>

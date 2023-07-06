@@ -1,0 +1,23 @@
+<div class="row m-t-20" [formGroup]="patientCovidForm">
+       
+       <div class = "col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+        <md-select
+        [style.width]="'50%'"
+        multiple
+        (change)="symptomSelected()"
+        id="symptom"
+        placeholder="{{currentLanguageSet?.ExaminationData?.cancerScreeningExamination?.symptoms?.symptoms}}"
+        name="symptom"
+        formControlName="symptom"
+        required="true"
+      >
+        <md-option
+        *ngFor="let symp of symptomsList"
+          [value]="symp"
+       >
+          {{ symp }}
+        </md-option>
+      </md-select>
+       </div>
+ 
+</div>

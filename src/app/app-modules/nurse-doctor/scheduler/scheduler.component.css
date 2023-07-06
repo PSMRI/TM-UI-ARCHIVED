@@ -1,0 +1,61 @@
+.title .exit {
+  cursor: pointer;
+}
+
+.title {
+  padding: 10px 24px 10px;
+  color: white;
+  font-size: 18px;
+  line-height: 32px;
+  font-weight: 400;
+  background: #0277bd;
+}
+
+.title h4 {
+  display: inline-block;
+}
+
+.slots-container {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.box {
+  height: 60px;
+}
+
+.m-b-20 {
+  margin-bottom: 20px;
+}
+
+.input-full-width {
+  width: 100%;
+}
+
+.available {
+  background: white;
+  border: 1px solid green;
+}
+
+.unavailable {
+  /* background: grey; */
+}
+
+.booked {
+  background: red;
+}
+
+.mat-chip:not(.mat-basic-chip)+.mat-chip:not(.mat-basic-chip) {
+  margin: unset;
+}
+
+.mat-chip:not(.mat-basic-chip) {
+  margin: 4px !important;
+  width: 150px;
+  text-align: center;
+}
+
+.step-btn button {
+  float: right;
+  margin-left: 5px;
+}

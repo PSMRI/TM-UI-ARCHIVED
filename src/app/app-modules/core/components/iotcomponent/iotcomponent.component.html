@@ -1,0 +1,33 @@
+<div class="row title" [ngClass]="{'warn': errorMsg != undefined}">
+  <h4>{{currentLanguageSet?.common?.bluetoothDevice}}</h4>
+  <button tooltip="{{currentLanguageSet?.stopTest}}" class="pull-right exit" (click)="stop()" md-icon-button>
+    <md-icon class="md-24">close</md-icon>
+  </button>
+</div>
+<div class="container-fluid">
+  <md-dialog-content>
+    <div class="table-responsive">
+      <p class="msg" *ngIf="!msgCalibration">          
+          {{errorMsg==undefined?"Please wait. Test in Progress  ":errorMsg}}
+      </p>
+      <p class="msg"  *ngIf="msgCalibration && !stripShowMsg">          
+        {{errorMsg==undefined?"Please wait.Calibration Test in Progress  ":errorMsg}}
+    </p>
+    <p class="msg"  *ngIf="msgCalibration && stripShowMsg">          
+      {{errorMsg==undefined?"Please Insert Calibration Strip to proceed ":errorMsg}}
+    </p>
+      <p class="progressMsg">
+
+          {{errorMsg==undefined && progressMsg!=undefined?progressMsg:""}}
+      </p>
+      <div class="row" *ngIf="msgCalibration && startedCalibration">
+        <button tooltip="{{currentLanguageSet?.common?.startTest}}" md-button type="button" class="pull-left exit" [ngClass]="{ enable: statusCalibration === false,disable: statusCalibration === true }"
+        style="border-radius: 8px;margin-bottom: 5px;margin-left: 30px;" [disabled]="statusCalibration" (click)="getCalibStatus()">{{currentLanguageSet?.coreComponents?.start}}</button>
+        
+        <button tooltip="{{currentLanguageSet?.stopTest}}" md-button type="button" class="pull-right exit"
+          style="border-radius: 8px;background-color: red;margin-bottom: 5px;margin-right: 30px;" [disabled]="stoppedCalibration" (click)="calibStop()">{{currentLanguageSet?.abort}}</button>
+        
+      </div>
+    </div>
+  </md-dialog-content>
+</div>

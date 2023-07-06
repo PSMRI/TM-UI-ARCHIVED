@@ -1,0 +1,263 @@
+
+.chipEdit{
+    background-color: lightcoral;
+}
+.stepper {
+    margin-bottom: 100px;
+}
+
+.mat-stepper-horizontal {
+    padding: 0px;
+    background: #f2f2f0 !important;
+}
+
+.mat-horizontal-stepper-header-container {
+    background: #f2f2f0 !important;
+}
+
+.step-btn button {
+    float: right;
+    margin-left: 5px;
+}
+
+.example-sidenav-fab-container {
+    width: 100%;
+    overflow: auto;
+}
+
+.example-sidenav-fab-container md-sidenav {
+    max-width: 250px;
+}
+
+.example-sidenav-fab-container .mat-sidenav-content,
+.example-sidenav-fab-container md-sidenav {
+    display: flex;
+}
+
+.example-scrolling-content {
+    flex: auto;
+    overflow: auto;
+    padding: 20px;
+    background: #f2f2f0 !important;
+    min-height: 500px;
+}
+
+.example-fab.mat-mini-fab {
+    position: fixed;
+    left: 20px;
+    bottom: 50px;
+    z-index: 3;
+}
+
+.page-header {
+    margin: 5px auto;
+}
+
+.page-header h3 {
+    font-family: 'Roboto', sans-serif;
+    font-size: 22px;
+    font-weight: 400;
+    margin: 0 0 16px 10px;
+    padding: 0;
+    display: inline-block;
+}
+
+/*md-panel-title {
+    font-size: 1.7rem;
+    font-variant: small-caps;
+}*/
+
+.mat-card-title {
+    font-size: 18px;
+    font-weight: 200 !important;
+}
+
+md-card {
+    min-height: 220px;
+    max-height: 220px;
+}
+
+
+/* 
+.col-lg-3{
+    border: 1px solid black;
+} */
+
+.select-container {
+    height: 55px;
+}
+
+.bg-Highlight {
+    background-color: #ffffcc !important;
+}
+
+#smallPhoto {
+    display: none;
+    padding: 50px;
+    justify-content: center;
+    text-align: center;
+    margin-top: -50px;
+}
+
+#fingerPrint {
+    text-align: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+#smallTitle {
+    display: none;
+}
+
+h5 {
+    font-weight: bold;
+}
+
+.mat-expansion-panel-header {
+    background: rgba(37, 55, 70, 0.2);
+}
+
+.textarea-full-width {
+    width: 100%;
+}
+
+.input-full-width {
+    width: 100%;
+}
+
+.select-full-width {
+    width: 100%;
+}
+
+.control-label {
+    font-weight: normal;
+}
+
+md-expansion-panel {
+    margin: 0.5%;
+}
+
+@media (max-width: 768px) {
+    #largePhoto {
+        display: none;
+    }
+    #smallPhoto {
+        display: block;
+    }
+    #largeTitle {
+        display: none;
+    }
+    #smallTitle {
+        display: block;
+        padding: 15px;
+    }
+}
+
+.radio-group {
+    display: inline-flex;
+    flex-direction: column;
+    padding: 10px 10px 10px 20px;
+    margin-bottom: 15px;
+}
+
+.radio-button {
+    margin: 10px;
+    margin-right: 25px;
+}
+
+#measurement {
+    font-size: 12px;
+    font-weight: 100;
+}
+
+.overlay {
+    background-color: rgba(22, 29, 34, 0.6);
+    color: white;
+}
+
+.radiology_card {
+    height: 60px;
+    max-height: 100px;
+    min-height: unset;
+    margin: 10px;
+    padding: 0;
+    background-color: white;
+    box-shadow: 0 3px 1px -2px rgba(0, 0, 0, .2), 0 2px 2px 0 rgba(0, 0, 0, .14), 0 1px 5px 0 rgba(0, 0, 0, .12);
+}
+
+.table-responsive {
+    overflow-x: unset !important;
+}
+
+.columns {
+    min-height: 60px;
+    max-height: 60px;
+    padding-right: 0;
+}
+
+.upload_panel {
+    position: absolute;
+    min-height: 60px;
+    padding: 15px;
+    top: 0;
+    right: 20px;
+}
+
+.upload_button {
+    display: inline-block;
+    border: none;
+    background: none;
+    position: relative;
+    margin: 0px 0px 0px 180px;
+}
+.span-style {
+    visibility: hidden;
+    position: absolute; 
+    overflow: hidden; 
+    width: 0px; 
+    height:0px;
+    border:none;
+    margin:0; 
+    padding:0;
+}
+.file-format-info {
+    color: red;
+    float: left;
+}
+#radiosubtitle {
+    margin-bottom: unset;
+}
+
+.mat-card {
+    max-height: unset !important;
+}
+
+.radio_newCard{
+    padding: unset !important;
+    text-align: center;
+}
+.shade_full {
+    padding: 10px;
+}
+.margin-style {
+    margin-top: 35px
+}
+.button-style{
+    background-color: #0277bd;
+    color: whitesmoke;
+    border-radius: 10%;
+}
+.filemargin-style {
+    margin-top: 8px;
+}
+/* .inner_table>tr {
+    border: 1px solid #ddd;
+}
+
+.inner_table>tr:first-child() {
+    border-top: none;
+}
+
+.inner_table>tr:last-child() {
+    border-bottom: none;
+} */

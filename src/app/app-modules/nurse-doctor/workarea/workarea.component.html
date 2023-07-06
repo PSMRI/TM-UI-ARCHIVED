@@ -1,0 +1,266 @@
+<div class="container-fluid">
+  <button md-mini-fab class="example-fab" color="primary" (click)="sideNavModeChange(sidenav)">
+    <md-icon>account_box</md-icon>
+  </button>
+
+  <button md-mini-fab class="previousIcon" color="primary" (click)="openBenPreviousisitDetails()" tooltip="{{ current_language_set?.benPreviousVisitDetails }}">
+    <md-icon class="iconStyle"> description</md-icon>
+  </button>
+  
+  <div class="overlay" *ngIf="showProgressBar">
+    <div class="overlay-content">
+      <md-spinner></md-spinner>
+    </div>
+  </div>
+  <md-sidenav-container class="example-sidenav-fab-container">
+    <md-sidenav #sidenav mode="side" opened="false">
+      <div class="example-scrolling-content sidenav">
+        <app-beneficiary-details></app-beneficiary-details>
+      </div>
+    </md-sidenav>
+    <div class="example-scrolling-content content">
+      <form [formGroup]="patientMedicalForm" autocomplete="off" (keyup.enter)="preventSubmitOnEnter($event)">
+        <md-horizontal-stepper linear="false" (selectionChange)="updatePending($event)">
+          <md-step selected label="Visit Details">
+            <ng-template mdStepLabel>{{current_language_set?.nurseData?.visitDetails}}</ng-template>
+            <app-visit-details [mode]="visitMode" [patientVisitForm]="patientMedicalForm.controls.patientVisitForm">
+            </app-visit-details>
+            <div class="row m-t-20">
+              <div class="col-sm-12 step-btn m-b-40">
+                <button md-raised-button color="primary" mdStepperNext type="button" (click)="checkMandatory()">
+                  {{ current_language_set?.common?.next }}
+                </button>
+                <button *ngIf="
+                    !isSpecialist &&
+                    visitCategory != null &&
+                    visitCategory != undefined
+                  " md-raised-button class="btn-green" color="primary" type="button" (click)="openScheduler()">
+                  {{ schedulerButton }}
+                </button>
+                <button *ngIf="isSpecialist" md-raised-button class="btn-green" color="primary" type="button"
+                  (click)="startTC()">
+                  {{ current_language_set?.tc?.startTc }}
+                </button>
+              </div>
+            </div>
+          </md-step>
+
+          <md-step *ngIf="showAnc" label="ANC">
+            <ng-template mdStepLabel>{{
+              current_language_set?.ancData?.anc
+            }}</ng-template>
+            <nurse-anc [mode]="ancMode" [patientANCForm]="patientMedicalForm.controls.patientANCForm"></nurse-anc>
+            <div class="row m-t-20">
+              <div class="col-sm-12 step-btn m-b-40">
+                <button md-raised-button color="primary" mdStepperNext type="button">
+                  {{ current_language_set?.common?.next }}
+                </button>
+                <button md-raised-button color="primary" mdStepperPrevious type="button">
+                  {{ current_language_set?.common?.back }}
+                </button>
+                <button md-raised-button color="primary" class="btn-green" *ngIf="ancMode"
+                  [disabled]="!patientMedicalForm.controls.patientANCForm.dirty" (click)="updatePatientANC()"
+                  type="button">
+                  {{ current_language_set?.common?.update }}
+                </button>
+              </div>
+            </div>
+          </md-step>
+
+          <md-step *ngIf="showPNC" label="PNC">
+            <ng-template mdStepLabel>{{
+              current_language_set?.pncData?.pnc
+            }}</ng-template>
+            <nurse-pnc [mode]="pncMode" [patientPNCForm]="patientMedicalForm.controls.patientPNCForm"></nurse-pnc>
+            <div class="row m-t-20">
+              <div class="col-sm-12 step-btn m-b-40">
+                <button md-raised-button color="primary" mdStepperNext type="button">
+                  {{ current_language_set?.common?.next }}
+                </button>
+                <button md-raised-button color="primary" mdStepperPrevious type="button">
+                  {{ current_language_set?.common?.back }}
+                </button>
+                <button md-raised-button color="primary" class="btn-green" *ngIf="pncMode"
+                  [disabled]="!patientMedicalForm.controls.patientPNCForm.dirty" (click)="updatePatientPNC()"
+                  type="button">
+                  {{ current_language_set?.common?.update }}
+                </button>
+              </div>
+            </div>
+          </md-step>
+
+          <md-step *ngIf="showHistory" label="History">
+            <ng-template mdStepLabel>{{
+              current_language_set?.common?.history
+            }}</ng-template>
+            <nurse-history [historyMode]="historyMode" [visitCategory]="visitCategory"
+              [pregnancyStatus]="pregnancyStatus" [primeGravidaStatus]="primeGravidaStatus" [patientHistoryForm]="
+                patientMedicalForm.controls.patientHistoryForm
+              "></nurse-history>
+            <div class="row m-t-20">
+              <div class="col-sm-12 step-btn m-b-40">
+                <button md-raised-button color="primary" mdStepperNext type="button">
+                  {{ current_language_set?.common?.next }}
+                </button>
+                <button md-raised-button color="primary" mdStepperPrevious type="button">
+                  {{ current_language_set?.common?.back }}
+                </button>
+                <button md-raised-button color="primary" class="btn-green" *ngIf="historyMode"
+                  (click)="updatePatientHistory()" [disabled]="
+                    !patientMedicalForm.controls.patientHistoryForm.dirty
+                  " type="button">
+                  {{ current_language_set?.common?.update }}
+                </button>
+              </div>
+            </div>
+          </md-step>
+
+          <md-step *ngIf="showVitals" label="Vitals">
+            <ng-template mdStepLabel>{{
+              current_language_set?.vitalsDetails?.vitalsDataANC_OPD_NCD_PNC
+                ?.vitals
+            }}</ng-template>
+            <nurse-vitals [vitalsMode]="vitalsMode" [pregnancyStatus]="pregnancyStatus" [visitCategory]="visitCategory"
+              [patientVitalsForm]="
+                patientMedicalForm.controls.patientVitalsForm
+              "></nurse-vitals>
+            <div class="row m-t-20">
+              <div class="col-sm-12 step-btn m-b-40">
+                <button md-raised-button color="primary" class="btn-green" type="button" [disabled]="disableSubmitButton"
+                  *ngIf="!showExamination && !showRefer && !showNCDScreening" (click)="submitPatientMedicalDetailsForm(patientMedicalForm)">
+                  {{ current_language_set?.common?.submit }}
+                </button>
+                <button md-raised-button color="primary" *ngIf="showExamination || showCaseRecord || showNCDScreening" mdStepperNext
+                  type="button">
+                  {{ current_language_set?.common?.next }}
+                </button>
+                <button md-raised-button color="primary" mdStepperPrevious type="button">
+                  {{ current_language_set?.common?.back }}
+                </button>
+                <button md-raised-button color="primary" class="btn-green" *ngIf="vitalsMode"
+                  (click)="updatePatientVitals()" [disabled]="
+                    !patientMedicalForm.controls.patientVitalsForm.dirty && !enableUpdateButtonInVitals
+                  " type="button">
+                  {{ current_language_set?.common?.update }}
+                </button>
+              </div>
+            </div>
+          </md-step>
+
+          <md-step *ngIf="showExamination" label="Examination">
+            <ng-template mdStepLabel>{{
+              current_language_set?.ExaminationData?.examination
+            }}</ng-template>
+            <nurse-examination [examinationMode]="examinationMode" [visitCategory]="visitCategory"
+              [patientExaminationForm]="
+                patientMedicalForm.controls.patientExaminationForm
+              "></nurse-examination>
+            <div class="row m-t-20">
+              <div class="col-sm-12 step-btn m-b-40">
+                <button md-raised-button color="primary" class="btn-green" type="button" *ngIf="!showRefer" [disabled]="disableSubmitButton"
+                  (click)="submitPatientMedicalDetailsForm(patientMedicalForm)">
+                  {{ current_language_set?.common?.submit }}
+                </button>
+                <button md-raised-button color="primary" *ngIf="showCaseRecord" mdStepperNext type="button">
+                  {{ current_language_set?.common?.next }}
+                </button>
+                <button md-raised-button color="primary" mdStepperPrevious type="button">
+                  {{ current_language_set?.common?.back }}
+                </button>
+                <button md-raised-button class="btn-green" color="primary" *ngIf="examinationMode"
+                  (click)="updatePatientExamination()" [disabled]="
+                    !patientMedicalForm.controls.patientExaminationForm.dirty
+                  " type="button">
+                  {{ current_language_set?.common?.update }}
+                </button>
+              </div>
+            </div>
+          </md-step>
+          <md-step *ngIf="showNCDScreening" label="IDRS">
+            <ng-template mdStepLabel>{{current_language_set?.idrs?.screening}}</ng-template>
+            <app-idrs [ncdScreeningMode]="ncdScreeningMode" [patientMedicalForm]='patientMedicalForm' (IDRSChanged)="idrsChange($event)" [idrsScreeningForm]='patientMedicalForm.controls.idrsScreeningForm'></app-idrs>
+            <div class="row m-t-20">
+              <div class="col-sm-12 step-btn m-b-40">
+                <button *ngIf="!ncdScreeningMode" md-raised-button color='primary' [disabled]="disableSubmitButton" class="btn-green" (click)='submitPatientMedicalDetailsForm(patientMedicalForm)' type="button"> {{ current_language_set?.common?.submit }}</button>
+                <button *ngIf="showCaseRecord" md-raised-button color='primary' mdStepperNext type="button"> {{ current_language_set?.common?.next }}</button>
+                <button md-raised-button color='primary' mdStepperPrevious type="button"> {{ current_language_set?.common?.back }}</button>
+                <button *ngIf="ncdScreeningMode" md-raised-button class="btn-green" color='primary' type="button" (click)="updatePatientNcdScreening()"  [disabled]="enableIDRSUpdate"> {{ current_language_set?.common?.update }}</button>
+              </div>
+            </div>
+          </md-step>
+          <md-step *ngIf="showCaseRecord" label="{{ current_language_set?.common?.caseRecord }}">
+            <ng-template mdStepLabel>{{
+              current_language_set?.common?.caseRecord
+            }}</ng-template>
+            <app-case-record [caseRecordMode]="caseRecordMode" [visitCategory]="visitCategory"
+              [pregnancyStatus]="pregnancyStatus" [findings]="findings" [currentVitals]="currentVitals"
+              [patientCaseRecordForm]="
+                patientMedicalForm.controls.patientCaseRecordForm
+              "></app-case-record>
+            <div class="row m-t-20">
+              <div class="col-sm-12 step-btn m-b-40">
+                <button md-raised-button color="primary" *ngIf="showExamination || showHistory" mdStepperNext
+                  type="button">
+                  {{ current_language_set?.common?.next }}
+                </button>
+                <button md-raised-button color="primary" mdStepperPrevious type="button">
+                  {{ current_language_set?.common?.back }}
+                </button>
+              </div>
+            </div>
+          </md-step>
+
+          <md-step *ngIf="showRefer" label="{{ current_language_set?.Refeails?.refer }}">
+            <ng-template mdStepLabel>{{current_language_set?.revisitRefer}}</ng-template>
+            <app-refer [referMode]="referMode" [visitCategory]="visitCategory"
+              [patientReferForm]="patientMedicalForm.controls.patientReferForm"></app-refer>
+            <div class="row m-t-20">
+              <div class="col-sm-12 step-btn m-b-40">
+                <!--{{isDoctorSave}}{{doctorSaveAndTCSave}}{{isDoctorUpdate}}{{doctorUpdateAndTCSubmit}}-->
+                <button *ngIf="isDoctorSave" md-raised-button color="primary" class="btn-green" [disabled]="disableSubmitButton"
+                  (click)="submitDoctorDiagnosisForm()" type="submit">
+                  {{ doctorSaveAndTCSave }}
+                </button>
+                <button *ngIf="isDoctorUpdate" md-raised-button color="primary" class="btn-green" [disabled]="disableSubmitButton"
+                  (click)="updateDoctorDiagnosisForm()" type="submit">
+                  {{ doctorUpdateAndTCSubmit }}
+                </button>
+                
+                <button md-raised-button color="primary" mdStepperPrevious type="button">
+                  {{ current_language_set?.common?.back }}
+                </button>
+              </div>
+            </div>
+          </md-step>
+
+          <md-step *ngIf="showQuickConsult">
+            <ng-template mdStepLabel>{{
+              current_language_set?.historyData?.QuickConsultDetails
+                ?.quickconsult
+            }}</ng-template>
+            <doctor-quick-consult [quickConsultMode]="quickConsultMode" [patientQuickConsultForm]="
+                patientMedicalForm.controls.patientQuickConsultForm
+              "></doctor-quick-consult>
+
+            <div class="row m-t-20">
+              <div class="col-sm-12 step-btn m-b-40">
+                <button *ngIf="isDoctorSave" md-raised-button color="primary" class="btn-green" [disabled]="disableSubmitButton"
+                  (click)="submitDoctorDiagnosisForm(patientMedicalForm)" type="button">
+                  {{ doctorSaveAndTCSave }}
+                </button>
+                <button *ngIf="isDoctorUpdate" md-raised-button color="primary" class="btn-green " [disabled]="disableSubmitButton"
+                  (click)="updateQuickConsultDiagnosisForm()" type="button ">
+                  {{ doctorUpdateAndTCSubmit }}
+                </button>
+
+                <button md-raised-button color="primary" mdStepperPrevious type="button">
+                  {{ current_language_set?.common?.back }}
+                </button>
+              </div>
+            </div>
+          </md-step>
+        </md-horizontal-stepper>
+      </form>
+    </div>
+  </md-sidenav-container>
+</div>

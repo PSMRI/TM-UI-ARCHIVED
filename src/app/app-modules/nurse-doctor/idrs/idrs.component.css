@@ -1,0 +1,53 @@
+.btn1{
+  align-content: center;
+  text-align: center;
+  align-items: center;
+  border-radius: 0px;
+text-decoration: none;
+background:#e44e4f;
+width: 80px !important;
+height: 50px !important;
+}
+.btn1 :hover{
+   background-color: none;
+}
+
+.mat-expansion-panel-header {
+  background: rgba(37, 55, 70, 0.2);
+}
+
+/********/
+.btn-group button {
+  background-color: #ff5252; /* Green background */
+  margin:5px;
+  /* border: 1px solid green; */
+  color: white; /* White text */
+  /* padding: 10px 24px;  */
+  /* cursor: pointer;  */
+  float: left; /* Float the buttons side by side */
+}
+
+.btn-group1 button {
+  background-color: #10df3d; /* Green background */
+  margin:5px;
+  /* border: 1px solid green; */
+  color: white; /* White text */
+  /* padding: 10px 24px;  */
+  /* cursor: pointer;  */
+  float: left; /* Float the buttons side by side */
+}
+
+
+/* Clear floats (clearfix hack) */
+.btn-group:after {
+  content: "";
+  clear: both;
+  display: table;
+}
+/* .box{
+  margin-right: -8%;
+} */
+
+/* .btn-group button:not(:last-child) {
+  border-right: none; 
+} */

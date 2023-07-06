@@ -1,0 +1,159 @@
+<!-- {{ generalDiagnosisForm.value | json}} -->
+<div class="row" [formGroup]="generalDiagnosisForm">
+  <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 m-t-6">
+    <header class="mat-expansion-panel-header">
+      <h4 *ngIf="enableProvisionalDiag">{{ current_language_set?.casesheet?.provisionalDiag }}*</h4>
+      <h4 *ngIf="!enableProvisionalDiag">{{ current_language_set?.casesheet?.provisionalDiag }}</h4>
+    </header>
+    <ng-container formArrayName="provisionalDiagnosisList">
+      <div
+        *ngFor="
+          let diagnosis of generalDiagnosisForm.controls[
+            'provisionalDiagnosisList'
+          ]['controls'];
+          let i = index;
+          let isLast = last
+        "
+      >
+        <ng-container [formGroupName]="i">
+          <div class="col-xs-12 col-sm-9">
+            <md-form-field class="input-full-width">
+              <input
+                mdInput allowText="inputFieldValidator"
+                appDiagnosisSearch
+                [diagnosisListForm]="diagnosis"
+                required
+                name="viewDiagnosisProvided"
+                formControlName="viewProvisionalDiagnosisProvided"
+                maxlength="100"
+                minlength="3"
+                [previousSelected]="
+                  generalDiagnosisForm?.value?.provisionalDiagnosisList
+                "
+                required
+              />
+              <md-icon
+                class="search-btn cursorPointer"
+                *ngIf="
+                  !diagnosis.controls['viewProvisionalDiagnosisProvided']
+                    .disabled
+                "
+                mdSuffix
+                appDiagnosisSearch
+                [diagnosisListForm]="diagnosis"
+                [previousSelected]="
+                  generalDiagnosisForm?.value?.provisionalDiagnosisList
+                "
+                >search</md-icon
+              >
+            </md-form-field>
+          </div>
+          <div class="col-xs-12 col-sm-3 m-t-10">
+            <button
+              md-mini-fab
+              type="button"
+              class="pull-left"
+              color="warn"
+              *ngIf="
+                (diagnosis.controls['viewProvisionalDiagnosisProvided']
+                  .disabled ||
+                (i != 0)) || (i==0 && generalDiagnosisForm.controls['provisionalDiagnosisList'].controls[i].controls.viewProvisionalDiagnosisProvided.value !== null && generalDiagnosisForm.controls['provisionalDiagnosisList'].controls[i].controls.viewProvisionalDiagnosisProvided.value !== '')
+              "
+              (click)="removeDiagnosisFromList(i, diagnosis)"
+            >
+              <md-icon>close</md-icon>
+            </button>
+            <button
+              md-mini-fab
+              type="button"
+              class="pull-right"
+              color="primary"
+              *ngIf="isLast"
+              [disabled]="checkProvisionalDiagnosisValidity(diagnosis)"
+              (click)="addDiagnosis()"
+            >
+              <md-icon>add</md-icon>
+            </button>
+          </div>
+        </ng-container>
+      </div>
+    </ng-container>
+  </div>
+  <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 m-t-6">
+    <header class="mat-expansion-panel-header">
+      <h4>{{ current_language_set?.DiagnosisDetails?.specialistssdvice }}</h4>
+    </header>
+    <md-form-field class="input-full-width">
+      <textarea
+        mdInput
+        defaultNull
+        mdTextareaAutosize
+        maxlength="300"
+        name="specialistAdvice"
+        formControlName="instruction"
+      >
+      </textarea>
+    </md-form-field>
+  </div>
+  <div *ngIf="designation === 'TC Specialist'">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 m-t-20">
+      <header class="mat-expansion-panel-header">
+        <h4>{{current_language_set?.finalDiagnosis}}*</h4>
+      </header>
+      <div class="col-xs-6 col-sm-6 align">
+        <label for="diabetesConfirmed">{{current_language_set?.isDiabetesConfirmed}}</label>
+      </div>
+      <div class="col-xs-6 col-sm-6 align" style="margin-left:-30px">
+        <md-radio-group
+          name="diabetesConfirmed"
+          formControlName="diabetesConfirmed"
+          id="diabetesConfirmed"
+          (change)="
+            addToConfirmDisease(
+              this.generalDiagnosisForm.value.diabetesConfirmed
+            )
+          "
+          required
+        >
+          <md-radio-button
+            color="primary"
+            [checked]="diabetesChecked"
+            [value]="true"
+            style="margin-left: 40px"
+            >{{ current_language_set?.common?.yes }}</md-radio-button
+          >
+          <md-radio-button color="primary" class="radio-btn" [value]="false">{{
+            current_language_set?.common?.no
+          }}</md-radio-button>
+        </md-radio-group>
+      </div>
+      <div class="col-xs-6 col-sm-6 align">
+        <label>{{current_language_set?.isHypertensionConfirmed}}</label>
+      </div>
+      <div class="col-xs-6 col-sm-6 align">
+        <md-radio-group
+          name="hypertensionConfirmed"
+          formControlName="hypertensionConfirmed"
+          id="hypertensionConfirmed"
+          (change)="
+            addHyperTensionToConfirmDisease(
+              this.generalDiagnosisForm.value.hypertensionConfirmed
+            )
+          "
+          required
+        >
+          <md-radio-button
+            color="primary"
+            [checked]="hyperTensionChecked"
+            style="margin-left: 10px"
+            [value]="true"
+            >{{ current_language_set?.common?.yes }}</md-radio-button
+          >
+          <md-radio-button color="primary" class="radio-btn" [value]="false">{{
+            current_language_set?.common?.no
+          }}</md-radio-button>
+        </md-radio-group>
+      </div>
+    </div>
+  </div>
+</div>

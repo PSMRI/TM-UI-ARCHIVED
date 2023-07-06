@@ -1,0 +1,10 @@
+h5{
+    font-weight: bold;
+}
+
+.mat-expansion-panel-header{
+    background: rgba(37,55,70,0.2);
+}
+.input-full-width{
+    width: 100%;
+}

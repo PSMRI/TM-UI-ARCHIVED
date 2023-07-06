@@ -1,0 +1,41 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <span *ngIf="!!showVanDetails">
+      <strong> Van ID :</strong> {{ vanID }} &nbsp; || &nbsp;
+      <strong> Vehical No :</strong> {{ vehicalNo }}
+    </span>
+    <span *ngIf="!showVanDetails">Error in fetching Van Details</span>
+    <md-icon *ngIf="!showProgressBar" class="md-24 close-btn pull-right" (click)="closeDialog()">close</md-icon>
+  </div>
+
+  <div class="panel-body">
+    <div class="example-sidenav-content">
+      <button type="button" md-raised-button color='primary' class="btn-green m-b-20" (click)='syncDownloadData()' [disabled]="showProgressBar || !showVanDetails">
+        Download Masters
+      </button>
+    </div>
+
+    <div class="example-sidenav-content">
+      <div *ngIf="showProgressBar" class="progress">
+        <div class="progress-bar progress-bar-striped active" role="progressbar" [attr.aria-valuenow]="progressValue" aria-valuemin="0"
+          aria-valuemax="100" [ngStyle]="{'width': progressValue+ '%'}">
+          {{ progressValue + "%" }}
+        </div>
+      </div>
+
+      <section *ngIf="failedMasterList && failedMasterList.length > 0" class="failedMaster">
+        <h4>{{current_language_set?.failedMasters}} </h4>
+        <ul class="list-group">
+          <li class="list-group-item" *ngFor="let item of failedMasterList">{{ item }}</li>
+        </ul>
+      </section>
+
+      <section *ngIf="failedMasterList && failedMasterList.length == 0" class="download-success">
+        <h4>
+          {{current_language_set?.dataDownloadedSuccessfully}}
+          <em class="material-icons">done</em>
+        </h4>
+      </section>
+    </div>
+  </div>
+</div>

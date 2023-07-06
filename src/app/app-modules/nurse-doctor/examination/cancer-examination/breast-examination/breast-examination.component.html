@@ -1,0 +1,153 @@
+<!--{{breastExaminationForm.value | json}}-->
+<div class="row m-t-10" [formGroup]="breastExaminationForm">
+  <div class="col-xs-12 col-md-7">
+    <div class="col-xs-6 custom-cell" *ngIf="female">
+      {{current_language_set?.ExaminationData?.cancerScreeningExamination?.breast?.everbreastfedachild}}
+    </div>
+    <div class="col-xs-6 custom-cell" *ngIf="female">
+      <md-radio-group name="everBreastFed" formControlName="everBreastFed" (change)='checkBreastFeed()'>
+        <md-radio-button color="primary" class="form-radio-btn" [value]="true">{{current_language_set?.common?.yes}}
+        </md-radio-button>
+        <md-radio-button color="primary" class="form-radio-btn" [value]="false">{{current_language_set?.common?.no}}
+        </md-radio-button>
+      </md-radio-group>
+    </div>
+
+    <div class="col-xs-6 custom-cell" *ngIf="everBreastFed.value">
+      {{current_language_set?.ExaminationData?.cancerScreeningExamination?.breast?.durationofbreastfeeding}}
+    </div>
+    <div class="col-xs-6 custom-cell" *ngIf="everBreastFed.value">
+      <md-radio-group name="breastFeedingDurationGTE6months" id="breastFeedingDurationGTE6months"
+        formControlName="breastFeedingDurationGTE6months">
+        <md-radio-button color="primary" class="form-radio-btn" [value]="true">
+          {{current_language_set?.ExaminationData?.cancerScreeningExamination?.breast?.less6months}}</md-radio-button>
+        <md-radio-button color="primary" class="form-radio-btn" [value]="false">
+          {{current_language_set?.ExaminationData?.cancerScreeningExamination?.breast?.greater6months}}
+        </md-radio-button>
+      </md-radio-group>
+    </div>
+
+    <div class="col-xs-6 custom-cell">
+      {{current_language_set?.ExaminationData?.cancerScreeningExamination?.breast?.breastsappearnormal}}
+    </div>
+    <div class="col-xs-6 custom-cell">
+      <md-radio-group name="breastsAppear_Normal" formControlName="breastsAppear_Normal">
+        <md-radio-button color="primary" class="form-radio-btn" [value]="true">{{current_language_set?.common?.yes}}
+        </md-radio-button>
+        <md-radio-button color="primary" class="form-radio-btn" [value]="false">{{current_language_set?.common?.no}}
+        </md-radio-button>
+      </md-radio-group>
+    </div>
+
+    <div class="col-xs-6 custom-cell">
+      {{current_language_set?.ExaminationData?.cancerScreeningExamination?.breast?.anyrashonthebreast}}
+    </div>
+    <div class="col-xs-6 custom-cell">
+      <md-radio-group name="rashOnBreast" formControlName="rashOnBreast">
+        <md-radio-button color="primary" class="form-radio-btn" [value]="true">{{current_language_set?.common?.yes}}
+        </md-radio-button>
+        <md-radio-button color="primary" class="form-radio-btn" [value]="false">{{current_language_set?.common?.no}}
+        </md-radio-button>
+      </md-radio-group>
+    </div>
+
+    <div class="col-xs-6 custom-cell">
+      {{current_language_set?.ExaminationData?.cancerScreeningExamination?.breast?.anydimplingofskinonthebreast}}
+    </div>
+    <div class="col-xs-6 custom-cell">
+      <md-radio-group name="dimplingSkinOnBreast" formControlName="dimplingSkinOnBreast">
+        <md-radio-button color="primary" class="form-radio-btn" [value]="true">{{current_language_set?.common?.yes}}
+        </md-radio-button>
+        <md-radio-button color="primary" class="form-radio-btn" [value]="false">{{current_language_set?.common?.no}}
+        </md-radio-button>
+      </md-radio-group>
+    </div>
+
+    <div class="col-xs-6 custom-cell">
+      {{current_language_set?.ExaminationData?.cancerScreeningExamination?.breast?.anydischargefromthenipple}}
+    </div>
+    <div class="col-xs-6 custom-cell">
+      <md-radio-group name="dischargeFromNipple" formControlName="dischargeFromNipple">
+        <md-radio-button color="primary" class="form-radio-btn" [value]="true">{{current_language_set?.common?.yes}}
+        </md-radio-button>
+        <md-radio-button color="primary" class="form-radio-btn" [value]="false">{{current_language_set?.common?.no}}
+        </md-radio-button>
+      </md-radio-group>
+    </div>
+
+    <div class="col-xs-6 custom-cell">
+      {{current_language_set?.ExaminationData?.cancerScreeningExamination?.breast?.peaudorange}}
+    </div>
+    <div class="col-xs-6 custom-cell">
+      <md-radio-group name="peaudOrange" formControlName="peaudOrange">
+        <md-radio-button color="primary" class="form-radio-btn" [value]="true">{{current_language_set?.common?.yes}}
+        </md-radio-button>
+        <md-radio-button color="primary" class="form-radio-btn" [value]="false">{{current_language_set?.common?.no}}
+        </md-radio-button>
+      </md-radio-group>
+    </div>
+
+    <div class="col-xs-6 custom-cell">
+      {{current_language_set?.ExaminationData?.cancerScreeningExamination?.breast?.anylumpinbreast}}
+    </div>
+    <div class="col-xs-6 custom-cell">
+      <md-radio-group name="lumpInBreast" formControlName="lumpInBreast" (change)='checkLump()'>
+        <md-radio-button color="primary" class="form-radio-btn" [value]="true">{{current_language_set?.common?.yes}}
+        </md-radio-button>
+        <md-radio-button color="primary" class="form-radio-btn" [value]="false">{{current_language_set?.common?.no}}
+        </md-radio-button>
+      </md-radio-group>
+    </div>
+
+    <div class="col-xs-6 custom-cell" *ngIf="lumpInBreast.value">
+      {{current_language_set?.ExaminationData?.cancerScreeningExamination?.breast?.lumpSize}}
+    </div>
+    <div class="col-xs-6 custom-cell" *ngIf="lumpInBreast.value">
+      <md-form-field class="form-input-text">
+        <input autocomplete="off" mdInput allowText="inputFieldValidator" defaultNull placeholder=" {{current_language_set?.ExaminationData?.cancerScreeningExamination?.breast?.lumpSize}}" maxlength="100" name="lumpSize"
+          id="lumpSize" formControlName="lumpSize">
+      </md-form-field>
+    </div>
+
+    <div class="col-xs-6 custom-cell" *ngIf="lumpInBreast.value">
+      {{current_language_set?.ExaminationData?.cancerScreeningExamination?.breast?.lumpShape}}
+    </div>
+    <div class="col-xs-6 custom-cell" *ngIf="lumpInBreast.value">
+      <md-form-field class="form-input-text">
+        <input autocomplete="off" mdInput allowText="inputFieldValidator" defaultNull placeholder="{{current_language_set?.ExaminationData?.cancerScreeningExamination?.breast?.lumpShape}}" maxlength="100" name="lumpShape"
+          id="lumpShape" formControlName="lumpShape">
+      </md-form-field>
+    </div>
+
+    <div class="col-xs-6 custom-cell" *ngIf="lumpInBreast.value">
+      {{current_language_set?.ExaminationData?.cancerScreeningExamination?.breast?.lumpTexture}}
+    </div>
+    <div class="col-xs-6 custom-cell" *ngIf="lumpInBreast.value">
+      <md-form-field class="form-input-text">
+        <input autocomplete="off" mdInput allowText="inputFieldValidator" defaultNull placeholder="{{current_language_set?.ExaminationData?.cancerScreeningExamination?.breast?.lumpTexture}}" maxlength="100" name="lumpTexture"
+          id="lumpTexture" formControlName="lumpTexture">
+      </md-form-field>
+    </div>
+
+    <div class="col-xs-6 custom-cell">
+      {{current_language_set?.ExaminationData?.cancerScreeningExamination?.breast?.referredtoMammogram}}
+    </div>
+    <div class="col-xs-6 custom-cell">
+      <md-radio-group name="referredToMammogram" formControlName="referredToMammogram">
+        <md-radio-button color="primary" class="form-radio-btn" [value]="true">{{current_language_set?.common?.yes}}
+        </md-radio-button>
+        <md-radio-button color="primary" class="form-radio-btn" [value]="false">{{current_language_set?.common?.no}}
+        </md-radio-button>
+      </md-radio-group>
+    </div>
+  </div>
+
+  <div class="col-xs-12 col-md-5">
+    <div class="image-placeholder">
+      <small>{{current_language_set?.common?.kindlyMark}}</small>
+      <br />
+      <a (click)="annotateImage()" id="annotateBreastImg"><img #breastsImage src="assets/images/breastExamination.png"
+          alt="breast examination"></a>
+    </div>
+  </div>
+</div>

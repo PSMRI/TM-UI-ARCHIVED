@@ -1,0 +1,450 @@
+<div [formGroup]="otherDetailsForm">
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 ">
+        
+        <div class="col-xs-2 col-sm-2 m-t-15" style="padding-top: 7px;margin-left: -18px;">
+        <md-checkbox
+          checked="checked"
+          formControlName="checked"
+          (change)="checkFatherIsRequired($event)"
+        >
+        </md-checkbox>
+      </div>
+      <div class="col-xs-10 col-sm-10 m-l-10-">
+        <md-form-field [style.width]="'100%'">
+          <input
+            autocomplete="off"
+            mdInput
+            placeholder="{{currentLanguageSet?.ro?.otherInfo?.fatherName}}"
+            allowText="alphaspace"
+            formControlName="fatherName"
+            maxlength="50"
+            [required]="isFatherRequired"
+          />
+          <md-error
+          *ngIf="otherDetailsForm.controls.fatherName.errors?.required"
+        >
+          {{
+            current_language_set?.benDetailsAlert?.fatherNameMandatory
+          }}</md-error>
+        </md-form-field>
+      </div>
+      </div>
+      <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+        <md-form-field [style.width]="'100%'">
+          <input
+            autocomplete="off"
+            mdInput
+            placeholder="{{currentLanguageSet?.ro?.otherInfo?.motherName}}"
+            allowText="alphaspace"
+            formControlName="motherName"
+            maxlength="50"
+          />
+        </md-form-field>
+      </div>
+      <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+        <md-form-field [style.width]="'100%'">
+          <input
+            autocomplete="off"
+            mdInput
+            validateEmail
+            placeholder="{{currentLanguageSet?.ro?.otherInfo?.emailID}}"
+            formControlName="emailID"
+            
+          />
+          <md-error *ngIf="!otherDetailsForm.controls.emailID.valid"
+            >{{currentLanguageSet?.invalidEmail}}</md-error
+          >
+        </md-form-field>
+      </div>
+      <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+        
+        <div class="col-xs-2 col-sm-2 m-t-15" style="padding-top: 7px">
+        <md-checkbox
+          checked="checked1"
+          formControlName="checked1"
+          (change)="checkCommunityIsRequired($event)"
+        >
+        </md-checkbox>
+      </div>
+      <div class="col-xs-10 col-sm-10 m-l-10-">
+        <div class="select-container">
+          <md-select
+            class="p-t-12"
+            [style.width]="'100%'"
+            placeholder="{{currentLanguageSet?.ro?.otherInfo?.community}}"
+            formControlName="community" 
+            [required]="isCommunityRequired"
+            (change)="onCommunityChanged()"
+          >
+            <md-option
+              *ngFor="let community of masterData?.communityMaster"
+              [value]="community.communityID"
+              >{{ community.communityType }}</md-option
+            >
+          </md-select>
+        </div>
+      </div></div>
+      <div class="clearfix"></div>
+      <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+        <md-form-field [style.width]="'100%'">
+          <input
+            autocomplete="off"
+            mdInput
+            placeholder="{{currentLanguageSet?.ro?.otherInfo?.bankName}}"
+            allowText="alphaspace"
+            maxLength="100"
+            formControlName="bankName"
+          />
+        </md-form-field>
+      </div>
+      <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+        <md-form-field [style.width]="'100%'">
+          <input
+            autocomplete="off"
+            mdInput
+            placeholder="{{currentLanguageSet?.ro?.otherInfo?.branchName}}"
+            allowText="alphanumericspace"
+            maxLength="100"
+            formControlName="branchName"
+          />
+        </md-form-field>
+      </div>
+      <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+        <md-form-field [style.width]="'100%'">
+          <input
+            autocomplete="off"
+            mdInput
+            placeholder="{{currentLanguageSet?.ro?.otherInfo?.accountNo}}"
+            allowText="number"
+            maxLength="20"
+            formControlName="accountNo"
+          />
+        </md-form-field>
+      </div>
+      <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+        <md-form-field [style.width]="'100%'">
+          <input
+            autocomplete="off"
+            mdInput
+            placeholder="{{currentLanguageSet?.ro?.otherInfo?.ifscCode}}"
+            maxLength="15"
+            allowText="alphanumeric"
+            formControlName="ifscCode"
+          />
+        </md-form-field>
+      </div>
+      <div class="clearfix"></div>
+      <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+        <div class="select-container">
+          <md-select
+            class="p-t-12"
+            [style.width]="'100%'"
+            placeholder="{{currentLanguageSet?.ro?.otherInfo?.religion}}"
+            formControlName="religion"
+            (change)="getReligionName()"
+          >
+            <md-option
+              *ngFor="let religion of masterData?.religionMaster"
+              [value]="religion.religionID"
+              >{{ religion.religionType | titlecase }}
+            </md-option>
+          </md-select>
+        </div>
+      </div>
+      <div
+        *ngIf="otherDetailsForm.value.religion == '7'"
+        class="col-xs-12 col-sm-6 col-md-3 col-lg-3"
+      >
+        <div class="select-container">
+          <md-form-field [style.width]="'100%'">
+            <input
+              autocomplete="off"
+              mdInput
+              placeholder="{{currentLanguageSet?.otherReligion}}"
+              allowText="alphaspace"
+              [required]="true"
+              formControlName="religionOther"
+              maxlength="50"
+            />
+          </md-form-field>
+        </div>
+      </div>
+
+     
+
+      
+      <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+        <div class="select-container">
+          <md-select
+            class="p-t-12"
+            [style.width]="'100%'"
+            placeholder="{{currentLanguageSet?.aBHAGenerationMode}}"
+            formControlName="healthIdMode"
+            [disabled]="disableGenerateOTP"
+          >
+          <md-option value="AADHAR">Aadhar</md-option>
+          </md-select>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3" >
+        <div class="row">
+          <div [className]="!disableGenerateOTP ? 'col-xs-8 col-sm-6 col-md-8 col-lg-8' : 'col-xs-8 col-sm-6 col-md-10 col-lg-10'">
+            <md-form-field [style.width]="'100%'" myHealthId>
+              <input autocomplete="off"  mdInput placeholder="{{currentLanguageSet?.aBHA}}" formControlName="healthId" minlength="4" maxlength="32"
+             [class.change]="disableGenerateOTP" (keydown.enter)="validateHealthId();"
+             (keydown.space)="$event.preventDefault()"
+              />
+            
+             <strong *ngIf="!disableGenerateOTP" mdSuffix>{{abhaSuffix}}</strong>
+            </md-form-field>
+           
+          </div>
+          
+          <div *ngIf="disableGenerateOTP" class="col-xs-2 col-sm-2 m-t-15">
+            <md-icon *ngIf="disableGenerateOTP"
+              style="background-color: green;color: white;font-size: 20px;height: 20px;width: 20px;" mdSuffix>
+              check
+            </md-icon>
+          </div>
+          <div *ngIf="!disableGenerateOTP" class="col-xs-4 col-sm-6 col-md-3 col-lg-3 p-t-3">
+            <button type="accent" color="accent" id="validateHealthId" md-raised-button
+            [disabled]="!otherDetailsForm.controls.healthIdMode.value || !(checkValidHealthID())" (click)="validateHealthId()">{{currentLanguageSet?.validate}}</button>
+          </div>
+        </div>
+      </div>
+
+      <span class="clearfix"></span>
+      <!-- NEW ID DETAILS for BENEFICIARY -->    
+     
+        <div class="row">
+
+          <div class="col-xs-1 col-sm-1 m-t-15" style="margin-top:45px;margin-left:10px" >
+            <md-checkbox
+              checked="checked2"
+              formControlName="checked2"
+              (change)="checkGidIsRequired($event)"
+            >
+            </md-checkbox>
+          
+          </div>
+
+        <section
+          class="col-xs-12 col-sm-12 col-md-5 col-lg-5 mtop20 newStyle"
+          formArrayName="govID"
+        >
+       
+          <!-- Gov IDs-->
+          <div
+          class="col-xs-10 col-sm-10 "
+        
+            *ngFor="
+              let id of otherDetailsForm.controls.govID['controls'];
+              let i = index;
+              let isLast = last
+            "
+            class="row"
+          >
+        
+            <ng-container [formGroupName]="i">
+              <md-select
+                class="p-t-12"
+                [style.width]="'40%'"
+                (change)="filtergovIDs(id.value.type, i)"
+                formControlName="type"
+                [required]="isGidRequired"
+                style="line-height: unset;"
+                placeholder="{{currentLanguageSet?.ro?.otherInfo?.govtIDType}}"
+              >
+            
+                <md-option
+                  *ngFor="let govIDType of govIDMaster[i]?.govIdEntityMaster"
+                  [value]="govIDType.govtIdentityTypeID"
+                  >{{ govIDType.identityType }}
+                </md-option>
+              </md-select>
+              <md-form-field
+                [style.width]="'35%'"
+                style="line-height: unset;margin-left: 15px;"
+                class="mleft15"
+              >
+                <input
+           
+                  autocomplete="off"
+                  mdInput
+                  placeholder="{{currentLanguageSet?.ro?.otherInfo?.govtIDNumber}}"
+                  [pattern]="otherDetailsForm.controls.govID.value[i].pattern"
+                  [allowText]="otherDetailsForm.controls.govID.value[i].allow"
+                  formControlName="idValue"
+                  [minlength]="otherDetailsForm.controls.govID.value[i].minLength"
+                  [maxlength]="
+                    otherDetailsForm.controls.govID.value[i].maxLength || 20
+                  "
+                  [readonly]="
+                    otherDetailsForm.controls.govID.value[i].type == null
+                  "
+                  [required]="
+                    otherDetailsForm.controls.govID.value[i].type != null
+                  "
+                  (blur)="
+                    checkPattern(i, otherDetailsForm.controls.govID.value[i])
+                  "
+                />
+              </md-form-field>
+              <button
+                md-mini-fab
+                *ngIf="
+                  otherDetailsForm.controls.govID.controls.length > 1 ||
+                  otherDetailsForm.controls.govID.value[i].type
+                "
+                color="warn"
+                (click)="
+                  removeID(
+                    1,
+                    i,
+                    otherDetailsForm.controls.govID.controls.length
+                  )
+                "
+              >
+                <md-icon class="md-18" mdTooltip="{{currentLanguageSet?.removeID}}">close</md-icon>
+              </button>
+              <span *ngIf="i < govLength - 1">
+                <button
+                  md-mini-fab
+                  color="primary"
+                  *ngIf="isLast"
+                  [disabled]="!otherDetailsForm.controls.govID.value[i].idValue"
+                  (click)="addID(1, i)"
+                >
+                  <md-icon class="md-18" mdTooltip="{{currentLanguageSet?.addID}}">add</md-icon>
+                </button>
+              </span>
+              <div style="float: right; width: 55%">
+                <md-error
+                class="govid-msg"
+                *ngIf=" id.value.type === 3 && 
+                ((otherDetailsForm.controls.govID.controls[i].controls.idValue
+                  ?.value?.length < otherDetailsForm.controls.govID.controls[i].value
+                  .minLength) ||
+                otherDetailsForm.controls.govID.controls[i].controls.idValue
+                  ?.invalid)
+                "
+              >
+                {{
+                  otherDetailsForm.controls.govID.controls[i]?.value.error
+                }}</md-error
+              >
+                <md-error
+                  class="govid-msg"
+                  *ngIf=" id.value.type !== 3 && 
+                  ((otherDetailsForm.controls.govID.controls[i].controls.idValue
+                    ?.value?.length < otherDetailsForm.controls.govID.controls[i].value
+                    .maxLength) ||
+                  otherDetailsForm.controls.govID.controls[i].controls.idValue
+                    ?.invalid)
+                  "
+                >
+                  {{
+                    otherDetailsForm.controls.govID.controls[i]?.value.error
+                  }}</md-error
+                >
+              </div>
+            </ng-container>
+          </div>
+        </section>
+        <section
+          class="col-xs-12 col-sm-12 col-md-6 col-lg-6 mtop20"
+          formArrayName="otherGovID"
+        >
+          <!-- Other Gov IDs-->
+          <section
+            *ngFor="
+              let id of otherDetailsForm.controls.otherGovID['controls'];
+              let i = index;
+              let isLast = last
+            "
+            class="row"
+          >
+            <ng-container [formGroupName]="i">
+              <md-select
+                class="p-t-12"
+                [style.width]="'40%'"
+                formControlName="type"
+                (change)="filterOtherGovIDs(id.value.type, i)"
+                style="line-height: unset;"
+                placeholder="{{currentLanguageSet?.ro?.otherInfo?.govtHealthProgramType}}"
+              >
+                <md-option
+                  *ngFor="
+                    let govIDType of otherGovIDMaster[i]?.otherGovIdEntityMaster
+                  "
+                  [value]="govIDType.govtIdentityTypeID"
+                  >{{ govIDType.identityType }}
+                </md-option>
+              </md-select>
+              <md-form-field
+                [style.width]="'35%'"
+                style="line-height: unset;margin-left: 15px;"
+                class="mleft15"
+              >
+                <input
+                  autocomplete="off"
+                  mdInput
+                  placeholder="{{currentLanguageSet?.ro?.otherInfo?.govtHealthProgramIDNumber}}"
+                  [readonly]="
+                    otherDetailsForm.controls.otherGovID.value[i].type == null
+                  "
+                  formControlName="idValue"
+                  [required]="
+                    otherDetailsForm.controls.otherGovID.value[i].type != null
+                  "
+                  maxlength="20"
+                />
+              </md-form-field>
+              <button
+                md-mini-fab
+                color="warn"
+                *ngIf="
+                  otherDetailsForm.controls.otherGovID.controls.length > 1 ||
+                  otherDetailsForm.controls.otherGovID.value[i].type
+                "
+                (click)="
+                  removeID(
+                    0,
+                    i,
+                    otherDetailsForm.controls.otherGovID.controls.length
+                  )
+                "
+              >
+                <md-icon
+                  class="md-18"
+                  aria-label="Example icon-button with a heart icon"
+                  >close</md-icon
+                >
+              </button>
+              <span *ngIf="i < otherGovLength - 1">
+                <button
+                  md-mini-fab
+                  color="primary"
+                  *ngIf="isLast"
+                  [disabled]="
+                    !otherDetailsForm.controls.otherGovID.value[i].idValue
+                  "
+                  (click)="addID(0, i)"
+                >
+                  <md-icon
+                    class="md-18"
+                    aria-label="Example icon-button with a heart icon"
+                    >add</md-icon
+                  >
+                </button>
+              </span>
+            </ng-container>
+          </section>
+        </section>
+        </div>    
+      <!--ENDS-> NEW ID DETAILS for BENEFICIARY -->
+    </div>
+  </div>
+</div>

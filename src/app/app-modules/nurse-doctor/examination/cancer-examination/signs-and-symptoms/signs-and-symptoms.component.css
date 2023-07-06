@@ -1,0 +1,32 @@
+.form-radio-btn {
+    margin-right: 15px;
+}
+
+.form-textarea {
+    width: 100%;
+}
+
+.toggle-btn {
+    margin-left: 10px;
+}
+
+.mat-button-toggle-checked {
+    background: lightblue;
+}
+
+.custom-cell{
+    height: 50px;
+}
+
+.table {
+    margin-top: 5px;
+}
+
+.table>tbody>tr>td, .table>tbody>tr>th {
+    border-top: none;
+    vertical-align: middle;
+}
+
+.lymph>tr>th, .lymph>tr>td {
+    text-align: center;
+}

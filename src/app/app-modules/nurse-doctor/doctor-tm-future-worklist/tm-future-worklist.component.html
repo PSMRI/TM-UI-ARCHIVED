@@ -1,0 +1,194 @@
+<div class="container-fluid">
+  <div class="row m-t-10">
+    <div class="col-xs-8 col-sm-6 col-md-4">
+      <div class="sw">
+        <input
+          type="search"
+          class="search"
+          autocomplete="off"
+          placeholder="{{ current_language_set?.common?.inTableSearch }}"
+          name="filterTerm"
+          [(ngModel)]="filterTerm"
+          (keyup)="filterBeneficiaryList(filterTerm)"
+        />
+        <button class="go" (click)="filterBeneficiaryList(filterTerm)">
+          <span class="material-icons">search</span>
+        </button>
+      </div>
+    </div>
+    <div class="col-xs-4 col-sm-6 col-md-8">
+      <button
+        md-button
+        id="caseSheetButton"
+        style="display:none;"
+        [disabled]="true"
+        class="btn btn-link pull-right"
+      >
+        {{current_language_set?.bendetails?.emergencyCaseSheet}}
+      </button>
+      <button
+        md-raised-button
+        class="pull-right btn-green"
+        color="primary"
+        id="refresh"
+        (click)="loadWorklist()"
+      >
+      {{ current_language_set?.common?.refresh }}
+      </button>
+    </div>
+  </div>
+
+  <div class="row m-t-10 m-b-40">
+    <div class="col-sm-12">
+      <md-card>
+        <section class="table-responsive">
+          <table class="table table-striped " aria-describedby=" EmergencyCaseSheetTbl">
+            <thead>
+              <tr>
+                <th id="sno">{{current_language_set?.coreComponents?.sno}}</th>
+                <th id="beneficiaryID">{{ current_language_set?.bendetails?.beneficiaryID }}</th>
+                <th id="beneficiaryName">{{ current_language_set?.bendetails?.beneficiaryName }}</th>
+                <th id="gender">{{ current_language_set?.bendetails?.gender }}</th>
+                <th id="age">{{ current_language_set?.bendetails?.age }}</th>
+                <th id="visitCategory">{{current_language_set?.bendetails?.visitCategory}}</th>
+                <th id="district">{{current_language_set?.bendetails?.district}}</th>
+                <th id="tcDate">{{current_language_set?.bendetails?.tcDate}}</th>
+                <th id="image">{{current_language_set?.bendetails?.image}}</th>
+                <th colspan="2" style="text-align: center;" id="action">{{current_language_set?.bendetails?.action}}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <ng-template
+                [ngIf]="
+                  filteredBeneficiaryList && filteredBeneficiaryList.length == 0
+                "
+              >
+                <tr *ngFor="let row of blankTable">
+                  <td colspan="10" *ngIf="row == 3">
+                    <h4 class="norecord">{{ current_language_set?.common?.noRecordFound }}</h4>
+                  </td>
+                  <td *ngIf="row != 3">&nbsp;</td>
+                  <td *ngIf="row != 3">&nbsp;</td>
+                  <td *ngIf="row != 3">&nbsp;</td>
+                  <td *ngIf="row != 3">&nbsp;</td>
+                  <td *ngIf="row != 3">&nbsp;</td>
+                  <td *ngIf="row != 3">&nbsp;</td>
+                  <td *ngIf="row != 3">&nbsp;</td>
+                  <td *ngIf="row != 3">&nbsp;</td>
+                  <td *ngIf="row != 3">&nbsp;</td>
+                  <td *ngIf="row != 3">&nbsp;</td>
+                </tr>
+              </ng-template>
+              <tr *ngFor="let beneficiary of pagedList" class="table-hover">
+                <td
+                  [ngClass]="{
+                    visitStatus: true,
+                    's-f-t-c ': beneficiary.statusCode == 1
+                  }"
+                >
+                  {{ filteredBeneficiaryList.indexOf(beneficiary) + 1 }}
+                </td>
+                <td (click)="getBeneficiryStatus(beneficiary)">
+                  {{ beneficiary?.beneficiaryID }}
+                </td>
+                <td (click)="getBeneficiryStatus(beneficiary)">
+                  {{ beneficiary?.benName | titlecase }}
+                </td>
+                <td (click)="getBeneficiryStatus(beneficiary)">
+                  {{ beneficiary.genderName | titlecase }}
+                </td>
+                <td (click)="getBeneficiryStatus(beneficiary)">
+                  {{ beneficiary.age }}
+                </td>
+                <td (click)="getBeneficiryStatus(beneficiary)">
+                  <span style="color:#a6a6a6"
+                    >{{ beneficiary.VisitCategory }}
+                  </span>
+                  /
+                  <span style="color:#a6a6a6">{{
+                    beneficiary.benVisitNo
+                  }}</span>
+                </td>
+                <td (click)="getBeneficiryStatus(beneficiary)">
+                  {{ beneficiary.districtName | titlecase }} /
+                  {{ beneficiary.villageName | titlecase }}
+                </td>
+                <td (click)="getBeneficiryStatus(beneficiary)">
+                  {{ beneficiary.tCRequestDate }}
+                </td>
+                <td
+                  (click)="patientImageView(beneficiary.beneficiaryRegID)"
+                  tooltip="{{current_language_set?.tc?.image}}"
+                >
+                  <img src="assets/images/Avatar-Profile_30X30.png"  alt=""/>
+                </td>
+                <td>
+                  <button
+                    md-raised-button
+                    (click)="cancelTCRequest(beneficiary)"
+                    tooltip="{{current_language_set?.tc?.cancelTc}}"
+                    color="warn"
+                    [disabled]="beneficiary.specialist_flag != 1"
+                  >
+                  {{current_language_set?.common?.cancel}}
+                  </button>
+                </td>
+                <td>
+                  <button
+                    md-raised-button
+                    (click)="reSchedule(beneficiary)"
+                    tooltip="{{current_language_set?.tc?.reschedule}}"
+                    color="primary"
+                    [disabled]="beneficiary.specialist_flag != 4"
+                  >
+                  {{current_language_set?.tc?.schedule}}
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="2">
+                  <div
+                    class="totalCount"
+                    *ngIf="filteredBeneficiaryList.length > 0"
+                  >
+                  {{current_language_set?.common?.totalCount}}  : {{ filteredBeneficiaryList.length }}
+                  </div>
+                </td>
+                <td colspan="4">
+                  <ul
+                    class="description"
+                    *ngIf="filteredBeneficiaryList.length > 0"
+                  >
+                    <li>
+                      <div class="marker-s-f-t-c "></div>
+                      <p>{{current_language_set?.common?.scheduledTC}}</p>
+                    </li>
+                  </ul>
+                </td>
+                <td colspan="5">
+                  <pagination
+                    class="pull-right"
+                    [boundaryLinks]="true"
+                    (pageChanged)="pageChanged($event)"
+                    *ngIf="filteredBeneficiaryList.length"
+                    [totalItems]="filteredBeneficiaryList.length"
+                    [itemsPerPage]="rowsPerPage"
+                    [maxSize]="rowsPerPage"
+                    [rotate]="rotate"
+                    [(ngModel)]="currentPage"
+                    previousText="&lsaquo;"
+                    nextText="&rsaquo;"
+                    firstText="&laquo;"
+                    lastText="&raquo;"
+                  ></pagination>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </section>
+      </md-card>
+    </div>
+  </div>
+</div>

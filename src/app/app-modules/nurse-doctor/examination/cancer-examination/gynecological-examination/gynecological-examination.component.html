@@ -1,0 +1,89 @@
+<!--{{gynecologicalExaminationForm.value | json}}-->
+<div class="row m-t-10" [formGroup]="gynecologicalExaminationForm">
+    <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
+        <div class="col-xs-6 box">{{current_language_set?.ExaminationData?.cancerScreeningExamination?.gynecological?.appearanceunderAceticAcid}}</div>
+        <div class="col-xs-6 box">
+            <md-select placeholder="{{current_language_set?.common?.select}}" name="appearanceOfCervix" formControlName="appearanceOfCervix">
+                <md-option value="Negative"> Negative </md-option>
+                <md-option value="Positive"> Positive </md-option>
+                <md-option value="Suspect"> Suspect </md-option>
+            </md-select>
+        </div>
+
+        <div class="col-xs-6 box">{{current_language_set?.ExaminationData?.cancerScreeningExamination?.gynecological?.typeoflesion}}</div>
+        <div class="col-xs-6 box">
+            <md-select multiple placeholder="{{current_language_set?.common?.select}}" name="typeOfLesionList" formControlName="typeOfLesionList">
+                <md-option value="Proliferative"> Proliferative </md-option>
+                <md-option value="Ulcerative"> Ulcerative </md-option>
+                <md-option value="Infiltrative"> Infiltrative </md-option>
+            </md-select>
+        </div>
+
+        <div class="col-xs-6 box">{{current_language_set?.ExaminationData?.cancerScreeningExamination?.gynecological?.vulvalInvolvement}}</div>
+        <div class="col-xs-6 box">
+            <md-radio-group name="vulvalInvolvement" formControlName="vulvalInvolvement">
+                <md-radio-button color="primary" class="form-radio-btn" [value]="true">{{current_language_set?.common?.involved}}</md-radio-button>
+                <md-radio-button color="primary" class="form-radio-btn" [value]="false">{{current_language_set?.common?.notInvolved}}</md-radio-button>
+            </md-radio-group>
+        </div>
+
+        <div class="col-xs-6 box">{{current_language_set?.ExaminationData?.cancerScreeningExamination?.gynecological?.vaginalInvolvement}}</div>
+        <div class="col-xs-6 box">
+            <md-radio-group name="vaginalInvolvement" formControlName="vaginalInvolvement">
+                <md-radio-button color="primary" class="form-radio-btn" [value]="true">{{current_language_set?.common?.involved}}</md-radio-button>
+                <md-radio-button color="primary" class="form-radio-btn" [value]="false">{{current_language_set?.common?.notInvolved}}</md-radio-button>
+            </md-radio-group>
+        </div>
+
+        <div class="col-xs-6 box">{{current_language_set?.ExaminationData?.cancerScreeningExamination?.gynecological?.uterus}}</div>
+        <div class="col-xs-6 box">
+            <md-radio-group name="uterus_Normal" formControlName="uterus_Normal">
+                <md-radio-button color="primary" class="form-radio-btn" [value]="true">{{current_language_set?.common?.normal}}</md-radio-button>
+                <md-radio-button color="primary" class="form-radio-btn" [value]="false">{{current_language_set?.common?.enlarged}}</md-radio-button>
+            </md-radio-group>
+        </div>
+
+        <div class="col-xs-6 box">{{current_language_set?.ExaminationData?.cancerScreeningExamination?.gynecological?.sufferedfromanyRTI}}</div>
+        <div class="col-xs-6 box">
+            <md-radio-group name="sufferedFromRTIOrSTI" formControlName="sufferedFromRTIOrSTI" (change)='checkWithRTIOrSTI()'>
+                <md-radio-button color="primary" class="form-radio-btn" [value]="true">{{current_language_set?.common?.yes}}</md-radio-button>
+                <md-radio-button color="primary" class="form-radio-btn" [value]="false">{{current_language_set?.common?.no}}</md-radio-button>
+            </md-radio-group>
+        </div>
+
+        <div class="col-xs-6 box" *ngIf="sufferedFromRTIOrSTI.value">{{current_language_set?.ExaminationData?.cancerScreeningExamination?.gynecological?.rTISuffered}}</div>
+        <div class="col-xs-6 box" *ngIf="sufferedFromRTIOrSTI.value">
+            <md-form-field class="input-full-width">
+                <input autocomplete="off" mdInput allowText="inputFieldValidator" defaultNull maxlength="100" placeholder="{{current_language_set?.ExaminationData?.cancerScreeningExamination?.gynecological?.specify}}" name="rTIOrSTIDetail" id="rTIOrSTIDetail" formControlName="rTIOrSTIDetail">
+            </md-form-field>
+        </div>
+        <div class="col-xs-6 col-sm-offset-6"></div>
+        <div class="col-xs-6 box" *ngIf="sufferedFromRTIOrSTI.value">
+            <input autocomplete="off" type="file" id="files" multiple (change)="selectedFiles($event)" disabled>
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div class="col-xs-6 box">{{current_language_set?.ExaminationData?.cancerScreeningExamination?.gynecological?.experiencedPostcoitalbleeding}}</div>
+        <div class="col-xs-6 box">
+            <md-radio-group name="experiencedPostCoitalBleeding" formControlName="experiencedPostCoitalBleeding">
+                <md-radio-button color="primary" class="form-radio-btn" [value]="true">{{current_language_set?.common?.yes}}</md-radio-button>
+                <md-radio-button color="primary" class="form-radio-btn" [value]="false">{{current_language_set?.common?.no}}</md-radio-button>
+            </md-radio-group>
+        </div>
+    </div>
+
+    <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
+        <div class="image-placeholder">
+            <small>{{current_language_set?.common?.kindlyMark}}</small>
+            <br>
+            <a (click)="annotateImage()" id="annotateGynecologicalImg"><img #gynaecologicalImage src="assets/images/gynecologicalExamination.png" alt="Gynaecological Examination"></a>
+        </div>
+    </div>
+
+    <div class="col-xs-12">
+        <md-form-field class="form-textarea">
+            <textarea mdInput allowText="textAreaValidator" defaultNull mdTextareaAutosize maxlength="500" name='observation' formControlName="observation" placeholder="{{current_language_set?.ExaminationData?.cancerScreeningExamination?.abdominal?.observation}}"></textarea>
+        </md-form-field>
+    </div>
+</div>

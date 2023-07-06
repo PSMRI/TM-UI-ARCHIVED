@@ -1,0 +1,12 @@
+.exit {
+  cursor: pointer;
+}
+
+.speclogin {
+  padding-bottom: 36px;
+}
+
+.btn-save {
+  background: white;
+  color: black
+}

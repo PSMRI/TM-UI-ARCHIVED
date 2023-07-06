@@ -1,0 +1,34 @@
+.form-radio-btn {
+    margin-right: 15px;
+}
+
+.form-textarea {
+    width: 100%;
+}
+
+md-select { 
+    width: 100%;
+}
+
+.mat-button-toggle-checked {
+    background: #9CC5D1;
+}
+
+.image-placeholder{
+    text-align: center
+}
+
+img {
+    margin-top: 5px;
+    height: 200px;
+    width: 200px;
+}
+
+.custom-cell {
+    height: 50px;
+} 
+
+.table>tbody>tr>td, .table>tbody>tr>th {
+    border-top: none;
+    vertical-align: middle;
+}

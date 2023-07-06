@@ -1,0 +1,96 @@
+<div [formGroup]='demographicDetailsForm'>
+  <div class="panel-body">
+    <md-slide-toggle id="demographicsToggle" formControlName="checked" color="primary" class="pull-right"
+      [checked]="demographicsEditEnabled" (change)="confirmEditDemographics($event)" labelPosition="before"><span
+        style="font-variant-caps: titling-caps; color: #14508c; font-weight: bold;">{{demographicsEditText}}</span>
+    </md-slide-toggle>
+    <div class="clearfix"></div>
+    <div class="row">
+
+
+
+      <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+        <div class="select-container">
+          <md-select class="p-t-12 m-t-20" [style.width]=" '100%' "
+            placeholder="{{current_language_set?.ro?.locInfo?.state}}" formControlName="stateID" [required]="true" (change)="onStateChange()"
+            [disabled]="disableState">
+            <md-option *ngFor="let state of statesList" [value]="state.stateID">{{state.stateName | titlecase }}
+            </md-option>
+          </md-select>
+        </div>
+      </div>
+
+
+      <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+        <div class="select-container">
+          <md-select class="p-t-12 m-t-20" [style.width]=" '100%' "
+            placeholder="{{current_language_set?.ro?.locInfo?.district_Town_City}}" [required]="true"
+            formControlName="districtID" [disabled]="disableDistrict" (change)="onDistrictChange()">
+            <md-option *ngFor="let district of districtList" [value]="district.districtID">
+              {{district.districtName | titlecase }} </md-option>
+          </md-select>
+        </div>
+      </div>
+
+      <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+        <div class="select-container">
+          <md-select class="p-t-12 m-t-20" [style.width]="'100%'"
+            placeholder="{{current_language_set?.ro?.locInfo?.taluk}}" [required]="true" formControlName="blockID"
+            [disabled]="disableSubDistrict" (change)="onSubDistrictChange()">
+            <md-option *ngFor="let subDistrict of subDistrictList" [value]="subDistrict.blockID">
+              {{subDistrict.blockName | titlecase }} </md-option>
+          </md-select>
+        </div>
+      </div>
+
+
+
+      <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+        <div class="select-container">
+          <md-select class="p-t-12 m-t-20" [style.width]="'100%'"
+            placeholder="{{current_language_set?.ro?.locInfo?.street}}" [required]="true"
+            [disabled]="patientRevisit && disableSubDistrict" formControlName="villageID" (change)="onVillageChange()">
+            <md-option *ngFor="let village of villageList" [value]="village.districtBranchID">
+              {{village.villageName | titlecase }} </md-option>
+          </md-select>
+        </div>
+      </div>
+
+      
+
+
+
+      <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3  m-t-20">
+        <md-form-field [style.width]=" '100%' ">
+          <input autocomplete="off" mdInput placeholder="{{current_language_set?.ro?.locInfo?.habitation}}"
+            allowText="address" formControlName="habitation" maxlength="50">
+        </md-form-field>
+      </div>
+
+      <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3  m-t-20">
+        <md-form-field [style.width]=" '100%' ">
+          <input autocomplete="off" mdInput placeholder="{{current_language_set?.ro?.locInfo?.address1}}"
+            allowText="address" formControlName="addressLine1" maxlength="50">
+        </md-form-field>
+      </div>
+      <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3  m-t-20">
+        <md-form-field [style.width]=" '100%' ">
+          <input autocomplete="off" mdInput placeholder="{{current_language_set?.ro?.locInfo?.address2}}"
+            allowText="address" formControlName="addressLine2" maxlength="50">
+        </md-form-field>
+      </div>
+      <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3  m-t-20">
+        <md-form-field [style.width]=" '100%' ">
+          <input autocomplete="off" mdInput placeholder="{{current_language_set?.ro?.locInfo?.address3}}"
+            allowText="address" formControlName="addressLine3" maxlength="50">
+        </md-form-field>
+      </div>
+      <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+        <md-form-field [style.width]=" '100%' ">
+          <input autocomplete="off" mdInput placeholder="{{current_language_set?.ro?.locInfo?.pincode}}"
+            allowText="number" maxlength="6" formControlName="pincode">
+        </md-form-field>
+      </div>
+    </div>
+  </div>
+</div>

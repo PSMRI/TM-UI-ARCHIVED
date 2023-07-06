@@ -1,0 +1,52 @@
+.prescription {
+  overflow: scroll;
+}
+
+.mat-form-field {
+  line-height: unset;
+}
+.mat-radio-label-content {
+  padding-right:10px !important;
+}
+.cdk-overlay-container .cdk-overlay-pane .mat-autocomplete-panel {
+  min-width: 500px;
+  max-width: 500px;
+}
+
+.input-full-width {
+  width: 100%;
+}
+
+fieldset {
+  display: block;
+  -webkit-margin-start: 2px;
+  -webkit-margin-end: 2px;
+  -webkit-padding-before: 0.35em;
+  -webkit-padding-start: 0.75em;
+  -webkit-padding-end: 0.75em;
+  -webkit-padding-after: 0.625em;
+  min-width: -webkit-min-content;
+  border-width: 1px;
+  border-style: groove;
+  border-color: azure;
+  border-image: initial;
+}
+
+legend {
+  display: block;
+  width: unset;
+  -webkit-padding-start: 2px;
+  -webkit-padding-end: 2px;
+  border: unset;
+}
+
+.fieldset {
+  background-color: rgba(240, 245, 245, 0.5);
+}
+
+@media only screen and (min-width: 980px){
+  .right-padding-remove-desktop {
+    padding-right: 0 !important;
+  }
+
+}

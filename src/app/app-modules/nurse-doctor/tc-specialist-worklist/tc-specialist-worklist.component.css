@@ -1,0 +1,175 @@
+.input-full-width {
+  width: 100%;
+}
+
+md2-pagination {
+  text-align: right;
+}
+
+md-input-container {
+  width: 60%;
+}
+.norecord {
+  text-align: center;
+}
+
+md-card {
+  min-height: 400px;
+  padding: 15px;
+}
+
+#refresh,
+#manageTimesheet {
+  margin-left: 5px;
+}
+
+:host /deep/ .pagination {
+  margin: 0;
+}
+
+@media (max-width: 481px) {
+  md-input-container {
+    width: 100%;
+  }
+  #caseSheetButton {
+    width: 100%;
+  }
+}
+
+ul {
+  list-style: none;
+  padding: 0px;
+}
+
+ul li {
+  display: inline-block;
+  padding: 0 8px;
+}
+
+ul li div,
+ul li p {
+  display: inline-block;
+}
+
+ul li div {
+  height: 15px;
+  width: 15px;
+}
+
+.marker-p-f-c {
+  background: #0b69b2;
+}
+
+.marker-p-f-d-u {
+  background: brown;
+}
+
+.marker-p-f-t {
+  background: #e44e4f;
+}
+
+.marker-t-d {
+  background: #eaaa26;
+}
+
+.marker-c-d {
+  background: #43760f;
+}
+
+.marker-a-f-t-p {
+  background:#9b1717;
+}
+
+.marker-a-f-t-d {
+  background:#ba8212;
+}
+
+.visitStatus {
+  position: relative;
+  text-align: center;
+}
+
+.no-padding {
+  padding: 0 !important;
+}
+
+.centered {
+  justify-content: center;
+  display: flex;
+}
+
+.visitStatus.p-f-c::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 1px;
+  width: 4px;
+  background: #0b69b2;
+}
+
+.visitStatus.p-f-d-u::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 1px;
+  width: 4px;
+  background: brown;
+}
+
+.visitStatus.p-f-t::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 1px;
+  width: 4px;
+  background: #e44e4f;
+}
+
+.visitStatus.t-d::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 1px;
+  width: 4px;
+  background: #eaaa26;
+}
+
+.visitStatus.c-d::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 1px;
+  width: 4px;
+  background: #43760f;
+}
+
+.visitStatus.a-f-t-p::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 1px;
+  width: 4px;
+  background:#9b1717;
+}
+
+.visitStatus.a-f-t-d::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 1px;
+  width: 4px;
+  background:#ba8212;
+}
+
+
+.totalCount,
+.description {
+  padding-top: 15px;
+}

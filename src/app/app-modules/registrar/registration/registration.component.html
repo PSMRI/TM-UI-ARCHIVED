@@ -1,0 +1,61 @@
+<div class="row">
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 page-header">
+    <h3>
+      <span *ngIf="patientRevisit">{{currentLanguageSet?.bendetails?.edit}}
+      </span>{{currentLanguageSet?.ro?.registration}}</h3>
+      <button style="margin: 5px;" *ngIf="patientRevisit" class="pull-right m-r-5" id="viewHealthID"  md-raised-button color='primary' type="accent"
+      (click)="viewHealthIdData()">{{currentLanguageSet?.aBHADetails}}</button>
+      <button *ngIf="!patientRevisit" id="healthIDSearch" style="margin: 5px;" md-raised-button color="primary" class="pull-right m-r-5"
+      (click)='openHealthIDSearch()'>{{currentLanguageSet?.aBHASearch}}</button>
+    <button id="moveToSearch" style="margin: 5px;" md-raised-button color="primary" class="pull-right m-r-5"
+      (click)='confirmFormReset(false)'>{{currentLanguageSet?.common?.search}}</button>
+      <button id="moveToPrintHealthIDCard" style="margin: 5px;" md-raised-button color="primary" class="pull-right m-r-5"
+      (click)='printHealthIDCard()'>{{currentLanguageSet?.generateABHACard}}</button>
+
+  </div>
+</div>
+<form [formGroup]='beneficiaryRegistrationForm'>
+  <md-accordion>
+    <md-expansion-panel [expanded]="step === 0" (opened)="setStep(0)">
+      <md-expansion-panel-header>
+        <md-icon>account_circle</md-icon>
+        <span class="headings"> {{currentLanguageSet?.ro?.personalInfo?.personalInformation}} </span>
+      </md-expansion-panel-header>
+      <register-personal-details [personalDetailsForm]='beneficiaryRegistrationForm.controls.personalDetailsForm'
+        [patientRevisit]='patientRevisit'></register-personal-details>
+    </md-expansion-panel>
+    <md-expansion-panel [expanded]="step === 1" (opened)="setStep(1)">
+      <md-expansion-panel-header>
+        <md-icon>room</md-icon>
+        <span class="headings"> {{currentLanguageSet?.ro?.locInfo?.locInformation}} </span>
+      </md-expansion-panel-header>
+      <register-demographic-details
+        [demographicDetailsForm]='beneficiaryRegistrationForm.controls.demographicDetailsForm'
+        [patientRevisit]='patientRevisit'></register-demographic-details>
+    </md-expansion-panel>
+    <md-expansion-panel [expanded]="step === 2" (opened)="setStep(2)">
+      <md-expansion-panel-header>
+        <md-icon>description</md-icon>
+        <span class="headings"> {{currentLanguageSet?.ro?.otherInfo?.otherInformation}} </span>
+      </md-expansion-panel-header>
+      <register-other-details [otherDetailsForm]='beneficiaryRegistrationForm.controls.otherDetailsForm'
+        [patientRevisit]='patientRevisit' [disableGenerateOTP]= "disableGenerateOTP" (disableGenerateHealthID)="disableGenerateHealthID();"></register-other-details>
+    </md-expansion-panel>
+  </md-accordion>
+</form>
+
+<div class="row m-t-20" style="margin-bottom:30px;">
+  <div class="col-sm-12 step-btn m-b-20" style="text-align: right;">
+    <button id="generateOtpButton" class="btn-green" md-raised-button color='primary' type="accent"
+    [disabled]="disableGenerateOTP" (click)="generateABHACard()">
+    {{currentLanguageSet?.generateABHA}}</button>
+    <button id="cancelButton" *ngIf="patientRevisit" md-raised-button type="button"
+      (click)="cancelBeneficiaryChanges()">{{currentLanguageSet?.common?.cancel}}</button>
+    <button id="resetButton" *ngIf="!patientRevisit" md-raised-button color="primary" type="reset"
+      (click)="confirmFormReset(true)">{{currentLanguageSet?.common?.reset}}</button>
+    <button id="saveButton" class="btn-green" md-raised-button *ngIf="patientRevisit" color="accent" type="button"
+      (click)="updateBeneficiaryDetails()">{{currentLanguageSet?.common?.update}}</button>
+    <button id="submitButton" class="btn-green" md-raised-button color='primary' type="accent"
+    (click)="postButtonCall()">{{currentLanguageSet?.common?.submit}}</button>
+  </div>
+</div>

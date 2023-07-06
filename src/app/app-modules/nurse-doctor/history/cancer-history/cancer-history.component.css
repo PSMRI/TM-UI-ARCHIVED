@@ -1,0 +1,11 @@
+h5{
+    font-weight: bold;
+}
+
+.mat-expansion-panel-header{
+    background: rgba(37,55,70,0.2);
+}
+
+md-expansion-panel {
+	margin: 0.5%;
+}

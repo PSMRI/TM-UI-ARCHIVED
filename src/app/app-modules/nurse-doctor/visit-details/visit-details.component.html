@@ -1,0 +1,67 @@
+<md-accordion [formGroup]='patientVisitForm'>
+  <md-expansion-panel expanded="true">
+    <md-expansion-panel-header>
+      <h5> {{currentLanguageSet?.nurseData?.visitDetails}}</h5>
+    </md-expansion-panel-header>
+    <patient-visit-details [mode]="mode" [patientVisitDetailsForm]='patientVisitForm.controls.patientVisitDetailsForm'></patient-visit-details>
+  </md-expansion-panel>
+
+  <md-expansion-panel *ngIf="visitCategory">
+    <md-expansion-panel-header>
+      <h5> {{currentLanguageSet?.covidVaccinationStatus}}</h5>
+    </md-expansion-panel-header>
+    <app-covid-vaccination-status [covidVaccineStatusForm]="patientVisitForm.controls.covidVaccineStatusForm"></app-covid-vaccination-status>
+  </md-expansion-panel>
+ 
+  <md-expansion-panel *ngIf="hideAll == true || showANCVisit == true || showPNC == true || showNcdScreeningVisit == true ">
+    <md-expansion-panel-header >
+      <h5> {{currentLanguageSet?.nurseData?.chiefComplaintsDetails?.chiefComplaints}}</h5>
+    </md-expansion-panel-header>
+    <patient-chief-complaints [mode]="mode" [patientChiefComplaintsForm]='patientVisitForm.controls.patientChiefComplaintsForm'></patient-chief-complaints>
+  </md-expansion-panel>
+
+  <md-expansion-panel  *ngIf="hideAll == true || showANCVisit == true || showNCDCare">
+    <md-expansion-panel-header>
+      <h5> {{currentLanguageSet?.nurseData?.adherenceDetails?.adherence}}</h5>
+    </md-expansion-panel-header>
+    <patient-adherence [mode]="mode" [patientAdherenceForm]='patientVisitForm.controls.patientAdherenceForm'></patient-adherence>
+  </md-expansion-panel>
+
+  <md-expansion-panel  *ngIf="hideAll == true || showANCVisit == true || showNCDCare">
+    <md-expansion-panel-header>
+      <h5> {{currentLanguageSet?.nurseData?.investigationsDetails?.investigations}}</h5>
+    </md-expansion-panel-header>
+    <patient-investigations [mode]="mode" [patientInvestigationsForm]='patientVisitForm.controls.patientInvestigationsForm'></patient-investigations>
+  </md-expansion-panel>
+  
+  <md-expansion-panel *ngIf="hideAll == true || showCOVID">
+    <md-expansion-panel-header>
+      <h5> {{currentLanguageSet?.ExaminationData?.cancerScreeningExamination?.symptoms?.symptoms}}</h5>
+    </md-expansion-panel-header>
+    <symptoms [mode]="mode" [patientCovidForm]='patientVisitForm.controls.patientCovidForm'></symptoms>
+  </md-expansion-panel>
+  <md-expansion-panel  *ngIf="hideAll == true || showCOVID">
+    <md-expansion-panel-header>
+      <h5> {{currentLanguageSet?.contactHistory}}</h5>
+    </md-expansion-panel-header>
+    <contact-history [mode]="mode" [patientCovidForm]='patientVisitForm.controls.patientCovidForm'></contact-history>
+  </md-expansion-panel>
+  <md-expansion-panel  *ngIf="hideAll == true || showCOVID">
+  <md-expansion-panel-header>
+    <h5>  {{currentLanguageSet?.covid?.travelHistory}}</h5>
+  </md-expansion-panel-header>
+  <travel-history  [mode]="mode" [patientCovidForm]='patientVisitForm.controls.patientCovidForm' (outputToParent)=getSymptomVal($event)></travel-history>
+</md-expansion-panel>
+<md-expansion-panel *ngIf="visitCategory ">
+  <md-expansion-panel-header>
+    <h5>  {{currentLanguageSet?.nurseData?.visitDetailsForm?.uploadFiles}}</h5>
+  </md-expansion-panel-header>
+  <patient-upload-files [mode]="mode" [enableFileSelection]='enableFileSelection' [patientFileUploadDetailsForm]='patientVisitForm.controls.patientFileUploadDetailsForm'></patient-upload-files>
+</md-expansion-panel>
+<md-expansion-panel *ngIf="hideAll == true || showNcdScreeningVisit == true">
+  <md-expansion-panel-header>
+    <h5>  {{currentLanguageSet?.nurseData?.visitDetailsForm?.diseaseConfirmation}}</h5>
+  </md-expansion-panel-header>
+  <diseaseconfirmation [mode]="mode" [diseaseFormsGroup]='patientVisitForm.controls.patientDiseaseForm'></diseaseconfirmation>
+</md-expansion-panel>
+</md-accordion>

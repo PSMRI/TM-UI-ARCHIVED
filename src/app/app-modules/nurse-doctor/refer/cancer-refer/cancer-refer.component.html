@@ -1,0 +1,111 @@
+<!-- {{ referForm.value | json}} -->
+<md-expansion-panel [formGroup]="referForm" expanded="true">
+  <md-expansion-panel-header>
+    <h5>{{ currentLanguageSet?.Referdetails?.refer }}</h5>
+  </md-expansion-panel-header>
+
+  <div class="row m-t-20">
+    <!-- Save Institute ID and serviceName-->
+
+    <div class="col-xs-6 tcell">
+      <span class="align-middle">
+        {{ currentLanguageSet?.Referdetails?.higherhealthcarecenter }}</span
+      >
+    </div>
+    <div class="col-xs-6 tcell">
+      <md-select
+        placeholder="{{ currentLanguageSet?.common?.select }}"
+        name="referredToInstituteID"
+        (ngModelChange)="higherhealthcarecenter($event)"
+        formControlName="referredToInstituteID"
+      >
+        <md-option
+          *ngFor="let center of higherHealthcareCenter"
+          [value]="center.institutionID"
+          >{{ center.institutionName }}</md-option
+        >
+      </md-select>
+    </div>
+    <div class="col-xs-6 tcell">
+      <span class="align-middle">
+        {{ currentLanguageSet?.Referdetails?.additionalservices }}</span
+      >
+    </div>
+    <div class="col-xs-6 tcell">
+      <md-select
+        placeholder="{{ currentLanguageSet?.common?.select }}"
+        (ngModelChange)="additionalservices($event)"
+        multiple="true"
+        name="refrredToAdditionalServiceList"
+        formControlName="refrredToAdditionalServiceList"
+      >
+        <md-option
+          *ngFor="let service of additionalServices"
+          [value]="service.serviceName"
+          [disabled]="canDisable(service)"
+        >
+          {{ service.serviceName }}</md-option
+        >
+      </md-select>
+    </div>
+    <div *ngIf="selectValue > 0; else elseBlock" class="col-xs-6 tcell">
+        <span class="align-middle"> {{
+          currentLanguageSet?.Referdetails?.referralReason
+        }}*</span>
+      </div>
+      <ng-template #elseBlock>
+        <div class="col-xs-6 tcell">
+          <span class="align-middle"> {{
+            currentLanguageSet?.Referdetails?.referralReason
+          }}</span>
+        </div>
+      </ng-template>
+        
+      <div *ngIf="selectValue > 0; else elseBlockText" class="col-xs-6">
+          <md-input-container class="referreason">
+            <textarea
+              mdInput allowText="textAreaValidator"
+              mdTextareaAutosize
+              required="true"
+              formControlName="referralReason"
+              name="Remarks"
+              maxLength="300"              
+            ></textarea>
+          </md-input-container>
+        </div>
+    
+        <ng-template #elseBlockText>
+          <div class="col-xs-6">
+            <md-input-container class="referreason">
+              <textarea
+                mdInput allowText="textAreaValidator"
+                mdTextareaAutosize
+                formControlName="referralReason"
+                name="Remarks"
+                maxLength="300"                
+              ></textarea>
+            </md-input-container>
+          </div>
+        </ng-template>
+    <div class="col-xs-5 tcell">
+      <span class="align-middle">{{
+        currentLanguageSet?.Referdetails?.revisitDate
+      }}</span>
+    </div>
+    <div class="col-xs-1 col-sm-1 col-md2-1 col-lg-1 tcell">
+      <md2-datepicker
+        class="input-full-width"
+        [openOnFocus]="true"
+        name="revisitDate"
+        formControlName="revisitDate"
+        placeholder="{{currentLanguageSet?.Referdetails?.revisitDate}}"
+        (change)="checkdate(revisitDate)"
+        [max]="maxSchedulerDate"
+        [min]="tomorrow"
+        ng-readonly="true"
+        style="margin-left: 80%;"
+        >{{ revisitDate }}</md2-datepicker
+      >
+    </div>
+  </div>
+</md-expansion-panel>

@@ -1,0 +1,113 @@
+<!-- {{ patientHistoryForm.value | json}} -->
+<md-accordion>
+  <div *ngIf="visitCategory != 'NCD screening'">
+  <md-expansion-panel expanded="true">
+    <md-expansion-panel-header>
+      <h5> {{currentLanguageSet?.historyData?.ancHistory?.pastHistory}}</h5>
+    </md-expansion-panel-header>
+    <general-past-history [mode]="mode" [visitCategory]="visitCategory" [pastHistory]="patientHistoryForm.controls['pastHistory']"></general-past-history>
+  </md-expansion-panel>
+
+  <md-expansion-panel>
+    <md-expansion-panel-header>
+      <h5> {{currentLanguageSet?.historyData?.ancHistory?.combordityANC_OPD_NCD_PNC?.comorbidityConditions}} </h5>
+    </md-expansion-panel-header>
+    <general-comorbidity-concurrent-conditions [mode]="mode" [visitCategory]="visitCategory" [comorbidityHistory]="patientHistoryForm.controls['comorbidityHistory']"></general-comorbidity-concurrent-conditions>
+  </md-expansion-panel>
+
+  <md-expansion-panel>
+    <md-expansion-panel-header>
+      <h5> {{currentLanguageSet?.historyData?.ancHistory?.medicationANC_OPD_NCD_PNC?.medicationHistory}} </h5>
+    </md-expansion-panel-header>
+    <general-medication-history [mode]="mode" [visitCategory]="visitCategory" [medicationHistory]="patientHistoryForm.controls['medicationHistory']"></general-medication-history>
+  </md-expansion-panel>
+
+  <md-expansion-panel >
+    <md-expansion-panel-header>
+      <h5>{{currentLanguageSet?.historyData?.ancHistory?.personalHistoryANC_OPD_NCD_PNC?.personalHistoryData}} </h5>
+    </md-expansion-panel-header>
+    <general-personal-history [mode]="mode" [visitCategory]="visitCategory" [personalHistory]="patientHistoryForm.controls['personalHistory']"></general-personal-history>
+  </md-expansion-panel>
+
+  <md-expansion-panel>
+    <md-expansion-panel-header>
+      <h5>{{currentLanguageSet?.historyData?.ancHistory?.familyHistoryDataANC_OPD_NCD_PNC?.familyHistory}}</h5>
+    </md-expansion-panel-header>
+    <general-family-history [mode]="mode" [visitCategory]="visitCategory" [familyHistory]="patientHistoryForm.controls['familyHistory']"></general-family-history>
+  </md-expansion-panel>
+
+  <md-expansion-panel *ngIf="beneficiary && beneficiary.ageVal >= 8 && beneficiary.genderName != 'Male'">
+    <md-expansion-panel-header>
+      <h5> {{currentLanguageSet?.historyData?.ancHistory?.menstrualHistoryANC?.menstrualHistory}} </h5>
+    </md-expansion-panel-header>
+    <general-menstrual-history [mode]="mode" [visitCategory]="visitCategory" [menstrualHistory]="patientHistoryForm.controls['menstrualHistory']"></general-menstrual-history>
+  </md-expansion-panel>
+
+  <md-expansion-panel *ngIf="beneficiary?.ageVal <= 1">
+    <md-expansion-panel-header>
+      <h5> {{currentLanguageSet?.historyData?.opd_NCD_PNCHistory?.perinatal_OPD?.perinatalHistory}} </h5>
+    </md-expansion-panel-header>
+    <general-perinatal-history [mode]="mode" [visitCategory]="visitCategory" [perinatalHistory]="patientHistoryForm.controls['perinatalHistory']"></general-perinatal-history>
+  </md-expansion-panel>
+
+  <md-expansion-panel *ngIf="showObstetricHistory">
+    <md-expansion-panel-header>
+      <h5> {{currentLanguageSet?.historyData?.opd_NCD_PNCHistory?.obstetric?.pastObstetricHistory}} </h5>
+    </md-expansion-panel-header>
+    <general-past-obsteric-history  [mode]="mode" [visitCategory]="visitCategory" [pastObstericHistory]="patientHistoryForm.controls['pastObstericHistory']"></general-past-obsteric-history>
+  </md-expansion-panel>
+
+  <md-expansion-panel *ngIf="beneficiary?.ageVal <= 16">
+    <md-expansion-panel-header>
+      <h5>{{currentLanguageSet?.historyData?.opd_NCD_PNCHistory?.immunization?.ImmunizationHistory}} </h5>
+    </md-expansion-panel-header>
+    <general-immunization-history [mode]="mode" [visitCategory]="visitCategory" [immunizationHistory]="patientHistoryForm.controls['immunizationHistory']"></general-immunization-history>
+  </md-expansion-panel>
+
+  <md-expansion-panel *ngIf="beneficiary?.ageVal <= 16">
+    <md-expansion-panel-header>
+      <h5> {{currentLanguageSet?.historyData?.opd_NCD_PNCHistory?.otherVaccine?.otherVaccines}} </h5>
+    </md-expansion-panel-header>
+    <general-other-vaccines [mode]="mode" [visitCategory]="visitCategory" [otherVaccines]="patientHistoryForm.controls['otherVaccines']"></general-other-vaccines>
+  </md-expansion-panel>
+
+  <md-expansion-panel *ngIf="beneficiary?.ageVal <= 6">
+    <md-expansion-panel-header>
+      <h5>{{currentLanguageSet?.historyData?.opd_NCD_PNCHistory?.feeding?.feedingHistory}}</h5>
+    </md-expansion-panel-header>
+    <general-feeding-history [mode]="mode" [visitCategory]="visitCategory" [feedingHistory]="patientHistoryForm.controls['feedingHistory']"></general-feeding-history>
+  </md-expansion-panel>
+
+  <md-expansion-panel *ngIf="beneficiary?.ageVal <= 2">
+    <md-expansion-panel-header>
+      <h5> {{currentLanguageSet?.historyData?.opd_NCD_PNCHistory?.development?.developmentHistory}} </h5>
+    </md-expansion-panel-header>
+    <general-development-history [mode]="mode" [visitCategory]="visitCategory" [developmentHistory]="patientHistoryForm.controls['developmentHistory']"></general-development-history>
+  </md-expansion-panel>
+  </div>
+  <div *ngIf="visitCategory === 'NCD screening'">  
+    <md-expansion-panel  expanded="true">
+      <md-expansion-panel-header>
+        <h5> {{currentLanguageSet?.historyData?.ancHistory?.familyHistoryDataANC_OPD_NCD_PNC?.familyHistory}}</h5>
+      </md-expansion-panel-header>
+      <app-family-history-ncdscreening [mode]="mode" [visitCategory]="visitCategory"
+        [familyHistory]="patientHistoryForm.controls['familyHistory']"></app-family-history-ncdscreening>
+    </md-expansion-panel>
+
+    <md-expansion-panel>
+      <md-expansion-panel-header>
+        <h5> {{currentLanguageSet?.historyData?.ncdPhysicalActivityHistory?.physicalActivityHistory}}</h5>
+      </md-expansion-panel-header>
+      <app-physical-activity-history [mode]="mode" [visitCategory]="visitCategory"
+        [physicalActivityHistory]="patientHistoryForm.controls['physicalActivityHistory']"></app-physical-activity-history>
+    </md-expansion-panel>
+
+    <md-expansion-panel >
+      <md-expansion-panel-header>
+        <h5>{{currentLanguageSet?.historyData?.ancHistory?.personalHistoryANC_OPD_NCD_PNC?.personalHistoryData}} </h5>
+      </md-expansion-panel-header>
+      <general-personal-history [mode]="mode" [visitCategory]="visitCategory" [personalHistory]="patientHistoryForm.controls['personalHistory']"></general-personal-history>
+    </md-expansion-panel>
+    
+  </div>
+</md-accordion>

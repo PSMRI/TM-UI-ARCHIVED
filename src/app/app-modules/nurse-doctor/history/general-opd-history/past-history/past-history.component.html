@@ -1,0 +1,262 @@
+<!-- {{ pastHistoryForm.value | json}} -->
+<div class="row m-t-10" [formGroup]="pastHistoryForm">
+  <div>
+    <div class="col-xs-12 text-right">
+      <label class="font-history-label m-t-10">{{
+        currentLanguageSet?.historyData?.Previousillness
+          ?.previousillnessandsurgery
+      }}</label>
+      <button
+        type="button"
+        md-icon-button
+        mdTooltip="{{currentLanguageSet?.DurationData?.previousDetails}}"
+        id="previousANCPastHistory"
+        class="pull-right"
+        color="primary"
+        (click)="getPreviousPastHistory()"
+      >
+        <md-icon class="md-18">history</md-icon>
+      </button>
+    </div>
+    <div class="col-xs-12" formArrayName="pastIllness">
+      <header class="description">
+        <h4>
+          <strong>{{
+            currentLanguageSet?.historyData?.ancHistory
+              ?.pastIllnessDataANC_OPD_NCD_PNC?.pastIllness
+          }}</strong>
+        </h4>
+      </header>
+      <div
+        class="row multi-row-select"
+        *ngFor="
+          let pastIllness of pastHistoryForm.controls['pastIllness'][
+            'controls'
+          ];
+          let i = index;
+          let isLast = last;
+          let isOdd = odd
+        "
+        [ngClass]="{ odd: !isOdd }"
+      >
+        <ng-container [formGroupName]="i">
+          <div class="col-sm-6 col-md-3 box">
+            <md-select
+              class="select-full-width"
+              name="pastAcuteIllness"
+              formControlName="illnessType"
+              placeholder="{{
+                currentLanguageSet?.historyData?.ancHistory
+                  ?.pastIllnessDataANC_OPD_NCD_PNC?.illness
+              }}"
+              (change)="filterPastIllnessType($event.value, i, pastIllness)"
+            >
+              <md-option
+                *ngFor="let illness of pastIllnessSelectList[i]"
+                [value]="illness"
+              >
+                {{ illness.illnessType }}</md-option
+              >
+            </md-select>
+          </div>
+
+          <div
+            class="col-sm-6 col-md-3 box"
+            *ngIf="pastIllness.value.illnessType?.illnessType == 'Other'"
+          >
+            <md-form-field class="input-full-width">
+              <input
+                autocomplete="off"
+                mdInput
+                defaultNull
+                maxlength="50"
+                allowText="alphaspace"
+                placeholder="{{
+                  currentLanguageSet?.historyData?.opd_NCD_PNCHistory
+                    ?.obstetric?.others
+                }}"
+                name="otherIllnessType"
+                formControlName="otherIllnessType"
+              />
+            </md-form-field>
+          </div>
+
+          <div class="col-sm-6 col-md-2 box">
+            <md-form-field class="input-full-width">
+              <input
+                autocomplete="off"
+                mdInput
+                defaultNull
+                placeholder="{{currentLanguageSet?.nurseData?.chiefComplaintsDetails?.duration}}"
+                allowText="number"
+                maxlength="2"
+                name="timePeriodAgo"
+                formControlName="timePeriodAgo"
+                [disableFormControl]="
+                  !pastIllness.value.illnessType ||
+                  pastIllness.value.illnessType?.illnessType == 'None'
+                "
+                (change)="validateDuration(pastIllness)"
+              />
+            </md-form-field>
+          </div>
+
+          <div class="col-sm-4 col-md-2 box">
+            <md-select
+              class="select-full-width"
+              placeholder="{{currentLanguageSet?.DurationData?.timeperiodAgo}}"
+              name="timePeriodUnit"
+              formControlName="timePeriodUnit"
+              (change)="validateDuration(pastIllness)"
+              [disableFormControl]="!pastIllness.value.timePeriodAgo"
+            >
+              <md-option value="Days">Day(s)</md-option>
+              <md-option value="Weeks">Week(s)</md-option>
+              <md-option value="Months">Month(s)</md-option>
+              <md-option value="Years">Year(s)</md-option>
+            </md-select>
+          </div>
+
+          <div class="col-sm-2 col-md-2 box action-btn-container pull-right">
+            <button
+              md-mini-fab
+              color="warn"
+              *ngIf="
+                i != 0 || (i == 0 && (pastIllness.touched || pastIllness.dirty))
+              "
+              (click)="removePastIllness(i, pastIllness)"
+            >
+              <md-icon class="md-18">close</md-icon>
+            </button>
+            <button
+              md-mini-fab
+              color="primary"
+              *ngIf="isLast"
+              [disabled]="checkIllnessValidity(pastIllness)"
+              (click)="addPastIllness(i)"
+            >
+              <md-icon class="md-18">add</md-icon>
+            </button>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-xs-12" formArrayName="pastSurgery">
+    <header class="description">
+      <h4>
+        <strong>{{currentLanguageSet?.historyData?.ancHistory?.pastHOSurgeryANC_OPD_NCD_PNC?.pastSurgery}}</strong>
+      </h4>
+    </header>
+    <div
+      class="row multi-row-select"
+      *ngFor="
+        let pastSurgery of pastHistoryForm.controls['pastSurgery']['controls'];
+        let i = index;
+        let isLast = last;
+        let isOdd = odd
+      "
+      [ngClass]="{ odd: !isOdd }"
+    >
+      <ng-container [formGroupName]="i">
+        <div class="col-sm-6 col-md-3 box">
+          <md-select
+            class="select-full-width"
+            placeholder="{{currentLanguageSet?.historyData?.ancHistory?.pastHOSurgeryANC_OPD_NCD_PNC?.hoSurgery}}"
+            formControlName="surgeryType"
+            name="surgeryType"
+            (change)="filterPastSurgeryType($event.value, i, pastSurgery)"
+          >
+            <md-option
+              *ngFor="let surgery of pastSurgerySelectList[i]"
+              [value]="surgery"
+              >{{ surgery.surgeryType }}</md-option
+            >
+          </md-select>
+        </div>
+
+        <div
+          class="col-sm-6 col-md-3 box"
+          *ngIf="pastSurgery.value.surgeryType?.surgeryType == 'Other'"
+        >
+          <md-form-field class="input-full-width">
+            <input
+              autocomplete="off"
+              mdInput
+              defaultNull
+              maxlength="50"
+              allowText="alphaspace"
+              placeholder="{{
+                currentLanguageSet?.historyData?.opd_NCD_PNCHistory
+                  ?.obstetric?.others
+              }}"
+              name="otherSurgeryType"
+              formControlName="otherSurgeryType"
+            />
+          </md-form-field>
+        </div>
+
+        <div class="col-sm-6 col-md-2 box">
+          <md-form-field class="input-full-width">
+            <input
+              autocomplete="off"
+              mdInput
+              defaultNull
+              placeholder="{{currentLanguageSet?.nurseData?.chiefComplaintsDetails?.duration}}"
+              allowText="number"
+              maxlength="2"
+              name="timePeriodAgo"
+              formControlName="timePeriodAgo"
+              [disableFormControl]="
+                !pastSurgery.value.surgeryType ||
+                pastSurgery.value.surgeryType?.surgeryType == 'None'
+              "
+              (change)="validateDuration(pastSurgery)"
+            />
+          </md-form-field>
+        </div>
+
+        <div class="col-sm-4 col-md-2 box">
+          <md-select
+            class="select-full-width"
+            formControlName="timePeriodUnit"
+            placeholder="{{currentLanguageSet?.DurationData?.timeperiodAgo}}"
+            name="timePeriodUnit"
+            [disableFormControl]="!pastSurgery.value.timePeriodAgo"
+            (change)="validateDuration(pastSurgery)"
+          >
+            <md-option value="Days">Day(s)</md-option>
+            <md-option value="Weeks">Week(s)</md-option>
+            <md-option value="Months">Month(s)</md-option>
+            <md-option value="Years">Year(s)</md-option>
+          </md-select>
+        </div>
+
+        <div class="col-sm-2 col-md-2 box action-btn-container pull-right">
+          <button
+            md-mini-fab
+            color="warn"
+            id="removePastSurgery"
+            *ngIf="
+              i != 0 || (i == 0 && (pastSurgery.touched || pastSurgery.dirty))
+            "
+            (click)="removePastSurgery(i, pastSurgery)"
+          >
+            <md-icon class="md-18">close</md-icon>
+          </button>
+          <button
+            md-mini-fab
+            color="primary"
+            *ngIf="isLast"
+            [disabled]="checkSurgeryValidity(pastSurgery)"
+            id="addPastSurgery"
+            (click)="addPastSurgery()"
+          >
+            <md-icon class="md-18">add</md-icon>
+          </button>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>

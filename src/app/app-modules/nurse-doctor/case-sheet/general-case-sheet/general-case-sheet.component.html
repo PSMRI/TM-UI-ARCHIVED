@@ -1,0 +1,43 @@
+<div class="container non-printable m-t-10" *ngIf='!hideBack'>
+  <div class="row">
+    <button md-raised-button color="primary" class="pull-right" (click)="downloadCasesheet()">{{current_language_set?.casesheet?.print}}</button>
+    <button md-raised-button color="primary" class="pull-left" (click)="goBack()">{{current_language_set?.common?.back}}</button>
+  </div>
+</div>
+
+<button md-mini-fab mdTooltip="{{current_language_set?.casesheet?.workList}}" mdTooltipPosition="left" class="example-fab back non-printable" color="primary" (click)="goBack()" *ngIf='!hideBack'>
+  <md-icon>chevron_left</md-icon>
+</button>
+
+<button md-mini-fab mdTooltip="{{current_language_set?.casesheet?.goTop}}" mdTooltipPosition="left" class="example-fab upward non-printable" color="primary" (click)="goToTop()" *ngIf='!previous'>
+    <md-icon>arrow_upward</md-icon>
+</button>
+
+<button md-mini-fab mdTooltip="{{current_language_set?.casesheet?.printCaseheet}}" mdTooltipPosition="left" class="example-fab print non-printable" color="primary" (click)="downloadCasesheet()" *ngIf='!previous'>
+    <md-icon>print</md-icon>
+</button>
+
+<button md-mini-fab mdTooltip="{{current_language_set?.casesheet?.caseComponent}}" mdTooltipPosition="left" mdTooltipClass="iemr-tooltip" class="example-fab select non-printable" color="primary" (click)="selectPrintPage()">
+    <md-icon>view_module</md-icon>
+</button>
+
+
+<div class="p-t-10 p-b-10">
+  <app-doctor-diagnosis-case-sheet [printPagePreviewSelect]="printPagePreviewSelect" [data]="caseSheetData" [previous]='previous'></app-doctor-diagnosis-case-sheet>
+  <div class="page-break" *ngIf="visitCategory != 'General OPD (QC)'"></div>
+  <ng-container *ngIf="printPagePreviewSelect?.caseSheetANC">
+    <app-anc-case-sheet *ngIf="visitCategory == 'ANC'" [data]="caseSheetData" [previous]='previous'></app-anc-case-sheet>
+    <div class="page-break"></div>
+  </ng-container>
+  <ng-container *ngIf="printPagePreviewSelect?.caseSheetPNC">
+    <app-pnc-case-sheet *ngIf="visitCategory == 'PNC'" [data]="caseSheetData" [previous]='previous'></app-pnc-case-sheet>
+    <div class="page-break"></div>
+  </ng-container>
+  <ng-container *ngIf="printPagePreviewSelect?.caseSheetHistory">
+    <app-history-case-sheet *ngIf="visitCategory != 'General OPD (QC)'" [data]="caseSheetData" [previous]='previous'></app-history-case-sheet>
+    <div class="page-break"></div>
+  </ng-container>
+  <ng-container *ngIf="printPagePreviewSelect?.caseSheetExamination">
+    <app-examination-case-sheet *ngIf="visitCategory != 'NCD care' && visitCategory != 'General OPD (QC)' && visitCategory != 'NCD screening' && visitCategory != 'COVID-19 Screening'" [data]="caseSheetData" [previous]='previous'></app-examination-case-sheet>
+  </ng-container>
+</div>

@@ -1,0 +1,18 @@
+<div class="container-fluid">
+
+  <md-tab-group (focusChange)="tabChanged($event)">
+    <md-tab label="{{currentLanguageSet?.nurse_tabs?.visit}}">
+      <app-nurse-worklist></app-nurse-worklist>
+    </md-tab>
+    <md-tab label="{{currentLanguageSet?.nurse_tabs?.current}}">
+      <app-nurse-tm-worklist></app-nurse-tm-worklist>
+    </md-tab>
+    <md-tab label="{{currentLanguageSet?.nurse_tabs?.future}}">
+      <app-nurse-tm-future-worklist></app-nurse-tm-future-worklist>
+    </md-tab>
+    <md-tab label="{{currentLanguageSet?.nurse_tabs?.referred}}">
+      <app-nurse-mmu-tm-referred-worklist></app-nurse-mmu-tm-referred-worklist>
+    </md-tab>
+  </md-tab-group>
+
+</div>

@@ -1,0 +1,99 @@
+<!-- {{musculoSkeletalSystemForm.value | json}} -->
+<div class="m-t-20" [formGroup]='musculoSkeletalSystemForm'>
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 m-t-10">
+      <h5><strong>{{current_language_set?.ExaminationData?.ANC_OPD_PNCExamination?.systemic?.musculoskeletalANC_OPD_PNC?.joints}}</strong></h5>
+      <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+          <md-select class="select-full-width" name='joint_TypeOfJoint' formControlName="joint_TypeOfJoint" placeholder="{{current_language_set?.ExaminationData?.ANC_OPD_PNCExamination?.systemic?.musculoskeletalANC_OPD_PNC?.typeofJoint}}">
+            <md-option *ngFor="let typeOfJoint of selectTypeOfJoint" [value]="typeOfJoint.jointType">
+              {{typeOfJoint.jointType}}
+            </md-option>
+          </md-select>
+        </div>
+
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+          <md-select class="select-full-width" name='joint_Laterality' formControlName="joint_Laterality" placeholder="{{current_language_set?.ExaminationData?.ANC_OPD_PNCExamination?.systemic?.musculoskeletalANC_OPD_PNC?.laterality}}">
+            <md-option *ngFor="let jointLaterality of selectJointLaterality" [value]="jointLaterality.name">
+              {{jointLaterality.name}}
+            </md-option>
+          </md-select>
+        </div>
+
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+          <md-select class="select-full-width" name='joint_Abnormality' formControlName="joint_Abnormality" placeholder="{{current_language_set?.ExaminationData?.ANC_OPD_PNCExamination?.systemic?.musculoskeletalANC_OPD_PNC?.abnormality}}">
+            <md-option *ngFor="let jointAbnormality of selectJointAbnormality" [value]="jointAbnormality.name">
+              {{jointAbnormality.name}}
+            </md-option>
+          </md-select>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 m-t-10">
+      <h5><strong>{{current_language_set?.ExaminationData?.ANC_OPD_PNCExamination?.systemic?.musculoskeletalANC_OPD_PNC?.upperLimbs}}</strong></h5>
+      <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+          <md-select class="select-full-width" name='upperLimb_Laterality' formControlName="upperLimb_Laterality" placeholder="{{current_language_set?.ExaminationData?.ANC_OPD_PNCExamination?.systemic?.musculoskeletalANC_OPD_PNC?.laterality}}">
+            <md-option *ngFor="let upperLimbsLaterality of selectUpperLimbsLaterality" [value]="upperLimbsLaterality.name">
+              {{upperLimbsLaterality.name}}
+            </md-option>
+          </md-select>
+        </div>
+
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+          <md-select class="select-full-width" name='upperLimb_Abnormality' formControlName="upperLimb_Abnormality" placeholder="{{current_language_set?.ExaminationData?.ANC_OPD_PNCExamination?.systemic?.musculoskeletalANC_OPD_PNC?.abnormality}}">
+            <md-option *ngFor="let upperLimbsAbnormality of selectUpperLimbsAbnormality" [value]="upperLimbsAbnormality.name">
+              {{upperLimbsAbnormality.name}}
+            </md-option>
+          </md-select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 m-t-10">
+      <h5><strong>{{current_language_set?.ExaminationData?.ANC_OPD_PNCExamination?.systemic?.musculoskeletalANC_OPD_PNC?.lowerLimbs}}</strong></h5>
+      <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+          <md-select class="select-full-width" name='lowerLimb_Laterality' formControlName="lowerLimb_Laterality" placeholder="{{current_language_set?.ExaminationData?.ANC_OPD_PNCExamination?.systemic?.musculoskeletalANC_OPD_PNC?.laterality}}">
+            <md-option *ngFor="let lowerLimbsLaterality of selectLowerLimbsLaterality" [value]="lowerLimbsLaterality.name">
+              {{lowerLimbsLaterality.name}}
+            </md-option>
+          </md-select>
+        </div>
+
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+          <md-select class="select-full-width" name='lowerLimb_Abnormality' formControlName="lowerLimb_Abnormality" placeholder="{{current_language_set?.ExaminationData?.ANC_OPD_PNCExamination?.systemic?.musculoskeletalANC_OPD_PNC?.abnormality}}">
+            <md-option *ngFor="let lowerLimbsAbnormality of selectLowerLimbsAbnormality" [value]="lowerLimbsAbnormality.name">
+              {{lowerLimbsAbnormality.name}}
+            </md-option>
+          </md-select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 m-t-10">
+      <h5><strong>{{current_language_set?.ExaminationData?.ANC_OPD_PNCExamination?.systemic?.musculoskeletalANC_OPD_PNC?.observation}}</strong></h5>
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <md-form-field class="input-full-width" class="textarea-full-width">
+            <textarea mdInput allowText="textAreaValidator" defaultNull mdTextareaAutosize name='chestWall' formControlName="chestWall" placeholder="{{current_language_set?.ExaminationData?.ANC_OPD_PNCExamination?.systemic?.musculoskeletalANC_OPD_PNC?.chestwall}}" maxlength="300"></textarea>
+          </md-form-field>
+        </div>
+
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <md-form-field class="input-full-width" class="textarea-full-width">
+            <textarea mdInput allowText="textAreaValidator" defaultNull mdTextareaAutosize name='spine' formControlName="spine" placeholder="{{current_language_set?.ExaminationData?.ANC_OPD_PNCExamination?.systemic?.musculoskeletalANC_OPD_PNC?.spine}}" maxlength="300"></textarea>
+          </md-form-field>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

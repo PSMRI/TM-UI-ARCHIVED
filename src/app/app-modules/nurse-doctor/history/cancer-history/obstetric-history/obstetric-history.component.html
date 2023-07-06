@@ -1,0 +1,337 @@
+<!-- {{cancerPatientObstetricHistoryForm.value | json}} -->
+<div [formGroup]="cancerPatientObstetricHistoryForm">
+  <div class="row m-t-10">
+    <div class="col-xs-12 text-right">
+      <label class="font-history-label m-t-10">{{
+        currentLanguageSet?.historyData?.obstetrichistory?.obstetricshistory}}</label>
+      <button
+        md-icon-button
+        mdTooltip="{{currentLanguageSet?.DurationData?.previousDetails}}"
+        id="previousCancerPastObstetricHistory"
+        class="pull-right"
+        color="primary"
+        (click)="getPreviousCancerPastObstetricHistory()"
+      >
+        <md-icon class="md-18">history</md-icon>
+      </button>
+    </div>
+  </div>
+
+  <div class="row m-t-10">
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+      <md-select
+        class="input-full-width"
+        placeholder="{{
+          currentLanguageSet?.historyData?.cancerScreeningHistory?.obstetric
+            ?.pregnancyStatus
+        }}"
+        name="pregnancyStatus"
+        formControlName="pregnancyStatus"
+        [disabled]="true"
+        (change)="checkWithPregnancy()"
+      >
+        <md-option
+          *ngFor="let pregnancyStatusValue of templatePregnancyStatus"
+          [value]="pregnancyStatusValue"
+        >
+          {{ pregnancyStatusValue }}
+        </md-option>
+      </md-select>
+    </div>
+
+    <div
+      class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box"
+      *ngIf="pregnancyStatus == 'Don\'t Know'"
+    >
+      <label class="control-label" for="drug">{{
+        currentLanguageSet?.historyData?.cancerScreeningHistory?.obstetric
+          ?.urinepregnancytest
+      }}</label>
+      <div class="clearfix"></div>
+      <md-radio-group name="isUrinePregTest" formControlName="isUrinePregTest">
+        <md-radio-button color="primary" class="radio-button" [value]="true"
+          >{{currentLanguageSet?.common?.positive}}</md-radio-button
+        >
+        <md-radio-button color="primary" class="radio-button" [value]="false"
+          >{{currentLanguageSet?.common?.negative}}</md-radio-button
+        >
+      </md-radio-group>
+    </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+      <md-select
+        class="input-full-width"
+        placeholder="{{
+          currentLanguageSet?.historyData?.cancerScreeningHistory?.obstetric
+            ?.nooftimespregnant
+        }}"
+        name="pregnant_No"
+        formControlName="pregnant_No"
+        (change)="checkWithPregnantTimes()"
+      >
+        <md-option
+          *ngFor="let timesPregnant of templateTimesPregnant"
+          [value]="timesPregnant"
+        >
+          {{ timesPregnant }}
+        </md-option>
+      </md-select>
+    </div>
+
+    <div
+      class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box"
+      *ngIf="pregnant_No && pregnant_No != '0'"
+    >
+      <md-form-field class=" input-full-width ">
+        <input
+          autocomplete="off"
+          mdInput
+          defaultNull
+          allowText="number"
+          placeholder="{{
+            currentLanguageSet?.historyData?.cancerScreeningHistory?.obstetric
+              ?.nooflivingchildren
+          }}"
+          maxlength="2"
+          name="noOfLivingChild"
+          formControlName="noOfLivingChild"
+          (change)="checkNoOfChildren(noOfLivingChild)"
+        />
+      </md-form-field>
+    </div>
+
+    <div
+      class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box"
+      *ngIf="pregnant_No && pregnant_No != '0'"
+    >
+      <label class="control-label" for="drug">{{
+        currentLanguageSet?.historyData?.cancerScreeningHistory?.obstetric
+          ?.abortions
+      }}</label>
+      <div class="clearfix"></div>
+      <md-radio-group name="isAbortion" formControlName="isAbortion">
+        <md-radio-button color="primary" class="radio-button" [value]="true"
+          >{{currentLanguageSet?.common?.yes}}</md-radio-button
+        >
+        <md-radio-button color="primary" class="radio-button" [value]="false"
+          >{{currentLanguageSet?.common?.no}}</md-radio-button
+        >
+      </md-radio-group>
+    </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+      <label class="control-label" for="drug">
+        {{
+          currentLanguageSet?.historyData?.cancerScreeningHistory?.obstetric
+            ?.oralContraceptiveUsed
+        }}</label
+      >
+      <div class="clearfix"></div>
+      <md-radio-group
+        name="isOralContraceptiveUsed"
+        formControlName="isOralContraceptiveUsed"
+      >
+        <md-radio-button color="primary" class="radio-button" [value]="true"
+          >{{currentLanguageSet?.common?.yes}}</md-radio-button
+        >
+        <md-radio-button color="primary" class="radio-button" [value]="false"
+          >{{currentLanguageSet?.common?.no}}</md-radio-button
+        >
+      </md-radio-group>
+    </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+      <label class="control-label" for="drug">
+        {{
+          currentLanguageSet?.historyData?.cancerScreeningHistory?.obstetric
+            ?.harmonereplacementTherapy
+        }}
+      </label>
+      <div class="clearfix"></div>
+      <md-radio-group
+        name="isHormoneReplacementTherapy"
+        formControlName="isHormoneReplacementTherapy"
+      >
+        <md-radio-button color="primary" class="radio-button" [value]="true"
+          >{{currentLanguageSet?.common?.yes}}</md-radio-button
+        >
+        <md-radio-button color="primary" class="radio-button" [value]="false"
+          >{{currentLanguageSet?.common?.no}}</md-radio-button
+        >
+      </md-radio-group>
+    </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+      <md-form-field class=" input-full-width ">
+        <input
+          autocomplete="off"
+          mdInput
+          defaultNull
+          allowText="number"
+          placeholder="{{
+            currentLanguageSet?.historyData?.cancerScreeningHistory?.obstetric
+              ?.ageatmenarche
+          }}"
+          maxlength="2"
+          name="menarche_Age"
+          formControlName="menarche_Age"
+          (change)="checkMenarcheAge($event)"
+        />
+      </md-form-field>
+    </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+      <label class="control-label" for="drug"
+        >{{
+          currentLanguageSet?.historyData?.cancerScreeningHistory?.obstetric
+            ?.regularityofMenstrualCycle
+        }}</label
+      >
+      <div class="clearfix"></div>
+      <md-radio-group
+        name="isMenstrualCycleRegular"
+        formControlName="isMenstrualCycleRegular"
+      >
+        <md-radio-button color="primary" class="radio-button" [value]="true"
+          >{{currentLanguageSet?.common?.regular}}</md-radio-button
+        >
+        <md-radio-button color="primary" class="radio-button" [value]="false"
+          >{{currentLanguageSet?.common?.irregular}}</md-radio-button
+        >
+      </md-radio-group>
+    </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+      <md-form-field class=" input-full-width ">
+        <input
+          autocomplete="off"
+          mdInput
+          defaultNull
+          allowText="number"
+          name="menstrualCycleLength"
+          placeholder="{{
+            currentLanguageSet?.historyData?.cancerScreeningHistory?.obstetric
+              ?.lengthofMenstrualCycle
+          }}"
+          maxlength="2"
+          formControlName="menstrualCycleLength"
+          (change)="checkLengthMenstrualCycle($event.target.value)"
+        />
+      </md-form-field>
+    </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+      <md-form-field class=" input-full-width ">
+        <input
+          autocomplete="off"
+          mdInput
+          defaultNull
+          allowText="number"
+          placeholder="{{
+            currentLanguageSet?.historyData?.cancerScreeningHistory?.obstetric
+              ?.menstrualFlowduration
+          }}"
+          maxlength="2"
+          name="menstrualFlowDuration"
+          formControlName="menstrualFlowDuration"
+          (change)="checkMenstrualFlowDuration($event.target.value)"
+        />
+      </md-form-field>
+    </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+      <md-select
+        class="input-full-width"
+        placeholder="{{
+          currentLanguageSet?.historyData?.cancerScreeningHistory?.obstetric
+            ?.typeofFlow
+        }}"
+        name="menstrualFlowType"
+        formControlName="menstrualFlowType"
+      >
+        <md-option
+          *ngFor="let typeOfFlow of templateTypeOfFlow"
+          [value]="typeOfFlow"
+        >
+          {{ typeOfFlow }}
+        </md-option>
+      </md-select>
+    </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+      <label class="control-label" for="drug">{{
+        currentLanguageSet?.historyData?.cancerScreeningHistory?.obstetric
+          ?.dysmenorrhea
+      }}</label>
+      <div class="clearfix"></div>
+      <md-radio-group name="isDysmenorrhea" formControlName="isDysmenorrhea">
+        <md-radio-button color="primary" class="radio-button" [value]="true"
+          >{{currentLanguageSet?.common?.yes}}</md-radio-button
+        >
+        <md-radio-button color="primary" class="radio-button" [value]="false"
+          >{{currentLanguageSet?.common?.no}}</md-radio-button
+        >
+      </md-radio-group>
+    </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+      <label class="control-label" for="drug">{{
+        currentLanguageSet?.historyData?.cancerScreeningHistory?.obstetric
+          ?.interMenstrualBleeding
+      }}</label>
+      <div class="clearfix"></div>
+      <md-radio-group
+        name="isInterMenstrualBleeding"
+        formControlName="isInterMenstrualBleeding"
+      >
+        <md-radio-button color="primary" class="radio-button" [value]="true"
+          >{{currentLanguageSet?.common?.yes}}</md-radio-button
+        >
+        <md-radio-button color="primary" class="radio-button" [value]="false"
+          >{{currentLanguageSet?.common?.no}}</md-radio-button
+        >
+      </md-radio-group>
+    </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+      <md-form-field class=" input-full-width ">
+        <input
+          autocomplete="off"
+          mdInput
+          defaultNull
+          allowText="number"
+          placeholder="{{
+            currentLanguageSet?.historyData?.cancerScreeningHistory?.obstetric
+              ?.ageAtmenopause
+          }}"
+          maxlength="2"
+          name="menopauseAge"
+          formControlName="menopauseAge"
+          (change)="checkMenopauseAge($event)"
+        />
+      </md-form-field>
+    </div>
+
+    <div
+      class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box"
+      *ngIf="menopauseAge && menopauseAge <= patientAge && menopauseAge != 0"
+    >
+      <label class="control-label" for="drug">{{
+        currentLanguageSet?.historyData?.cancerScreeningHistory?.obstetric
+          ?.postMenopausalBleeding
+      }}</label>
+      <div class="clearfix"></div>
+      <md-radio-group
+        name="isPostMenopauseBleeding"
+        formControlName="isPostMenopauseBleeding"
+      >
+        <md-radio-button color="primary" class="radio-button" [value]="true"
+          >{{currentLanguageSet?.common?.yes}}</md-radio-button
+        >
+        <md-radio-button color="primary" class="radio-button" [value]="false"
+          >{{currentLanguageSet?.common?.no}}</md-radio-button
+        >
+      </md-radio-group>
+    </div>
+  </div>
+</div>

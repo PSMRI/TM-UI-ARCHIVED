@@ -1,0 +1,23 @@
+.checkbox-margin {
+    margin-top: 12px;
+}
+
+.select-full-width {
+    width: 100%;
+}
+
+.input-full-width {
+    width: 100%;
+}
+
+.mat-form-field {
+    line-height: unset;
+}
+
+.box {
+    height: 60px;
+}
+
+.checkbox {
+    padding: 15px 25px;
+}

@@ -1,0 +1,39 @@
+<div>
+   <div class="title info">
+      <h4>{{currentLanguageSet?.aBHACard}}</h4>
+      <button class="pull-right close-btn" tooltip="{{currentLanguageSet?.common.close}}" mdDialogClose (click)="closeDialog()" md-icon-button>
+        <md-icon class="md-24">close</md-icon>
+      </button>
+    </div>
+
+      <div class="image-container m-t-15">
+          
+
+        
+              <img width="600px" height="300px" id="imghealthIDCard" [src]="transform()" alt=""/>
+   
+      </div>
+ 
+ 
+    <div class="row" class="image-container m-t-10">
+        <button md-raised-button color="primary"(click)="downloadHealthIDCard()">
+          {{currentLanguageSet?.coreComponents?.download}}</button>
+            
+             
+                           
+    </div>
+
+  
+
+     </div>
+
+
+
+
+
+
+
+
+
+
+

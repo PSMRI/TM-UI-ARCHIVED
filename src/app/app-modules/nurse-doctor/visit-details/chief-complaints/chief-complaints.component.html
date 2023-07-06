@@ -1,0 +1,191 @@
+<!-- {{patientChiefComplaintsForm.value | json}} -->
+<div
+  class="row m-t-20"
+  *ngIf="!benChiefComplaints"
+  [formGroup]="patientChiefComplaintsForm"
+>
+  <div class="col-xs-12" formArrayName="complaints">
+    <div
+      class="row multi-row-select"
+      *ngFor="
+        let complaint of patientChiefComplaintsForm.controls.complaints[
+          'controls'
+        ];
+        let i = index;
+        let isLast = last;
+        let isOdd = odd
+      "
+      [ngClass]="{ odd: !isOdd }"
+    >
+      <div [formGroupName]="i">
+        <div class="col-xs-12 col-sm-6 col-md-4">         
+
+          <md-form-field class="input-full-width">
+            <input
+              autocomplete="off"
+              type="text"
+              mdInput
+              placeholder="{{currentLanguageSet?.nurseData?.chiefComplaintsDetails?.chiefComplaints}}"
+              name="chiefComplaint"
+              formControlName="chiefComplaint"
+              #complaintType
+              (keyup)="suggestChiefComplaintList(complaint, i)"
+              [mdAutocomplete]="auto"
+            />
+          </md-form-field>
+
+          <md-autocomplete
+            #auto="mdAutocomplete"
+            [displayWith]="displayChiefComplaint"
+            (optionSelected)="
+              filterComplaints($event.option.value, i);
+              getSCTid($event.option.value, i)
+            "
+          >
+            <md-option
+              *ngFor="let compl of suggestedChiefComplaintList[i]"
+              [value]="compl"
+            >
+              {{ compl.chiefComplaint }}
+            </md-option>
+          </md-autocomplete>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-4" [hidden]="true">
+          <md-form-field class="input-full-width">
+            <input
+              autocomplete="off"
+              mdInput
+              defaultNull
+              readonly="true"
+              name="SCTID"
+              formControlName="conceptID"
+              placeholder="{{currentLanguageSet?.nurseData?.chiefComplaintsDetails?.SCTID}}"
+            />
+          </md-form-field>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-4">
+          <md-form-field class="input-full-width">
+            <input
+              autocomplete="off"
+              mdInput
+              defaultNull
+              allowText="number"
+              maxlength="2"
+              name="duration"
+              formControlName="duration"
+              placeholder="{{currentLanguageSet?.nurseData?.chiefComplaintsDetails?.duration}}"
+              [disableFormControl]="!complaint.value.chiefComplaint"
+              (change)="validateDuration(complaint)"
+            />
+          </md-form-field>
+        </div>
+
+        <div class="col-xs-12 col-sm-6 col-md-4 box">
+          <md-select
+            class="input-full-width"
+            name="unitOfDuration"
+            formControlName="unitOfDuration"
+            placeholder="{{currentLanguageSet?.nurseData?.chiefComplaintsDetails?.unitOfDuration}}"
+            [disableFormControl]="!complaint.value.duration"
+            (change)="validateDuration(complaint)"
+          >
+            <md-option value="Hours">Hour(s)</md-option>
+            <md-option value="Days">Day(s)</md-option>
+            <md-option value="Weeks">Week(s)</md-option>
+            <md-option value="Months">Month(s)</md-option>
+            <md-option value="Years">Year(s)</md-option>
+          </md-select>
+        </div>
+
+        <div class="col-xs-8 col-sm-4 col-md-4">
+          <md-form-field class="textarea-full-width">
+            <textarea
+              mdInput allowText="textAreaValidator"
+              defaultNull
+              mdTextareaAutosize
+              maxRows="3"
+              minRows="6"
+              name="description"
+              formControlName="description"
+              placeholder="{{currentLanguageSet?.nurseData?.chiefComplaintsDetails?.description}}"
+              maxlength="300"
+              [disableFormControl]="!complaint.value.chiefComplaint"
+            ></textarea>
+          </md-form-field>
+        </div>
+
+        <div class="col-xs-4 col-sm-2 col-md-4">
+          <button
+            type="button"
+            md-mini-fab
+            [id]="'removeBtn' + i"
+            *ngIf="i != 0 || (i == 0 && complaint.touched)"
+            (click)="removeCheifComplaint(i, complaint)"
+            color="warn"
+          >
+            <span class="material-icons">close</span>
+          </button>
+          <button
+            type="button"
+            md-mini-fab
+            [id]="'addBtn' + i"
+            *ngIf="isLast"
+            [disabled]="checkComplaintFormValidity(complaint)"
+            (click)="addCheifComplaint()"
+            color="primary"
+          >
+            <span class="material-icons">add</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row m-t-10" *ngIf="benChiefComplaints">
+  <div class="col-xs-12">
+    <table class="table table-bordered" aria-describedby="benChiefComplaintsTbl">
+      <thead>
+        <tr>
+          <!-- <th id="SCTID">{{currentLanguageSet?.nurseData?.chiefComplaintsDetails?.SCTID}}</th> -->
+          <th id="">{{currentLanguageSet?.nurseData?.chiefComplaintsDetails?.chiefComplaints}}</th>
+          <th id="duration">{{currentLanguageSet?.nurseData?.chiefComplaintsDetails?.duration}}</th>
+          <th id="unitOfDuration">{{currentLanguageSet?.nurseData?.chiefComplaintsDetails?.unitOfDuration}}</th>
+          <th id="description">{{currentLanguageSet?.nurseData?.chiefComplaintsDetails?.description}}</th>
+        </tr>
+      </thead>
+      <tbody *ngIf="benChiefComplaints.length >= 1">
+        <tr *ngFor="let complaint of benChiefComplaints">
+          <ng-template [ngIf]="complaint.chiefComplaint">
+            <!-- <td>{{ complaint.conceptID }}</td> -->
+            <td>{{ complaint.chiefComplaint }}</td>
+            <td>{{ complaint.duration }}</td>
+            <td>
+              {{
+                complaint.unitOfDuration == "Hours"
+                  ? "Hour(s)"
+                  : complaint.unitOfDuration == "Days"
+                  ? "Day(s)"
+                  : complaint.unitOfDuration == "Weeks"
+                  ? "Week(s)"
+                  : complaint.unitOfDuration == "Months"
+                  ? "Month(s)"
+                  : complaint.unitOfDuration == "Years"
+                  ? "Year(s)"
+                  : complaint.unitOfDuration
+              }}
+            </td>
+            <td>{{ complaint.description }}</td>
+          </ng-template>
+        </tr>
+      </tbody>
+      <tbody *ngIf="benChiefComplaints.length == 0">
+        <tr>
+          <td colspan="5" class="text-center">
+            <p>{{currentLanguageSet?.nurseData?.chiefComplaintsDetails?.noCheifComplaint}}</p>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

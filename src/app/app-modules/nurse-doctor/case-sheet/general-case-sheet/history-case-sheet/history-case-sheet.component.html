@@ -1,0 +1,1353 @@
+<div class="container">
+  <div class="row col-xs-12">
+    <h2 class="text-center">
+      {{ current_language_set?.historyData?.history }}
+    </h2>
+    <hr />
+  </div>
+  <!--Past Illness Starts-->
+  <div class="row m-t-10" *ngIf="visitCategory !== 'NCD screening'">
+    <div class="col-xs-12">
+      <h4>{{ current_language_set?.historyData?.ancHistory?.pastHistory }}:</h4>
+    </div>
+    <div class="col-xs-12">
+      <table class="table table-bordered table-striped casesheet-table" aria-describedby="PastIllnessStartsTbl">
+        <thead>
+          <tr>
+            <th id="serialNo">{{ current_language_set?.casesheet?.serialNo }}</th>
+            <th id="illness">
+              {{
+                current_language_set?.historyData?.ancHistory
+                  ?.pastIllnessDataANC_OPD_NCD_PNC?.illness
+              }}
+            </th>
+            <th id="duration">
+              {{
+                current_language_set?.nurseData?.chiefComplaintsDetails
+                  ?.duration
+              }}
+            </th>
+            <th id="unitOfDuration">
+              {{
+                current_language_set?.nurseData?.chiefComplaintsDetails
+                  ?.unitOfDuration
+              }}
+            </th>
+          </tr>
+        </thead>
+        <tbody *ngIf="!pastIllnessList">
+          <tr>
+            <td class="text-center" colspan="4">
+              {{ current_language_set?.common?.noRecordFound }}
+            </td>
+          </tr>
+        </tbody>
+        <tbody *ngIf="pastIllnessList">
+          <tr *ngFor="let pastIllness of pastIllnessList; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ pastIllness.illnessType }}</td>
+            <td>{{ pastIllness.timePeriodAgo }}</td>
+            <td>
+              {{
+                pastIllness.timePeriodUnit == "Hours"
+                  ? "Hour(s)"
+                  : pastIllness.timePeriodUnit == "Days"
+                  ? "Day(s)"
+                  : pastIllness.timePeriodUnit == "Weeks"
+                  ? "Week(s)"
+                  : pastIllness.timePeriodUnit == "Months"
+                  ? "Month(s)"
+                  : pastIllness.timePeriodUnit == "Years"
+                  ? "Year(s)"
+                  : pastIllness.timePeriodUnit
+              }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <!--Past Illness ends-->
+
+  <!--Past Surgery Starts-->
+  <div class="row m-t-10" *ngIf="visitCategory !== 'NCD screening'">
+    <div class="col-xs-12">
+      <h4>{{ current_language_set?.casesheet?.pastSurgery }}:</h4>
+    </div>
+    <div class="col-xs-12">
+      <table class="table table-bordered table-striped casesheet-table" aria-describedby="PastSurgeryTbl">
+        <thead>
+          <tr>
+            <th id="serialNo">{{ current_language_set?.casesheet?.serialNo }}</th>
+            <th id="surgery">{{ current_language_set?.common?.surgery }}</th>
+            <th id="duration">
+              {{
+                current_language_set?.nurseData?.chiefComplaintsDetails
+                  ?.duration
+              }}
+            </th>
+            <th id="unitOfDuration">
+              {{
+                current_language_set?.nurseData?.chiefComplaintsDetails
+                  ?.unitOfDuration
+              }}
+            </th>
+          </tr>
+        </thead>
+        <tbody *ngIf="!pastSurgeryList">
+          <tr>
+            <td class="text-center" colspan="4">
+              {{ current_language_set?.common?.noRecordFound }}
+            </td>
+          </tr>
+        </tbody>
+        <tbody *ngIf="pastSurgeryList">
+          <tr *ngFor="let pastSurgery of pastSurgeryList; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ pastSurgery.surgeryType }}</td>
+            <td>{{ pastSurgery.timePeriodAgo }}</td>
+            <td>
+              {{
+                pastSurgery.timePeriodUnit == "Hours"
+                  ? "Hour(s)"
+                  : pastSurgery.timePeriodUnit == "Days"
+                  ? "Day(s)"
+                  : pastSurgery.timePeriodUnit == "Weeks"
+                  ? "Week(s)"
+                  : pastSurgery.timePeriodUnit == "Months"
+                  ? "Month(s)"
+                  : pastSurgery.timePeriodUnit == "Years"
+                  ? "Year(s)"
+                  : pastSurgery.timePeriodUnit
+              }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <!--Past Surgery Ends-->
+
+  <!--Family History Starts-->
+  <div class="row m-t-10">
+    <div class="col-xs-12">
+      <h4>
+        {{
+          current_language_set?.historyData?.ancHistory
+            ?.familyHistoryDataANC_OPD_NCD_PNC?.familyHistory
+        }}:
+      </h4>
+    </div>
+    <div class="col-xs-12">
+      <table class="table table-bordered table-striped" aria-describedby="FamilyHistoryTbl">
+        <thead>
+          <tr>
+            <th style="width: 10%" id="serialNo">
+              {{ current_language_set?.casesheet?.serialNo }}
+            </th>
+            <th style="width: 20%" id="disease">
+              {{ current_language_set?.common?.disease }}
+            </th>
+            <th style="width: 40%" id="fMembers">{{current_language_set?.historyData?.cancerScreeningHistory?.familyMedical?.familyMembers}}</th>
+            <!-- <th style="width: 15%" id="sCode">{{current_language_set?.historyData?.opd_NCD_PNCHistory?.otherVaccine?.sctCode}}</th> -->
+            <!-- <th style="width: 15%" id="sterm">{{current_language_set?.historyData?.opd_NCD_PNCHistory?.otherVaccine?.sctTerm}}</th> -->
+          </tr>
+        </thead>
+        <tbody
+          *ngIf="
+            !familyHistory?.familyDiseaseList ||
+            familyHistory?.familyDiseaseList.length == 0
+          "
+        >
+          <tr>
+            <td class="text-center" colspan="5">
+              {{ current_language_set?.common?.noRecordFound }}
+            </td>
+          </tr>
+        </tbody>
+        <tbody *ngIf="familyHistory?.familyDiseaseList">
+          <tr
+            *ngFor="
+              let familyDisease of familyHistory?.familyDiseaseList;
+              let i = index
+            "
+          >
+            <td>{{ i + 1 }}</td>
+            <td>{{ familyDisease.diseaseType }}</td>
+            <td>{{ familyDisease.familyMembers }}</td>
+            <!-- <td>{{ familyDisease.snomedCode }}</td> -->
+            <!-- <td>{{ familyDisease.snomedTerm }}</td> -->
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="col-xs-12 m-t-10" *ngIf="visitCategory !== 'NCD screening'">
+      <table class="table table-no-border casesheet-table" aria-describedby="ancHistoryTbl">
+        <tr>
+          <th id="H_geneticDisorders">
+            {{
+              current_language_set?.historyData?.ancHistory
+                ?.familyHistoryDataANC_OPD_NCD_PNC?.H_geneticDisorders
+            }}:
+          </th>
+          <td>
+            {{
+              familyHistory?.isGeneticDisorder == undefined
+                ? null
+                : familyHistory?.isGeneticDisorder
+                ? "Yes"
+                : "No"
+            }}
+          </td>
+          <th id="geneticDisorders">
+            {{
+              current_language_set?.historyData?.ancHistory
+                ?.familyHistoryDataANC_OPD_NCD_PNC?.geneticDisorders
+            }}:
+          </th>
+          <td>{{ familyHistory?.geneticDisorder }}</td>
+        </tr>
+        <tr>
+          <th id="consanguineousMarriage">
+            {{
+              current_language_set?.historyData?.ancHistory
+                ?.familyHistoryDataANC_OPD_NCD_PNC?.consanguineousMarriage
+            }}:
+          </th>
+          <td>
+            {{
+              familyHistory?.isConsanguineousMarrige == undefined
+                ? null
+                : familyHistory?.isConsanguineousMarrige
+                ? "Yes"
+                : "No"
+            }}
+          </td>
+          <td colspan="2"></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <!--Family History Ends-->
+
+  <!--Child Optional Vaccine Starts-->
+  <div class="row m-t-10" *ngIf="beneficiary && beneficiary?.ageVal <= 16 && visitCategory !== 'NCD screening'">
+    <div class="col-xs-12">
+      <h4>{{ current_language_set?.casesheet?.childVaccine }}</h4>
+    </div>
+    <div class="col-xs-12">
+      <table class="table table-bordered table-striped casesheet-table" aria-describedby="ChildOptionalVaccineTbl">
+        <thead>
+          <tr>
+            <th id="serialNo">{{ current_language_set?.casesheet?.serialNo }}</th>
+            <th id="vaccine">
+              {{
+                current_language_set?.historyData?.opd_NCD_PNCHistory
+                  ?.otherVaccine?.vaccine
+              }}:
+            </th>
+            <th id="otherVaccineName">
+              {{
+                current_language_set?.historyData?.opd_NCD_PNCHistory?.otherVaccine
+                  ?.otherVaccineName
+              }}
+            </th>
+            <!-- <th id="sctCode">
+              {{
+                current_language_set?.historyData?.opd_NCD_PNCHistory
+                  ?.otherVaccine?.sctCode
+              }}:
+            </th>
+            <th id="sctTerm">
+              {{
+                current_language_set?.historyData?.opd_NCD_PNCHistory
+                  ?.otherVaccine?.sctTerm
+              }}:
+            </th> -->
+            <th id="ageatReceived">
+              {{
+                current_language_set?.historyData?.opd_NCD_PNCHistory
+                  ?.otherVaccine?.ageatReceived
+              }}:
+            </th>
+            <th id="facilityName">
+              {{
+                current_language_set?.historyData?.opd_NCD_PNCHistory
+                  ?.otherVaccine?.facilityName
+              }}:
+            </th>
+          </tr>
+        </thead>
+        <tbody
+          *ngIf="
+            !childOptionalVaccineList || childOptionalVaccineList.length == 0
+          "
+        >
+          <tr>
+            <td class="text-center" colspan="6">
+              {{ current_language_set?.common?.noRecordFound }}
+            </td>
+          </tr>
+        </tbody>
+        <tbody *ngIf="childOptionalVaccineList">
+          <tr
+            *ngFor="
+              let childOptionalVaccine of childOptionalVaccineList;
+              let i = index
+            "
+          >
+            <td>{{ i + 1 }}</td>
+            <td>{{ childOptionalVaccine.vaccineName }}</td>
+            <td>{{ childOptionalVaccine.otherVaccineName }}</td>
+            <!-- <td>{{ childOptionalVaccine.sctCode }}</td> -->
+            <!-- <td>{{ childOptionalVaccine.sctTerm }}</td> -->
+            <td>{{ childOptionalVaccine.actualReceivingAge }}</td>
+            <td>{{ childOptionalVaccine.receivedFacilityName }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <!--Child Optional Vaccine Ends-->
+
+  <!--Comorbid condition Starts-->
+  <div class="row m-t-10" *ngIf="visitCategory !== 'NCD screening'">
+    <div class="col-xs-12">
+      <h4>{{ current_language_set?.casesheet?.comoridCond }}:</h4>
+    </div>
+    <div class="col-xs-12">
+      <table class="table table-bordered table-striped casesheet-table" aria-describedby="ComorbidconditionTbl">
+        <thead>
+          <tr>
+            <th id="serialNo">{{ current_language_set?.casesheet?.serialNo }}</th>
+            <th id="comoridCond">{{ current_language_set?.casesheet?.comoridCond }}</th>
+            <th id="duration">
+              {{
+                current_language_set?.nurseData?.chiefComplaintsDetails
+                  ?.duration
+              }}
+            </th>
+            <th id="unitOfDuration">
+              {{
+                current_language_set?.nurseData?.chiefComplaintsDetails
+                  ?.unitOfDuration
+              }}
+            </th>
+          </tr>
+        </thead>
+        <tbody
+          *ngIf="!comorbidConditionList || comorbidConditionList.length == 0"
+        >
+          <tr>
+            <td class="text-center" colspan="4">
+              {{ current_language_set?.common?.noRecordFound }}
+            </td>
+          </tr>
+        </tbody>
+        <tbody *ngIf="comorbidConditionList">
+          <tr
+            *ngFor="
+              let comorbidityConditions of comorbidConditionList;
+              let i = index
+            "
+          >
+            <td>{{ i + 1 }}</td>
+            <td>{{ comorbidityConditions.comorbidCondition }}</td>
+            <td>{{ comorbidityConditions.timePeriodAgo }}</td>
+            <td>
+              {{
+                comorbidityConditions.timePeriodUnit == "Hours"
+                  ? "Hour(s)"
+                  : comorbidityConditions.timePeriodUnit == "Days"
+                  ? "Day(s)"
+                  : comorbidityConditions.timePeriodUnit == "Weeks"
+                  ? "Week(s)"
+                  : comorbidityConditions.timePeriodUnit == "Months"
+                  ? "Month(s)"
+                  : comorbidityConditions.timePeriodUnit == "Years"
+                  ? "Year(s)"
+                  : comorbidityConditions.timePeriodUnit
+              }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <!--Comorbid condition Ends-->
+
+  <!--Medication History Starts-->
+  <div class="row m-t-10" *ngIf="visitCategory !== 'NCD screening'">
+    <div class="col-xs-12">
+      <h4>
+        {{
+          current_language_set?.historyData?.ancHistory
+            ?.medicationANC_OPD_NCD_PNC?.medicationHistory
+        }}:
+      </h4>
+    </div>
+    <div class="col-xs-12">
+      <table class="table table-bordered table-striped casesheet-table" aria-describedby="MedicationHistoryTbl">
+        <thead>
+          <tr>
+            <th id="serialNo">{{ current_language_set?.casesheet?.serialNo }}</th>
+            <th id="medicationHistory">
+              {{
+                current_language_set?.historyData?.ancHistory
+                  ?.medicationANC_OPD_NCD_PNC?.medicationHistory
+              }}
+            </th>
+            <th id="duration">
+              {{
+                current_language_set?.nurseData?.chiefComplaintsDetails
+                  ?.duration
+              }}
+            </th>
+            <th id="unitOfDuration">
+              {{
+                current_language_set?.nurseData?.chiefComplaintsDetails
+                  ?.unitOfDuration
+              }}
+            </th>
+          </tr>
+        </thead>
+        <tbody
+          *ngIf="!medicationHistoryList || medicationHistoryList.length == 0"
+        >
+          <tr>
+            <td class="text-center" colspan="4">
+              {{ current_language_set?.common?.noRecordFound }}
+            </td>
+          </tr>
+        </tbody>
+        <tbody *ngIf="medicationHistoryList">
+          <tr
+            *ngFor="
+              let medicationHistory of medicationHistoryList;
+              let i = index
+            "
+          >
+            <td>{{ i + 1 }}</td>
+            <td>{{ medicationHistory.currentMedication }}</td>
+            <td>{{ medicationHistory.timePeriodAgo }}</td>
+            <td>
+              {{
+                medicationHistory.timePeriodUnit == "Hours"
+                  ? "Hour(s)"
+                  : medicationHistory.timePeriodUnit == "Days"
+                  ? "Day(s)"
+                  : medicationHistory.timePeriodUnit == "Weeks"
+                  ? "Week(s)"
+                  : medicationHistory.timePeriodUnit == "Months"
+                  ? "Month(s)"
+                  : medicationHistory.timePeriodUnit == "Years"
+                  ? "Year(s)"
+                  : medicationHistory.timePeriodUnit
+              }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <!--Medication History Ends-->
+
+  <!--Menstrual History Starts-->
+  <div
+    class="row m-t-10"
+    *ngIf="
+      beneficiary &&
+      beneficiary?.ageVal >= 8 &&
+      beneficiary?.genderName != 'Male'
+      && visitCategory !== 'NCD screening'
+    "
+  >
+    <div class="col-xs-12">
+      <h4>
+        {{
+          current_language_set?.historyData?.ancHistory?.menstrualHistoryANC
+            ?.menstrualHistory
+        }}:
+      </h4>
+    </div>
+
+    <div class="col-xs-12">
+      <table class="table table-no-border casesheet-table" aria-describedby="MenstrualHistoryTbl">
+        <tr>
+          <th id="menstrualCycleStatus">
+            {{
+              current_language_set?.historyData?.ancHistory?.menstrualHistoryANC
+                ?.menstrualCycleStatus
+            }}:
+          </th>
+          <td>{{ menstrualHistory?.menstrualCycleStatus }}</td>
+          <th id="regularityofMenstrualCycle">
+            {{
+              current_language_set?.historyData?.cancerScreeningHistory
+                ?.obstetric?.regularityofMenstrualCycle
+            }}:
+          </th>
+          <td>{{ menstrualHistory?.regularity }}</td>
+        </tr>
+
+        <tr>
+          <th id="lengthofMenstrualCycle">
+            {{
+              current_language_set?.historyData?.cancerScreeningHistory
+                ?.obstetric?.lengthofMenstrualCycle
+            }}:
+          </th>
+          <td>{{ menstrualHistory?.cycleLength }}</td>
+          <th id="menstrualFlowduration">
+            {{
+              current_language_set?.historyData?.cancerScreeningHistory
+                ?.obstetric?.menstrualFlowduration
+            }}:
+          </th>
+          <td>{{ menstrualHistory?.bloodFlowDuration }}</td>
+        </tr>
+
+        <tr>
+          <th id="menstrualProblems">
+            {{
+              current_language_set?.historyData?.opd_NCD_PNCHistory?.menstrual
+                ?.menstrualProblems
+            }}:
+          </th>
+          <td>{{ menstrualHistory?.problemName }}</td>
+          <th id="lastMenstrualPeriod">
+            {{
+              current_language_set?.historyData?.opd_NCD_PNCHistory?.menstrual
+                ?.lastMenstrualPeriod
+            }}:
+          </th>
+          <td>{{ menstrualHistory?.lMPDate | date: "dd/MM/yyyy" }}</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <!--Menstrual History Ends-->
+
+  <!--Developmental History Starts-->
+  <div class="row m-t-10" *ngIf="beneficiary && beneficiary?.ageVal <= 2 && visitCategory !== 'NCD screening'">
+    <div class="col-xs-12">
+      <h4>
+        {{
+          current_language_set?.historyData?.opd_NCD_PNCHistory?.development
+            ?.developmentHistory
+        }}
+      </h4>
+    </div>
+
+    <div class="col-xs-12">
+      <table class="table table-no-border casesheet-table" id="DevelopmentalHistoryTbl" aria-describedby="DevelopmentalHistoryTbl">
+        <tr>
+          <th id="grossMotorMilestone">
+            {{
+              current_language_set?.historyData?.opd_NCD_PNCHistory?.development
+                ?.grossMotorMilestone
+            }}:
+          </th>
+          <td>{{ developmentalHistory?.grossMotorMilestone }}</td>
+          <th id="fineMotorMilestone">
+            {{
+              current_language_set?.historyData?.opd_NCD_PNCHistory?.development
+                ?.fineMotorMilestone
+            }}:
+          </th>
+          <td>{{ developmentalHistory?.fineMotorMilestone }}</td>
+        </tr>
+
+        <tr>
+          <th id="socialMilestone">
+            {{
+              current_language_set?.historyData?.opd_NCD_PNCHistory?.development
+                ?.socialMilestone
+            }}:
+          </th>
+          <td>{{ developmentalHistory?.socialMilestone }}</td>
+          <th id="languageMilestone">
+            {{
+              current_language_set?.historyData?.opd_NCD_PNCHistory?.development
+                ?.languageMilestone
+            }}:
+          </th>
+          <td>{{ developmentalHistory?.languageMilestone }}</td>
+        </tr>
+
+        <tr>
+          <th id="developmentalProblems">
+            {{
+              current_language_set?.historyData?.opd_NCD_PNCHistory?.development
+                ?.developmentalProblems
+            }}:
+          </th>
+          <td>{{ developmentalHistory?.developmentProblem }}</td>
+          <td colspan="2"></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <!--Developmental History Ends-->
+
+  <!--Feeding History Starts-->
+  <div class="row m-t-10" *ngIf="beneficiary && beneficiary?.ageVal <= 6 && visitCategory !== 'NCD screening'">
+    <div class="col-xs-12">
+      <h4>
+        {{
+          current_language_set?.historyData?.opd_NCD_PNCHistory?.feeding
+            ?.feedingHistory
+        }}
+      </h4>
+    </div>
+
+    <div class="col-xs-12">
+      <table class="table table-no-border casesheet-table" aria-describedby="FeedingHistoryTbl">
+        <tr>
+          <th id="typeofFeeds">
+            {{
+              current_language_set?.historyData?.opd_NCD_PNCHistory?.feeding
+                ?.typeofFeeds
+            }}:
+          </th>
+          <td>{{ feedingHistory?.typeOfFeed }}</td>
+          <th id="ageatweaning">
+            {{
+              current_language_set?.historyData?.opd_NCD_PNCHistory?.feeding
+                ?.ageatweaning
+            }}:
+          </th>
+          <td>{{ feedingHistory?.compFeedStartAge }}</td>
+        </tr>
+
+        <tr>
+          <th id="numberofComplimentaryfoodservings">
+            {{
+              current_language_set?.historyData?.opd_NCD_PNCHistory?.feeding
+                ?.numberofComplimentaryfoodservings
+            }}:
+          </th>
+          <td>{{ feedingHistory?.noOfCompFeedPerDay }}</td>
+          <th id="foodIntoleranceStatus">
+            {{
+              current_language_set?.historyData?.opd_NCD_PNCHistory?.feeding
+                ?.foodIntoleranceStatus
+            }}:
+          </th>
+          <td>{{ feedingHistory?.foodIntoleranceStatus }}</td>
+        </tr>
+
+        <tr>
+          <th id="typeofFoodIntolerance">
+            {{
+              current_language_set?.historyData?.opd_NCD_PNCHistory?.feeding
+                ?.typeofFoodIntolerance
+            }}:
+          </th>
+          <td>
+            {{
+              feedingHistory?.typeofFoodIntolerance == undefined
+                ? null
+                : feedingHistory?.typeofFoodIntolerance
+                ? "Yes"
+                : "No"
+            }}
+          </td>
+          <td></td>
+          <td></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <!--Feeding History Ends-->
+
+  <!--Perinatal History Starts-->
+  <div class="row m-t-10" *ngIf="beneficiary && beneficiary?.ageVal <= 1 && visitCategory !== 'NCD screening'">
+    <div class="col-xs-12">
+      <h4>
+        {{
+          current_language_set?.historyData?.opd_NCD_PNCHistory?.perinatal_OPD
+            ?.perinatalHistory
+        }}
+      </h4>
+    </div>
+
+    <div class="col-xs-12">
+      <table class="table table-no-border casesheet-table" aria-describedby="PerinatalHistoryTbl">
+        <tr>
+          <th id="placeofDelivery">
+            {{
+              current_language_set?.historyData?.opd_NCD_PNCHistory
+                ?.perinatal_OPD?.placeofDelivery
+            }}:
+          </th>
+          <td>{{ perinatalHistory?.placeOfDelivery }}</td>
+          <th id="typeofDelivery">
+            {{
+              current_language_set?.historyData?.opd_NCD_PNCHistory
+                ?.perinatal_OPD?.typeofDelivery
+            }}:
+          </th>
+          <td>{{ perinatalHistory?.typeOfDelivery }}</td>
+        </tr>
+
+        <tr>
+          <th id="complicationatBirth">
+            {{
+              current_language_set?.historyData?.opd_NCD_PNCHistory
+                ?.perinatal_OPD?.complicationatBirth
+            }}:
+          </th>
+          <td>{{ perinatalHistory?.complicationAtBirth }}</td>
+          <th id="gestation">
+            {{
+              current_language_set?.historyData?.opd_NCD_PNCHistory
+                ?.perinatal_OPD?.gestation
+            }}:
+          </th>
+          <td>{{ perinatalHistory?.gestation }}</td>
+        </tr>
+
+        <tr>
+          <th id="birthWeight">
+            {{
+              current_language_set?.historyData?.opd_NCD_PNCHistory
+                ?.perinatal_OPD?.birthWeight
+            }}:
+          </th>
+          <td>{{ perinatalHistory?.birthWeight_kg }}</td>
+          <td></td>
+          <td></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <!--Perinatal History Ends-->
+
+  <!--Immunization History Starts-->
+  <div class="row m-t-10" *ngIf="beneficiary && beneficiary?.ageVal <= 16 && visitCategory !== 'NCD screening'">
+    <div class="col-xs-12">
+      <h4>
+        {{
+          current_language_set?.historyData?.opd_NCD_PNCHistory?.immunization
+            ?.ImmunizationHistory
+        }}
+      </h4>
+    </div>
+
+    <div class="col-xs-12">
+      <table class="table table-bordered table-striped casesheet-table" aria-describedby="ImmunizationHistoryTbl">
+        <thead>
+          <tr>
+            <th id="age">
+              {{
+                current_language_set?.historyData?.opd_NCD_PNCHistory
+                  ?.immunization?.age
+              }}:
+            </th>
+            <th id="Vaccines">
+              {{
+                current_language_set?.historyData?.opd_NCD_PNCHistory
+                  ?.immunization?.Vaccines
+              }}:
+            </th>
+            <!-- <th id="sctCode">
+              {{
+                current_language_set?.historyData?.opd_NCD_PNCHistory
+                  ?.immunization?.sctCode
+              }}:
+            </th>
+            <th id="sctTerm">
+              {{
+                current_language_set?.historyData?.opd_NCD_PNCHistory
+                  ?.immunization?.sctTerm
+              }}:
+            </th> -->
+            <th id="Status">
+              {{
+                current_language_set?.historyData?.opd_NCD_PNCHistory
+                  ?.immunization?.Status
+              }}:
+            </th>
+          </tr>
+        </thead>
+        <tbody
+          *ngIf="
+            !immunizationHistory ||
+            immunizationHistory?.immunizationList.length == 0
+          "
+        >
+          <tr>
+            <td class="text-center" colspan="3">
+              {{ current_language_set?.common?.noRecordFound }}
+            </td>
+          </tr>
+        </tbody>
+        <tbody *ngIf="immunizationHistory">
+          <ng-container
+            *ngFor="let immunization of immunizationHistory?.immunizationList"
+          >
+            <tr>
+              <th [attr.rowspan]="immunization.vaccines.length + 1" id="defaultReceivingAge">
+                {{ immunization.defaultReceivingAge }}
+              </th>
+            </tr>
+            <tr *ngFor="let vaccine of immunization?.vaccines">
+              <td>{{ vaccine.vaccine }}</td>
+              <!-- <td>{{ vaccine.sctCode }}</td> -->
+              <!-- <td>{{ vaccine.sctTerm }}</td> -->
+              <td>
+                <md-checkbox [checked]="vaccine.status" disabled></md-checkbox>
+              </td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <!--Immunization History Ends-->
+
+  <!--Personal History Starts-->
+  <div class="row m-t-10">
+    <div class="col-xs-12">
+      <h4>
+        {{
+          current_language_set?.historyData?.cancerScreeningHistory?.personal
+            ?.personalHistory
+        }}:
+      </h4>
+    </div>
+
+    <div class="col-xs-12">
+      <table class="table table-no-border casesheet-table" aria-describedby="PersonalHistoryTbl">
+        <tr>
+          <th id="dietaryType">
+            {{
+              current_language_set?.historyData?.ancHistory
+                ?.personalHistoryANC_OPD_NCD_PNC?.dietaryType
+            }}:
+          </th>
+          <td>{{ personalHistory?.dietaryType }}</td>
+          <th id="physicalActivityType">
+            {{
+              current_language_set?.historyData?.ancHistory
+                ?.personalHistoryANC_OPD_NCD_PNC?.physicalActivityType
+            }}:
+          </th>
+          <td>{{ personalHistory?.physicalActivityType }}</td>
+        </tr>
+
+        <tr *ngIf="beneficiary && beneficiary?.ageVal >= 18">
+          <th id="riskySexualPracticesStatus">
+            {{
+              current_language_set?.historyData?.ancHistory
+                ?.personalHistoryANC_OPD_NCD_PNC?.riskySexualPracticesStatus
+            }}:
+          </th>
+
+          <td>
+            {{
+              personalHistory?.riskySexualPracticesStatus == undefined
+                ? null
+                : personalHistory?.riskySexualPracticesStatus
+                ? "Yes"
+                : "No"
+            }}
+          </td>
+          <td colspan="2"></td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="col-xs-12 m-t-10">
+      <table class="table table-no-border casesheet-table" aria-describedby="">
+        <tbody>
+          <tr>
+            <th id="allergicStatus">
+              {{
+                current_language_set?.historyData?.ancHistory
+                  ?.personalHistoryANC_OPD_NCD_PNC?.allergicStatus
+                  ?.allergicStatus
+              }}:
+            </th>
+            <td>{{ personalHistory?.allergyStatus }}</td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="col-xs-12 m-t-10">
+      <table class="table table-bordered table-striped" aria-describedby="ancHistoryTbl1">
+        <thead>
+          <tr>
+            <th style="width: 5%" id="serialNo">
+              {{ current_language_set?.casesheet?.serialNo }}
+            </th>
+            <th style="width: 15%" id="allergyType">
+              {{
+                current_language_set?.historyData?.ancHistory
+                  ?.personalHistoryANC_OPD_NCD_PNC?.allergicStatus?.allergyType
+              }}
+            </th>
+            <th style="width: 20%" id="allergenName">
+              {{
+                current_language_set?.historyData?.ancHistory
+                  ?.personalHistoryANC_OPD_NCD_PNC?.allergicStatus
+                  ?.allergenName
+              }}
+            </th>
+            <!-- <th style="width: 20%" id="sCode">{{current_language_set?.historyData?.opd_NCD_PNCHistory?.otherVaccine?.sctCode}}</th> -->
+            <!-- <th style="width: 20%" id="sTerm">{{current_language_set?.historyData?.opd_NCD_PNCHistory?.otherVaccine?.sctTerm}}</th> -->
+            <th style="width: 40%" id="">
+              {{
+                current_language_set?.historyData?.ancHistory
+                  ?.personalHistoryANC_OPD_NCD_PNC?.allergicStatus
+                  ?.typeofReaction
+              }}
+            </th>
+          </tr>
+        </thead>
+        <tbody *ngIf="personalHistory?.allergicList?.length == 0">
+          <tr>
+            <td class="text-center" colspan="5">
+              {{ current_language_set?.common?.noRecordFound }}
+            </td>
+          </tr>
+        </tbody>
+        <tbody *ngIf="personalHistory?.allergicList">
+          <tr
+            *ngFor="let allergy of personalHistory?.allergicList; let i = index"
+          >
+            <td>{{ i + 1 }}</td>
+            <td>{{ allergy.allergyType }}</td>
+            <!-- <td>{{allergy.snomedTerm}}</td> -->
+            <!-- <td>{{allergy.snomedCode}}</td> -->
+            <!-- <td>{{allergy.snomedTerm}}</td> -->
+            <td>{{ allergy.allergicReactionType }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div
+      class="col-xs-12 m-t-10"
+      *ngIf="beneficiary && beneficiary?.ageVal >= 13"
+    >
+      <table class="table table-no-border casesheet-table" aria-describedby="ancHistoryTbl2">
+        <tbody>
+          <tr>
+            <th id="tobaccoUseStatus">
+              {{
+                current_language_set?.historyData?.ancHistory
+                  ?.personalHistoryANC_OPD_NCD_PNC?.tobaccoData
+                  ?.tobaccoUseStatus
+              }}:
+            </th>
+            <td>{{ personalHistory?.tobaccoUseStatus }}</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div
+      class="col-xs-12 m-t-10"
+      *ngIf="beneficiary && beneficiary?.ageVal >= 13"
+    >
+      <table class="table table-bordered table-striped" aria-describedby="ancHistoryTbl3">
+        <thead>
+          <tr>
+            <th style="width: 5%" id="serialNo">
+              {{ current_language_set?.casesheet?.serialNo }}
+            </th>
+            <th style="width: 20%" id="typeofTobaccoUse">
+              {{
+                current_language_set?.historyData?.ancHistory
+                  ?.personalHistoryANC_OPD_NCD_PNC?.tobaccoData
+                  ?.typeofTobaccoUse
+              }}
+            </th>
+            <th style="width: 25%" id="numberPerDay">
+              {{
+                current_language_set?.historyData?.ancHistory
+                  ?.personalHistoryANC_OPD_NCD_PNC?.tobaccoData?.numberPerDay
+              }}
+            </th>
+            <th style="width: 25%" id="duration1">
+              {{
+                current_language_set?.nurseData?.chiefComplaintsDetails
+                  ?.duration
+              }}
+            </th>
+            <th style="width: 25%" id="unitOfDuration1">
+              {{
+                current_language_set?.nurseData?.chiefComplaintsDetails
+                  ?.unitOfDuration
+              }}
+            </th>
+          </tr>
+        </thead>
+        <tbody *ngIf="personalHistory?.tobaccoList?.length == 0">
+          <tr>
+            <td class="text-center" colspan="5">
+              {{ current_language_set?.common?.noRecordFound }}
+            </td>
+          </tr>
+        </tbody>
+        <tbody *ngIf="personalHistory?.tobaccoList">
+          <tr
+            *ngFor="let tobacco of personalHistory?.tobaccoList; let i = index"
+          >
+            <td>{{ i + 1 }}</td>
+            <td>{{ tobacco.tobaccoUseType }}</td>
+            <td>{{ tobacco.numberperDay }}</td>
+            <td>{{ tobacco.duration }}</td>
+            <td>
+              {{
+                tobacco.durationUnit == "Hours"
+                  ? "Hour(s)"
+                  : tobacco.durationUnit == "Days"
+                  ? "Day(s)"
+                  : tobacco.durationUnit == "Weeks"
+                  ? "Week(s)"
+                  : tobacco.durationUnit == "Months"
+                  ? "Month(s)"
+                  : tobacco.durationUnit == "Years"
+                  ? "Year(s)"
+                  : tobacco.durationUnit
+              }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div
+      class="col-xs-12 m-t-10"
+      *ngIf="beneficiary && beneficiary?.ageVal >= 13"
+    >
+      <table class="table table-no-border casesheet-table" aria-describedby="alcoholIntakeStatustbl">
+        <tbody>
+          <tr>
+            <th id="alcoholUseStatus">
+              {{
+                current_language_set?.historyData?.ancHistory
+                  ?.personalHistoryANC_OPD_NCD_PNC?.alcoholData
+                  ?.alcoholUseStatus
+              }}:
+            </th>
+            <td>{{ personalHistory?.alcoholIntakeStatus }}</td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div
+      class="col-xs-12 m-t-10"
+      *ngIf="beneficiary && beneficiary?.ageVal >= 13"
+    >
+      <table class="table table-bordered table-striped" aria-describedby="alcoholDataTbl">
+        <thead>
+          <tr>
+            <th style="width: 5%" id="serialNo">
+              {{ current_language_set?.casesheet?.serialNo }}
+            </th>
+            <th style="width: 20%" id="typeofAlcohol3">
+              {{
+                current_language_set?.historyData?.ancHistory
+                  ?.personalHistoryANC_OPD_NCD_PNC?.alcoholData?.typeofAlcohol
+              }}
+            </th>
+            <th style="width: 25%" id="freqofAlcohol2">
+              {{
+                current_language_set?.historyData?.ancHistory
+                  ?.personalHistoryANC_OPD_NCD_PNC?.alcoholData?.freqofAlcohol
+              }}
+            </th>
+            <th style="width: 20%" id="qtyofAlcoholintake">
+              {{
+                current_language_set?.historyData?.ancHistory
+                  ?.personalHistoryANC_OPD_NCD_PNC?.alcoholData
+                  ?.qtyofAlcoholintake
+              }}
+            </th>
+            <th style="width: 15%" id="duration2">
+              {{
+                current_language_set?.nurseData?.chiefComplaintsDetails
+                  ?.duration
+              }}
+            </th>
+            <th style="width: 15%" id="unitOfDuration2">
+              {{
+                current_language_set?.nurseData?.chiefComplaintsDetails
+                  ?.unitOfDuration
+              }}
+            </th>
+          </tr>
+        </thead>
+        <tbody *ngIf="personalHistory?.alcoholList?.length == 0">
+          <tr>
+            <td class="text-center" colspan="6">
+              {{ current_language_set?.common?.noRecordFound }}
+            </td>
+          </tr>
+        </tbody>
+        <tbody *ngIf="personalHistory?.alcoholList">
+          <tr
+            *ngFor="let alcohol of personalHistory?.alcoholList; let i = index"
+          >
+            <td>{{ i + 1 }}</td>
+            <td>{{ alcohol.alcoholType }}</td>
+            <td>{{ alcohol.alcoholIntakeFrequency }}</td>
+            <td>{{ alcohol.avgAlcoholConsumption }}</td>
+            <td>{{ alcohol.duration }}</td>
+            <td>
+              {{
+                alcohol.durationUnit == "Hours"
+                  ? "Hour(s)"
+                  : alcohol.durationUnit == "Days"
+                  ? "Day(s)"
+                  : alcohol.durationUnit == "Weeks"
+                  ? "Week(s)"
+                  : alcohol.durationUnit == "Months"
+                  ? "Month(s)"
+                  : alcohol.durationUnit == "Years"
+                  ? "Year(s)"
+                  : alcohol.durationUnit
+              }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <!--Personal History Ends-->
+
+  <!--Female Obstetric History Starts-->
+  <div
+    class="row m-t-10"
+    *ngIf="
+      beneficiary &&
+      beneficiary?.ageVal >= 12 &&
+      beneficiary?.genderName != 'Male' &&
+      !ANCDetailsAndFormula?.primiGravida
+      && visitCategory !== 'NCD screening'
+    "
+  >
+    <div class="col-xs-12">
+      <h4>{{ current_language_set?.casesheet?.femaleObstetric }}:</h4>
+    </div>
+    <div class="col-xs-12">
+      <table class="table table-responsive table-bordered" aria-describedby="FemaleObstetricHistoryTbl">
+        <tbody
+          *ngIf="
+            !femaleObstetricHistory?.femaleObstetricHistoryList ||
+            femaleObstetricHistory?.femaleObstetricHistoryList.length == 0
+          "
+        >
+          <tr>
+            <td class="text-center" colspan="11">
+              {{ current_language_set?.common?.noRecordFound }}
+            </td>
+          </tr>
+        </tbody>
+        <tbody *ngIf="femaleObstetricHistory?.femaleObstetricHistoryList">
+          <ng-container
+            *ngFor="
+              let femaleObstetricHistory of femaleObstetricHistory?.femaleObstetricHistoryList;
+              let i = index
+            "
+          >
+            
+            <tr>
+              <th id="pregOrder">{{ current_language_set?.casesheet?.pregOrder }}:</th>
+              <td>{{ femaleObstetricHistory.pregOrder }}</td>
+              <th id="pregComp">{{ current_language_set?.casesheet?.pregComp }}:</th>
+              <td>{{ femaleObstetricHistory.pregComplicationType }}</td>
+            </tr>
+            <tr *ngIf="femaleObstetricHistory?.otherPregComplication">
+              <th id="otherPregComp">
+                {{ current_language_set?.casesheet?.otherPregComp }}:
+              </th>
+              <td colspan="3">
+                {{ femaleObstetricHistory?.otherPregComplication }}
+              </td>
+            </tr>
+            <tr>
+              <th id="durationofPregnancy">
+                {{current_language_set?.historyData?.opd_NCD_PNCHistory?.obstetric?.durationofPregnancy}}:
+              </th>
+              <td>{{ femaleObstetricHistory.durationType }}</td>
+              <th id="placeofDelivery">
+                {{current_language_set?.historyData?.opd_NCD_PNCHistory?.obstetric?.placeofDelivery}}:
+              </th>
+              <td>{{ femaleObstetricHistory.deliveryPlace }}</td>
+            </tr>
+            <tr>
+              <th id="deliveryType">
+                {{current_language_set?.historyData?.opd_NCD_PNCHistory?.obstetric?.deliveryType}}:
+              </th>
+              <td>{{ femaleObstetricHistory.deliveryType }}</td>
+              <th id="deliveryComplication">
+                {{current_language_set?.historyData?.opd_NCD_PNCHistory?.obstetric?.deliveryComplication}}:
+              </th>
+              <td>{{ femaleObstetricHistory.deliveryComplicationType }}</td>
+            </tr>
+            <tr *ngIf="femaleObstetricHistory?.otherDeliveryComplication">
+              <th  id="otherdeliverycomplication">
+                {{current_language_set?.historyData?.obstetrichistory?.otherdeliverycomplication}}:
+              </th>
+              <td colspan="3">
+                {{ femaleObstetricHistory?.otherDeliveryComplication }}
+              </td>
+            </tr>
+            <tr>
+              <th id="PregOutcome">
+                {{current_language_set?.historyData?.obstetrichistory?.PregOutcome}}:
+              </th>
+              <td>{{ femaleObstetricHistory.pregOutcome }}</td>
+              <th id="postpartumComplication">
+                {{current_language_set?.historyData?.opd_NCD_PNCHistory?.obstetric?.postpartumComplication}}:
+              </th>
+              <td>{{ femaleObstetricHistory.postpartumComplicationType }}</td>
+            </tr>
+            <tr *ngIf="femaleObstetricHistory?.otherPostpartumCompType">
+              <th id="otherpostpartumcompType">
+                {{current_language_set?.historyData?.obstetrichistory?.otherpostpartumcompType}}:
+              </th>
+              <td colspan="3">
+                {{ femaleObstetricHistory?.otherPostpartumCompType }}
+              </td>
+            </tr>
+            <tr>
+              <th id="newBornComplication">
+                {{current_language_set?.historyData?.opd_NCD_PNCHistory?.obstetric?.newBornComplication}}:
+              </th>
+              <td>{{ femaleObstetricHistory.newBornComplication }}</td>
+              <th id="congenitalAnomalies">
+                {{current_language_set?.historyData?.opd_NCD_PNCHistory?.obstetric?.congenitalAnomalies}}:
+              </th>
+              <td>{{ femaleObstetricHistory.congenitalAnomalies }}</td>
+            </tr>
+            <tr>
+              <th id="typeOfAbortion">
+                {{current_language_set?.historyData?.opd_NCD_PNCHistory?.obstetric?.typeOfAbortion}}:
+              </th>
+              <td>{{ femaleObstetricHistory.typeOfAbortionValue }}</td>
+              <th id="typeofFacility">
+                {{current_language_set?.historyData?.opd_NCD_PNCHistory?.obstetric?.typeofFacility}}:
+              </th>
+              <td>{{ femaleObstetricHistory.serviceFacilityValue }}</td>
+            </tr>
+            <tr>
+              <th id="noOfcompletedWeeks1">
+                {{current_language_set?.historyData?.opd_NCD_PNCHistory?.obstetric?.noOfcompletedWeeks}}:
+              </th>
+              <td>{{ femaleObstetricHistory.pregDuration }}</td>
+              <th complicationPostAbortion id="complicationPostAbortion">
+                {{current_language_set?.historyData?.opd_NCD_PNCHistory?.obstetric?.complicationPostAbortion}}:
+              </th>
+              <td>{{ femaleObstetricHistory.postAbortionComplicationsValues }}</td>
+            </tr>
+            <tr>
+              <td class="text-center" colspan="11">
+              </td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <!--Female Obstetric History Ends-->
+  <!--Physical Activity History Starts-->
+  <div class="row m-t-10"  *ngIf="visitCategory == 'NCD screening'">
+    <div class="col-xs-12">
+      <h4>{{current_language_set?.physicalActivity}}:</h4>
+    </div>
+    <div class="col-xs-12">
+      <table class="table table-bordered table-striped casesheet-table" aria-describedby="PhysicalActivityHistoryTbl">
+        <thead>
+          <tr>
+            <th style="width: 10%" id="sno">{{current_language_set?.coreComponents?.sno}}</th>
+            <th style="width: 30%" id="pat">{{current_language_set?.historyData?.cancerScreeningHistory?.personal?.physicalActivityType}}</th>
+            <th style="width: 60%" id="ActivityType">{{current_language_set?.activityType}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td> 1 </td>
+            <td>{{ previousPhysicalList?.physicalActivityType }}</td>
+            <td>{{ previousPhysicalList?.activityType }}</td>            
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <!--Physical Activity History ends-->
+
+
+
+
+</div>
+<div *ngIf="visitCategory == 'NCD care' || visitCategory == 'COVID-19 Screening'" class="container">
+  <div class="row col-xs-12">
+    <h2 class="text-center">{{current_language_set?.revisitRefer}}</h2>
+    <hr />
+    <div class="col-xs-12">
+      <table class="table table-no-border casesheet-table" aria-describedby="Revisit&Refertbl">
+          <tbody>
+              <tr>
+                <th id="referredToInstituteName">{{current_language_set?.Referdetails?.higherhealthcarecenter}}:</th>
+                <td>{{ referDetails?.referredToInstituteName }}</td>
+              </tr>
+              <tr>
+                  <th id="serviceList">{{current_language_set?.Referdetails?.additionalservices}}:</th>
+                  <td>{{ serviceList }}</td>
+                </tr>
+                <tr>
+                    <th id="referralReason">{{current_language_set?.Referdetails?.referralReason}}:</th>
+                    <td>{{ referDetails?.referralReason }}</td>
+                  </tr>
+              <tr>
+                <th id="revisitDate">{{current_language_set?.Referdetails?.revisitDate}}:</th>
+                <td>{{ referDetails?.revisitDate }}</td>
+              </tr>
+            </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<div *ngIf="visitCategory == 'NCD screening'" class="container">
+  <div class="row col-xs-12">
+    <h2 class="text-center">{{current_language_set?.revisitRefer}}</h2>
+    <hr />
+    <div class="col-xs-12">
+      <table class="table table-no-border casesheet-table" aria-describedby="referDetailsTbl">
+        <tbody>
+          <tr>
+            <th id="hhc">{{current_language_set?.Referdetails?.higherhealthcarecenter}}:</th>
+            <td>{{ referDetails?.referredToInstituteName }}</td>
+          </tr>
+          <tr>
+            <th id="servicesHHC">{{current_language_set?.Referdetails?.additionalservices}}:</th>
+            <td>{{ serviceList }}</td>
+          </tr>
+          <tr>
+            <th id="rr">{{current_language_set?.Referdetails?.referralReason}}:</th>
+            <td>{{ referDetails?.referralReason }}</td>
+          </tr>
+          <tr>
+            <th id="RD">{{current_language_set?.Referdetails?.revisitDate}}:</th>
+            <td>{{ referDetails?.revisitDate }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

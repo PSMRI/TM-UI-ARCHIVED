@@ -1,0 +1,225 @@
+<md-accordion [formGroup]="diagnosisForm">
+  <md-expansion-panel expanded="true">
+    <md-expansion-panel-header>
+      <h5>{{current_language_set?.previousvisit?.Previousvisitdetails}}</h5>
+    </md-expansion-panel-header>
+    <app-beneficiary-platform-history></app-beneficiary-platform-history>
+    <div class="row m-t-20">
+      <div class="col-xs-12 col-sm-12 col-md-6">
+        <h4>{{current_language_set?.previousvisit?.currentvitals}}</h4>
+        <table class="table table-bordered table-responsive vitals-table" aria-describedby="currentvitals">
+          <tr>
+            <td>{{current_language_set?.vitalsDetails?.AnthropometryDataANC_OPD_NCD_PNC?.weight}}:
+              <span>{{ vitals?.weight_Kg }}</span></td>
+            <td>{{current_language_set?.vitalsDetails?.AnthropometryDataANC_OPD_NCD_PNC?.height}}:
+              <span>{{ vitals?.height_cm }}</span></td>
+            <td>{{current_language_set?.vitalsDetails?.AnthropometryDataANC_OPD_NCD_PNC?.waist}}: <span
+                [ngClass]="{'abnormal': !normalWaist }">{{ vitals?.waistCircumference_cm }}</span></td>
+          </tr>
+          <tr>
+            <td>{{current_language_set?.vitalsDetails?.AnthropometryDataANC_OPD_NCD_PNC?.BMI}}(Kg/m<sup>2</sup>): <span
+                [ngClass]="{'abnormal': calculateBMI() < 18.5 || calculateBMI() > 24.9 }">{{ calculateBMI() }}</span>
+            </td>
+            <td>{{current_language_set?.vitalsDetails?.vitalsCancerscreening_QC?.HbA1c}}(%): <span
+                [ngClass]="{'abnormal': +vitals?.hbA1C > 5.7 }">{{ vitals?.hbA1C }}</span></td>
+            <td>{{current_language_set?.vitalsDetails?.vitalsCancerscreening_QC?.hemoglobin}}:
+              <span>{{ vitals?.hemoglobin }}</span> </td>
+          </tr>
+          <tr>
+            <td>{{current_language_set?.sPOTwoWithUnit}}: 
+              <span [ngClass]="{'abnormal':(vitals?.sPO2 < 1 || vitals?.sPO2 > 100)}">{{ vitals?.sPO2 }}</span>
+            </td>
+          </tr>
+          <tr>
+            <th colspan="3" id="bloodpressuremmhg"> {{current_language_set?.previousvisit?.bloodpressuremmhg}} </th>
+          </tr>
+          <tr>
+            <td>{{current_language_set?.vitalsDetails?.vitalsCancerscreening_QC?.systolic}}:
+              <span>{{ vitals?.systolicBP_1stReading }}</span></td>
+            <td>{{current_language_set?.vitalsDetails?.vitalsCancerscreening_QC?.systolic}}:
+              <span>{{ vitals?.systolicBP_2ndReading }}</span> </td>
+            <td>{{current_language_set?.vitalsDetails?.vitalsCancerscreening_QC?.systolic}}:
+              <span>{{ vitals?.systolicBP_3rdReading }}</span></td>
+          </tr>
+          <tr>
+            <td>{{current_language_set?.vitalsDetails?.vitalsCancerscreening_QC?.diastolic}}:
+              <span>{{ vitals?.diastolicBP_1stReading }}</span></td>
+            <td>{{current_language_set?.vitalsDetails?.vitalsCancerscreening_QC?.diastolic}}:
+              <span>{{ vitals?.diastolicBP_2ndReading }}</span></td>
+            <td>{{current_language_set?.vitalsDetails?.vitalsCancerscreening_QC?.diastolic}}:
+              <span>{{ vitals?.diastolicBP_3rdReading }}</span></td>
+          </tr>
+          <tr>
+            <th colspan="3" id="bloodpressuremmhgp"> {{current_language_set?.previousvisit?.bloodglucosemg}} </th>
+          </tr>
+          <tr>
+            <td>{{current_language_set?.vitalsDetails?.vitalsCancerscreening_QC?.fasting}}: <span
+                [ngClass]="{'abnormal': vitals?.bloodGlucose_Fasting > 100 }">{{ vitals?.bloodGlucose_Fasting}}</span>
+            </td>
+            <td>{{current_language_set?.vitalsDetails?.vitalsCancerscreening_QC?.random}}: <span
+                [ngClass]="{'abnormal': vitals?.bloodGlucose_Random > 140 }">{{ vitals?.bloodGlucose_Random }}</span>
+            </td>
+            <td>{{current_language_set?.vitalsDetails?.vitalsCancerscreening_QC?.postPrandial}}: <span
+                [ngClass]="{'abnormal': vitals?.bloodGlucose_2HrPostPrandial > 140 }">{{ vitals?.bloodGlucose_2HrPostPrandial }}</span>
+            </td>
+          </tr>
+        </table>
+        <div class="view-link">
+          <a md-button style="display:none;">{{current_language_set?.common?.viewMore}}</a>
+        </div>
+      </div>
+
+      <div class="col-xs-12 col-sm-12 col-md-6 p-t-10">
+        <div style="margin: 10px; display: block; max-height: 150px; vertical-align: bottom;"
+          *ngIf="weightChartData.length && weightChartLabels.length">
+
+
+          <h5>{{current_language_set?.previousvisit?.bodyweighttrends}} </h5>
+
+
+          <canvas baseChart [datasets]="weightChartData" [labels]="weightChartLabels" [options]="lineChartOptions"
+            [colors]="weightChartColors" [legend]="weightChartLegend" [chartType]="weightChartType"
+            (chartClick)="chartClicked('bw')"></canvas>
+
+        </div>
+        <div class="no_records" *ngIf="!weightChartData.length">
+
+
+          <h4>{{current_language_set?.common?.previousRecordWeight}}</h4>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="row ">
+
+      <div class="col-md-6 p-t-10">
+
+        <div style="margin: 10px; display: block; max-height: 150px; vertical-align: bottom; "
+          *ngIf="bpChartData.length && bpChartLabels.length">
+
+          <h5>{{current_language_set?.common?.bloodPressureTrend}}</h5>
+          <canvas baseChart [datasets]="bpChartData" [labels]="bpChartLabels" [options]="lineChartOptions"
+            [colors]="bpChartColors" [legend]="bpChartLegend" [chartType]="bpChartType"
+            (chartClick)="chartClicked('bp')"></canvas>
+
+        </div>
+        <div class="no_records" *ngIf="!bpChartData.length">
+
+          <h4>{{current_language_set?.previousvisit?.previousbloodpressurerecordsfound}}</h4>
+        </div>
+
+      </div>
+
+      <div class="col-md-6 p-t-10">
+
+        <div style="margin: 10px; display: block; max-height: 150px; vertical-align: bottom; "
+          *ngIf="bgChartData.length && bgChartLabels.length">
+
+
+          <h5>{{current_language_set?.common?.bloodGlucoseTrend}}</h5>
+
+
+          <canvas baseChart [datasets]="bgChartData" [labels]="bgChartLabels" [options]="lineChartOptions"
+            [colors]="bgChartColors" [legend]="bgChartLegend" [chartType]="bgChartType"
+            (chartClick)="chartClicked('bg')"></canvas>
+
+        </div>
+        <div class="no_records" *ngIf="!bgChartData.length">
+
+
+          <h4>{{current_language_set?.previousvisit?.previousbloodglucoserecordsfound}}</h4>
+        </div>
+
+      </div>
+    </div>
+    <div class="row p-t-30">
+
+    </div>
+  </md-expansion-panel>
+
+  <md-expansion-panel
+    *ngIf="findings && ((findings.briefHistory && findings.briefHistory != '') || (findings.oralExamination && findings.oralExamination != '') || (findings.abdominalExamination && findings.abdominalExamination != '') || (findings.gynecologicalExamination && findings.gynecologicalExamination != ''))">
+    <md-expansion-panel-header>
+      <h5>{{current_language_set?.Find?.findings}}</h5>
+    </md-expansion-panel-header>
+    <div class="row m-t-10">
+      <div class="col-xs-12 col-sm-12 col-md-6"
+        *ngIf="findings && findings.briefHistory && findings.briefHistory != ''">
+        <md-form-field class="textarea-full-width">
+          <textarea mdInput disabled="true" mdTextareaAutosize
+            placeholder="{{current_language_set?.ExaminationData?.cancerScreeningExamination?.symptoms?.briefHistory}}">{{ findings?.briefHistory }}</textarea>
+        </md-form-field>
+      </div>
+
+      <div class="col-xs-12 col-sm-12 col-md-6"
+        *ngIf="findings && findings.oralExamination && findings.oralExamination != ''">
+        <md-form-field class="textarea-full-width">
+          <textarea mdInput disabled="true" mdTextareaAutosize
+            placeholder="{{current_language_set?.ExaminationData?.cancerScreeningExamination?.oral?.oralExamamination}}">{{findings?.oralExamination}}</textarea>
+        </md-form-field>
+      </div>
+
+      <div class="col-xs-12 col-sm-12 col-md-6"
+        *ngIf="findings && findings.abdominalExamination && findings.abdominalExamination != ''">
+        <md-form-field class="textarea-full-width">
+          <textarea mdInput disabled="true" mdTextareaAutosize
+            placeholder="{{current_language_set?.ExaminationData?.cancerScreeningExamination?.abdominal?.abdominalExamination}}">{{ findings?.abdominalExamination}}</textarea>
+        </md-form-field>
+      </div>
+
+      <div class="col-xs-12 col-sm-12 col-md-6"
+        *ngIf="findings && findings.gynecologicalExamination && findings.gynecologicalExamination != ''">
+        <md-form-field class="textarea-full-width">
+          <textarea mdInput disabled="true" mdTextareaAutosize
+            placeholder="{{current_language_set?.ExaminationData?.cancerScreeningExamination?.gynecological?.gynecologicalExamination}}">{{ findings?.gynecologicalExamination }}</textarea>
+        </md-form-field>
+      </div>
+    </div>
+
+    <div class="row" *ngIf="mammogramLink">
+      <div class="col-xs-12">
+        <h4>{{current_langugae_set?.ExaminationData?.cancerScreeningExamination?.breast?.breastExamination}} -
+          <small>{{current_language_set?.common?.resultMammogram}}</small></h4>
+      </div>
+
+      <div class="col-xs-6 col-sm-3">
+        <strong>{{current_language_set?.common?.report}}</strong>
+      </div>
+
+      <div class="col-xs-6 col-sm-3">
+        <a href="#"><em class="fa fa-file-o fa-lg cursorPointer"></em></a>
+      </div>
+    </div>
+  </md-expansion-panel>
+
+  <md-expansion-panel>
+    <md-expansion-panel-header>
+      <h5>{{current_language_set?.DiagnosisDetails?.diagnosis}}</h5>
+    </md-expansion-panel-header>
+    <div class="row m-t-10">
+      <div class="col-xs-12">
+        <md-form-field class="textarea-full-width">
+          <textarea mdInput allowText="textAreaValidator" mdTextareaAutosize maxlength="500" formControlName="provisionalDiagnosisPrimaryDoctor"
+            placeholder="{{current_language_set?.DiagnosisDetails?.provisionaldiagnosisprimary}}" required> </textarea>
+        </md-form-field>
+      </div>
+
+      <div class="col-xs-12">
+        <md-form-field class="textarea-full-width">
+          <textarea mdInput allowText="textAreaValidator" mdTextareaAutosize maxlength="500" formControlName="remarks"
+            placeholder="{{current_language_set?.common?.remarks}}"> </textarea>
+        </md-form-field>
+      </div>
+
+      <div class="col-xs-12">
+        <md-form-field class="textarea-full-width">
+          <textarea mdInput allowText="textAreaValidator" mdTextareaAutosize maxlength="500" formControlName="provisionalDiagnosisOncologist"
+            placeholder="{{current_language_set?.DiagnosisDetails?.diagnosisbyoncologist}}"> </textarea>
+        </md-form-field>
+      </div>
+
+
+    </div>
+  </md-expansion-panel>
+</md-accordion>

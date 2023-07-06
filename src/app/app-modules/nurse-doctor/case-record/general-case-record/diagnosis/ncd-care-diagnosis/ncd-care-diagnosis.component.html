@@ -1,0 +1,129 @@
+<!-- {{ generalDiagnosisForm.value | json }} -->
+<div class="m-t-10" [formGroup]="generalDiagnosisForm">
+  <div class="row">
+    <div class="col-xs-12 col-xs-6 box" *ngIf="enableNCDCondition">
+      <md-select
+        class="input-full-width"
+        name="ncdScreeningCondition"
+        placeholder="{{ current_language_set?.casesheet?.ncdCondition }}*"
+        multiple
+        (change)="changeNcdScreeningCondition($event.value,$event)"
+        [(ngModel)]="temp" [ngModelOptions]="{standalone: true}"
+      >
+        <md-option
+          *ngFor="let ncdCareCondition of ncdCareConditions"
+          [value]="ncdCareCondition.screeningCondition"
+        >
+          {{ ncdCareCondition.screeningCondition }}</md-option
+        >
+      </md-select>
+    </div>
+    <div class="col-xs-12 col-xs-6 box" *ngIf="!enableNCDCondition">
+      <md-select
+        class="input-full-width"
+        name="ncdScreeningCondition"
+        placeholder="{{ current_language_set?.casesheet?.ncdCondition }}"
+        multiple
+        (change)="changeNcdScreeningCondition($event.value,$event)"
+        [(ngModel)]="temp" [ngModelOptions]="{standalone: true}"
+      >
+        <md-option
+          *ngFor="let ncdCareCondition of ncdCareConditions"
+          [value]="ncdCareCondition.screeningCondition"
+        >
+          {{ ncdCareCondition.screeningCondition }}</md-option
+        >
+      </md-select>
+    </div>
+    <div class="col-xs-12" *ngIf="isNcdScreeningConditionOther">
+      <md-form-field class="input-full-width">
+        <textarea mdInput allowText="textAreaValidator" mdTextareaAutosize defaultNull name='ncdScreeningConditionOther' maxlength="20" formControlName="ncdScreeningConditionOther"  placeholder="
+        {{ current_language_set?.ncdConditionOther}}"
+        > </textarea>
+      </md-form-field>
+    </div>
+    <div class="col-xs-12 col-xs-6 box">
+      <md-select
+        class="input-full-width"
+        name="ncdCareType"
+        formControlName="ncdCareType"
+        placeholder="{{ current_language_set?.casesheet?.typeOfNcd }}"
+      >
+        <md-option
+          *ngFor="let ncdCareType of ncdCareTypes"
+          [value]="ncdCareType"
+        >
+          {{ ncdCareType.ncdCareType }}</md-option
+        >
+      </md-select>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" style="display: none;">
+      <md-form-field class="input-full-width">
+        <textarea
+          mdInput allowText="textAreaValidator"
+          mdTextareaAutosize
+          defaultNull
+          name="ncdComplication"
+          maxlength="300"
+          formControlName="ncdComplication"
+          placeholder="{{ current_language_set?.casesheet?.ncdComplication }}"
+        >
+        </textarea>
+      </md-form-field>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+      <header class="mat-expansion-panel-header m-t-5" >
+        <h4>{{current_language_set?.casesheet?.provisionalDiag}}</h4>
+      </header>
+      <ng-container formArrayName="provisionalDiagnosisList">
+        <div *ngFor="let diagnosis of generalDiagnosisForm.controls['provisionalDiagnosisList']['controls']; let i = index; let isLast=last;">
+          <ng-container [formGroupName]="i">
+            <div class="col-xs-12 col-sm-9">
+              <md-form-field class="input-full-width">
+                <input mdInput allowText="inputFieldValidator" appDiagnosisSearch [diagnosisListForm]="diagnosis"  name="viewDiagnosisProvided" formControlName="viewProvisionalDiagnosisProvided"
+                  maxlength="100" minlength="3" [previousSelected]="generalDiagnosisForm?.value?.provisionalDiagnosisList" required >
+                <md-icon class="search-btn cursorPointer" *ngIf="!(diagnosis.controls['viewProvisionalDiagnosisProvided'].disabled)" mdSuffix
+                  appDiagnosisSearch [diagnosisListForm]="diagnosis" [previousSelected]="generalDiagnosisForm?.value?.provisionalDiagnosisList">search</md-icon>
+              </md-form-field>
+            </div>
+            <div class="col-xs-12 col-sm-3 m-t-10">
+              <button md-mini-fab type="button" class="pull-left" color="warn" *ngIf="((diagnosis.controls['viewProvisionalDiagnosisProvided'].disabled || (i != 0))) || (i==0 && generalDiagnosisForm.controls['provisionalDiagnosisList'].controls[i].controls.viewProvisionalDiagnosisProvided.value !== null && generalDiagnosisForm.controls['provisionalDiagnosisList'].controls[i].controls.viewProvisionalDiagnosisProvided.value !== '') "
+                (click)="removeDiagnosisFromList(i, diagnosis)">
+                <md-icon>close</md-icon>
+              </button>
+              <button md-mini-fab type="button" class="pull-right" color="primary" *ngIf="isLast" [disabled]="checkProvisionalDiagnosisValidity(diagnosis)"
+                (click)="addDiagnosis()">
+                <md-icon>add</md-icon>
+              </button>
+            </div>
+          </ng-container>
+        </div>
+      </ng-container>
+    </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" *ngIf="visitCategory !== 'NCD care'">
+      <header class="mat-expansion-panel-header m-t-5">
+        <h4>{{ current_language_set?.DiagnosisDetails?.specialistdignosis }}</h4>
+      </header>
+      <md-form-field class="input-full-width">
+        <textarea
+          [readonly]="!specialist"
+          mdInput allowText="textAreaValidator"
+          defaultNull
+          mdTextareaAutosize
+          maxlength="300"
+          name="specialistAdvice"
+          formControlName="specialistDiagnosis"
+          
+        >
+        </textarea>
+      </md-form-field>
+    </div>
+
+    <!-- <div class="col-xs-12 col-sm-6"> -->
+      
+
+  </div>
+</div>

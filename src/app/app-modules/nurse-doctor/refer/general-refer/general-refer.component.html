@@ -1,0 +1,153 @@
+<!-- {{ referForm.value | json}} -->
+<md-expansion-panel [formGroup]="referForm" expanded="true">
+  <md-expansion-panel-header>
+    <h5>{{
+      currentLanguageSet?.Referdetails?.revisitAndRefer
+    }}</h5>
+  </md-expansion-panel-header>
+  <div class="m-t-20">
+    <div class="p-l-10" *ngIf="visitCategory == 'NCD screening'">
+      <label *ngIf="(showMsg > 0) && !healthCareReferred && instituteFlag===true" style="color: red;"> * {{
+        currentLanguageSet?.Referdetails?.pleaseReferthePatientToHigherHealthCareCenter
+      }}</label><br>
+    
+    </div>
+
+    <div class="row m-t-5"  *ngIf="referredVisitcode !== 'undefined' && referredVisitcode !== undefined && referredVisitcode !== null">
+      <div class="col-sm-12 step-btn m-b-10">
+        <button md-raised-button color="primary" class="pull-right" (click)="loadMMUReferDeatils()">{{
+          currentLanguageSet?.Referdetails?.mMUReferralDetails
+        }}</button>
+      </div>
+    </div>
+
+    
+
+    <div *ngIf="visitCategory == 'NCD screening'">
+      <div class="row text-right">
+        <label class="font-history-label m-t-10">{{
+          currentLanguageSet?.Referdetails?.previousReferralHistory
+        }}</label>
+        <button type="button" md-icon-button mdTooltip="{{currentLanguageSet?.previousReferredDetails}}" id='PreviousReferralHistory'
+          class="pull-right" color="primary" (click)="getPreviousReferralHistory()">
+          <md-icon class="md-18">history</md-icon>
+        </button>
+      </div>
+      </div>
+
+    
+
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 alignment">
+    {{
+        currentLanguageSet?.Referdetails?.higherhealthcarecenter 
+      }}{{(showMsg > 0 && instituteFlag===true) ? '*' : ''}}
+    </div>
+
+    <div class="col-sm-6 col-md-3 box">
+      <md-select style="width: 220px;"
+        placeholder="{{
+          currentLanguageSet?.Referdetails?.referredtoinstitute
+        }}"
+        (ngModelChange)="higherhealthcarecenter($event)"
+        name="referredToInstituteName"
+        formControlName="referredToInstituteName"
+      >
+        <md-option
+          *ngFor="let center of higherHealthcareCenter"
+          [value]="center"
+          >{{ center.institutionName }}</md-option
+        >
+      </md-select>
+    </div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 alignment">
+        {{ currentLanguageSet?.Referdetails?.additionalservices }}
+    
+    </div>
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+      <md-select style="width: 220px;"
+        placeholder="{{
+          currentLanguageSet?.Referdetails?.additionalservices
+        }}"
+        (ngModelChange)="additionalservices($event)"
+        multiple="true"
+        name="refrredToAdditionalServiceList"
+        formControlName="refrredToAdditionalServiceList"
+      >
+        <md-option
+          *ngFor="let service of additionalServices"
+          [value]="service"
+          [disabled]="canDisable(service)"
+        >
+          {{ service.serviceName }}</md-option
+        >
+      </md-select>
+    </div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <div *ngIf="selectValue > 0 || selectValueService > 0; else elseBlock"   class="col-xs-6 col-sm-6 col-md-6 col-lg-6 alignment">
+     {{
+        currentLanguageSet?.Referdetails?.referralReason
+      }}*
+    </div>
+    <ng-template #elseBlock>
+      <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 alignment">
+     {{
+          currentLanguageSet?.Referdetails?.referralReason
+        }}
+      </div>
+    </ng-template>
+    <div *ngIf="selectValue > 0 || selectValueService > 0; else elseBlockText"  class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+      <md-input-container class="referreason"  style="width: 220px;">
+        <textarea
+          mdInput allowText="textAreaValidator"
+          mdTextareaAutosize
+          required="true"
+          formControlName="referralReason"
+          name="Remarks"
+          maxLength="300"
+        ></textarea>
+      </md-input-container>
+    </div>
+
+    <ng-template #elseBlockText>
+      <div  class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+        <md-input-container class="referreason" style="width: 220px;">
+          <textarea
+            mdInput allowText="textAreaValidator"
+            mdTextareaAutosize
+            formControlName="referralReason"
+            name="Remarks"
+            maxLength="300"
+          ></textarea>
+        </md-input-container>
+      </div>
+    </ng-template>
+</div>
+
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 alignment">
+      {{
+        currentLanguageSet?.Referdetails?.revisitDate
+      }}
+    </div>
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" style="padding-left: 0px; width: 280px;">
+      <md2-datepicker
+        [openOnFocus]="true"
+        name="revisitDate"
+        formControlName="revisitDate"
+        placeholder="{{
+          currentLanguageSet?.Referdetails?.revisitDate
+        }}"
+        [max]="maxSchedulerDate"
+        [min]="tomorrow"
+        (change)="checkdate(revisitDate)"
+        ng-readonly="true"
+        >{{ revisitDate }}</md2-datepicker
+      >
+    </div>
+    </div>
+  </div>
+</md-expansion-panel>

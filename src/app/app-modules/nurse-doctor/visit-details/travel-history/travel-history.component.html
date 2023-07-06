@@ -1,0 +1,402 @@
+<div [formGroup]="patientCovidForm">
+  <div class="row">
+    <div class="container">
+      <br />
+    
+
+
+
+   
+       <h5>{{currentLanguageSet?.travel?.haveyouTravelledlast14days}}
+      </h5>
+      <br />
+      <md-radio-group
+        class="test"
+        [style.width]="'50%'"
+        placeholder="Travelled last 14 days"
+        formControlName="travelStatus"
+        name="travelStatus"
+        (change)="travelStatuschange(travelStatus)"
+        id="travelStatus"
+        required="{{ travelReqiured }}"
+      >
+      <md-radio-button  value="true">{{currentLanguageSet?.common?.yes}}</md-radio-button>
+        <md-radio-button value="false">{{currentLanguageSet?.common.no}}</md-radio-button>
+      </md-radio-group>
+      <br />
+
+      <div *ngIf="istravelStatus">
+        <div>
+          <br />
+          <h5>{{currentLanguageSet?.travel?.travelType}}</h5>
+          <div *ngIf="readTravel==false">
+          <div *ngFor="let travel of travelTypeList">
+            <input
+              type="checkbox"
+              style="width:20px;height:20px;"
+              (change)="onChange(travel, $event.target.checked)"
+              id="travelType"
+             />
+            <span>{{ travel }}</span>
+          </div>
+        </div>
+          <div *ngIf="readTravel== true">
+          <input
+          type="checkbox"
+          style="width:20px;height:20px;"
+          id="travelType"
+          (change)="onChange('Domestic', $event.target.checked)"
+          [checked]="domtravel"
+          [disabled]="readTravel && readTravel1==false"/>
+          {{currentLanguageSet?.travel?.domestic}}
+   <br>
+   <input
+          type="checkbox"
+          style="width:20px;height:20px;"
+          id="travelType"
+          (change)="onChange('International', $event.target.checked)"
+          [checked]="intertravel"
+          [disabled]="readTravel && readTravel1==false"/>
+          {{currentLanguageSet?.travel?.international}}
+</div>
+          
+          <br />
+          <!--Grid row-->
+          <div class="row">
+            <!--Grid column-->
+            <div class="col-md-6 mb-4" *ngIf="istravelModeDomestic">
+              <!-- Card -->
+              <div class="card gradient-card">
+                <!-- Content -->
+               
+                  <div class="text-white d-flex h-100 mask blue-gradient-rgba">
+                    <div class="first-content align-self-left p-3">
+                      <h4 style="text-align: center;color: black;size:40px;">
+                        <br/>
+                        <strong>{{currentLanguageSet?.travel?.domestic}}</strong>
+                      </h4>
+                      <br />
+                      <div style="text-align: center;">
+                        <md-select
+                          [style.width]="'70%'"
+                          class="test"
+                          placeholder="{{currentLanguageSet?.travel?.modeofTravel}}"
+                          name="modeOfTravelDomestic"
+                          formControlName="modeOfTravelDomestic"
+                          id="modeOfTravelDomestic"
+                          (change)="
+                            traveldomesticStatuschange(modeOfTravelDomestic)
+                          "
+                        >
+                          <md-option
+                            *ngFor="let type of domestictype"
+                            value="{{ type }}"
+                            >{{ type }}</md-option
+                          >
+                          
+                        </md-select>
+                        <br />
+                        <br />
+                        <h5 style="text-align: center;color: black;size:30px;">
+                          {{currentLanguageSet?.travel?.locationTravelledFrom}}
+                        </h5>
+                        <md-select
+                          placeholder="{{currentLanguageSet?.travel?.state}}"
+                          [style.width]="'70%'"
+                          name="fromStateDom"
+                          id="fromStateDom"
+                          formControlName="fromStateDom"
+                          (change)="GetDistrictsFromDom(fromStateDom)"
+                        >
+                          <md-option
+                            *ngFor="let state of states"
+                            [value]="state.stateID"
+                          >
+                            {{ state.stateName }}
+                          </md-option>
+                        </md-select>
+
+                        <md-select
+                          [style.width]="'70%'"
+                          placeholder="{{currentLanguageSet?.travel?.district}}"
+                          id="fromDistrictDom"
+                          name="fromDistrictDom"
+                          formControlName="fromDistrictDom"
+                          (change)="GetSubDistrictFromDom(fromDistrictDom)"
+                        >
+                          <md-option
+                            *ngFor="let district of districtsFromDom"
+                            [value]="district.districtID"
+                          >
+                            {{ district.districtName }}
+                          </md-option>
+                        </md-select>
+
+                        <md-select
+                          [style.width]="'70%'"
+                          placeholder="{{currentLanguageSet?.travel?.subDistrict}}"
+                          id="fromSubDistrictDom"
+                          formControlName="fromSubDistrictDom"
+                          name="fromSubDistrictDom"
+                          (change)="getVillage(fromSubDistrictDom)"
+                        >
+                          <md-option
+                            *ngFor="let item of subDistrictsFromDom"
+                            [value]="item.blockID"
+                            >{{ item.blockName }}
+                          </md-option>
+                        </md-select>
+                        <br />
+                        <br />
+                        <h5 style="text-align: center;color: black;size:30px;">
+                          {{currentLanguageSet?.travel?.locationTravelledTo}}
+                        </h5>
+                        <md-select
+                          placeholder="{{currentLanguageSet?.travel?.state}}"
+                          [style.width]="'70%'"
+                          name="toStateDom"
+                          formControlName="toStateDom"
+                          id="toStateDom"
+                          (change)="GetDistrictsToDom(toStateDom)"
+                        >
+                          <md-option
+                            *ngFor="let state of states"
+                            [value]="state.stateID"
+                          >
+                            {{ state.stateName }}
+                          </md-option>
+                        </md-select>
+
+                        <md-select
+                          [style.width]="'70%'"
+                          placeholder="{{currentLanguageSet?.travel?.district}}"
+                          name="toDistrictDom"
+                          formControlName="toDistrictDom"
+                          id="toDistrictDom"
+                          (change)="getSubDistrictToDom(toDistrictDom)"
+                        >
+                          <md-option
+                            *ngFor="let district of districtsToDom"
+                            [value]="district.districtID"
+                          >
+                            {{ district.districtName }}
+                          </md-option>
+                        </md-select>
+
+                        <md-select
+                          [style.width]="'70%'"
+                          placeholder="{{currentLanguageSet?.travel?.subDistrict}}"
+                          name="toSubDistrictDom"
+                          id="toSubDistrictDom"
+                          formControlName="toSubDistrictDom"
+                          (change)="
+                            getVillageTosubDistrictDom(toSubDistrictDom)
+                          "
+                        >
+                          <md-option
+                            *ngFor="let item of subDistrictsToDom"
+                            [value]="item.blockID"
+                            >{{ item.blockName }}
+                          </md-option>
+                        </md-select>
+                      </div>
+                      <div
+                        class="second-content align-self-center mx-auto text-center"
+                      >
+                        <em class="far fa-money-bill-alt fa-3x"></em>
+                      </div>
+                    </div>
+                  </div>
+                
+
+                <br />
+                <!-- Data -->
+                <div class="third-content ml-auto mr-4 mb-2">
+                  <p class="text-uppercase text-muted"></p>
+                  <h4 class="font-weight-bold float-right"></h4>
+                </div>
+
+                <!-- Content -->
+               
+              </div>
+              <!-- Card -->
+            </div>
+
+            <!--Grid column-->
+
+            <!--Grid column-->
+            <div class="col-md-6 mb-4" *ngIf="istravelModeInternatinal">
+              <!-- Card -->
+              <div class="card gradient-card">
+                <!-- Content -->
+              
+                  <div
+                    class="text-white d-flex h-100 mask purple-gradient-rgba"
+                  >
+                    <div class="first-content align-self-left p-3">
+                      <h4 style="text-align: center;color: black;size:30px;">
+                        <br/>
+                        <strong>{{currentLanguageSet?.travel?.international}}</strong>
+                      </h4>
+                      <br />
+                      <div style="text-align: center;">
+                        <md-select
+                          [style.width]="'70%'"
+                          class="test"
+                          id="modeOfTravelInter"
+                          formControlName="modeOfTravelInter"
+                          placeholder="{{currentLanguageSet?.travel?.modeofTravel}}"
+                          name="modeOfTravelInter"
+                          (change)="
+                            travelinternationalStatuschange(modeOfTravelInter)
+                          "
+                        >
+                          <md-option
+                            *ngFor="let type of internationaltype"
+                            value="{{ type }}"
+                            >{{ type }}</md-option
+                          >
+                         
+                        </md-select>
+                        <br />
+                        <br />
+
+                        <h5 style="text-align: center;color: black;size:30px;">
+                          {{currentLanguageSet?.travel?.locationTravelledFrom}}
+                        </h5>
+
+                        <md-select
+                          placeholder="{{currentLanguageSet?.travel?.country}}"
+                          [style.width]="'70%'"
+                          id="fromCountryInter"
+                          formControlName="fromCountryInter"
+                          name="fromCountryInter"
+                          (change)="getCitiesFromInter(fromCountryInter)"
+                        >
+                          <md-option
+                            *ngFor="let country of countries"
+                            [value]="country.countryID"
+                          >
+                            {{ country.countryName }}
+                          </md-option>
+                        </md-select>
+
+                        <md-select
+                          [style.width]="'70%'"
+                          placeholder="{{currentLanguageSet?.travel?.city}}"
+                          formControlName="fromCityInter"
+                          id="fromCityInter"
+                          name="fromCityInter"
+                          (change)="CitiesFromInter(fromCityInter)"
+                        >
+                          <md-option
+                            *ngFor="let city of citiesFromInter"
+                            [value]="city.cityID"
+                          >
+                            {{ city.cityName }}
+                          </md-option>
+                        </md-select>
+                        <br />
+                        <br />
+                        <h5 style="text-align: center;color: black;size:40px;">
+                          {{currentLanguageSet?.travel?.locationTravelledTo}}
+                        </h5>
+                        <md-select
+                          placeholder="{{currentLanguageSet?.travel?.country}}"
+                          [style.width]="'70%'"
+                          formControlName="toCountryInter"
+                          name="toCountryInter"
+                          id="toCountryInter"
+                          (change)="getCitiesToInter(toCountryInter)"
+                        >
+                          <md-option
+                            *ngFor="let country of countries"
+                            [value]="country.countryID"
+                          >
+                            {{ country.countryName }}
+                          </md-option>
+                        </md-select>
+
+                        <md-select
+                          [style.width]="'70%'"
+                          placeholder="{{currentLanguageSet?.travel?.city}}"
+                          name="toCityInter"
+                          id="toCityInter"
+                          formControlName="toCityInter"
+                          (change)="CitiesToInter(toCityInter)"
+                        >
+                          <md-option
+                            *ngFor="let city of citiesToInter"
+                            [value]="city.cityID"
+                          >
+                            {{ city.cityName }}
+                          </md-option>
+                        </md-select>
+                      </div>
+                      <div
+                        class="second-content  align-self-center mx-auto text-center"
+                      >
+                        <em class="fas fa-chart-line fa-3x"></em>
+                      </div>
+                    </div>
+                  </div>
+                
+
+                <br />
+
+                <!-- Data -->
+                <div class="third-content  ml-auto mr-4 mb-2">
+                  <p class="text-uppercase text-muted"></p>
+                  <h4 class="font-weight-bold float-right"></h4>
+                </div>
+
+                <!-- Content -->               
+              </div>
+              <!-- Card -->
+            </div>
+            <!--Grid column-->
+          </div>
+        </div>
+        <br />
+      </div>
+
+      <br />
+      <h4>{{currentLanguageSet?.travel?.outcome}}</h4>
+       
+      <div>
+        <md-input-container>
+          <h5>{{currentLanguageSet?.travel?.suspectedCOVID}}</h5>
+          <input
+            mdInput
+            class="test"
+            name="suspectedStatusUI"
+            id="suspectedStatusUI"
+            formControlName="suspectedStatusUI"
+            value="{{ suspectedCovid }}"
+            readonly
+          />
+         
+          </md-input-container
+        ><br /><br />
+      
+        <md-input-container [style.width]="'50%'"> 
+             <h4>{{currentLanguageSet?.travel?.recommendation}} : </h4><br/>
+        
+        <textarea
+            mdInput
+            rows="6"
+            value="{{ recommendationText }}"
+            id="recommendation"
+            readonly
+            ></textarea
+          >
+          </md-input-container>
+        
+  </div>
+  <!--Grid column-->
+
+ 
+        </div>
+    
+    
+

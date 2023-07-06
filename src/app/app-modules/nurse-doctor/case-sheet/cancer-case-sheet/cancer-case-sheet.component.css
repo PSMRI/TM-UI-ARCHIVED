@@ -1,0 +1,52 @@
+@media print {
+  body {
+    background: white;
+    font-size: 14px;
+  }
+  .page-break:last-child {
+    page-break-after: auto;
+  }
+  .non-printable {
+    display: none;
+  }
+  @page {
+    margin: 1.3cm;
+  }
+}
+
+.navbar {
+  padding: 7px 0px;
+}
+
+.m-t-60 {
+  margin-top: 60px;
+}
+
+.example-fab.mat-mini-fab {
+  position: fixed;
+  right: 20px;
+  z-index: 3;
+}
+
+.upward {
+  bottom: 80px;
+}
+
+.print {
+  bottom: 130px;
+}
+
+.back {
+  bottom: 30px;
+}
+
+.select {
+  bottom: 180px;
+}
+
+.comment-fab.mat-mini-fab.edit {
+  position: fixed;
+  left: 20px;
+  bottom: 30px;
+  z-index: 3;
+}

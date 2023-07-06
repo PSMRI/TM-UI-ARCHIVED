@@ -1,0 +1,71 @@
+<section id="searchDialog" class="container-fluid">
+
+    <div class="row title info">
+        <h4>{{currentLanguageSet?.common?.advanceBeneficiarySearch}}</h4>
+        <button class="pull-right close-btn" (click)="mdDialogRef.close(false)" md-icon-button>
+            <md-icon class="md-24">close</md-icon>
+        </button>
+    </div>
+
+    <md-dialog-content>
+        <form #newSearchForm="ngForm">
+            <section class="row m-t-10">
+                <div class="col-xs-12 col-sm-6 box">
+                    <md-input-container [style.width]="'100%'">
+                        <input autocomplete="off" mdInput allowText="alphabet" placeholder="{{currentLanguageSet?.ro?.personalInfo?.firstName}}" required="true" name="firstName" [(ngModel)]="beneficiary.firstName"
+                            #firstNameV="ngModel" minlength="2" maxlength="50">
+                        <md-error *ngIf="firstNameV?.errors?.required">{{currentLanguageSet?.common?.firstNameisrequired}}</md-error>
+                        <md-error *ngIf="firstNameV?.errors?.minlength">{{currentLanguageSet?.common?.pleaseprovideatleast2character}}</md-error>
+                    </md-input-container>
+                </div>
+                <div class="col-xs-12 col-sm-6 box">
+                    <md-input-container myName [style.width]="'100%'">
+                        <input autocomplete="off" mdInput allowText="alphaspace" placeholder="{{currentLanguageSet?.ro?.personalInfo?.lastName}}" name="lastName" [(ngModel)]="beneficiary.lastName"
+                            #lastNameV="ngModel" minlength="1" maxlength="50">
+                    </md-input-container>
+                </div>                
+                <div class="col-xs-12 col-sm-6 box">
+                    <md-input-container [style.width]="'100%'">
+                        <input autocomplete="off" mdInput allowText="alphabet" placeholder="{{currentLanguageSet?.ro?.otherInfo?.fatherName}} " name="fatherName" [(ngModel)]="beneficiary.fatherName"
+                            #fatherNameV="ngModel" minlength="2" maxlength="50">
+                        <md-error *ngIf="fatherNameV?.errors?.minlength">{{currentLanguageSet?.common?.pleaseprovideatleast2character}}</md-error>
+                    </md-input-container>
+                </div>
+                <div class="col-xs-12 col-sm-6 box">
+                    <div class="select-container">
+                        <md-select class="p-t-12" (change)="selectGender()" required [style.width]="'100%'" placeholder="{{currentLanguageSet?.ro?.personalInfo?.gender}}" name="gender" [(ngModel)]="beneficiary.gender">
+                            <md-option *ngFor="let gender of masterData?.genderMaster" [value]="gender.genderID">{{gender.genderName}} </md-option>
+                        </md-select>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 box">
+                    <md2-datepicker [openOnFocus]="true" style="width:100%" name='dob' [(ngModel)]="beneficiary.dob" placeholder="{{currentLanguageSet?.dateOfBirth}}" [max]='today' ng-readonly="true" ></md2-datepicker>
+                  </div>
+            </section>
+            <section class="row grayborder">
+                <div class="col-xs-12 col-sm-6 box">
+                    <div class="select-container">
+                        <md-select class="p-t-12" (change)="onStateChange()" required [style.width]="'100%'" placeholder="
+                        {{currentLanguageSet?.ro?.locInfo?.state}}" name="state" [(ngModel)]="beneficiary.stateID">
+                            <md-option *ngFor="let state of states" [value]="state.stateID">{{state.stateName | titlecase }} </md-option>
+                        </md-select>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 box">
+                    <div class="select-container">
+                        <md-select class="p-t-12" required [style.width]="'100%'" placeholder="{{currentLanguageSet?.bendetails?.district}}" name="district" [(ngModel)]="beneficiary.districtID">
+                            <md-option *ngFor="let district of districts" [value]="district.districtID">{{district.districtName | titlecase }} </md-option>
+                        </md-select>
+                    </div>
+                </div>
+            </section>
+        </form>
+    </md-dialog-content>
+
+    <md-dialog-actions align="right" class="padding15 margin15 pull-right">
+        <button md-raised-button color="primary" type="button" md-dialog-close (click)="mdDialogRef.close(false)">{{currentLanguageSet?.common?.close}}</button>
+        <button md-raised-button color="primary" type="button" (click)="resetBeneficiaryForm()">{{currentLanguageSet?.common?.clear}}</button>
+        <button [disabled]="newSearchForm.invalid" md-raised-button color="accent" type="button" (click)="getSearchResult(newSearchForm.value)">{{currentLanguageSet?.common?.search}}</button>
+    </md-dialog-actions>
+    <div class="clearfix"></div>
+</section>

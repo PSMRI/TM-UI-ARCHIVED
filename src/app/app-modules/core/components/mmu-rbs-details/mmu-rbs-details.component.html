@@ -1,0 +1,35 @@
+<div>
+  <div class="title info">
+    <h4>{{ current_language_set?.mmuRBSDetails }}</h4>
+    <button class="pull-right close-btn" (click)="closeDialog()" md-icon-button>
+      <md-icon class="md-24">close</md-icon>
+    </button>
+  </div>
+
+  <section class="message">
+    <section class="table-responsive vw100">
+      <table aria-describedby="title" class="table table-striped">
+        <thead>
+          <tr class="column">
+            <th id="rbsResult">{{ current_language_set?.rbsTestResult }}</th>
+            <th id="rbsResult">{{ current_language_set?.rbsTestRemarks }}</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="input==undefined || input ==null ||((input.rbsResult == null || input.rbsResult == undefined) && (input.rbsRemarks == null || input.rbsRemarks == undefined))">
+          <tr>
+            <td colspan="2">
+              <h4 class='norecord'>{{current_language_set?.common?.noRecordFound}}</h4>
+            </td>
+          </tr>
+        </tbody>
+        <tbody *ngIf="input !=undefined && input !=null && ((input.rbsResult != null || input.rbsResult != undefined) || (input.rbsRemarks != null || input.rbsRemarks != undefined))">
+          <tr >
+            <td>{{ input.rbsResult }}</td>
+            <td>{{ input.rbsRemarks }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+  </section>
+</div>

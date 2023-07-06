@@ -1,0 +1,16 @@
+.select-full-width {
+    width: 100%;
+    white-space: nowrap;
+}
+
+.input-full-width {
+    width: 100%;
+}
+
+.mat-form-field {
+    line-height: unset;
+}
+
+.box{
+    height: 60px;
+}

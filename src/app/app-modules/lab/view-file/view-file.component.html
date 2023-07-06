@@ -1,0 +1,13 @@
+<div class="title">
+  <h4>{{currentLanguageSet?.coreComponents?.files}}</h4>
+  <button md-icon-button mdDialogClose tooltip="{{currentLanguageSet?.common?.close}}" (click)="closeDialog()" class="pull-right exit width-20px">
+    <md-icon>close</md-icon>
+  </button>
+</div>
+<div class="container-fluid">
+  <md-chip-list *ngIf="fileObj && fileObj.length > 0">
+    <md-chip *ngFor="let file of fileObj;" [ngClass]="{'chipEdit': file.isUploaded}">{{file.fileName}}
+      <md-icon mdChipRemove *ngIf="!(file.isUploaded)" (click)="remove(file)">cancel</md-icon>
+    </md-chip>
+  </md-chip-list>
+</div>

@@ -1,0 +1,70 @@
+.md-card-width {
+  padding: 0 !important;
+  width: 400px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.stretch{
+  height: stretch;
+  background: #f2f2f0;
+}
+
+.login-form-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: auto;
+  padding: 10px;
+  margin-bottom: 30px;
+  position: relative;
+}
+
+.close-button{
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  font-size: 18px;
+  z-index: 1;
+}
+
+.sync-login-title {
+  text-align: center;
+  background-color: #0277bd; 
+  padding-top: 12px;
+  padding-bottom: 12px;
+  color: white;
+  border: 1px solid white;
+}
+
+.sync-login-title img {
+  display: inline-block;
+  height: 40px;
+  width: 40px;
+}
+
+.sync-login-title h4 {
+  display: inline-block;
+}
+
+.box {
+  height: 55px !important;
+  margin-bottom: 16px;
+}
+
+.prefix-icon {
+  padding-top: 16px;
+  color: gray;
+}
+
+.input-full-width {
+  width: 100%;
+}
+
+.m-t-20 {
+  margin-top: 20px;
+}
+
+.m-b-20 {
+  margin-bottom: 20px;
+}

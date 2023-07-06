@@ -1,0 +1,119 @@
+@media (min-width: 317px) {
+    body {
+        background: #3F0;
+    }
+    .left {
+        width: 50px;
+        transition: width 1.2s;
+    }
+    .right {
+        background: #fff;
+        width: 84.60%;
+        transition: width 1.2s;
+    }
+    .rightNew {
+        width: 61.45%;
+    }
+}
+
+@media (max-width: 317px) {
+    body {
+        background: orange;
+    }
+    .left {
+        width: 50px;
+        transition: width 1.2s;
+    }
+    .right {
+        background: #fff;
+        width: 87.60%;
+        transition: width 1.2s;
+    }
+    .rightNew {
+        width: 61.45%;
+    }
+}
+
+@media (min-width: 480px) {
+    body {
+        background: blue;
+    }
+    .left {
+        width: 50px;
+        transition: width 1.2s;
+    }
+    .right {
+        background: #fff;
+        width: 91.60%;
+        transition: width 1.2s;
+    }
+    .rightNew {
+        width: 61.45%;
+    }
+}
+
+@media (min-width: 767px) {
+    body {
+        background: gray;
+    }
+    .left {
+        width: 50px;
+        transition: width 1.2s;
+    }
+    .right {
+        background: #fff;
+        width: 92.60%;
+        transition: width 1.2s;
+    }
+    .rightNew {
+        width: 64.45%;
+    }
+}
+
+@media (min-width: 992px) {
+    body {
+        background: red;
+    }
+    .left {
+        width: 50px;
+        transition: width 1.2s;
+    }
+    .right {
+        background: #fff;
+        width: 94.60%;
+        transition: width 1.2s;
+    }
+    .rightNew {
+        width: 71.45%;
+    }
+}
+
+@media (min-width: 1200px) {
+    body {
+        background: yellow;
+    }
+    .left {
+        background: #337ab7;
+        display: inline-block;
+        white-space: nowrap;
+        width: 50px;
+        transition: width 1.2s;
+    }
+    .right {
+        background: #fff;
+        width: 95.60%;
+        transition: width 1.2s;
+        border-style: solid;
+        border-color: #ccc;
+        border-width: 1px;
+    }
+    .rightNew {
+        width: 77.45%;
+    }
+}
+
+.onMouseHoverWorklist:hover {
+    color: #0000ff !important;
+    cursor: pointer;
+    text-decoration: underline;
+}

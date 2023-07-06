@@ -1,0 +1,243 @@
+<div class="container">
+
+  <div class="row m-t-10">
+    <div class="col-xs-12 text-right">
+      <p>
+        <strong>{{currentLanguageSet?.casesheet?.date}}: </strong> {{ date }}
+      </p>
+    </div>
+    <div class="col-xs-12 text-center">
+      <img id="logo" src="assets/images/Swasthya.png" alt="Piramal">
+    </div>
+  </div>
+
+  <div class="row m-t-20">
+    <div class="col-xs-6 text-left">
+      <p>
+        <strong> {{currentLanguageSet?.nurseData?.visitDetailsForm?.visitCategory}}: </strong> {{ beneficiaryDetails?.VisitCategory }} 
+      </p>
+    </div>
+    <div class="col-xs-6 text-right" *ngIf="casesheetData?.serviceID == 2">
+      <p>
+        <strong>{{currentLanguageSet?.casesheet?.servicePoint}}:</strong> {{ beneficiaryDetails?.servicePointName}}
+      </p>
+    </div>
+  </div>
+
+  <!-- Beneficiary Details -->
+  <div class="row m-t-10">
+    <div class="col-xs-12">
+      <fieldset>
+        <legend>{{currentLanguageSet?.casesheet?.beneficiaryDetails}}: </legend>
+        <table class="table table-no-border casesheet-table" aria-describedby="beneficiaryDetailstbl">
+          <tr>
+            <th id="beneficiaryID">{{currentLanguageSet?.bendetails?.beneficiaryID}}:</th>
+            <td> {{ beneficiaryDetails && beneficiaryDetails.beneficiaryID }} </td>
+            <th id="visitCode"> {{currentLanguageSet?.casesheet?.visitCode}}:</th>
+            <td> {{ beneficiaryDetails && beneficiaryDetails.visitCode }} </td>
+          </tr>
+          <tr>
+            <th id="name"> {{currentLanguageSet?.casesheet?.name}}:</th>
+            <td colspan="3"> {{ beneficiaryDetails && beneficiaryDetails.beneficiaryName }} </td>
+          </tr>
+          <tr>
+            <th id="gender">  {{currentLanguageSet?.bendetails?.gender}}:</th>
+            <td> {{ beneficiaryDetails && beneficiaryDetails.genderName }} </td>
+            <th id="visitDate">  {{currentLanguageSet?.bendetails?.visitDate}}:</th>
+            <td> {{ beneficiaryDetails && beneficiaryDetails.serviceDate }} </td>
+          </tr>
+          <tr>
+            <th id="age"> {{currentLanguageSet?.casesheet?.age}}:</th>
+            <td> {{ beneficiaryDetails && beneficiaryDetails.age }} </td>
+            <th id="consultDate">{{currentLanguageSet?.casesheet?.consultDate}}:</th>
+            <td> {{ beneficiaryDetails && beneficiaryDetails.consultationDate }} </td>
+          </tr>
+          <tr *ngIf="healthIDValue !== undefined && healthIDValue !== null && healthIDValue !=='' && healthIDValue.length >0">
+            <th id="healthId"> {{currentLanguageSet?.aBHA}}:</th>
+            <td> {{ healthIDValue}} </td>
+          </tr>
+        </table>
+      </fieldset>
+    </div>
+  </div>
+  <!-- End of Beneficiary Details -->
+
+  <!-- Current Vitals -->
+  <div class="row m-t-10" *ngIf="printPagePreviewSelect?.caseSheetCurrentVitals">
+    <div class="col-xs-12">
+      <fieldset>
+        <legend>{{currentLanguageSet?.casesheet?.currentVitals}}:</legend>
+        <table class="table table-no-border casesheet-table" aria-describedby="printPagePreviewTbl">
+          <tr>
+            <th id="height"> {{currentLanguageSet?.casesheet?.height}}:</th>
+            <td> {{ currentVitals && currentVitals.height_cm }} </td>
+            <th id="weight">{{currentLanguageSet?.casesheet?.weight}}:</th>
+            <td> {{ currentVitals && currentVitals.weight_Kg }} </td>
+          </tr>
+          <tr>
+            <th id="weightCircumference">{{currentLanguageSet?.casesheet?.weightCircumference}}:</th>
+            <td> {{ currentVitals && currentVitals.waistCircumference_cm }} </td>
+            <th id="empty">&nbsp;</th>
+            <td>&nbsp;</td>
+          </tr>
+
+          <tr>
+            <th id="spo2">{{ currentLanguageSet?.sPOTwoWithUnit }}:</th>
+            <td>{{ currentVitals && currentVitals.sPO2 }}</td>
+            <th id="rbs">{{ currentLanguageSet?.rbs }}:</th>
+            <td>{{ currentVitals && currentVitals.rbsTestResult }}</td>
+          </tr>
+          <tr>
+            <td colspan="4">
+              <h5>{{ currentLanguageSet?.rbsRemarks }}:</h5>
+              <div class="textarea">
+                {{ currentVitals && currentVitals.rbsTestRemarks }}
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <th id="bpSystolic"> {{currentLanguageSet?.casesheet?.bpSystolic}}:</th>
+            <td> {{ currentVitals && currentVitals.systolicBP_1stReading }} </td>
+            <th id="bpDiastolic">{{currentLanguageSet?.casesheet?.bpDiastolic}}: </th>
+            <td> {{ currentVitals && currentVitals.diastolicBP_1stReading }} </td>
+          </tr>
+          <tr>
+            <th id="sugarFasting">{{currentLanguageSet?.casesheet?.sugarFasting}}: </th>
+            <td>{{ currentVitals && currentVitals.bloodGlucose_Fasting }} </td>
+            <th id="sugarRandom">{{currentLanguageSet?.casesheet?.sugarRandom}}: </th>
+            <td>{{ currentVitals && currentVitals.bloodGlucose_Random }} </td>
+          </tr>
+          <tr>
+            <th id="sugarPp"> {{currentLanguageSet?.casesheet?.sugarPp}}:</th>
+            <td> {{ currentVitals && currentVitals.bloodGlucose_2HrPostPrandial }} </td>
+            <td colspan="2"></td>
+          </tr>
+          <tr>
+            <th id="hba1c"> {{currentLanguageSet?.casesheet?.hba1c}}:</th>
+            <td> {{ currentVitals && currentVitals.hbA1C }} </td>
+            <th id="hb"> {{currentLanguageSet?.casesheet?.hb}}: </th>
+            <td> {{ currentVitals && currentVitals.hemoglobin }} </td>
+          </tr>
+        </table>
+      </fieldset>
+    </div>
+  </div>
+  <!-- End of Current Vitals -->
+
+
+   <!-- Covid Vaccination Details -->
+   <div class="row m-t-10" *ngIf="printPagePreviewSelect?.caseSheetCovidVaccinationDetails">
+    <div class="col-xs-12">
+      <fieldset>
+        <legend>{{currentLanguageSet?.covidVaccinationStatus}}:</legend>
+        <table class="table table-no-border casesheet-table" aria-describedby="CovidVaccinationDetails">
+          <tr>
+            <th id="ageGroup">{{ currentLanguageSet?.ageGroup }}:</th>
+            <td> {{ ( beneficiaryDetails && beneficiaryDetails.ageVal >= 12) ? '>=12 years' : ageValidationForVaccination }} </td>
+            <th id="isApplicableForVaccine">{{ currentLanguageSet?.isApplicableForVaccine }}:</th>
+            <td> {{ ( beneficiaryDetails && beneficiaryDetails.ageVal >= 12) ? 'Applicable for Vaccination' : 'Not Applicable for Vaccination'}} </td>
+          </tr>
+          <tr>
+            <th id="vaccineStatus">{{ currentLanguageSet?.vaccineStatus }}:</th>
+            <td > {{ covidVaccineDetails && covidVaccineDetails.vaccineStatus }} </td>
+            <th id="vaccineTypes">{{ currentLanguageSet?.vaccineTypes }}:</th>
+            <td> {{ covidVaccineDetails && covidVaccineDetails.covidVaccineTypeID && covidVaccineDetails.covidVaccineTypeID[0].vaccineType }} </td>
+          </tr>
+          <tr>
+            <th id="doseTaken"> {{ currentLanguageSet?.doseTaken }}:</th>
+            <td> {{ covidVaccineDetails && covidVaccineDetails.doseTypeID && covidVaccineDetails.doseTypeID[0].doseType }} </td>
+          </tr>
+          
+          
+        </table>
+      </fieldset>
+
+     
+    </div>
+  </div>
+  <!-- End of Covid Vaccination details -->
+
+  <div *ngIf="printPagePreviewSelect?.cancerCaseSheetObservations">
+
+    <h4>{{currentLanguageSet?.ExaminationData?.cancerScreeningExamination?.oral?.observations}}:</h4>
+
+    <div class="row m-t-10">
+      <div class="col-xs-12">
+        <h5>{{currentLanguageSet?.ExaminationData?.cancerScreeningExamination?.symptoms?.briefHistory}}:</h5>
+        <div class="textarea">
+          {{ casesheetData?.nurseData?.signsAndSymptoms?.observation }}
+        </div>
+      </div>
+    </div>
+
+    <div class="row m-t-10">
+      <div class="col-xs-12">
+        <h5>{{currentLanguageSet?.ExaminationData?.cancerScreeningExamination?.oral?.oralExamamination}}:</h5>
+        <div class="textarea">
+          {{ casesheetData?.nurseData?.oralExamination?.observation }}
+        </div>
+      </div>
+    </div>
+
+    <div class="row m-t-10">
+      <div class="col-xs-12">
+        <h5>{{currentLanguageSet?.ExaminationData?.cancerScreeningExamination?.abdominal?.abdominalExamination}}:</h5>
+        <div class="textarea">
+          {{ casesheetData?.nurseData?.abdominalExamination?.observation }}
+        </div>
+      </div>
+    </div>
+
+    <div class="row m-t-10">
+      <div class="col-xs-12">
+        <h5>{{currentLanguageSet?.ExaminationData?.cancerScreeningExamination?.gynecological?.gynecologicalExamination}}:</h5>
+        <div class="textarea">
+          {{ casesheetData?.nurseData?.gynecologicalExamination?.observation }}
+        </div>
+      </div>
+    </div>
+
+    <div class="row m-t-10">
+      <div class="col-xs-12">
+        <h4>{{currentLanguageSet?.casesheet?.provisionalDiagnosis}}:</h4>
+        <div class="textarea">
+          {{ caseSheetDiagnosisData?.provisionalDiagnosisPrimaryDoctor }}
+        </div>
+      </div>
+    </div>
+
+    <div class="row m-t-10">
+      <div class="col-xs-12">
+        <h4>{{currentLanguageSet?.casesheet?.remarksPrimaryDoctor}}:</h4>
+        <div class="textarea">
+          {{ caseSheetDiagnosisData?.remarks }}
+        </div>
+      </div>
+    </div>
+
+    <div class="row m-t-10">
+      <div class="col-xs-12">
+        <h4>{{currentLanguageSet?.casesheet?.oncologistObservation}}:</h4>
+        <div class="textarea">
+          {{ caseSheetDiagnosisData?.provisionalDiagnosisOncologist }}
+        </div>
+      </div>
+    </div>
+
+
+
+    
+  </div>
+
+  <!-- Doctor's Sign -->
+  <div class="row m-t-50">
+    <div class="col-xs-6">&nbsp;</div>
+    <div class="col-xs-6">
+      <p>
+        <strong>{{currentLanguageSet?.casesheet?.docSign}}:</strong>&nbsp; &nbsp;
+        <img [src]="imgUrl" alt="img" *ngIf="imgUrl">
+      </p>
+    </div>
+  </div>
+  <!-- End of Doctor's Sign -->
+</div>

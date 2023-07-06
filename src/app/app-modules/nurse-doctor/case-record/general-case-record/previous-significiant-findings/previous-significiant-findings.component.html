@@ -1,0 +1,49 @@
+<div class="row m-t-20">
+  <div class="col-sm-12">
+    <div *ngIf="previousSignificiantFindingsList?.length> 0" class="pull-right">
+      <md-input-container id="filterbox" class="m-t-20-">
+        <input autocomplete="off" mdInput placeholder="{{current_language_set?.common?.inTableSearch}}" #filterTerm (keyup)="filterPreviousSignificiantFindingsList(filterTerm.value)">
+        <md-icon mdSuffix>search</md-icon>
+      </md-input-container>
+    </div>
+    <div class="clearfix"></div>
+    <section class="table-responsive">
+      <table class="table table-bordered" aria-describedby="PreviousSignificiantFindings">
+        <thead>
+          <tr>
+            <th style="width: 10%;" id="sno">{{current_language_set?.coreComponents?.sno}}</th>
+            <th style="width: 70%;" id="significantfindings">{{current_language_set?.Significantfindingsdetails?.significantfindings}}</th>
+            <th style="width: 20%;" id="captureddate">{{current_language_set?.Significantfindingsdetails?.captureddate}}</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="previousSignificiantFindingsList?.length == 0">
+          <tr>
+            <td colspan="3">
+              <h4 class='norecord'>{{current_language_set?.Significantfindingsdetails?.noprevioussignificantrecord}}</h4>
+              </td>
+          </tr>
+          </tbody>
+
+          <tbody *ngIf="previousSignificiantFindingsList?.length > 0">
+            <tr *ngFor="let findings of pagedList let i = index">
+              <td>{{filteredPreviousSignificiantFindingsList.indexOf(findings)+1 }}</td>
+              <td>{{findings.significantFindings}}</td>
+              <td>{{findings.captureDate | date: 'dd/MM/yyyy'}}</td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="1">
+                <div *ngIf="filteredPreviousSignificiantFindingsList.length > 0" class="totalCount"> {{current_language_set?.common?.totalCount}} : {{ filteredPreviousSignificiantFindingsList.length }}</div>
+              </td>
+              <td colspan="2">
+                <pagination class="pull-right" [boundaryLinks]="true" (pageChanged)="pageChanged($event)" *ngIf="filteredPreviousSignificiantFindingsList.length" [totalItems]="filteredPreviousSignificiantFindingsList.length" [itemsPerPage]="rowsPerPage" [maxSize]="rowsPerPage"
+                  [rotate]="rotate" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"></pagination>
+
+              </td>
+            </tr>
+          </tfoot>
+      </table>
+    </section>
+  </div>
+</div>

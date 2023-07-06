@@ -1,0 +1,25 @@
+<div class="row m-t-10">
+  <div class="col-xs-12">
+    <h5>{{current_language_set?.common?.annotatedimagereport}}</h5>
+  </div>
+  <div class="col-xs-12">
+    <table class="table table-bordered" aria-describedby="annotatedimagereportTbl">
+      <tr>
+        <td rowspan="6">
+          <canvas width="250" height="250" #canvas></canvas>
+        </td>
+        <th id="description">{{current_language_set?.nurseData?.chiefComplaintsDetails?.description}} </th>
+      </tr>
+      <ng-container *ngIf="!this.annotatedMarker?.markers">
+        <tr *ngFor="let row of blankRows">
+          <td> &nbsp; </td>
+        </tr>
+      </ng-container>
+      <ng-container *ngIf="this.annotatedMarker?.markers">
+        <tr *ngFor="let mark of this.annotatedMarker?.markers">
+          <td> {{ mark?.description}} </td>
+        </tr>
+      </ng-container>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,334 @@
+<div class="container-fluid" *ngIf="technicianForm">
+  <button md-mini-fab class="example-fab" color="primary" (click)="sideNavModeChange(sidenav)">
+    <md-icon>account_box</md-icon>
+  </button>
+  <md-sidenav-container class="example-sidenav-fab-container">
+    <md-sidenav #sidenav mode="side" opened="false">
+      <div class="example-scrolling-content">
+        <app-beneficiary-details></app-beneficiary-details>
+      </div>
+    </md-sidenav>
+    <div class="example-scrolling-content">
+      <form [formGroup]='technicianForm'>
+        <md-tab-group>
+          <md-tab label="{{currentLanguageSet?.labTechnicianData?.laboratoryinformation}}" *ngIf="labForm">
+            <section formArrayName="labForm" class="container-fluid" style="min-height:400px;">
+              <md-accordion>
+                <div *ngIf="labForm?.controls">
+                  {{procedure | json}}
+                  <section class="row" *ngFor="let procedure of labForm?.controls; let i=index;  let isLast=last">
+                    <ng-container [formGroupName]="i">
+                      <md-expansion-panel [expanded]="i==0">
+                        <md-expansion-panel-header>
+                          <md-panel-title>
+                            {{procedure.value.procedureName }}&nbsp;                           
+                          </md-panel-title>
+                          <md-panel-description>
+                          </md-panel-description>
+                        </md-expansion-panel-header>
+                        <div formArrayName="compListDetails" class="container-fluid">
+                          <div class="row">
+                            <div class="col-sm-4 col-md-4 cl-lg-4"
+                              *ngFor="let component of procedure?.controls.compListDetails?.controls; let j=index; let innerLast= last">
+                              <ng-container [formGroupName]="j">
+                                <md-card style="margin-top: 10px; padding: 0;">
+                                  <md-card-title style="padding: 24px;" class="overlay">
+                                    {{component.value.testComponentName }}
+                                  </md-card-title>
+                          <md-checkbox color="accent" formControlName="stripsNotavailable" name="altNum" style="padding-left: 4%;" (change)="onStripsCheckBox($event,i,j)" *ngIf="procedure.value.procedureName === testName">
+                            {{currentLanguageSet?.coreComponents?.stripsNotAvailable}}
+                          </md-checkbox>
+                                  <button tooltip="{{currentLanguageSet?.common?.startTest}}" md-button type="button" class="button-style"
+                                    style="margin-right:15px" *ngIf="procedure?.value?.procedureStartAPI!=undefined"
+                                    (click)="openIOTModal(procedure,i);$event.stopPropagation();">{{currentLanguageSet?.coreComponents?.start}}</button>
+                                  <md-panel-description>
+                                  </md-panel-description>
+                                  <md-card-content style="padding: 0 24px 24px 24px;">
+                                    <section class="container-fluid" #textboxChoice
+                                      *ngIf="component.value.inputType == 'TextBox'">
+                                      <div style="text-align: center;" class="row">
+                                        <md-form-field style = "width: 70%;    padding-bottom: 10%;margin-bottom : 10%; margin-top:5%"
+                                          [ngClass]="{
+                                                                                'mat-input-invalid':component.value.abnormal,
+                                                                                'mat-form-field-invalid':component.value.abnormal,
+                                                                                'ng-invalid': component.value.abnormal,
+                                                                                'ng-valid': !component.value.abnormal,
+                                                                                'mat-input-valid':!component.value.abnormal,
+                                                                                'mat-form-field-valid':!component.value.abnormal}">
+                                          <input autocomplete="off" mdInput formControlName="inputValue"
+                                            [allowText]="component.value.allowText" maxLength="50" placeholder="{{currentLanguageSet?.common?.result}}"
+                                            (input)="checkNormalRange(i, j)" (blur)="checkRange(i ,j)" [required]="(procedure.value.isMandatory === true && procedure.value.procedureName === testName && stripSelected === true) ?true:false || (procedure.value.procedureName != testName && procedure.value.isMandatory === true) ?true:false">
+
+                                          <md-hint>{{currentLanguageSet?.coreComponents?.range}} {{component.value.range_min}} {{currentLanguageSet?.coreComponents?.to}} {{component.value.range_max}}
+                                          </md-hint>
+
+                                        </md-form-field>
+                                        <span
+                                          style="margin-top:unset; font-weight:700;">{{component.value.measurementUnit}}
+                                        </span>
+
+                                      </div>
+
+                                    </section>
+                                    <section #radioChoice *ngIf="component.value.inputType == 'RadioButton'">
+                                      <div style = "padding-bottom: 10%;">
+                                        <span *ngIf="(procedure.value.isMandatory === true && procedure.value.procedureName === testName && stripSelected === true) ?true:false || (procedure.value.procedureName != testName && procedure.value.isMandatory === true) ?true:false"><p style="font-size: 12px;">{{currentLanguageSet?.coreComponents?.mandatory}}*</p></span>
+                                        <md-radio-group formControlName="compOptSelected" disableRipple="true"  [required]="(procedure.value.isMandatory === true && procedure.value.procedureName === testName && stripSelected === true) ?true:false || ( procedure.value.procedureName != testName && procedure.value.isMandatory === true) ?true:false">
+                                          <md-radio-button color="primary"
+                                            *ngFor="let radio of component?.controls.compOpt?.controls;"
+                                            class="radio-button" [value]="radio.value.name">
+                                            {{radio.value.name}}
+                                          </md-radio-button>
+                                        </md-radio-group>
+                                      </div>
+                                    </section>
+                                    <section #dropdownChoice *ngIf="component.value.inputType == 'DropDown'">
+                                      <div>
+                                        <md-select class="p-t-12" [style.width]=" '100%' " formControlName="compOptSelected" style="line-height: unset;" placeholder="{{currentLanguageSet?.common?.result}}" [required]="(procedure.value.isMandatory === true && procedure.value.procedureName === testName && stripSelected === true) ?true:false || (procedure.value.procedureName != testName && procedure.value.isMandatory === true) ?true:false">
+                                          <md-option *ngFor="let options of component?.controls.compOpt?.controls;"
+                                            [value]="options.value.name">{{options.value.name}} </md-option>
+                                        </md-select>
+                                      </div>
+                                    </section>
+                                    <div style="bottom: -5px; position:absolute; width:90%; text-align:center;"
+                                      class="row">
+                                      <md-form-field [style.width]="'95%'">
+                                        <input autocomplete="off" mdInput formControlName="remarks"
+                                          allowText="alphanumericspace" maxLength="300" placeholder="{{currentLanguageSet?.common?.remarks}}">
+                                      </md-form-field>
+                                    </div>
+                                  </md-card-content>
+
+                                </md-card>
+                              </ng-container>
+                            </div>
+                          </div>
+                        </div>
+                      </md-expansion-panel>
+                    </ng-container>
+                  </section>
+                </div>
+              </md-accordion>
+            </section>
+          </md-tab>
+          <md-tab label="{{currentLanguageSet?.labTechnicianData?.radiologyimaging}} " *ngIf="radiologyForm">
+
+            <section formArrayName="radiologyForm" class="container-fluid" style="min-height:400px;">
+              <section class="row" style="margin:20px;">
+                <div class="col-md-6 col-lg-6" style="margin-top:10px;"
+                  *ngFor="let procedure of radiologyForm?.controls; let m=index; let isLast=last">
+                  <ng-container [formGroupName]="m">
+                    <md-card class="radio_newCard" style="height:280px;">
+                      <section class="overlay shade_full">
+                        <md-card-title class="radio_proc_title">{{procedure?.value.procedureName | titlecase }}
+                        </md-card-title>
+                      </section>
+                      <md-card-content class="shade_full">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <label for="upload-file" style="color: gray; margin-left: -25px;"> {{currentLanguageSet?.uploadFileSizeLimit}} :{{maxFileSize}} {{currentLanguageSet?.mb}} , {{currentLanguageSet?.SupportedFileFormats}})</label>  
+                      </div>
+                        <section>
+                          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <button md-raised-button color='primary' class="pull-left" (click)="filelist.click()">{{currentLanguageSet?.nurseData?.visitDetailsForm?.selectFile}}</button>
+                            <span class="span-style">
+                              <input autocomplete="off" type="file" #filelist style="display:inline-block"
+                                (change)="uploadFile($event, procedure?.value.procedureID)">
+                            </span>
+                            <button md-raised-button color='primary' class="filemargin-style pull-right"
+                              *ngIf="fileObj && (fileObj | json) != '{}' && fileObj[procedure?.value.procedureID]"
+                              (click)="openToViewFile(procedure?.value.procedureID)">{{currentLanguageSet?.nurseData?.visitDetailsForm?.viewFiles}}</button>
+                          </div>
+                          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 margin-style">
+                            <button md-raised-button color='primary' class="pull-right"
+                              (click)="saveUploadDetails(procedure?.value.procedureID)">{{currentLanguageSet?.nurseData?.visitDetailsForm?.uploadFiles}}</button>
+                          </div>
+                        </section>
+                        <div style="bottom:10px; position:absolute; width:90%; margin: 5px; text-align:center;"
+                          class="row">
+                          <md-form-field [style.width]="'95%'">
+                            <input autocomplete="off" mdInput
+                              [formControl]="procedure.controls.compDetails.controls.remarks"
+                              allowText="alphanumericspace" maxLength="300" placeholder="{{currentLanguageSet?.common?.remarks}}">
+                          </md-form-field>
+                        </div>
+                      </md-card-content>
+                    </md-card>
+                  </ng-container>
+                </div>
+              </section>
+            </section>
+          </md-tab>
+          <md-tab label="External Investigations " *ngIf="externalForm">
+            <form [formGroup]='externalForm'>
+              <section style="min-height:400px;">
+                <div class="container">
+                  <div class="row">
+                    <md-card>
+                      <md-card-title>
+                        {{currentLanguageSet?.coreComponents?.belowExternalTestRequired}}
+                      </md-card-title>
+                      <md-card-subtitle>
+                        {{externalForm.value.tests}}
+                      </md-card-subtitle>
+                    </md-card>
+                  </div>
+                </div>
+              </section>
+            </form>
+          </md-tab>
+          <md-tab label="{{currentLanguageSet?.labTechnicianData?.labResults}}" *ngIf="archiveList && archiveList.length">
+            <section style="min-height:400px;">
+              <md-card style="min-height:400px;">
+                <div *ngIf="filteredLaboratoryData.length > 0">
+                  <md-input-container id="filterbox" class="m-t-20" style="width:100%">
+                    <input autocomplete="off" mdInput placeholder="{{currentLanguageSet?.labTechnicianData?.inTableSearch}}" #filterTerm
+                      (keyup)="filterProceduresLab(filterTerm.value)">
+                    <md-icon mdSuffix>search</md-icon>
+                  </md-input-container>
+                </div>
+                <div class="clearfix"></div>
+                <section class="table-responsive">
+                  <table class="table table-bordered" [md2Data]="laboratoryData" #md2="md2DataTable" [rowsPerPage]="5"
+                    [activePage]="1" class="table " aria-describedby="laboratoryData">
+                    <thead *ngIf="laboratoryData.length">
+                      <tr>
+                        <th style="width: 20%;" id="date">{{currentLanguageSet?.common?.date}}</th>
+                        <th style="width: 20%;" id="testName">{{currentLanguageSet?.labTechnicianData.testName}} </th>
+                        <th style="width: 20%;" id="componentName">{{currentLanguageSet?.labTechnicianData.componentName}}</th>
+                        <th style="width: 10%;" id="result">{{currentLanguageSet?.common?.result}}</th>
+                        <th style="width: 10%;" id="measurementUnit">{{currentLanguageSet?.labTechnicianData.measurementUnit}}</th>
+                        <th style="width: 20%;" id="remarks">{{currentLanguageSet?.common?.remarks}}</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <ng-template [ngIf]="!laboratoryData.length">
+                        <tr>
+                          <td colspan="6" style="text-align:center">
+                            <h3>{{currentLanguageSet?.Reports?.notestresultsfound}}</h3>
+                          </td>
+                        </tr>
+                        <tr *ngFor="let row of blankTable">
+                          <td colspan="7"> &nbsp; </td>
+                        </tr>
+                      </ng-template>
+                      <ng-container *ngFor="let comps of md2.data; let i = index">
+                        <tr>
+                          <td [attr.rowspan]="comps?.componentList.length + 1"
+                            style="max-width:100px;vertical-align:middle;border:1px solid #ddd">
+                            {{comps?.createdDate | date: 'dd/MM/yyyy, h:mm a'}}</td>
+                          <td [attr.rowspan]="comps?.componentList.length + 1"
+                            style="max-width:200px; word-break: normal; vertical-align:middle;border:1px solid #ddd">
+                            {{comps?.procedureName}}</td>
+                        </tr>
+                        <tr *ngFor="let component of comps?.componentList">
+                          <td style="width:300px;max-width:120px; word-break: normal; vertical-align:middle">
+                            {{component?.componentName}}</td>
+                          <td style="width:150px; word-break: normal; vertical-align:middle ">
+                            {{component?.testResultValue}}</td>
+                          <td style="width:150px; word-break: normal; vertical-align:middle">
+                            {{component?.testResultUnit}}</td>
+                          <td style="max-width:150px; word-break: normal; vertical-align:middle">{{component?.remarks }}
+                          </td>
+                        </tr>
+                      </ng-container>
+                    </tbody>
+                    <tfoot *ngIf="laboratoryData.length">
+                      <tr>
+                        <td colspan="4 ">
+                          <div *ngIf="laboratoryData.length> 0" class="totalCount"> {{currentLanguageSet?.common?.totalCount}} :
+                            {{ laboratoryData.length }}</div>
+                        </td>
+                        <td colspan="2" style="text-align:right;">
+                          <md2-pagination></md2-pagination>
+                        </td>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </section>
+              </md-card>
+            </section>
+          </md-tab>
+          <md-tab label="{{currentLanguageSet?.labTechnicianData?.radiologyResults}}" *ngIf="archiveList && archiveList.length">
+            <section style="min-height:400px;">
+              <md-card style="min-height:400px;">
+                <div *ngIf="filteredRadiologyData.length > 0">
+                  <md-input-container id="filterbox" class="m-t-20" style="width:100%">
+                    <input autocomplete="off" mdInput placeholder="{{currentLanguageSet?.labTechnicianData?.inTableSearch}}" #filterTerm
+                      (keyup)="filterProceduresRadiology(filterTerm.value)">
+                    <md-icon mdSuffix>search</md-icon>
+                  </md-input-container>
+                </div>
+                <div class="clearfix"></div>
+                <section class="table-responsive">
+                  <table class="table table-bordered" [md2Data]="radiologyFile" #md2="md2DataTable" [rowsPerPage]="5"
+                    [activePage]="1" class="table " aria-describedby="radiologyFile">
+                    <thead *ngIf="radiologyFile.length">
+                      <tr>
+                        <th style="width: 20%;" id="date1">{{currentLanguageSet?.common?.date}}</th>
+                        <th style="width: 20%;" id="testName1">{{currentLanguageSet?.labTechnicianData.testName}} </th>
+                        <th style="width: 20%;" id="componentName1">{{currentLanguageSet?.labTechnicianData.componentName}}</th>
+                        <th style="width: 20%;" id="result1">{{currentLanguageSet?.common?.result}}</th>
+                        <th style="width: 20%;" id="measurementUnit1">{{currentLanguageSet?.labTechnicianData.measurementUnit}}</th>
+                        <th style="width: 20%;" id="remarks1">{{currentLanguageSet?.common?.remarks}}</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <ng-template [ngIf]="!radiologyFile.length">
+                        <tr>
+                          <td colspan="6" style="text-align:center">
+                            <h3>{{currentLanguageSet?.Reports?.noradiologyreportsfound}}</h3>
+                          </td>
+                        </tr>
+                        <tr *ngFor="let row of blankTable">
+                          <td colspan="6"> &nbsp; </td>
+                        </tr>
+                      </ng-template>
+                      <ng-container *ngFor="let comps of md2.data; let i = index">
+                        <tr>
+                          <td [attr.rowspan]="comps?.componentList.length + 1"
+                            style="max-width:200px; word-break: normal; vertical-align:middle;border:1px solid #ddd">
+                            {{comps?.createdDate | date: 'dd/MM/yyyy, h:mm a'}}</td>
+                          <td [attr.rowspan]="comps?.componentList.length + 1"
+                            style="max-width:200px; word-break: normal; vertical-align:middle;border:1px solid #ddd">
+                            {{comps?.procedureName}}</td>
+                        </tr>
+                        <tr *ngFor="let component of comps?.componentList">
+                          <td style="max-width:300px; word-break: normal; vertical-align:middle">
+                            {{component?.componentName}}</td>
+                          <td style="max-width:150px; word-break: normal; vertical-align:middle">{{component?.remarks }}
+                          </td>
+                          <td style="max-width:150px; word-break: normal; vertical-align:middle">
+                            <button md-raised-button color='primary' (click)="viewFileContent(component.fileIDs)">{{currentLanguageSet?.labTechnicianData.viewFiles}}</button>
+                          </td>
+                        </tr>
+                      </ng-container>
+                    </tbody>
+                    <tfoot *ngIf="radiologyFile.length">
+                      <tr>
+                        <td colspan="4 ">
+                          <div *ngIf="radiologyFile.length> 0" class="totalCount"> {{currentLanguageSet?.common?.totalCount}} :
+                            {{ radiologyFile.length }}</div>
+                        </td>
+                        <td colspan="2" style="text-align:right;">
+                          <md2-pagination></md2-pagination>
+                        </td>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </section>
+              </md-card>
+            </section>
+          </md-tab>
+        </md-tab-group>
+        <div class="row m-t-20" style="margin-bottom:30px;">
+          <div class="col-sm-12 step-btn" style="text-align: right">
+            <button md-raised-button id="submitButton" class="btn-green" color='primary' (click)="validateSubmit(true)"
+              type="submit" [disabled]="technicianForm.invalid">{{currentLanguageSet?.common?.submit}}</button>            
+            <button id="resetButton" [disabled]="!technicianForm.dirty" md-raised-button color='primary' type="submit"
+              (click)="confirmFormReset()">{{currentLanguageSet?.common?.reset}}</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </md-sidenav-container>
+</div>

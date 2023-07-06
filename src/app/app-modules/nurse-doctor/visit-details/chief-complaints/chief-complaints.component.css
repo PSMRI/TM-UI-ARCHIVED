@@ -1,0 +1,25 @@
+h5{
+    font-weight: bold;
+}
+
+.textarea-full-width {
+    width: 100%;
+}
+
+.input-full-width {
+    width: 100%;
+}
+
+.mat-form-field {
+    line-height: unset;
+}
+
+.box {
+    height: 60px;
+}
+
+.autocomplete{
+    padding: 0px 16px;
+    width: 100%;
+    border-bottom: 1px solid lightgray;
+}

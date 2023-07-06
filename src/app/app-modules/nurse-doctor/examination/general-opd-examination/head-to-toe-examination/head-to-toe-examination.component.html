@@ -1,0 +1,116 @@
+<!--{{headToToeExaminationForm.value | json}} -->
+<div class="row m-t-20" [formGroup]="headToToeExaminationForm">
+  <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 box">
+    <div class="form-group">
+      <label class="control-label" for="headToToeExamination">{{current_language_set?.ExaminationData?.ANC_OPD_PNCExamination?.headToToe?.headexamination}}</label>
+      <div class="clearfix"></div>
+      <md-radio-group id='headtoToeExam' name='headtoToeExam' formControlName="headtoToeExam" (change)='checkWithHeadToToe()'>
+        <md-radio-button color='primary' value="Normal">{{current_language_set?.common?.normal}}</md-radio-button>
+        <md-radio-button color='primary' value="Abnormal">{{current_language_set?.common?.abnormal}}</md-radio-button>
+      </md-radio-group>
+    </div>
+  </div>
+  <div>
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 box" *ngIf="headtoToeExam == 'Abnormal'">
+      <div class="form-group">
+        <md-form-field class="input-full-width" class="input-full-width">
+          <input autocomplete="off" mdInput allowText="textAreaValidator" defaultNull mdTextareaAutosize id='head' name='head' formControlName="head" placeholder="{{current_language_set?.ExaminationData?.ANC_OPD_PNCExamination?.headToToe?.Head}}" maxlength="50">
+        </md-form-field>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 box" *ngIf="headtoToeExam == 'Abnormal'">
+      <div class="form-group">
+        <md-form-field class="input-full-width" class="input-full-width">
+          <input autocomplete="off" mdInput allowText="textAreaValidator" defaultNull mdTextareaAutosize id='eyes' name='eyes' formControlName="eyes" placeholder="{{current_language_set?.ExaminationData?.ANC_OPD_PNCExamination?.headToToe?.Eyes}}" maxlength="50">
+        </md-form-field>
+      </div>
+    </div>
+
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 box" *ngIf="headtoToeExam == 'Abnormal'">
+      <div class="form-group">
+        <md-form-field class="input-full-width" class="input-full-width">
+          <input autocomplete="off" mdInput allowText="textAreaValidator" defaultNull mdTextareaAutosize id='ears' name='ears' formControlName="ears" placeholder="{{current_language_set?.ExaminationData?.ANC_OPD_PNCExamination?.headToToe?.Ears}}" maxlength="50">
+        </md-form-field>
+      </div>
+    </div>
+
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 box" *ngIf="headtoToeExam == 'Abnormal'">
+      <div class="form-group">
+        <md-form-field class="input-full-width" class="input-full-width">
+          <input autocomplete="off" mdInput allowText="textAreaValidator" defaultNull mdTextareaAutosize id='nose' name='nose' formControlName="nose" placeholder="{{current_language_set?.ExaminationData?.ANC_OPD_PNCExamination?.headToToe?.Nose}}" maxlength="50">
+        </md-form-field>
+      </div>
+    </div>
+
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 box" *ngIf="headtoToeExam == 'Abnormal'">
+      <div class="form-group">
+        <md-form-field class="input-full-width" class="input-full-width">
+          <input autocomplete="off" mdInput allowText="textAreaValidator" defaultNull mdTextareaAutosize id='oralCavity' name='oralCavity' formControlName="oralCavity" placeholder="{{current_language_set?.ExaminationData?.ANC_OPD_PNCExamination?.headToToe?.Oralcavity}}" maxlength="50">
+        </md-form-field>
+      </div>
+    </div>
+
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 box" *ngIf="headtoToeExam == 'Abnormal'">
+      <div class="form-group">
+        <md-form-field class="input-full-width" class="input-full-width">
+          <input autocomplete="off" mdInput allowText="textAreaValidator" defaultNull mdTextareaAutosize id='throat' name='throat' formControlName="throat" placeholder="{{current_language_set?.ExaminationData?.ANC_OPD_PNCExamination?.headToToe?.Throat}}" maxlength="50">
+        </md-form-field>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 box" *ngIf="headtoToeExam == 'Abnormal'">
+      <div class="form-group">
+        <md-form-field class="input-full-width" class="input-full-width">
+          <input autocomplete="off" mdInput allowText="textAreaValidator" defaultNull mdTextareaAutosize id='breastAndNipples' name='breastAndNipples' formControlName="breastAndNipples" placeholder="{{current_language_set?.ExaminationData?.ANC_OPD_PNCExamination?.headToToe?.Breast}}" maxlength="50">
+        </md-form-field>
+      </div>
+    </div>
+
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 box" *ngIf="headtoToeExam == 'Abnormal'">
+      <div class="form-group">
+        <md-form-field class="input-full-width" class="input-full-width">
+          <input autocomplete="off" mdInput allowText="textAreaValidator" defaultNull mdTextareaAutosize id='trunk' name='trunk' formControlName="trunk" placeholder="{{current_language_set?.ExaminationData?.ANC_OPD_PNCExamination?.headToToe?.Trunk}}" maxlength="50">
+        </md-form-field>
+      </div>
+    </div>
+
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 box" *ngIf="headtoToeExam == 'Abnormal'">
+      <div class="form-group">
+        <md-form-field class="input-full-width" class="input-full-width">
+          <input autocomplete="off" mdInput allowText="textAreaValidator" defaultNull mdTextareaAutosize id='upperLimbs' name='upperLimbs' formControlName="upperLimbs" placeholder="{{current_language_set?.ExaminationData?.ANC_OPD_PNCExamination?.headToToe?.upperlimbs}}" maxlength="50">
+        </md-form-field>
+      </div>
+    </div>
+
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 box" *ngIf="headtoToeExam == 'Abnormal'">
+      <div class="form-group">
+        <md-form-field class="input-full-width" class="input-full-width">
+          <input autocomplete="off" mdInput allowText="textAreaValidator" defaultNull mdTextareaAutosize id='lowerLimbs' name='lowerLimbs' formControlName="lowerLimbs" placeholder="{{current_language_set?.ExaminationData?.ANC_OPD_PNCExamination?.headToToe?.lowerlimbs}}" maxlength="50">
+        </md-form-field>
+      </div>
+    </div>
+
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 box" *ngIf="headtoToeExam == 'Abnormal'">
+      <div class="form-group">
+        <md-form-field class="input-full-width" class="input-full-width">
+          <input autocomplete="off" mdInput allowText="textAreaValidator" defaultNull mdTextareaAutosize id='skin' name='skin' formControlName="skin" placeholder="{{current_language_set?.ExaminationData?.ANC_OPD_PNCExamination?.headToToe?.Skin}}" maxlength="50">
+        </md-form-field>
+      </div>
+    </div>
+
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 box" *ngIf="headtoToeExam == 'Abnormal'">
+      <div class="form-group">
+        <md-form-field class="input-full-width" class="input-full-width">
+          <input autocomplete="off" mdInput allowText="textAreaValidator" defaultNull mdTextareaAutosize id='hair' name='hair' formControlName="hair" placeholder="{{current_language_set?.ExaminationData?.ANC_OPD_PNCExamination?.headToToe?.Hairs}}" maxlength="50">
+        </md-form-field>
+      </div>
+    </div>
+
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 box" *ngIf="headtoToeExam == 'Abnormal'">
+      <div class="form-group">
+        <md-form-field class="input-full-width" class="input-full-width">
+          <input autocomplete="off" mdInput allowText="textAreaValidator" defaultNull mdTextareaAutosize id='nails' name='nails' formControlName="nails" placeholder="{{current_language_set?.ExaminationData?.ANC_OPD_PNCExamination?.headToToe?.Nails}}" maxlength="50">
+        </md-form-field>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,49 @@
+<h3 class="title info">{{currentLanguageSet?.common?.selectPrintPage}}</h3>
+<div class="message">
+  <div class="col-xs-12 col-sm-6 col-md-6 m-t-15" *ngIf="visitCategory == 'ANC'">
+    <md-checkbox color='primary' class="" [(ngModel)]="printPagePreviewSelect.caseSheetANC"> {{currentLanguageSet?.ancData?.anc}} </md-checkbox>
+  </div>
+  <div class="col-xs-12 col-sm-6 col-md-6 m-t-15" *ngIf="visitCategory == 'PNC'">
+    <md-checkbox color='primary' class="" [(ngModel)]="printPagePreviewSelect.caseSheetPNC">{{currentLanguageSet?.pncData?.pnc}}</md-checkbox>
+  </div>
+  <div class="col-xs-12 col-sm-6 col-md-6 m-t-15" *ngIf="visitCategory != 'General OPD (QC)'">
+    <md-checkbox color='primary' class="" [(ngModel)]="printPagePreviewSelect.caseSheetHistory"> {{currentLanguageSet?.historyData.history}} </md-checkbox>
+  </div>
+  <div class="col-xs-12 col-sm-6 col-md-6 m-t-15" *ngIf="visitCategory != 'NCD care' && visitCategory != 'General OPD (QC)' && visitCategory != 'COVID-19 Screening'">
+    <md-checkbox color='primary' class="" [(ngModel)]="printPagePreviewSelect.caseSheetExamination"> {{currentLanguageSet?.ExaminationData.examination}} </md-checkbox>
+  </div>
+  <div class="col-xs-12 col-sm-6 col-md-6 m-t-15" *ngIf=" visitCategory != 'Cancer Screening'">
+    <md-checkbox color='primary' class="" [(ngModel)]="printPagePreviewSelect.caseSheetPrescription"> {{currentLanguageSet?.casesheet.prescribe}}</md-checkbox>
+  </div>
+  <div class="col-xs-12 col-sm-6 col-md-6 m-t-15" *ngIf=" visitCategory != 'Cancer Screening'">
+    <md-checkbox color='primary' class="" [(ngModel)]="printPagePreviewSelect.caseSheetDiagnosis"> {{currentLanguageSet?.DiagnosisDetails.diagnosis}}</md-checkbox>
+  </div>
+   <div class="col-xs-12 col-sm-6 col-md-6 m-t-15" *ngIf=" visitCategory != 'Cancer Screening'">
+    <md-checkbox color='primary' class="" [(ngModel)]="printPagePreviewSelect.caseSheetInvestigations"> {{currentLanguageSet?.nurseData?.investigationsDetails?.investigations}}</md-checkbox>
+  </div>
+   <div class="col-xs-12 col-sm-6 col-md-6 m-t-15" *ngIf=" visitCategory != 'Cancer Screening'">
+    <md-checkbox color='primary' class="" [(ngModel)]="printPagePreviewSelect.caseSheetExtInvestigation"> {{currentLanguageSet?.Investigationdetails?.externalinvestigations}}</md-checkbox>
+  </div>
+   <div class="col-xs-12 col-sm-6 col-md-6 m-t-15" *ngIf=" visitCategory != 'Cancer Screening'">
+    <md-checkbox color='primary' class="" [(ngModel)]="printPagePreviewSelect.caseSheetChiefComplaints">{{currentLanguageSet?.nurseData?.chiefComplaintsDetails?.chiefComplaints}}</md-checkbox>
+  </div>
+   <div class="col-xs-12 col-sm-6 col-md-6 m-t-15" *ngIf=" visitCategory != 'Cancer Screening'">
+    <md-checkbox color='primary' class="" [(ngModel)]="printPagePreviewSelect.caseSheetClinicalObservations">{{currentLanguageSet?.casesheet.clinicalObs}}</md-checkbox>
+  </div>
+   <div class="col-xs-12 col-sm-6 col-md-6 m-t-15" *ngIf=" visitCategory != 'Cancer Screening' && visitCategory != 'General OPD (QC)'">
+    <md-checkbox color='primary' class="" [(ngModel)]="printPagePreviewSelect.caseSheetFindings">{{currentLanguageSet?.Find?.findings}}</md-checkbox>
+  </div>
+   <div class="col-xs-12 col-sm-6 col-md-6 m-t-15">
+    <md-checkbox color='primary' class="" [(ngModel)]="printPagePreviewSelect.caseSheetCurrentVitals"> {{currentLanguageSet?.previousvisit?.currentvitals}}</md-checkbox>
+  </div>
+  <div class="col-xs-12 col-sm-6 col-md-6 m-t-15">
+    <md-checkbox color='primary' class="" [(ngModel)]="printPagePreviewSelect.caseSheetCovidVaccinationDetails">{{currentLanguageSet?.covidVaccinationStatus}}</md-checkbox>
+  </div>
+   <div class="col-xs-12 col-sm-6 col-md-6 m-t-15" *ngIf=" visitCategory == 'Cancer Screening'">
+    <md-checkbox color='primary' class="" [(ngModel)]="printPagePreviewSelect.cancerCaseSheetObservations">{{currentLanguageSet?.ExaminationData?.cancerScreeningExamination?.oral?.observations}}</md-checkbox>
+  </div>
+</div>
+<div class="action">
+  <button md-button (click)="dialogRef.close(false)">{{currentLanguageSet?.common?.cancel}}</button>
+  <button md-button (click)="dialogRef.close(printPagePreviewSelect)" class="background-primary" cdkFocusInitial>{{currentLanguageSet?.previousvisit?.previewmmu}}</button>
+</div>

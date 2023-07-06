@@ -1,0 +1,62 @@
+.title .exit {
+    cursor: pointer;
+  }
+  
+  .title {
+    padding: 10px 24px 10px;
+    color: white;
+    font-size: 18px;
+    line-height: 32px;
+    font-weight: 400;
+    background: #0277bd;
+  }
+  
+  .title h4 {
+    display: inline-block;
+  }
+
+  .warn {
+    background-color: red;
+  }
+.connected{
+  background-color: green;
+}
+  .deviceConnect{
+    margin: 20px 0px 20px 200px;
+
+  }
+
+  .background-primary {
+    background-color: #0277bd !important;
+    color: white !important;
+}
+
+.background-red {
+  background-color: red !important;
+  color: white !important;
+}
+
+.background-yellow {
+  background-color: rgb(221, 221, 23) !important;
+  color: white !important;
+}
+
+.background-green {
+  background-color: green !important;
+  color: white !important;
+}
+
+.deviceList{
+ border:1px solid grey;
+ margin: 2px;
+}
+
+.deviceTestStatus{
+  display: inline-flex;
+  /* text-align: center; */
+  /* vertical-align: middle; */
+  margin: 5px 0px 5px 220px;
+}
+
+
+

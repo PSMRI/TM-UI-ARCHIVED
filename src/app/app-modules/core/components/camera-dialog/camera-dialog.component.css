@@ -1,0 +1,38 @@
+.center-btn {
+    justify-content: center !important;
+    display: flex !important;
+}
+
+ #workarea { 
+    width:650px; 
+    height:650px; 
+    text-align:center;
+}
+
+#photo {
+    overflow: hidden;
+    width: 600px;
+    height: 400px;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+#camPic{
+    overflow: hidden;
+    width: 550px;
+    height: 400px;
+    text-align: center;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.overflown {
+    max-height: 250px;
+    overflow-y: auto;
+}
+
+.dialog {
+    padding: 24px;
+}

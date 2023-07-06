@@ -1,0 +1,39 @@
+.select-full-width {
+    width: 100%;
+}
+
+.input-full-width {
+    width: 100%;
+}
+
+.mat-form-field {
+    line-height: unset;
+}
+
+.checkbox-group {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    align-items: center;
+    height: fit-content;
+}
+
+.checkbox-group md-checkbox {
+    margin-bottom: 5px;
+}
+
+md-card {
+    margin: 10px auto;
+}
+
+.checkbox {
+    margin: 0 10px;
+}
+
+.box {
+    height: 60px;
+}
+
+.mat-card-header{
+    justify-content: space-between;
+}

@@ -1,0 +1,152 @@
+<!-- {{ perinatalHistoryForm.value | json }} -->
+<div class="row m-t-10" [formGroup]="perinatalHistoryForm">
+  <div class="col-xs-12 text-right">
+    <label class="font-history-label m-t-10">{{
+      currentLanguageSet?.historyData?.Perinatalhistorydetails
+        ?.previousperinatalhistory
+    }}</label>
+    <button
+      type="button"
+      md-icon-button
+      mdTooltip="{{currentLanguageSet?.DurationData?.previousDetails}}"
+      id="previousPerinatalHistory"
+      class="pull-right"
+      color="primary"
+      (click)="getPreviousPerinatalHistory()"
+    >
+      <md-icon class="md-18">history</md-icon>
+    </button>
+  </div>
+  <div>
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+      <md-select
+        class="select-full-width"
+        name="placeOfDelivery"
+        formControlName="placeOfDelivery"
+        placeholder="{{ currentLanguageSet?.pncData?.placeofDelivery }}"
+        (change)="resetOtherPlaceOfDelivery()"
+      >
+        <md-option
+          *ngFor="let place of masterData?.deliveryPlaces"
+          [value]="place"
+          >{{ place.deliveryPlace }}</md-option
+        >
+      </md-select>
+    </div>
+
+    <div
+      class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box"
+      *ngIf="placeOfDelivery?.deliveryPlace == 'Other'"
+    >
+      <md-form-field class="input-full-width">
+        <input
+          autocomplete="off"
+          mdInput
+          defaultNull
+          placeholder="{{
+            currentLanguageSet?.historyData?.opd_NCD_PNCHistory?.obstetric
+              ?.others
+          }}"
+          maxlength="50"
+          allowText="alphabet"
+          formControlName="otherPlaceOfDelivery"
+          name="otherPlaceOfDelivery"
+        />
+      </md-form-field>
+    </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+      <md-select
+        class="select-full-width"
+        name="typeOfDelivery"
+        formControlName="typeOfDelivery"
+        placeholder="{{ currentLanguageSet?.pncData?.typeofDelivery }}"
+      >
+        <md-option
+          *ngFor="let deliveryType of selectDeliveryTypes"
+          [disableFormControl]="!perinatalHistoryForm.value.placeOfDelivery"
+          [value]="deliveryType"
+          >{{ deliveryType.deliveryType }}</md-option
+        >
+      </md-select>
+    </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+      <md-select
+        class="select-full-width"
+        name="complicationAtBirth"
+        formControlName="complicationAtBirth"
+        placeholder="{{
+          currentLanguageSet?.historyData?.opd_NCD_PNCHistory?.perinatal_OPD
+            ?.complicationatBirth
+        }}"
+        (change)="resetOtherComplicationAtBirth()"
+      >
+        <md-option
+          *ngFor="let birthComplication of masterData?.birthComplications"
+          [value]="birthComplication"
+          >{{ birthComplication.complicationValue }}</md-option
+        >
+      </md-select>
+    </div>
+
+    <div
+      class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box"
+      *ngIf="complicationAtBirth?.complicationValue == 'Other'"
+    >
+      <md-form-field class="input-full-width">
+        <input
+          autocomplete="off"
+          mdInput
+          defaultNull
+          placeholder="{{
+            currentLanguageSet?.historyData?.opd_NCD_PNCHistory?.obstetric
+              ?.others
+          }}"
+          maxlength="50"
+          allowText="alphaspace"
+          name="otherComplicationAtBirth"
+          formControlName="otherComplicationAtBirth"
+        />
+      </md-form-field>
+    </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+      <md-select
+        class="select-full-width"
+        name="gestation"
+        formControlName="gestation"
+        placeholder="{{
+          currentLanguageSet?.historyData?.opd_NCD_PNCHistory?.perinatal_OPD
+            ?.gestation
+        }}"
+      >
+        <md-option
+          *ngFor="let gestation of masterData?.gestation"
+          [value]="gestation.name"
+          >{{ gestation.name }}</md-option
+        >
+      </md-select>
+    </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+      <md-form-field class="input-full-width">
+        <input
+          autocomplete="off"
+          mdInput
+          defaultNull
+          placeholder="{{
+            currentLanguageSet?.historyData?.opd_NCD_PNCHistory?.perinatal_OPD
+              ?.birthWeight
+          }}"
+          maxlength="4"
+          allowText="decimal"
+          name="birthWeight_kg"
+          formControlName="birthWeight_kg"
+          allowMax="6"
+          (keypress)="checkWeight(birthWeight_kg)"
+        />
+      </md-form-field>
+    </div>
+  </div>
+</div>

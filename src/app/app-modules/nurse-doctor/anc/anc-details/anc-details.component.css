@@ -1,0 +1,19 @@
+.box {
+  height: 60px;
+}
+
+.input-full-width {
+  width: 100%;
+}
+
+.radio-btn {
+  margin-left: 20px;
+}
+
+.control-label {
+  font-weight: normal;
+}
+
+.mat-form-field {
+  line-height: unset;
+}

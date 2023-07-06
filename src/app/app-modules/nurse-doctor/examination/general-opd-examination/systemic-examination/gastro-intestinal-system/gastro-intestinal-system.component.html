@@ -1,0 +1,81 @@
+<!--{{gastroIntestinalSystemForm.value | json}} -->
+<div class="row m-t-20" [formGroup]='gastroIntestinalSystemForm'>
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <md-form-field class="textarea-full-width">
+      <textarea mdInput allowText="textAreaValidator" defaultNull mdTextareaAutosize name='inspection' formControlName="inspection"
+        placeholder="{{current_language_set?.ExaminationData?.genralOPD_PNC?.Gastro?.inspection}}"
+        maxlength="300"></textarea>
+    </md-form-field>
+  </div>
+
+  <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+    <md-select class="select-full-width" name='palpation_AbdomenTexture' formControlName="palpation_AbdomenTexture"
+      placeholder="{{current_language_set?.ExaminationData?.genralOPD_PNC?.Gastro?.abdomenTexture}}">
+      <md-option *ngFor="let texture of selectAbdomenTexture" [value]="texture.name">
+        {{texture.name}}
+      </md-option>
+    </md-select>
+  </div>
+
+  <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+    <md-select class="select-full-width" name='palpation_Liver' formControlName="palpation_Liver"
+      placeholder="{{current_language_set?.ExaminationData?.genralOPD_PNC?.Gastro?.liver}}">
+      <md-option *ngFor="let liver of selectLiver" [value]="liver.name">
+        {{liver.name}}
+      </md-option>
+    </md-select>
+  </div>
+
+  <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+    <md-select class="select-full-width" name='palpation_Spleen' formControlName="palpation_Spleen"
+      placeholder="{{current_language_set?.ExaminationData?.genralOPD_PNC?.Gastro?.spleen}}">
+      <md-option *ngFor="let spleen of selectSpleen" [value]="spleen.name">
+        {{spleen.name}}
+      </md-option>
+    </md-select>
+  </div>
+
+  <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+    <label class="control-label"
+      for="gastroIntestinalSystem">{{current_language_set?.ExaminationData?.genralOPD_PNC?.Gastro?.tenderness}}</label>
+    <div class="clearfix"></div>
+    <md-radio-group name='palpation_Tenderness' id='palpation_Tenderness' formControlName="palpation_Tenderness"
+      (change)='checkWithTenderness()'>
+      <md-radio-button color='primary' class="radio-btn" value="Present">{{current_language_set?.common?.present}}</md-radio-button>
+      <md-radio-button color='primary' class="radio-btn" value="Absent">{{current_language_set?.common?.absent}}</md-radio-button>
+    </md-radio-group>
+  </div>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" *ngIf="palpation_Tenderness == 'Present'">
+    <md-form-field class="input-full-width" class="textarea-full-width">
+      <textarea mdInput allowText="textAreaValidator" defaultNull mdTextareaAutosize id='palpation_LocationOfTenderness'
+        name='palpation_LocationOfTenderness' formControlName="palpation_LocationOfTenderness"
+        placeholder="{{current_language_set?.ExaminationData?.genralOPD_PNC?.Gastro?.location}}"
+        maxlength="300"></textarea>
+    </md-form-field>
+  </div>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <md-form-field class="input-full-width" class="textarea-full-width">
+      <textarea mdInput allowText="textAreaValidator" defaultNull mdTextareaAutosize name='percussion' formControlName="percussion"
+        placeholder="{{current_language_set?.ExaminationData?.genralOPD_PNC?.Gastro?.percussion}}"
+        maxlength="300"></textarea>
+    </md-form-field>
+  </div>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <md-form-field class="input-full-width" class="textarea-full-width">
+      <textarea mdInput allowText="textAreaValidator" defaultNull mdTextareaAutosize name='auscultation' formControlName="auscultation"
+        placeholder="{{current_language_set?.ExaminationData?.genralOPD_PNC?.Gastro?.auscultation}}"
+        maxlength="300"></textarea>
+    </md-form-field>
+  </div>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <md-form-field class="input-full-width" class="textarea-full-width">
+      <textarea mdInput allowText="textAreaValidator" defaultNull mdTextareaAutosize name='analRegion' formControlName="analRegion"
+        placeholder="{{current_language_set?.ExaminationData?.genralOPD_PNC?.Gastro?.analregion}}"
+        maxlength="300"></textarea>
+    </md-form-field>
+  </div>
+</div>

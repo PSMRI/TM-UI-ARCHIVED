@@ -1,0 +1,50 @@
+<div class="container">
+  <div class="row col-xs-12">
+    <h2 class="text-center">{{current_language_set?.pncData?.pnc}}</h2>
+    <hr/>    
+  </div>
+  <div class="row m-t-10">
+    <div class="col-xs-12">
+      <h4>{{current_language_set?.casesheet?.pncDetails}}:</h4>
+    </div>
+
+    <div class="col-xs-12">
+      <table class="table table-no-border casesheet-table" aria-describedby="pncDetailstbl">
+
+        <tr>
+          <th id="typeofDelivery">{{current_language_set?.pncData?.typeofDelivery}}:</th>
+          <td> {{ pNCCaseSheetData?.deliveryType }} </td>
+          <th id="placeofDelivery">{{current_language_set?.pncData?.placeofDelivery}}:</th>
+          <td> {{ pNCCaseSheetData?.deliveryPlace}} </td>
+        </tr>
+        <tr>
+          <th id="dateofDelivery"> {{current_language_set?.pncData?.dateofDelivery}}:</th>
+          <td> {{ pNCCaseSheetData?.dateOfDelivery }} </td>
+          <th id="deliveryComplication"> {{current_language_set?.pncData?.deliveryComplication}}:</th>
+          <td> {{ pNCCaseSheetData?.deliveryComplication}} </td>
+        </tr>
+
+        <tr>
+          <th id="outcomeofpregnancy"> {{current_language_set?.pncData?.outcomeofpregnancy}}:</th>
+          <td> {{ pNCCaseSheetData?.pregOutcome }} </td>
+          <th id="postNatalComplication">  {{current_language_set?.pncData?.postNatalComplication}}:</th>
+          <td> {{ pNCCaseSheetData?.postNatalComplication}} </td>
+        </tr>
+
+        <tr>
+          <th id="gestationalAgeofNewborn">{{current_language_set?.pncData?.gestationalAgeofNewborn}}:</th>
+          <td> {{ pNCCaseSheetData?.gestationName }} </td>
+          <th id="birthWeight"> {{current_language_set?.pncData?.birthWeight}}:</th>
+          <td> {{ pNCCaseSheetData?.birthWeightOfNewborn}} </td>
+        </tr>
+
+        <tr>
+          <th id="newBornHealthStatus"> {{current_language_set?.pncData?.newBornHealthStatus}}:</th>
+          <td> {{ pNCCaseSheetData?.newBornHealthStatus }} </td>
+          <td colspan="2"> </td>
+        </tr>
+      </table>
+
+    </div>
+  </div>
+</div>

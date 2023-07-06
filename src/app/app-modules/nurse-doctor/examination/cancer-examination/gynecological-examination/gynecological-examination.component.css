@@ -1,0 +1,29 @@
+.form-radio-btn {
+    margin-right: 15px;
+}
+
+.input-full-width {
+    width: 100%;
+}
+
+.form-textarea {
+    width: 100%;
+}
+
+md-select {
+    width: 100%;
+}
+
+.image-placeholder{
+    text-align: center;
+}
+
+img {
+    margin-top: 5px;
+    height: 200px;
+    width: 200px;
+}
+
+.box{
+    height: 60px;
+}

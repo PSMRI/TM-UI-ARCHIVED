@@ -1,0 +1,90 @@
+<div class="container-fluid">
+  <div class="row m-t-10 m-b-30">
+    <div class="col-xs-12">
+      <md-tab-group color="warn" backgroundColor="primary">
+        <md-tab label="Data Upload" [disabled]="showProgressBar">
+          <md-card class="col-sm-12">
+            <section class="table-responsive">
+              <table aria-describedby="synctable" class="table table-striped ">
+                <thead>
+                  <tr>
+                    <th id="empty">&nbsp;</th>
+                    <th id="SYNCTableGroupName">{{current_language_set?.coreComponents?.sYNCTableGroupName}}</th>                   
+                    <th id="sync">{{current_language_set?.coreComponents?.sYNC}}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <ng-template [ngIf]="syncTableGroupList && syncTableGroupList.length == 0">
+                    <tr *ngFor="let row of blankTable">
+                      <td> &nbsp; </td>
+                      <td> &nbsp; </td>                    
+                      <td> &nbsp; </td>
+                    </tr>
+                  </ng-template>
+                  <tr *ngFor="let syncTableGroup of syncTableGroupList" class="table-hover">
+                    <td (click)='checkSelectedGroup(syncTableGroup)' [ngClass]="{'visitStatus': true, 'p-f-c': syncTableGroup.processed == 'N', 't-d': syncTableGroup.processed == 'P', 'c-d': syncTableGroup.processed == 'D'}"></td>
+                    <td (click)='checkSelectedGroup(syncTableGroup)'> {{syncTableGroup?.syncTableGroupName}}</td>
+                 
+                    <td>
+                      <span class="material-icons" (click)='checkSelectedGroup(syncTableGroup)'>
+                        {{current_language_set?.coreComponents?.cached}}
+                      </span>
+                    </td>
+                  </tr>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <td colspan="3">
+                      <ul class="description" *ngIf="syncTableGroupList.length > 0">
+                        <li>
+                          <div class="marker-p-f-c"></div>
+                          <p> {{current_language_set?.coreComponents?.pendingForDataSYNC}} </p>
+                        </li>
+                        <li>
+                          <div class="marker-c-d"></div>
+                          <p> {{current_language_set?.coreComponents?.dataSynced}} </p>
+                        </li>
+                      </ul>
+                    </td>
+                  </tr>
+                </tfoot>
+              </table>
+            </section>
+          </md-card>
+        </md-tab>
+        <md-tab label="Data Download">
+          <md-drawer-container class="example-container m-t-10" autosize>
+            <div class="example-sidenav-content">
+              <button type="button" md-raised-button color='primary' class="btn-green m-b-20" (click)='syncDownloadData()' [disabled]="showProgressBar">
+                {{current_language_set?.coreComponents?.download}}
+              </button>
+            </div>
+
+            <div class="example-sidenav-content">
+              <div *ngIf="showProgressBar" class="progress">
+                <div class="progress-bar progress-bar-striped active" role="progressbar" [attr.aria-valuenow]="progressValue" aria-valuemin="0"
+                  aria-valuemax="100" [ngStyle]="{'width': progressValue+ '%'}">
+                  {{ progressValue + "%" }}
+                </div>
+              </div>
+
+              <section *ngIf="failedMasterList && failedMasterList.length > 0" class="failedMaster">
+                <h4>{{current_language_set?.coreComponents?.failedMasters}} </h4>
+                <ul class="list-group">
+                  <li class="list-group-item" *ngFor="let item of failedMasterList">{{ item }}</li>
+                </ul>
+              </section>
+
+              <section *ngIf="failedMasterList && failedMasterList.length == 0" class="download-success">
+                <h4>
+                  {{current_language_set?.coreComponents?.dataDownloadedSuccessfully}}
+                  <span class="material-icons">done</span>
+                </h4>
+              </section>
+            </div>
+          </md-drawer-container>
+        </md-tab>
+      </md-tab-group>
+    </div>
+  </div>
+</div>

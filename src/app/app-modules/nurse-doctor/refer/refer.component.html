@@ -1,0 +1,14 @@
+<div class="row m-t-10">
+  <div class="col-xs-12">
+    <app-cancer-refer
+      *ngIf="showCancer"
+      [referMode]="referMode"
+      [referForm]="patientReferForm"
+    ></app-cancer-refer>
+    <app-general-refer
+      *ngIf="showGeneralOPD"
+      [referMode]="referMode"
+      [referForm]="patientReferForm"
+    ></app-general-refer>
+  </div>
+</div>

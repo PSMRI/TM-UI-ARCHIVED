@@ -1,0 +1,34 @@
+.title .exit {
+  cursor: pointer;
+}
+
+.title {
+  margin: 0px 0px 10px;
+  padding: 15px 24px 15px;
+  color: white;
+  font-size: 18px;
+  line-height: 32px;
+  font-weight: 400;
+  background: #0277bd;
+}
+
+.title h4 {
+  display: inline-block;
+}
+
+.message {
+  padding: 24px 24px 24px;
+  box-sizing: border-box;
+  overflow-y: auto;
+  border-top: none;
+  border-bottom: none;
+}
+
+.modal_Scroll {
+  max-height: 75vh;
+  overflow-y: scroll;
+}
+
+.norecord {
+  text-align: center;
+}

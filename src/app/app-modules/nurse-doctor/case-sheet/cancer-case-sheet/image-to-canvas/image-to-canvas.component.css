@@ -1,0 +1,26 @@
+img {
+    width: 250px;
+    height: 250px;
+}
+
+td {
+    width: 50%;
+}
+
+h4, h5 {
+    font-weight: bold;
+}
+
+@media print {
+    th, strong {
+        font-weight: bold;
+        font-family: Cambria, Cochin, Georgia, Times, Times New Roman, serif
+    }
+    h4, h5 {
+        font-weight: bold;
+        font-family: Cambria, Cochin, Georgia, Times, Times New Roman, serif
+    }
+    .page-break:last-child {
+        page-break-after: auto;
+      }
+}

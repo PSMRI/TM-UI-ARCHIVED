@@ -1,0 +1,12 @@
+.input-full-width {
+    width: 100%;
+  }
+  
+  .mat-expansion-panel-header {
+    background: rgba(37, 55, 70, 0.2);
+    padding: 0 15px;
+  }
+  
+  .box {
+    height: 60px;
+  }

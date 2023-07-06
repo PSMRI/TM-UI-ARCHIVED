@@ -1,0 +1,17 @@
+.card-container {
+    /*  not needed styles to reflect it */ 
+    /*background: blue;*/
+   /* padding: 10px;*/
+   /* color: white;*/
+    /*width: 500px;*/
+  
+    /* needed styles below */
+   /*display: flex;
+    justify-content: space-between;*/
+  }
+  .input-full-width {
+    width: 100%;
+}
+.card{
+  width:70%;
+}

@@ -1,0 +1,102 @@
+<div [formGroup]="idrsScreeningForm">
+  <md-expansion-panel expanded="true">
+    <md-expansion-panel-header>
+      <h5><strong>{{currentLanguageSet?.idrs?.screening}}</strong> </h5>
+    </md-expansion-panel-header>
+    <div class="row m-t-20">
+      <div class="col-xs-12">
+        <div class="row m-t-10">
+          <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 box">
+            <h5><strong>{{currentLanguageSet?.idrs?.iDRSScore}} :</strong>&nbsp;&nbsp;{{idrsScore+idrsScoreWaist+idrsScoreFamily+IRDSscorePhysicalActivity}}</h5>
+          </div>
+        </div>
+
+        <div class="row m-t-10">
+          <div class="col-xs-4 col-sm-2 col-md-2 col-lg-2 box">
+            <h5><strong>{{currentLanguageSet?.idrs?.confirmedFor}} :</strong></h5>
+          </div>
+          <div class="btn-group" *ngFor="let i of confirmDiseaseArray">
+            <button md-raised-button disabled>{{i}}</button>
+          </div>
+        </div>
+
+        <div class="row m-t-10">
+          <div class="col-xs-4 col-sm-2 col-md-2 col-lg-2 box">
+            <h5><strong>{{currentLanguageSet?.idrs?.suspectedFor}} :</strong></h5>
+          </div>
+          <div class="btn-group1" *ngFor="let i of suspect">
+            <button md-raised-button disabled>{{i}}</button>
+          </div>
+        </div>
+
+        <div class="row text-right">
+          <label class="font-history-label m-t-10">{{currentLanguageSet?.idrs?.previousDiabetesHistory}}</label>
+          <button type="button" md-icon-button mdTooltip="{{currentLanguageSet?.DurationData?.previousDetails}}" id='previousDiabetesHistory'
+            class="pull-right" color="primary" (click)="getPreviousDiabetesHistory()">
+            <md-icon class="md-18">history</md-icon>
+          </button>
+        </div>
+
+        <div *ngFor="let d of diseases">
+          <md-card class="row m-t-10" *ngIf="d.disease != 'Hypertension'">
+            <md-card-header>
+              <md-card-title>
+                <h4 *ngIf="!d.flag ||d.confirmed">
+                  <strong>{{d.disease}}</strong>
+                </h4>
+                <h4 *ngIf="(!d.confirmed) && d.flag">
+                  <strong>{{d.disease}}<label style="color: red;">*</label></strong>
+                </h4>
+              </md-card-title>
+            </md-card-header>
+            <md-card-content>
+              <div class="table-responsive">
+                <table class="table" aria-describedby="diseasestbl">
+                  <thead>
+                    <tr>
+                      <th scope="col">{{currentLanguageSet?.coreComponents?.sno}}</th>
+                      <th scope="col">{{currentLanguageSet?.common?.question}}</th>
+                      <th scope="col">{{currentLanguageSet?.common?.answer}}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <ng-container *ngFor="let q of questions1,let i=index;">
+                      <tr *ngIf="q.diseaseQuestionType==d.disease">
+                        <td>{{i+1}}</td>
+                        <td>{{q.question}}</td>
+                        <td>
+                          <md-radio-group *ngIf="(d.confirmed)||(d.disabled)">
+                            <md-radio-button color='primary' class="radio-button" [value]="true" disabled
+                              [checked]="q.answer == 'yes'">{{currentLanguageSet?.common?.yes}}</md-radio-button>
+                            <md-radio-button color='primary' class="radio-button" [value]="false" disabled
+                              [checked]="q.answer == 'no'">{{currentLanguageSet?.common?.no}}</md-radio-button>
+                          </md-radio-group>
+                          <md-radio-group *ngIf="(!d.confirmed) && (!d.disabled) && d.disease==='Diabetes'">
+                            <md-radio-button color='primary' class="radio-button" [value]="true"
+                              (change)="radioChange(q,'yes',d.disease)" [checked]="q.answer == 'yes'">{{currentLanguageSet?.common?.yes}}
+                            </md-radio-button>
+                            <md-radio-button color='primary' class="radio-button" [value]="false"
+                              (change)="radioChange(q,'no',d.disease)" [checked]="q.answer == 'no'">{{currentLanguageSet?.common?.no}}</md-radio-button>
+                          </md-radio-group>
+                          <md-radio-group *ngIf="(!d.confirmed) && (!d.disabled)  && d.disease!=='Diabetes' && !revisit">
+                            <md-radio-button color='primary' class="radio-button" [value]="true"
+                              (change)="radioChange(q,'yes',d.disease)" [checked]="q.answer == 'yes'">{{currentLanguageSet?.common?.yes}}
+                            </md-radio-button>
+                            <md-radio-button color='primary' class="radio-button" [value]="false"
+                              (change)="radioChange(q,'no',d.disease)" [checked]="q.answer == 'no'">{{currentLanguageSet?.common?.no}}</md-radio-button>
+                          </md-radio-group>
+                        </td>
+  
+                      </tr>
+                    </ng-container>
+                  </tbody>
+                </table>
+              </div>
+            </md-card-content>
+          </md-card>
+        </div>
+        
+      </div>
+    </div>
+  </md-expansion-panel>
+</div>

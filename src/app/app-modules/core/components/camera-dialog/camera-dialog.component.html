@@ -1,0 +1,103 @@
+<div class="container-fluid dialog" *ngIf="capture">
+
+    <md-dialog-content>
+        <div class="row">
+            <a (click)="captureBase64()">
+                <ack-webcam [(ref)]="webcam" [options]="options" (onSuccess)="onSuccess($event)" *ngIf="!captured"
+                    (onError)="onError($event)" width="800px"></ack-webcam>
+            </a>
+
+            <a (click)="captureBase64()">
+                <img id="camPic" [src]="base64" *ngIf="captured" alt=""/>
+            </a>
+        </div>
+    </md-dialog-content>
+    <md-dialog-actions align="center" >
+        <h3 md-dialog-title>
+            <div class="row">
+                <button md-raised-button color="primary" (click)="dialogRef.close(false) ">{{currentLanguageSet?.common?.cancel}}</button>
+                <button md-raised-button color="primary" (click)="captureBase64()">{{status}}</button>
+                <button md-raised-button color="primary" [disabled]="!captured" [mat-dialog-close]="base64">{{currentLanguageSet?.common?.proceed}}</button>
+            </div>
+        </h3>
+    </md-dialog-actions>
+</div>
+
+
+<div class="container-fluid dialog" *ngIf="imageCode">
+    <md-dialog-content>
+        <div class="row">
+            <img id="photo" [src]="imageCode" alt=""/>
+        </div>
+    </md-dialog-content>
+    <md-dialog-actions align="center">
+        <div class="row">
+            <button md-raised-button color="primary" md-dialog-close>
+                {{currentLanguageSet?.common?.close}}</button>
+        </div>
+    </md-dialog-actions>
+</div>
+
+
+<div class="container-fluid dialog" *ngIf="!imageCode && !capture && !annotate && !graph">
+    <md-dialog-content>
+        <div class="row">
+            <h3> {{currentLanguageSet?.coreComponents?.noDataAvailableForThisBeneficiary}} </h3>
+        </div>
+    </md-dialog-content>
+    <md-dialog-actions align="center">
+        <div class="row">
+            <button md-raised-button color="primary" md-dialog-close>
+                {{currentLanguageSet?.common?.close}}</button>
+        </div>
+    </md-dialog-actions>
+</div>
+
+<div class="container-fluid dialog" *ngIf="annotate">
+    <md-dialog-content>
+        <div class="row">
+            <div class="col-md-5 col-sm-5 text-center">
+                <div [hidden]="true">
+                    <img #myImg [src]="annotate" alt="">
+                </div>
+                <canvas width="250" height="250" (click)="pointMark($event)" #myCanvas style="border:1px solid #d3d3d3;"></canvas>
+            </div>
+
+            <div class="col-md-7 overflown col-sm-7">
+                <h4>{{currentLanguageSet?.coreComponents?.markDescriptions}}</h4>
+                <div *ngFor="let mark of markers">
+                    <md-form-field [style.width]="'100%'">
+                        <input autocomplete="off" mdInput placeholder="{{mark.point}}." maxlength="30" [(ngModel)]="mark.description">
+                    </md-form-field>
+                </div>
+            </div>
+        </div>
+    </md-dialog-content>
+
+    <md-dialog-actions align="center">
+        <div class="row">
+            <button md-raised-button color="primary" md-dialog-close>
+                {{currentLanguageSet?.common?.close}}</button>
+            <button md-raised-button color="primary" [disabled]="!markers.length" (click)="clearPointers()">{{currentLanguageSet?.coreComponents?.reset}}</button>
+            <button md-raised-button color="primary" [disabled]="!markers.length" [mat-dialog-close]="getMarkers()">{{currentLanguageSet?.coreComponents?.save}}</button>
+        </div>
+    </md-dialog-actions>
+</div>
+
+<div class="container-fluid dialog" *ngIf="graph">
+
+    <md-dialog-content id="container-dialog" style="max-height: unset !important;">
+        <h4 *ngIf="graph?.type == 'bw'"> {{currentLanguageSet?.previousvisit?.bodyweighttrends}}</h4>
+        <h4 *ngIf="graph?.type == 'bg'"> {{currentLanguageSet?.previousvisit?.bloodGlucoseTrends}}</h4>
+        <h4 *ngIf="graph?.type == 'bp'"> {{currentLanguageSet?.previousvisit?.bloodPressureTrends}}</h4>
+        <canvas baseChart [datasets]="graph?.chartData" [labels]="graph?.chartLabels" [options]="graph?.lineChartOptions" [colors]="graph?.chartColors"
+            [legend]="graph?.chartLegend" [chartType]="graph?.chartType"></canvas>
+    </md-dialog-content>
+
+    <md-dialog-actions align="center">
+        <div class="row">
+            <button md-raised-button md-dialog-close>{{currentLanguageSet?.common?.close}}</button>
+            <button md-raised-button color="primary" (click)="downloadGraph()">{{currentLanguageSet?.coreComponents?.download}}</button>
+        </div>
+    </md-dialog-actions>
+</div>

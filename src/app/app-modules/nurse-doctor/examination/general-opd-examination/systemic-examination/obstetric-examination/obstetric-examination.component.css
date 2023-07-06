@@ -1,0 +1,54 @@
+h5{
+    font-weight: bold;
+}
+
+.mat-expansion-panel-header{
+    background: rgba(37,55,70,0.2);
+}
+.textarea-full-width {
+    width: 100%;
+}
+
+.input-full-width {
+    width: 100%;
+}
+.select-full-width {
+    width: 100%;
+}
+
+.radio-button{
+    margin-right : 25px;
+}
+
+.control-label{
+    font-weight: normal;
+} 
+.mat-form-field {
+    line-height: unset;
+}
+.box{
+    height: 60px;
+}
+.description{
+    height: 45px;
+    padding-right: 10px;
+}
+
+.description h5 {
+    display: inline-block;
+    float: left;
+}
+
+.description button {
+    display: inline-block;
+    float: right;
+}
+
+/********/
+.btn-group button {
+    /* background-color:lightgray; */
+    margin:5px;
+    /* color: white;  */
+    float: left; 
+  }
+

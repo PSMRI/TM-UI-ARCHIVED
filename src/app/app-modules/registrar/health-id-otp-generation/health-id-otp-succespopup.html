@@ -1,0 +1,23 @@
+<div *ngIf="!verify">
+  <h3 class="title success">Info</h3>
+  <div class="message">
+    <label>{{currentLanguageSet?.aBHAGeneratedSuccessfully}}</label><br>
+    <label><strong>{{currentLanguageSet?.aBHA}}:</strong> {{succdata.healthId}}</label><br>
+    <label><strong>{{currentLanguageSet?.aBHANumber}}:</strong> {{succdata.healthIdNumber}}</label><br><br>
+    <label class="userConsent">{{currentLanguageSet?.doYouWantToDownloadABHACard}}</label></div>
+  <div class="action">
+    <button md-button md-dialog-close>{{currentLanguageSet?.common?.no}}</button>
+    <button md-button  class="background-primary" cdkFocusInitial (click)="fetchOtp(succdata.healthId, succdata.healthIdNumber)">{{currentLanguageSet?.common?.yes}}</button>
+  </div>
+</div>
+<div *ngIf="verify">
+  <h3 class="title success">Info</h3>
+  <div class="messageotp"> 
+    <label>{{currentLanguageSet?.aBHAValidatedSuccessfully}}</label><br>
+    <label><strong>{{currentLanguageSet?.aBHA}}:</strong>{{succdata.Auth.Patient.Id}}</label><br>
+    <label><strong>{{currentLanguageSet?.casesheet?.name}}:</strong> {{succdata.Auth.Patient.Name}}</label><br>
+    <label><strong>{{currentLanguageSet?.bendetails?.gender}}:</strong> {{genderName}}</label><br><br>
+  <div class="action">
+    <button md-button md-dialog-close>{{currentLanguageSet?.common?.ok}}</button>
+  </div>
+</div>

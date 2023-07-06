@@ -1,0 +1,63 @@
+<div class="p-t-10">
+  <md-accordion>
+    <md-expansion-panel *ngIf='displayGeneral'>
+      <md-expansion-panel-header>
+        <h5>{{current_language_set?.ExaminationData?.genralOPD_PNC?.Gastro?.gastroIntestinalSystem}}</h5>
+      </md-expansion-panel-header>
+      <nurse-gastro-intestinal-system [gastroIntestinalSystemForm]='systemicExaminationForm.controls.gastroIntestinalSystemForm'></nurse-gastro-intestinal-system>
+    </md-expansion-panel>
+
+    <md-expansion-panel>
+      <md-expansion-panel-header>
+        <h5>{{current_language_set?.ExaminationData?.ANC_OPD_PNCExamination?.systemic?.cardioForANC_OPD_PNC?.cardioSystem}}</h5>
+      </md-expansion-panel-header>
+
+      <nurse-cardio-vascular-system [cardioVascularSystemForm]='systemicExaminationForm.controls.cardioVascularSystemForm'></nurse-cardio-vascular-system>
+
+    </md-expansion-panel>
+
+    <md-expansion-panel>
+      <md-expansion-panel-header>
+        <h5>{{current_language_set?.ExaminationData?.ANC_OPD_PNCExamination?.systemic?.respiratoryANC_OPD_PNC?.respiratorySystem}}</h5>
+      </md-expansion-panel-header>
+
+      <nurse-respiratory-system [respiratorySystemForm]='systemicExaminationForm.controls.respiratorySystemForm'></nurse-respiratory-system>
+
+    </md-expansion-panel>
+
+    <md-expansion-panel>
+      <md-expansion-panel-header>
+        <h5>{{current_language_set?.ExaminationData?.ANC_OPD_PNCExamination?.systemic?.centralANC_OPD_PNC?.centralNervousSystem}}</h5>
+      </md-expansion-panel-header>
+
+      <nurse-central-nervous-system [centralNervousSystemForm]='systemicExaminationForm.controls.centralNervousSystemForm'></nurse-central-nervous-system>
+
+    </md-expansion-panel>
+
+    <md-expansion-panel>
+      <md-expansion-panel-header>
+        <h5>{{current_language_set?.ExaminationData?.ANC_OPD_PNCExamination?.systemic?.musculoskeletalANC_OPD_PNC?.musculoskeletalSystem}}</h5>
+      </md-expansion-panel-header>
+      <nurse-musculoskeletal-system [musculoSkeletalSystemForm]='systemicExaminationForm.controls.musculoSkeletalSystemForm'></nurse-musculoskeletal-system>
+    </md-expansion-panel>
+
+    <md-expansion-panel>
+      <md-expansion-panel-header>
+        <h5>{{current_language_set?.ExaminationData?.ANC_OPD_PNCExamination?.systemic?.genitoANC_OPD_PNC?.GenitoUrinarySystem}}</h5>
+      </md-expansion-panel-header>
+
+      <nurse-genito-urinary-system [genitoUrinarySystemForm]='systemicExaminationForm.controls.genitoUrinarySystemForm'></nurse-genito-urinary-system>
+
+    </md-expansion-panel>
+
+    <md-expansion-panel *ngIf="displayANC">
+      <md-expansion-panel-header>
+        <h5>{{current_language_set?.ExaminationData?.ANC_OPD_PNCExamination?.systemic?.obstetric?.obstetricExamination}}</h5>
+      </md-expansion-panel-header>
+
+      <nurse-anc-obstetric-examination [obstetricExaminationForANCForm]='systemicExaminationForm.controls.obstetricExaminationForANCForm'></nurse-anc-obstetric-examination>
+
+    </md-expansion-panel>
+  </md-accordion>
+
+</div>

@@ -1,0 +1,162 @@
+<div *ngIf="confirmAlert">
+  <h3 [ngClass]="['title', title]">{{ (title == 'warn'? 'warning': title) | titlecase }}</h3>
+  <div class="message">{{ message }}</div>
+  <div class="action">
+    <button md-button (click)="dialogRef.close(false)">{{btnCancelText}}</button>
+    <button md-button (click)="dialogRef.close(true)" [ngClass]="{'background-primary': title != 'warn'}" cdkFocusInitial>{{btnOkText}}</button>
+  </div>
+</div>
+
+<div *ngIf="confirmHealthID">
+<h3 class="title success">Success</h3>
+  <div class="message">{{ message }}</div>
+  <div class="action">
+    <button  md-button (click)="dialogRef.close(true)" cdkFocusInitial>{{btnOkText}}</button>
+  </div>
+</div>
+
+
+<div *ngIf="confirmcalibration">
+  <h3 [ngClass]="['title', title]">{{ (title == 'warn'? 'warning': title) | titlecase }}</h3>
+  <div class="message">{{ message }}</div>
+  <div class="action">
+    <button md-button (click)="dialogRef.close(false)">{{btnCancelText}}</button>
+    <button md-button (click)="dialogRef.close(true)" [ngClass]="{'background-primary': title != 'warn'}" cdkFocusInitial>{{btnOkText}}</button>
+  </div>
+</div>
+<div *ngIf="confirmCBAC">
+  <h3 [ngClass]="['title', title]">{{ (title == 'warn'? 'warning': title) | titlecase }}</h3>
+  <div class="message">
+    <div class="row" style="font-size: 14px;" *ngIf="cbacData !=undefined && cbacData !=null && cbacData.length >0">
+      <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12" style="margin-bottom: 10px;">
+        This patient is <strong>suspected </strong> to have the following health conditions as per the preliminary screening done by the ASHA:
+      </div> 
+      <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12" *ngFor="let data of cbacData;let i=index;">
+         {{i+1}}.{{data}}
+       </div>
+       <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12" style="margin-top: 10px;">
+        Please perform the necessary examinations to confirm.
+      </div>
+       </div>
+   <br/>
+     Confirm to proceed further 
+  </div>
+  
+  <div class="action">
+    <button md-button (click)="dialogRef.close(false)">{{btnCancelText}}</button>
+    <button md-button (click)="dialogRef.close(true)" [ngClass]="{'background-primary': title != 'warn'}" cdkFocusInitial>{{btnOkText}}</button>
+  </div>
+</div>
+<div *ngIf="alert">
+  <h3 [ngClass]="['title', status]">{{ (status == 'warn'? 'warning': status) | titlecase }}</h3>
+  <div class="message">{{ message }}</div>
+  <div class="action">
+    <button md-button md-dialog-close cdkFocusInitial>{{btnOkText}}</button>
+  </div>
+</div>
+
+
+<div *ngIf="alertFetsenseMessage">
+  <h3 class="title info">Fetosense Device</h3>
+  <div class="message">{{ message }}</div>
+  <div class="action">
+    <button md-button md-dialog-close cdkFocusInitial>{{btnOkText}}</button>
+  </div>
+</div>
+
+<div *ngIf="remarks">
+  <h3 class="title info">{{ message | titlecase }}</h3>
+  <div class="message">
+    <md-input-container [style.width]="'100%'">
+      <input autocomplete="off" mdInput placeholder="Enter Remarks" name="Remarks" #remarksRef>
+    </md-input-container>
+  </div>
+  <div class="action">
+    <button md-button (click)="dialogRef.close(false)">{{btnCancelText}}</button>
+    <button md-raised-button class="background-success" (click)="dialogRef.close(remarksRef.value)">{{btnOkText}}</button>
+  </div>
+</div>
+
+
+
+<div *ngIf="editRemarks">
+  <h3 class="title info">{{ message | titlecase }}</h3>
+  <div class="message">
+    <md-input-container [style.width]="'100%'">
+      <textarea mdInput allowText="textAreaValidator" mdTextareaAutosize placeholder="Observation" name="Remarks" maxLength="500" #remarksRef [(ngModel)]="comments"></textarea>
+    </md-input-container>
+  </div>
+  <div class="action">
+    <button md-button (click)="dialogRef.close(false)">{{btnCancelText}}</button>
+    <button md-button class="background-success" (click)="dialogRef.close(remarksRef.value+'.')">{{btnOkText}}</button>
+  </div>
+</div>
+
+<div *ngIf="notify">
+  <h3 class="title info">Info </h3>
+  <div class="message">
+    <h4>{{ message | titlecase }}</h4>
+    <ul class="list-group ">
+      <li class="list-group-item alert alert-danger" *ngFor="let items of mandatories">
+        <div *ngIf="items.toLowerCase() !== ('ABHA').toLowerCase() && items.toLowerCase() !== ('ABHA Generation Mode').toLowerCase()">
+        <span class="glyphicon glyphicon-hand-right" style="color:#cd807e; margin-right: 5px"></span> <span> {{items | titlecase}}</span>
+        </div>
+        <div *ngIf="items.toLowerCase() === ('ABHA').toLowerCase() || 
+        items.toLowerCase() === ('ABHA Generation Mode').toLowerCase()">
+          <span class="glyphicon glyphicon-hand-right" style="color:#cd807e; margin-right: 5px"></span> <span>{{items}}</span>
+          </div>
+      </li>
+    </ul>
+  </div>
+  <div class="action">
+    <button md-button (click)="dialogRef.close(true)" cdkFocusInitial>{{btnOkText}}</button>
+  </div>
+</div>
+
+<div *ngIf="choice">
+  <h3 class="title info">Info</h3>
+  <div class="message">
+    <h4>{{message | titlecase}}</h4>
+    <md-radio-group [(ngModel)]="selectedValue" disableRipple="true" class="radio-group">
+      <md-radio-button disableRipple="true" class="radio-button" *ngFor="let value of values;" [value]="value.id">
+        {{value.name}}
+      </md-radio-button>
+    </md-radio-group>
+  </div>
+  <div class="action">
+    <button md-button (click)="dialogRef.close(false)">{{btnCancelText}}</button>
+    <button md-button (click)="dialogRef.close(selectedValue)" class="background-primary" cdkFocusInitial>{{btnOkText}}</button>
+  </div>
+</div>
+
+<div *ngIf="sessionTimeout">
+  <h3 class="title warn">{{ title }}</h3>
+  <div class="message">
+    <span>{{message}} &nbsp;</span>
+    <small>
+            <span *ngIf="minutes >= 1">{{minutes.toFixed(0)}} &nbsp; minutes &nbsp;</span>  
+            <span *ngIf="seconds > 0">{{seconds}} &nbsp; seconds</span>
+        </small>
+  </div>
+  <div class="action">
+    <button md-button (click)="stopTimer()">{{btnCancelText}}</button>
+    <button md-button (click)="continueSession()" cdkFocusInitial class="background-primary">{{btnOkText}}</button>
+  </div>
+
+  <div *ngIf="choiceSelect">
+    <h3 class="title info">Info</h3>
+    <div class="message">
+      <h4>{{message | titlecase}}</h4>
+      <md-radio-group [(ngModel)]="selectedOption" disableRipple="true" class="radio-group">
+        <md-radio-button disableRipple="true" class="radio-button" *ngFor="let option of options;" [value]="option.id">
+          {{option.name}}
+        </md-radio-button>
+      </md-radio-group>
+    </div>
+    <div class="action">
+      <button md-button (click)="dialogRef.close(false)">{{btnCancelText}}</button>
+      <button md-button (click)="dialogRef.close(selectedOption)" class="background-primary" cdkFocusInitial>{{btnOkText}}</button>
+    </div>
+  </div>
+  
+</div>

@@ -1,0 +1,124 @@
+<!-- {{ feedingHistoryForm.value | json }} -->
+<div class="row m-t-10" [formGroup]="feedingHistoryForm">
+  <div class="col-xs-12 text-right">
+    <label class="font-history-label m-t-10">{{
+      currentLanguageSet?.historyData?.Feedinghistorydetails
+        ?.previousfeedinghistory
+    }}</label>
+    <button
+      type="button"
+      md-icon-button
+      mdTooltip="{{currentLanguageSet?.DurationData?.previousDetails}}"
+      id="previousFeedingHistory"
+      class="pull-right"
+      color="primary"
+      (click)="getPreviousFeedingHistory()"
+    >
+      <md-icon class="md-18">history</md-icon>
+    </button>
+  </div>
+  <div>
+    <div class="box col-xs-12 col-sm-6 col-md-6 col-lg-6">
+      <md-select
+        class="select-full-width"
+        name="typeOfFeedsDuringFirst6Months"
+        formControlName="typeOfFeed"
+        placeholder="{{
+          currentLanguageSet?.historyData?.opd_NCD_PNCHistory
+            ?.feeding?.typeofFeeds
+        }}"
+      >
+        <md-option
+          *ngFor="let feedsAge of masterData?.feedTypes"
+          [value]="feedsAge.value"
+          >{{ feedsAge.value }}</md-option
+        >
+      </md-select>
+    </div>
+
+    <div class="clearfix"></div>
+
+    <div class="box col-xs-12 col-sm-6 col-md-6 col-lg-6" *ngIf="age > 6">
+      <md-select
+        class="select-full-width"
+        name="ageAtWeaningFeedIntroduced"
+        formControlName="compFeedStartAge"
+        placeholder="{{
+          currentLanguageSet?.historyData?.opd_NCD_PNCHistory
+            ?.feeding?.ageatweaning
+        }}"
+        (change)="resetNoOfCompFeedPerDay()"
+      >
+        <md-option
+          *ngFor="let feedType of masterData?.compFeedAges"
+          [value]="feedType.value"
+          >{{ feedType.value }}</md-option
+        >
+      </md-select>
+    </div>
+
+    <div
+      class="box col-xs-12 col-sm-6 col-md-6 col-lg-6"
+      *ngIf="compFeedStartAge"
+    >
+      <md-select
+        class="select-full-width"
+        name="complimentaryFoodNumber"
+        formControlName="noOfCompFeedPerDay"
+        placeholder="{{
+          currentLanguageSet?.historyData?.opd_NCD_PNCHistory
+            ?.feeding?.numberofComplimentaryfoodservings
+        }}"
+      >
+        <md-option
+          *ngFor="let feedsNumber of masterData?.compFeedServings"
+          [value]="feedsNumber.value"
+          >{{ feedsNumber.value }}</md-option
+        >
+      </md-select>
+    </div>
+
+    <div class="clearfix"></div>
+
+    <div class="box col-xs-12 col-sm-6 col-md-6 col-lg-6">
+      <label class="control-label" for="foodIntoleranceStatus"
+        >{{
+          currentLanguageSet?.historyData?.opd_NCD_PNCHistory
+            ?.feeding?.foodIntoleranceStatus
+        }}</label
+      >
+      <div class="clearfix"></div>
+      <md-radio-group
+        name="foodIntoleranceStatus"
+        formControlName="foodIntoleranceStatus"
+        (change)="resetTypeofFoodIntolerance()"
+      >
+        <md-radio-button color="primary" [value]="true">{{currentLanguageSet?.common?.yes}}</md-radio-button>
+        <md-radio-button color="primary" [value]="false" class="radio-btn"
+          >{{currentLanguageSet?.common?.no}}</md-radio-button
+        >
+      </md-radio-group>
+    </div>
+
+    <div
+      class="box col-xs-12 col-sm-6 col-md-6 col-lg-6"
+      *ngIf="foodIntoleranceStatus"
+    >
+      <md-form-field class="input-full-width">
+        <input
+          autocomplete="off"
+          mdInput
+          defaultNull
+          maxlength="50"
+          placeholder="{{
+            currentLanguageSet?.historyData?.opd_NCD_PNCHistory
+              ?.feeding?.typeofFoodIntolerance
+          }}"
+          allowText="alphaspace"
+          formControlName="typeofFoodIntolerance"
+          name="foodIntoleranceType"
+        />
+      </md-form-field>
+    </div>
+  </div>
+</div>

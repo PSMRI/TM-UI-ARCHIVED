@@ -1,0 +1,48 @@
+<!-- {{obstetricFormulaForm.value | json}} -->
+<div [formGroup]="obstetricFormulaForm" class="row m-t-20">
+  <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box" *ngIf="(gravidaStatus != null &&  gravidaStatus != undefined && gravidaStatus) || (gravidaStatus != null &&  gravidaStatus != undefined && !gravidaStatus)">
+    <md-form-field class="input-full-width">
+      <input autocomplete="off" mdInput defaultNull allowText="number" maxlength='2' name='gravida_G' formControlName="gravida_G"
+        placeholder="{{current_language_set?.casesheet?.gravida}}" readonly>
+    </md-form-field>
+  </div>
+  <div *ngIf="gravidaStatus != null &&  gravidaStatus != undefined && !gravidaStatus">
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+      <md-form-field class="input-full-width">
+        <input autocomplete="off" mdInput defaultNull allowText="number" maxlength='1' name='termDeliveries_T' formControlName="termDeliveries_T"
+          placeholder="{{current_language_set?.ancData?.obstetricDeatils?.termDeliveries}}" (input)="calculateGravida('termDeliveries_T')">
+      </md-form-field>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+      <md-form-field class="input-full-width">
+        <input autocomplete="off" mdInput defaultNull allowText="number" maxlength='1' name='pretermDeliveries_P' formControlName="pretermDeliveries_P"
+          placeholder="{{current_language_set?.casesheet?.preTermDeliveries}}" (input)="calculateGravida('pretermDeliveries_P')">
+      </md-form-field>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+      <md-form-field class="input-full-width">
+        <input autocomplete="off" mdInput defaultNull allowText="number" maxlength='1' name='abortions_A' formControlName="abortions_A"
+          placeholder="{{current_language_set?.ancData?.obstetricDeatils?.abortions}}" (input)="calculateGravida('abortions_A')">
+      </md-form-field>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+      <md-form-field class="input-full-width">
+        <input autocomplete="off" mdInput defaultNull allowText="number" maxlength='1' name='stillBirth' formControlName="stillBirth"
+          placeholder="{{current_language_set?.stillBirth}}" (input)="calculateGravida('stillBirth')">
+      </md-form-field>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+      <md-form-field class="input-full-width">
+        <input autocomplete="off" mdInput defaultNull allowText="number" maxlength='2' allowMax="18" name='livebirths_L' formControlName="livebirths_L"
+          placeholder="{{current_language_set?.ancData?.obstetricDeatils?.livingChildren}}" (input)="checkLivingChildren(livebirths_L)">
+      </md-form-field>
+    </div>
+  </div>
+  <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+    <md-select class="input-full-width" name='bloodGroup' formControlName="bloodGroup" placeholder="{{current_language_set?.ancData?.obstetricDeatils?.bloodGroupType}}"  [disabled]="disableBloodGroup">
+      <md-option *ngFor="let bloodGroups of selectBloodGroupType"  [value]="bloodGroups.bloodGroup">
+        {{bloodGroups.bloodGroup}}
+      </md-option>
+    </md-select>
+  </div>
+</div>

@@ -1,0 +1,173 @@
+<form #prescriptionForm="ngForm" class="m-t-20">
+<section class="row no-row">
+    <div class="row" >
+    <div class="col-sm-12 step-btn m-b-10" *ngIf="referredVisitCode !== 'undefined' && referredVisitCode !== undefined && referredVisitCode !== null">
+
+      <button md-raised-button color="primary" class="pull-right" (click)="loadMMUPrescription()">{{current_language_set?.loadMMUPrescription}}</button>
+      </div>
+  </div>
+  <div class="col-md-3" style="padding-bottom: 8px;">
+    
+    <div *ngIf="isStockAvalable == 'primary'">
+      <md-icon style="background-color: green;color: white;font-size: 20px;height: 20px;width: 20px;" class="md-18">
+        check
+      </md-icon> <span style="color: green;padding-left: 1px;">{{current_language_set?.stockAvailability}}</span>
+    </div>
+    <div *ngIf="isStockAvalable == 'warn'">
+      <md-icon style="background-color: #c30d0d;color: white;font-size: 20px;height: 20px;width: 20px;" class="md-18">
+        close
+      </md-icon><span style="color: #c30d0d;padding-left: 5px;">{{current_language_set?.stockAvailability}}</span>
+    </div>
+  </div>
+</section>
+  <section class="row no-row">
+    <div class="col-md-3 box">
+      <md-select class="input-full-width" name="form" [(ngModel)]="currentPrescription.formName" placeholder="{{current_language_set?.Prescription?.form}}" (change)="getFormValueChanged()"
+        required>
+        <md-option *ngFor="let item of drugFormMaster" [value]="item.itemFormName">
+          {{item.itemFormName}}
+        </md-option>
+      </md-select>
+    </div>
+
+    <div class="col-md-3 box">
+      <md-form-field class="input-full-width">
+        <input autocomplete="off" type="text" name="medicine" [disabled]="!currentPrescription.formID" mdInput [(ngModel)]="tempDrugName"
+          (keyup)="filterMedicine(tempDrugName)" placeholder="{{current_language_set?.Prescription?.medicine}}" (blur)="reEnterMedicine()" required [mdAutocomplete]="autoGroup">
+        <md-autocomplete #autoGroup="mdAutocomplete" [displayWith]="displayFn">
+          <md-option *ngFor="let item of subFilteredDrugMaster" [value]="item" (onSelectionChange)="selectMedicineObject($event)">
+            {{item.itemName}} {{item.strength}}{{item.unitOfMeasurement}} {{item.quantityInHand?'('+item.quantityInHand+')':''}} 
+          </md-option>
+        </md-autocomplete>
+      </md-form-field>
+    </div>
+
+    <div class="col-md-2 box">
+      <md-select class="input-full-width" name="dose" [(ngModel)]="currentPrescription.dose" [disabled]="!currentPrescription.drugID"
+        placeholder="{{current_language_set?.Prescription?.dosage}}" required>
+        <md-option *ngFor="let item of filteredDrugDoseMaster" [value]="item.drugDose">
+          {{item.drugDose}}
+        </md-option>
+      </md-select>
+    </div>
+
+    <div class="col-md-4 box">
+      <md-select class="input-full-width" name="frequency" [(ngModel)]="currentPrescription.frequency" [disabled]="!currentPrescription.drugID"
+        placeholder="{{current_language_set?.Prescription?.frequency}}" required>
+        <md-option *ngFor="let item of drugFrequencyMaster" [value]="item.frequency">
+          {{item.frequency}}
+        </md-option>
+      </md-select>
+    </div>
+  </section>
+
+  <section class="row no-row" style="margin-top:10px !important;">
+    <div class="col-md-3 box">
+      <md-select class="input-full-width" name="duration" [(ngModel)]="currentPrescription.duration" [disabled]="!currentPrescription.drugID"
+        placeholder="{{current_language_set?.nurseData?.chiefComplaintsDetails?.duration}}" required>
+        <md-option *ngFor="let item of drugDurationMaster" [value]="item">
+          {{item}}
+        </md-option>
+      </md-select>
+    </div>
+
+    <div class="col-md-3 box">
+      <md-select class="input-full-width" name="unit" [(ngModel)]="currentPrescription.unit" placeholder="{{current_language_set?.Prescription?.unit}}" [disabled]="!currentPrescription.drugID"
+        required>
+        <md-option *ngFor="let item of drugDurationUnitMaster" [value]="item.drugDuration">
+          {{item.drugDuration}}
+        </md-option>
+      </md-select>
+    </div>
+
+    <div class="col-md-2 box" *ngIf="currentPrescription.formID && currentPrescription.formID != '1' && currentPrescription.formID != '2'">
+      <md-select class="input-full-width" name="quantity" [(ngModel)]="currentPrescription.qtyPrescribed" [disabled]="!currentPrescription.drugID"
+        placeholder="{{current_language_set?.Prescription?.quantity}}" required>
+        <md-option *ngFor="let item of drugDurationMaster | slice:0:5" [value]="item">
+          {{item}}
+        </md-option>
+      </md-select>
+    </div>
+
+    <div class="box" [ngClass]="{'col-md-6': (!currentPrescription.formID) || (currentPrescription.formID && currentPrescription.formID <= '2'),
+  'col-md-4': currentPrescription.formID && currentPrescription.formID > '2'}">
+      <md-select class="input-full-width" name="route" [(ngModel)]="currentPrescription.route" placeholder="{{current_language_set?.Prescription?.Route}}" [disabled]="!currentPrescription.drugID">
+        <md-option *ngFor="let item of drugRouteMaster" [value]="item.routeName">
+          {{item.routeName}}
+        </md-option>
+      </md-select>
+    </div>
+  </section>
+
+  <section class="row no-row" style="margin-top:10px !important;">
+    <div class="col-md-10 box">
+      <md-form-field class="input-full-width">
+        <textarea mdInput allowText="textAreaValidator" defaultNull mdTextareaAutosize name="instructions" maxlength="300" name='instructions' [disabled]="!currentPrescription.drugID"
+          [(ngModel)]="currentPrescription.instructions" placeholder="{{current_language_set?.Prescription?.instructions}}"> </textarea>
+      </md-form-field>
+    </div>
+    <div class="col-md-2 box centered-button">
+      <button id="add-button" [disabled]="prescriptionForm.invalid" md-raised-button color="primary" type="button" (click)="submitForUpload()">{{current_language_set?.common?.add}}</button>
+    </div>
+  </section>
+</form>
+
+<div *ngIf="drugPrescriptionForm.controls.prescribedDrugs.value.length > 0">
+  <hr />
+  <div [formGroup]='drugPrescriptionForm'>
+    <div class="row" formArrayName="prescribedDrugs">
+      <div class="col-xs-12" *ngFor="let drug of drugPrescriptionForm?.controls.prescribedDrugs?.controls; let j=index">
+        <ng-container [formGroupName]="j" *ngIf="j >= pageLimits[0] && j < pageLimits[1]">
+          <fieldset class="m-b-20" [ngClass]="{'fieldset': drug.value.createdBy }">
+            <legend>{{drug.value.drugName}} {{drug.value.drugStrength}}  {{drug.value.isEDL? '': current_language_set?.nonEDLMedicine}}</legend>
+            <div class="row">
+              <div class="col-md-2">
+                <md-form-field class="input-full-width">
+                  <input autocomplete="off" readonly="true" type="text" mdInput formControlName="formName" placeholder="{{current_language_set?.Prescription?.form}}">
+                </md-form-field>
+                <!-- {{drug.value.formName}} -->
+              </div>
+              <div class="col-md-2">
+                <md-form-field class="input-full-width">
+                  <input autocomplete="off" readonly="true" type="text" mdInput formControlName="dose" placeholder="{{current_language_set?.casesheet?.dose}}">
+                </md-form-field>
+              </div>
+              <div class="col-md-2">
+                <md-form-field class="input-full-width">
+                  <input autocomplete="off" readonly="true" type="text" mdInput formControlName="frequency" placeholder="{{current_language_set?.Prescription?.frequency}}">
+                </md-form-field>
+              </div>
+              <div class="col-md-2">
+                <md-form-field class="input-full-width">
+                  <input autocomplete="off" readonly="true" type="text" mdInput formControlName="durationView" placeholder="{{current_language_set?.nurseData?.chiefComplaintsDetails?.duration}}">
+                </md-form-field>
+              </div>
+              <div class="col-md-1">
+                <md-form-field class="input-full-width">
+                  <input autocomplete="off" readonly="true" type="text" mdInput formControlName="qtyPrescribed" placeholder="{{current_language_set?.Prescription?.quantity}}">
+                </md-form-field>
+              </div>
+              <div class="col-md-3">
+                <md-form-field class="input-full-width">
+                  <input autocomplete="off" readonly="true" type="text" mdInput formControlName="instructions" placeholder="{{current_language_set?.Prescription?.instructions}}">
+                </md-form-field>
+              </div>
+              <div class="col-md-12
+               centered-button">
+                <button md-mini-fab id='editMedicine' (click)="editMedicine(j, drug.value.id)" color="primary">
+                  <span class="material-icons">edit</span>
+                </button>
+                <button md-mini-fab id='deleteMedicine' (click)="deleteMedicine(j, drug.value.id)" color="warn">
+                  <span class="material-icons">close</span>
+                </button>
+              </div>
+            </div>
+          </fieldset>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+  <md-paginator [length]="drugPrescriptionForm?.controls.prescribedDrugs?.value.length" [pageSize]="pageSize" hidePageSize=true
+    (page)="setLimits($event.pageIndex)">
+  </md-paginator>
+</div>

@@ -1,0 +1,56 @@
+<md-accordion [formGroup]="nurseCancerHistoryForm">
+  <md-expansion-panel expanded="true">
+    <md-expansion-panel-header>
+      <h5>
+        {{
+          currentLanguageSet?.historyData?.cancerScreeningHistory
+            ?.familyMedical?.familyMedicalHistory
+        }}
+      </h5>
+    </md-expansion-panel-header>
+    <nurse-cancer-family-disease-history
+      [mode]="mode"
+      [cancerPatientFamilyMedicalHistoryForm]="
+        nurseCancerHistoryForm.controls.cancerPatientFamilyMedicalHistoryForm
+      "
+    ></nurse-cancer-family-disease-history>
+  </md-expansion-panel>
+  <md-expansion-panel>
+    <md-expansion-panel-header>
+      <h5>
+        {{
+          currentLanguageSet?.historyData?.cancerScreeningHistory?.personal
+            ?.personalHistory
+        }}
+      </h5>
+    </md-expansion-panel-header>
+    <nurse-cancer-personal-history
+      [cancerPatientPerosnalHistoryForm]="
+        nurseCancerHistoryForm.controls.cancerPatientPerosnalHistoryForm
+      "
+    ></nurse-cancer-personal-history>
+  </md-expansion-panel>
+  <md-expansion-panel
+    *ngIf="
+      (templateBeneficiaryDetails?.genderName == 'Female' &&
+        templateBeneficiaryDetails?.ageVal > 19) ||
+      (templateBeneficiaryDetails?.genderName == 'Transgender' &&
+        templateBeneficiaryDetails?.ageVal > 19)
+    "
+  >
+    <md-expansion-panel-header>
+      <h5>
+        {{
+          currentLanguageSet?.historyData?.cancerScreeningHistory?.obstetric
+            ?.obstetricHistory
+        }}
+      </h5>
+    </md-expansion-panel-header>
+    <nurse-cancer-obstetric-history
+      [cancerPatientObstetricHistoryForm]="
+        nurseCancerHistoryForm.controls.cancerPatientObstetricHistoryForm
+      "
+      [pregnancyStatus]="pregnancyStatus"
+    ></nurse-cancer-obstetric-history>
+  </md-expansion-panel>
+</md-accordion>

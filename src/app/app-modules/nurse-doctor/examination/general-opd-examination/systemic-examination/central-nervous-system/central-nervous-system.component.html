@@ -1,0 +1,55 @@
+<!-- {{centralNervousSystemForm.value | json}} -->
+<div class="row m-t-20" [formGroup]='centralNervousSystemForm'>
+  <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+    <md-select class="select-full-width" name='handedness' formControlName="handedness" placeholder="{{current_language_set?.ExaminationData?.ANC_OPD_PNCExamination?.systemic?.centralANC_OPD_PNC?.handedness}}">
+      <md-option *ngFor="let handedness of selectHandedness" [value]="handedness.name">
+        {{handedness.name}}
+      </md-option>
+    </md-select>
+  </div>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <md-form-field class="input-full-width" class="textarea-full-width">
+      <textarea mdInput allowText="textAreaValidator" defaultNull mdTextareaAutosize name='cranialNervesExamination' formControlName="cranialNervesExamination" placeholder="{{current_language_set?.ExaminationData?.ANC_OPD_PNCExamination?.systemic?.centralANC_OPD_PNC?.cranial}}" maxlength="300"></textarea>
+    </md-form-field>
+  </div>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
+    <md-form-field class="input-full-width" class="textarea-full-width">
+      <textarea mdInput allowText="textAreaValidator" defaultNull mdTextareaAutosize name='motorSystem' formControlName="motorSystem" placeholder="{{current_language_set?.ExaminationData?.ANC_OPD_PNCExamination?.systemic?.centralANC_OPD_PNC?.motorsystem}}" maxlength="300"></textarea>
+    </md-form-field>
+  </div>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
+    <md-form-field class="input-full-width" class="textarea-full-width">
+      <textarea mdInput allowText="textAreaValidator" defaultNull mdTextareaAutosize name='sensorySystem' formControlName="sensorySystem" placeholder="{{current_language_set?.ExaminationData?.ANC_OPD_PNCExamination?.systemic?.centralANC_OPD_PNC?.sensorysystem}}" maxlength="300"></textarea>
+    </md-form-field>
+  </div>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
+    <md-form-field class="input-full-width" class="textarea-full-width">
+      <textarea mdInput allowText="textAreaValidator" defaultNull mdTextareaAutosize name='autonomicSystem' formControlName="autonomicSystem" placeholder="{{current_language_set?.ExaminationData?.ANC_OPD_PNCExamination?.systemic?.centralANC_OPD_PNC?.autonomicsystem}}" maxlength="300"></textarea>
+    </md-form-field>
+  </div>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
+    <md-form-field class="input-full-width" class="textarea-full-width">
+      <textarea mdInput allowText="textAreaValidator" defaultNull mdTextareaAutosize name='cerebellarSigns' formControlName="cerebellarSigns" placeholder="{{current_language_set?.ExaminationData?.ANC_OPD_PNCExamination?.systemic?.centralANC_OPD_PNC?.cerebellarsigns}}" maxlength="300"></textarea>
+    </md-form-field>
+  </div>
+
+  <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+    <label class="control-label" for="centralNervousSystem">{{current_language_set?.ExaminationData?.ANC_OPD_PNCExamination?.systemic?.centralANC_OPD_PNC?.signsofMeningealIrritation}}</label>
+    <div class="clearfix"></div>
+    <md-radio-group name='signsOfMeningealIrritation' formControlName="signsOfMeningealIrritation">
+      <md-radio-button color='primary' value="Present">{{current_language_set?.common?.present}}</md-radio-button>
+      <md-radio-button color='primary' value="Absent">{{current_language_set?.common?.absent}}</md-radio-button>
+    </md-radio-group>
+  </div>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
+    <md-form-field class="input-full-width" class="textarea-full-width">
+      <textarea mdInput allowText="textAreaValidator" defaultNull mdTextareaAutosize name='skull' formControlName="skull" placeholder="{{current_language_set?.ExaminationData?.ANC_OPD_PNCExamination?.systemic?.centralANC_OPD_PNC?.skull}}" maxlength="300"></textarea>
+    </md-form-field>
+  </div>
+</div>

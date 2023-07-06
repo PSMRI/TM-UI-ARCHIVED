@@ -1,0 +1,45 @@
+<div class="login-form-container" [ngClass]="{'stretch': data && data.masterDowloadFirstTime}">
+  <button *ngIf="data?.masterDowloadFirstTime" class="close-button" (click)="closeDialog()" md-icon-button>
+    <md-icon class="md-24">close</md-icon>
+  </button>
+  <md-card class="m-t-40">
+    <md-card-title class="sync-login-title">
+      <h4>Confirm your identity to perform this action</h4>
+    </md-card-title>
+
+    <md-card-content class="m-t-30">
+      <form name="loginForm" (submit)="loginForm.form.valid && dataSyncLogin()" #loginForm="ngForm">
+        <div class="container-fluid">
+          <div class="row no-gutters">
+            <div class="col-xs-1 col-md-1 col-sm-1 box">
+              <em class="material-icons prefix-icon">account_box</em>
+            </div>
+            <div class="col-xs-11 col-md-11 col-sm-11 box">
+              <md-input-container class="input-full-width">
+                <input mdInput allowText="usernameValidator" type="text" autocomplete="off" autofocus="autofocus" placeholder="User Name" [(ngModel)]="userName" name="userName"
+                />
+              </md-input-container>
+            </div>
+          </div>
+          <div class="row no-gutters">
+            <div class="col-xs-1 col-md-1 col-sm-1 box">
+              <em class="material-icons prefix-icon">lock</em>
+            </div>
+            <div class="col-xs-11 col-md-11 col-sm-11 box">
+              <md-input-container class="input-full-width">
+                <input mdInput [type]="dynamictype" autocomplete="off" placeholder="Password" [(ngModel)]="password" name="password" />
+                <md-icon mdSuffix class="material-icons cursorPointer" mdTooltip="Show Password" (mousedown)='showPWD()' (mouseup)='hidePWD()'
+                  style="color:gray">visibility</md-icon>
+              </md-input-container>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12 col-md-12 col-sm-12 box">
+              <button md-raised-button color="primary" type="submit" class="input-full-width">Proceed</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </md-card-content>
+  </md-card>
+</div>

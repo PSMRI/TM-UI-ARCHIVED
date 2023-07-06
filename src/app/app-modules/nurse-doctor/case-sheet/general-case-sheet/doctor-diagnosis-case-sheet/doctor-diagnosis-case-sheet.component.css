@@ -1,0 +1,109 @@
+.container {
+    background: white;
+    padding-bottom: 50px;
+}
+#covid-19{
+    width: 100%;
+}
+#heading
+{
+    text-align:center;
+}
+#logo {
+    width: 90px;
+}
+.full-card {
+    width: 100%; /* or try width: 100vw; */
+}
+.textarea {
+    min-height: 100px;
+    border: 1px solid black;
+    padding: 5px;
+}
+
+.table {
+    margin-bottom: 0px;
+}
+
+.table-no-border tr, th, .table-no-border tr td, .table-no-border thead tr th, .table-no-border tbody tr th, .table-no-border tbody tr td {
+    border: none;
+}
+
+.casesheet-table tr th, .casesheet-table tr td, .casesheet-table thead tr th, .casesheet-table tbody tr th, .casesheet-table tbody tr td {
+    width: 25%;
+}
+
+.m-t-50 {
+    margin-top: 50px;
+}
+
+h4, h5 {
+    font-weight: bold;
+}
+
+@media print {
+    th, strong {
+        font-weight: bold;
+        font-family: Cambria, Cochin, Georgia, Times, Times New Roman, serif
+    }
+    h4, h5 {
+        font-weight: bold;
+        font-family: Cambria, Cochin, Georgia, Times, Times New Roman, serif
+    }
+    .page-break:last-child {
+        page-break-after: auto;
+      }
+}
+
+fieldset {
+    display: block;
+    -webkit-margin-start: 2px;
+    -webkit-margin-end: 2px;
+    -webkit-padding-before: 0.35em;
+    -webkit-padding-start: 0.75em;
+    -webkit-padding-end: 0.75em;
+    -webkit-padding-after: 0.625em;
+    min-width: -webkit-min-content;
+    border-width: 2px;
+    border-style: groove;
+    border-color: threedface;
+    border-image: initial;
+}
+
+legend {
+    display: block;
+    width: unset;
+    -webkit-padding-start: 2px;
+    -webkit-padding-end: 2px;
+    border: unset;
+}
+
+
+/********/
+.btn-group button {
+    background-color: #ff5252; /* Green background */
+    margin:5px;
+    /* border: 1px solid green; */
+    color: white; /* White text */
+    /* padding: 10px 24px;  */
+    /* cursor: pointer;  */
+    float: left; /* Float the buttons side by side */
+  }
+
+  .btn-group1 button {
+    background-color: #10df3d; /* Green background */
+    margin:5px;
+    /* border: 1px solid green; */
+    color: white; /* White text */
+    /* padding: 10px 24px;  */
+    /* cursor: pointer;  */
+    float: left; /* Float the buttons side by side */
+  }
+
+  
+  /* Clear floats (clearfix hack) */
+  .btn-group:after {
+    content: "";
+    clear: both;
+    display: table;
+  }

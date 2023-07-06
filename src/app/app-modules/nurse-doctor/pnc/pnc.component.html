@@ -1,0 +1,202 @@
+<md-expansion-panel expanded="true">
+  <md-expansion-panel-header>
+    <h5>{{ currentLanguageSet?.pncData?.pnc }}</h5>
+  </md-expansion-panel-header>
+  <div [formGroup]="patientPNCForm" class="row m-t-20">
+    <!--{{patientPNCForm.value | json}}-->
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+      <md-select
+        class="select-full-width"
+        name="placeOfDelivery"
+        formControlName="deliveryPlace"
+        placeholder="{{ currentLanguageSet?.pncData?.placeofDelivery }}"
+        (change)="resetOtherPlaceOfDelivery()"
+        required
+      >
+        <md-option
+          *ngFor="let place of masterData?.deliveryPlaces"
+          [value]="place"
+          >{{ place.deliveryPlace }}</md-option
+        >
+      </md-select>
+    </div>
+
+    <div
+      class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box"
+      *ngIf="deliveryPlace?.deliveryPlace == 'Other'"
+    >
+      <md-form-field class="input-full-width">
+        <input
+          autocomplete="off"
+          mdInput
+          defaultNull
+          placeholder="{{ currentLanguageSet?.pncData?.others }}"
+          maxlength="50"
+          formControlName="otherDeliveryPlace"
+          name="otherPlaceOfDelivery"
+        />
+      </md-form-field>
+    </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+      <md-select
+        class="select-full-width"
+        name="typeOfDelivery"
+        formControlName="deliveryType"
+        [disableFormControl]="!patientPNCForm.value.deliveryPlace"
+        placeholder="{{ currentLanguageSet?.pncData?.typeofDelivery }}"
+        [required]="patientPNCForm.value.deliveryPlace"
+      >
+        <md-option *ngFor="let type of selectDeliveryTypes" [value]="type">
+          {{ type.deliveryType }}
+        </md-option>
+      </md-select>
+    </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+      <md2-datepicker
+        [openOnFocus]="true"
+        [max]="today"
+        [min]="minimumDeliveryDate"
+        name="dateOfDelivery"
+        formControlName="dDate"
+        placeholder="{{ currentLanguageSet?.pncData?.dateofDelivery }}"
+      ></md2-datepicker>
+    </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+      <md-select
+        class="select-full-width"
+        name="deliveryComplication"
+        formControlName="deliveryComplication"
+        placeholder="{{
+          currentLanguageSet?.historyData?.obstetrichistory
+            ?.deliverycomplicationtype
+        }}"
+        (change)="resetOtherDeliveryComplication()"
+      >
+        <md-option
+          *ngFor="let complication of masterData?.deliveryComplicationTypes"
+          [value]="complication"
+        >
+          {{ complication.deliveryComplicationType }}
+        </md-option>
+      </md-select>
+    </div>
+
+    <div
+      class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box"
+      *ngIf="deliveryComplication?.deliveryComplicationType == 'Other'"
+    >
+      <md-form-field class="input-full-width">
+        <input
+          autocomplete="off"
+          mdInput
+          defaultNull
+          placeholder="{{ currentLanguageSet?.pncData?.others }}"
+          maxlength="50"
+          name="othersDeliveryComplication"
+          formControlName="otherDeliveryComplication"
+        />
+      </md-form-field>
+    </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+      <md-select
+        class="select-full-width"
+        name="outcomeOfPregnancy"
+        formControlName="pregOutcome"
+        placeholder="{{ currentLanguageSet?.pncData?.outcomeofpregnancy }}"
+      >
+        <md-option
+          *ngFor="let outcome of masterData?.pregOutcomes"
+          [value]="outcome"
+        >
+          {{ outcome.pregOutcome }}
+        </md-option>
+      </md-select>
+    </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+      <md-select
+        class="select-full-width"
+        name="postNatalComplication"
+        formControlName="postNatalComplication"
+        placeholder="{{ currentLanguageSet?.pncData?.postNatalComplication }}"
+        (change)="resetOtherPostNatalComplication()"
+      >
+        <md-option
+          *ngFor="let complication of masterData?.postNatalComplications"
+          [value]="complication"
+        >
+          {{ complication.complicationValue }}
+        </md-option>
+      </md-select>
+    </div>
+
+    <div
+      class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box"
+      *ngIf="postNatalComplication?.complicationValue == 'Other'"
+    >
+      <md-form-field class="input-full-width">
+        <input
+          autocomplete="off"
+          mdInput
+          defaultNull
+          placeholder="{{ currentLanguageSet?.pncData?.others }}"
+          maxlength="50"
+          name="otherPostNatalComplication"
+          formControlName="otherPostNatalComplication"
+        />
+      </md-form-field>
+    </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+      <md-select
+        class="select-full-width"
+        name="gestation"
+        formControlName="gestationName"
+        placeholder="{{ currentLanguageSet?.pncData?.gestationalAgeofNewborn }}"
+      >
+        <md-option
+          *ngFor="let gestation of masterData?.gestation"
+          [value]="gestation"
+          >{{ gestation.name }}</md-option
+        >
+      </md-select>
+    </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+      <md-form-field class="input-full-width">
+        <input
+          autocomplete="off"
+          mdInput
+          defaultNull
+          placeholder="{{ currentLanguageSet?.pncData?.birthWeight }}"
+          maxlength="4"
+          allowText="decimal"
+          name="birthWeight_kg"
+          formControlName="birthWeightOfNewborn"
+          allowMax="6"
+          (keypress)="checkWeight()"
+        />
+      </md-form-field>
+    </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+      <md-select
+        class="input-full-width"
+        name="newBornHealthStatus"
+        formControlName="newBornHealthStatus"
+        placeholder="{{ currentLanguageSet?.pncData?.newBornHealthStatus }}"
+      >
+        <md-option
+          *ngFor="let newBornHealthStatus of masterData?.newbornHealthStatuses"
+          [value]="newBornHealthStatus"
+        >
+          {{ newBornHealthStatus.newBornHealthStatus }}
+        </md-option>
+      </md-select>
+    </div>
+  </div>
+</md-expansion-panel>

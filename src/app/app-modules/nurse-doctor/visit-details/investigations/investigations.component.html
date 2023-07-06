@@ -1,0 +1,17 @@
+<!-- {{patientInvestigationsForm.value | json}} -->
+<div class="row m-t-20" [formGroup]="patientInvestigationsForm">
+  <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 box">
+    <md-select
+      class="input-full-width"
+      multiple
+      name="laboratoryList"
+      formControlName="laboratoryList"
+      placeholder="{{currentLanguageSet?.nurseData?.investigationsDetails?.laboratory}}"
+      (change)="checkTestName($event)"
+    >
+      <md-option *ngFor="let laboratary of selectLabTest" [value]="laboratary"    [disabled]="canDisable(laboratary)">
+        {{ laboratary.procedureName }}
+      </md-option>
+    </md-select>
+  </div>
+</div>

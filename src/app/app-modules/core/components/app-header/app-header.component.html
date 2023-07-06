@@ -1,0 +1,101 @@
+<nav class="navbar navbar-iemr">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+        data-target="#top-navbar, #main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand">
+        <img src="assets/images/logo.png" alt="Logo">
+      </a>
+    </div>
+
+    <!-- Collect the nav linkngs, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="top-navbar">
+      <ul class="nav navbar-nav navbar-right">
+
+        <li *ngIf="isAuthenticated" class="logout cursorPointer" tooltip="
+        {{currentLanguageSet?.coreComponents?.logout}}">
+          <a (click)="getSwymedLogout()">
+            <span class="logoutIcon"></span>
+            <span style="color:#ffffff;" class="hidden-sm hidden-md hidden-lg">Logout</span>
+          </a>
+        </li>
+        <li class="cursorPointer" *ngIf="isAuthenticated">
+          <span class="fa fa-question-circle helpAlign" tooltip="
+          {{currentLanguageSet?.coreComponents?.help}}" alt="Help" [mdMenuTriggerFor]="knowAboutUs"></span>
+        </li>
+        <md-menu #knowAboutUs x-position="before"  class="m-t-40">
+          <md-list class="p-t-0">
+            <md-list-item (click)='showVersionAndCommitDetails()'>{{currentLanguageSet?.version}}:{{versionUI}}</md-list-item>
+            <md-list-item><a target="_blank" href={{license}}>{{currentLanguageSet?.licenseInfo}}.</a>
+            </md-list-item>
+          </md-list>
+        </md-menu>
+        <li *ngIf="userName && isAuthenticated" tooltip="{{currentLanguageSet?.coreComponents?.user}}">
+          <a>
+            <img src="assets/images/user1.png" alt="user"/>
+            <span style="color:#d9d9d9"> {{currentLanguageSet?.coreComponents?.user}}
+              <span style="color:#d9d9d9">:</span>
+              <span style="color:#ffffff;">{{ userName | titlecase }}</span>
+            </span>
+          </a>
+        </li>
+        <li *ngIf="isAuthenticated" class="cursorPointer" tooltip="
+        {{currentLanguageSet?.coreComponents?.connectBluetooth}}">
+          <span class="material-icons iot" (click)="openIOT()" [ngClass]="{connected : isConnected}">
+            bluetooth_searching
+          </span>
+        </li>
+        <li *ngIf="status" class="alignDropDown">
+          <select class="form-control drop-arrow border-radius-20 height-30 width120px pull-right" name="app_language"
+            [(ngModel)]="app_language" (change)="changeLanguage(app_language)">
+            <option *ngFor="let language of languageArray" [value]="language.languageName">{{language.languageName}}
+            </option>
+          </select>
+          </li>
+          <li *ngIf="status" class="alignWord">
+            <span>{{currentLanguageSet?.common?.SelectLanguage}}: </span>
+          </li>
+      </ul>
+    </div>   
+  </div>
+</nav>
+
+<div *ngIf="showRoles" class="container-fluid">
+  <div class="collapse navbar-collapse" id="main-navbar">
+    <ul class="nav navbar-nav" *ngFor="let item of filteredNavigation;let isLast=last;">
+      <li *ngIf="item.role == 'Registrar'">
+        <button md-button [mdMenuTriggerFor]="items"> {{item.label}}
+          <span class="caret"></span>
+        </button>
+        <md-menu class="registrar-menu md-menuwidth" #items="mdMenu" yPosition='below' xPosition="after" [overlapTrigger]='false'>
+          <button md-menu-item *ngFor="let value of item.work " [routerLink]="[value.link]" routerLinkActive="active">
+            {{value.label}}</button>
+        </md-menu>
+      </li>
+      <li *ngIf="item.role != 'Registrar' && item.role != 'TC Specialist'">
+        <button md-button [routerLink]="[item.link]" routerLinkActive="active"> {{item.label}}</button>
+      </li>
+      <li *ngIf="item.role == 'TC Specialist'">
+        <button md-button [mdMenuTriggerFor]="TCitems"> {{item.label}}
+          <span class="caret"></span>
+        </button>
+        <md-menu class="tc-menu md-menuwidth" #TCitems="mdMenu" yPosition='below' xPosition="after" [overlapTrigger]='false'>
+          <span *ngFor="let value of item.work">
+            <button md-menu-item *ngIf="value.label == 'Worklist'" [routerLink]="[value.link]"
+              routerLinkActive="active">
+              {{value.labelName}}</button>
+            <button md-menu-item *ngIf="value.label == 'Timesheet'" (click)="navigateToTeleMedicine()"
+              routerLinkActive="active">
+              {{value.labelName}}</button>
+          </span>
+        </md-menu>
+      </li>
+    </ul>
+  </div>
+</div>

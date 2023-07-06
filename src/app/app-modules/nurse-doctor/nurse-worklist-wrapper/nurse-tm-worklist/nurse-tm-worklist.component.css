@@ -1,0 +1,161 @@
+.input-full-width {
+  width: 100%;
+}
+
+md2-pagination {
+  text-align: right;
+}
+
+md-input-container {
+  width: 60%;
+}
+
+md-card {
+  min-height: 400px;
+  padding: 15px;
+}
+
+:host /deep/ .pagination {
+  margin: 0;
+}
+
+@media (max-width: 481px) {
+  md-input-container {
+    width: 100%;
+  }
+  #caseSheetButton {
+    width: 100%;
+  }
+}
+
+ul {
+  list-style: none;
+  padding: 0px;
+}
+
+ul li {
+  display: inline-block;
+  padding: 0 8px;
+}
+
+ul li div,
+ul li p {
+  display: inline-block;
+}
+
+ul li div {
+  height: 15px;
+  width: 15px;
+}
+
+.marker-p-f-c {
+  background: #0b69b2;
+}
+
+.marker-p-f-t {
+  background: #e44e4f;
+}
+
+.marker-t-d {
+  background: #eaaa26;
+}
+
+.marker-c-d {
+  background: #43760f;
+}
+
+.marker-p-f-t-c {
+  background: #9933ff;
+}
+
+.marker-t-c-c {
+  background: black;
+}
+
+.color-rows>td {
+  padding: 0;
+  border: 0;
+}
+
+.norecord {
+  text-align: center;
+}
+
+.visitStatus {
+  position: relative;
+  text-align: center;
+}
+
+.no-padding {
+  padding: 0 !important;
+}
+
+.centered {
+  justify-content: center;
+  display: flex;
+}
+
+.visitStatus.p-f-c::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 1px;
+  width: 4px;
+  background: #0b69b2;
+}
+
+.visitStatus.p-f-t-c::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 1px;
+  width: 4px;
+  background: #9933ff;
+}
+
+.visitStatus.t-c-c::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 1px;
+  width: 4px;
+  background: black;
+}
+
+.visitStatus.p-f-t::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 1px;
+  width: 4px;
+  background: #e44e4f;
+}
+
+.visitStatus.t-d::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 1px;
+  width: 4px;
+  background: #eaaa26;
+}
+
+.visitStatus.c-d::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 1px;
+  width: 4px;
+  background: #43760f;
+}
+
+.totalCount,
+.description {
+  padding-top: 15px;
+}

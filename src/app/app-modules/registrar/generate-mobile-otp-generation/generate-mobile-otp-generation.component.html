@@ -1,0 +1,79 @@
+<div class="title info">
+  <h4>{{currentLanguageSet?.generateABHA}}</h4>
+  <button class="pull-right close-btn" mdDialogClose (click)="closeDialog()" md-icon-button>
+    <md-icon class="md-24">close</md-icon>
+  </button>
+</div>
+<br>
+
+<div class="overlay" *ngIf="showProgressBar">
+  <div class="overlay-content">
+    <md-spinner></md-spinner>
+  </div>
+</div>
+<br>
+
+<div class="col-xs-12 col-sm-12" [formGroup]="generateMobileOTPForm" novalidate >  
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" *ngIf="!enableMobileOTPForm" >
+      <md-form-field [style.width]="'100%'">
+        <input
+          defaultNull
+          autocomplete="off"
+          allowText="number"
+          autofocus
+          required
+          mdInput 
+          minlength="10"
+          maxlength="10"
+          [min]="10"
+          placeholder="{{currentLanguageSet?.enterMobileNo}}"
+          formControlName="mobileNo"
+        />
+        <md-error
+        *ngIf="generateMobileOTPForm.controls.mobileNo.errors?.required"
+      >
+        {{
+          currentLanguageSet?.benDetailsAlert?.mobNoMandatory
+        }}</md-error
+      >
+      <md-error
+        *ngIf="generateMobileOTPForm.controls.mobileNo.errors?.minlength"
+      >
+        {{
+          currentLanguageSet?.benDetailsAlert?.minDigitsRequired
+        }}</md-error
+      >
+        </md-form-field>
+   
+    </div>
+
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" *ngIf="enableMobileOTPForm">
+      <md-form-field [style.width]="'100%'">
+        <input
+          defaultNull
+          autocomplete="off"
+          type="text"
+          autofocus
+          required
+          mdInput 
+          minlength="6"
+          maxlength="6"
+          placeholder="{{currentLanguageSet?.enterOTP}}"
+          (keypress)="numberOnly($event)"
+          formControlName="mobileOtp"
+        />
+        </md-form-field>
+    </div>
+    <div class="col-sm-12 step-btn m-b-20" style="text-align:right">
+      <button id="submitButton"  md-raised-button type="accent" color="accent"
+        [disabled]="!generateMobileOTPForm.valid"
+        (click)="onSubmitOfMobileNo();verifyMobileOtp()">
+        {{currentLanguageSet?.common?.submit}}
+      </button>
+    </div>
+
+  
+    
+  </div>
+</div>

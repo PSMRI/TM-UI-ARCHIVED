@@ -1,0 +1,382 @@
+<!-- Most of the SPANs in this code are for correction of UI layout-->
+<!-- {{personalDetailsForm.value | json }} -->
+<div class="m-t-10" [formGroup]="personalDetailsForm">
+  <div class="row">
+    <div id="image_row" class="col-md-2 col-md-push-10 text-center">
+      <div class="row">
+        <div class="col-xs-12">
+          <div *ngIf="personalDetailsForm.value.image == null">
+            <a>
+              <img
+                src="assets/images/default-avatar.gif"
+                class="img-circle thumbnail-120"
+                alt="Upload Beneficiary Image"
+              />
+            </a>
+          </div>
+          <div *ngIf="personalDetailsForm.value.image != null">
+            <a>
+              <img alt=""
+                [src]="personalDetailsForm.value.image"
+                class="img-circle thumbnail-120"
+              />
+            </a>
+          </div>
+          <button
+            id="captureButton"
+            class="m-t-10"
+            (click)="captureImage()"
+            md-button
+            md-raised-button
+            type="button"
+          >
+            {{ current_language_set?.ro?.personalInfo?.capturePhoto }}
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div id="data_row" class="col-md-10 col-md-pull-2">
+      <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 box">
+        <md-form-field [style.width]="'100%'">
+          <input
+            defaultNull
+            autocomplete="off"
+            autofocus
+            required
+            mdInput
+            allowText="alphabet"
+            placeholder="{{
+              current_language_set?.ro?.personalInfo?.firstName
+            }}"
+            formControlName="firstName"
+            minlength="2"
+            maxlength="50"
+            (change)="setFullName()"
+          />
+          <md-error
+            *ngIf="personalDetailsForm.controls.firstName.errors?.required"
+          >
+            {{
+              current_language_set?.benDetailsAlert?.firstNameMandatory
+            }}</md-error
+          >
+          <md-error
+            *ngIf="personalDetailsForm.controls.firstName.errors?.minlength"
+          >
+            {{
+              current_language_set?.benDetailsAlert?.minCharRequired
+            }}</md-error
+          >
+        </md-form-field>
+      </div>
+
+      <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 box">
+        <md-form-field [style.width]="'100%'">
+          <input
+            defaultNull
+            autocomplete="off"
+            mdInput
+            allowText="alphaspace"
+            placeholder="{{ current_language_set?.ro?.personalInfo?.lastName }}"
+            formControlName="lastName"
+            (change)="setFullName()"
+            maxlength="50"
+           
+          />
+        </md-form-field>
+      </div>
+
+      <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 box">
+        <div class="row">
+          <div class="col-xs-2 col-sm-2 m-t-15" style="padding-top: 7px">
+            <md-checkbox
+              checked="checked"
+              formControlName="checked"
+              (change)="checkMobileNoIsRequired($event)"
+            >
+            </md-checkbox>
+          </div>
+          <div class="col-xs-10 col-sm-10 m-l-10-">
+            <md-form-field [style.width]="'100%'">
+              <input
+                defaultNull
+                autocomplete="off"
+                mdInput
+                allowText="number"
+                name="phoneNo"
+                [required]="isMobileNoRequired"
+                (blur)="getParentDetails()"
+                placeholder="{{
+                  current_language_set?.ro?.personalInfo?.contactNo
+                }}."
+                minlength="10"
+                formControlName="phoneNo"
+                maxlength="10"
+                name="contactNo"
+                [min]="10"
+              />
+              <md-error
+                *ngIf="personalDetailsForm.controls.phoneNo.errors?.required"
+              >
+                {{
+                  current_language_set?.benDetailsAlert?.mobNoMandatory
+                }}</md-error
+              >
+              <md-error
+                *ngIf="personalDetailsForm.controls.phoneNo.errors?.minlength"
+              >
+                {{
+                  current_language_set?.benDetailsAlert?.minDigitsRequired
+                }}</md-error
+              >
+            </md-form-field>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 box">
+        <md-select
+          [style.width]="'100%'"
+          required
+          (change)="onGenderSelected()"
+          placeholder="{{ current_language_set?.ro?.personalInfo?.gender }}"
+          formControlName="gender"
+        >
+          <md-option
+            *ngFor="let gender of masterData?.genderMaster"
+            [value]="gender.genderID"
+            >{{ gender.genderName }}
+          </md-option>
+        </md-select>
+</div>
+
+      <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 box">
+        <md-form-field [style.width]="'100%'">
+          <input
+            autocomplete="off"
+            mdInput
+            allowText="number"
+            required
+            placeholder="{{ current_language_set?.ro?.personalInfo?.age }}"
+            (change)="onAgeEntered()"
+            formControlName="age"
+            maxlength="3"
+          />
+          <md-error
+          *ngIf="personalDetailsForm.controls.age.errors?.required"
+        >
+          {{
+            current_language_set?.benDetailsAlert?.ageMandatory
+          }}</md-error>
+        </md-form-field>
+      </div>
+
+      <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 box">
+        <md-select
+          [style.width]="'100%'"
+          required
+          (change)="onAgeUnitEntered()"
+          placeholder="{{ current_language_set?.ro?.personalInfo?.ageUnit }}"
+          formControlName="ageUnit"
+        >
+          <md-option value="Days">Days</md-option>
+          <md-option value="Months">Months</md-option>
+          <md-option value="Years">Years</md-option>
+        </md-select>
+      </div>
+
+      <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 box">
+        <md-form-field [style.width]="'96%'">
+          <md-icon mdSuffix>event</md-icon>
+          <input
+            autocomplete="off"
+            readonly="true"
+            mdInput
+            id="dob-input"
+            [(ngModel)]="dateForCalendar"
+            type="text"
+            #dobval
+            (onHidden)="dobChangeByCalender(dobval.value)"
+            (change)="dobChangeByCalender(dobval.value)"
+            [bsConfig]="bsConfig"
+            [minDate]="minDate"
+            [maxDate]="today"
+            #dp="bsDatepicker"
+            maxlength="10"
+            bsDatepicker
+            formControlName="dob"
+            placeholder="{{ current_language_set?.ro?.personalInfo?.dob }}"
+          />
+        </md-form-field>
+      </div>
+
+      <ng-container *ngIf="enableMaritalStatus">
+        <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 box">
+          <md-select
+            [style.width]="'100%'"
+            placeholder="{{
+              current_language_set?.ro?.personalInfo?.maritalStatus
+            }}"
+            (change)="onMaritalStatusChanged()"
+            [required]="enableMaritalStatus"
+            formControlName="maritalStatus"
+          >
+            <md-option
+              *ngFor="let maritalStatus of maritalStatusMaster"
+              [value]="maritalStatus.maritalStatusID"
+            >
+              {{ maritalStatus.status | titlecase }}
+            </md-option>
+          </md-select>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="enableMaritalStatus && enableMarriageDetails">
+        <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 box">
+          <md-form-field [style.width]="'100%'">
+            <input
+              autocomplete="off"
+              mdInput
+              allowText="alphaspace"
+              [required]="enableSpouseMandatory" 
+              placeholder="{{
+                current_language_set?.ro?.personalInfo?.spouseName
+              }}"
+              formControlName="spouseName"
+              minlength="2"
+              maxlength="50"
+            />
+            <md-error
+              *ngIf="personalDetailsForm.controls.spouseName.errors?.minlength"
+              >{{current_language_set?.common?.pleaseprovideatleast3character}}</md-error
+            >
+          </md-form-field>
+        </div>
+      </ng-container>
+
+      <div
+        *ngIf="enableMaritalStatus && enableMarriageDetails"
+        class="col-xs-12 col-sm-6 col-md-3 col-lg-3 box"
+      >
+        <md-form-field [style.width]="'100%'">
+          <input
+            autocomplete="off"
+            mdInput
+            allowText="number"
+            (change)="checkAgeAtMarriage()"
+            [required]="enableMarriageDetails"
+            formControlName="ageAtMarriage"
+            minlength="2"
+            maxlength="3"
+            placeholder="{{
+              current_language_set?.ro?.personalInfo?.ageAtMarriage
+            }}"
+          />
+          <md-error
+            *ngIf="personalDetailsForm.controls.ageAtMarriage.errors?.minlength"
+            >{{current_language_set?.common?.invalidMarriageAge}}</md-error
+          >
+          <md-error
+            *ngIf="personalDetailsForm.controls.ageAtMarriage.errors?.maxlength"
+            >{{current_language_set?.common?.invalidMarriageAge}}</md-error
+          >
+        </md-form-field>
+      </div>
+
+      <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 box">
+        <md-select
+          [style.width]="'100%'"
+          placeholder="{{
+            current_language_set?.ro?.personalInfo?.incomeStatus
+          }}"
+          (change)="onIncomeChanged()"
+          formControlName="income"
+        >
+          <md-option
+            *ngFor="let incomeStatus of masterData?.incomeMaster"
+            [value]="incomeStatus.incomeStatusID"
+          >
+            {{ incomeStatus.incomeStatus }}
+          </md-option>
+        </md-select>
+      </div>
+
+      <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 box">
+        <md-select
+          [style.width]="'100%'"
+          placeholder="{{
+            current_language_set?.ro?.personalInfo?.literacyStatus
+          }}"
+          formControlName="literacyStatus"
+          (change)="changeLiteracyStatus()"
+        >
+          <md-option value="Illiterate">Illiterate </md-option>
+          <md-option value="Illiterate (can sign)"
+            >Illiterate (can sign)
+          </md-option>
+          <md-option value="Literate">Literate </md-option>
+        </md-select>
+      </div>
+
+      <div
+        *ngIf="personalDetailsForm.value.literacyStatus == 'Literate'"
+        class="col-xs-12 col-sm-6 col-md-3 col-lg-3 box"
+      >
+        <md-select
+          [style.width]="'100%'"
+          [required]="personalDetailsForm.value.literacyStatus == 'Literate'"
+          placeholder="{{
+            current_language_set?.ro?.personalInfo?.educationalQualification
+          }}"
+          formControlName="educationQualification"
+          (change)="onEducationQualificationChanged()"
+        >
+          <md-option
+            *ngFor="let qualification of masterData?.qualificationMaster"
+            [value]="qualification.educationID"
+          >
+            {{ qualification.educationType | titlecase }}
+          </md-option>
+        </md-select>
+      </div>
+
+      <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 box">
+        <md-select
+          [style.width]="'100%'"
+          placeholder="{{ current_language_set?.ro?.personalInfo?.occupation }}"
+          formControlName="occupation"
+          (change)="getOccupationName()"
+        >
+          <md-option
+            *ngFor="let occupation of masterData?.occupationMaster"
+            [value]="occupation.occupationID"
+          >
+            {{ occupation.occupationType | titlecase }}
+          </md-option>
+        </md-select>
+      </div>
+
+      <div
+        *ngIf="personalDetailsForm.value.occupation == '7'"
+        class="col-xs-12 col-sm-6 col-md-3 col-lg-3 box"
+      >
+        <md-form-field [style.width]="'100%'">
+          <input
+            autocomplete="off"
+            autofocus
+            mdInput
+            allowText="alphaspace"
+            placeholder="{{ current_language_set?.ro?.personalInfo?.otherOccupation }}
+            "
+            formControlName="occupationOther"
+            minlength="3"
+            maxlength="50"
+            [required]="true"
+          />
+        </md-form-field>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Most of the SPANs in this code are for correction of UI layout-->

@@ -1,0 +1,11 @@
+<div class="row m-t-10 p-t-30" [formGroup]="diseaseFormsGroup">
+  <div class="col-xs-3 col-sm-3 col-md-12 col-lg-12">
+    <div class="checkbox-group" formArrayName="diseaseFormsArray">
+      <ng-container *ngFor="let item of diseaseFormsGroup.get('diseaseFormsArray')['controls']; let i = index;" [formGroupName]="i">        
+          <md-checkbox formControlName="selected" class="checkbox" color="primary" (change)="checked($event,item);" [disabled]="isDoctor">
+            {{diseaseFormsGroup.controls.diseaseFormsArray.controls[i].controls.diseaseName.value}}
+          </md-checkbox>       
+      </ng-container>
+    </div>
+  </div>
+</div>

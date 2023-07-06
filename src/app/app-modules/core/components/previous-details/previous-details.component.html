@@ -1,0 +1,46 @@
+<div>
+  <div class="title info">
+    <h4>{{ input.title }}</h4>
+    <button class="pull-right close-btn" (click)="closeDialog()" md-icon-button>
+      <md-icon class="md-24">close</md-icon>
+    </button>
+  </div>
+
+  <section class="message">
+    <md-input-container>
+      <input autocomplete="off" mdInput placeholder="{{this.current_language_set?.common?.inTableSearch}}" #filterTerm (keyup)="filterPreviousData(filterTerm.value)">
+      <md-icon mdSuffix>search</md-icon>
+    </md-input-container>
+    <section class="table-responsive vw100">
+      <table aria-describedby="title" [md2Data]="filteredDataList" #md2="md2DataTable" [rowsPerPage]="5" [activePage]="1" class="table table-striped">
+        <thead>
+          <tr class="column">
+            <th id="sno">SNo</th>
+            <th *ngFor="let column of columnList" id="columnName">{{ column.columnName }}</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="filteredDataList?.length==0">
+          <tr>
+            <td [attr.colspan]="columnList.length + 1">
+              <h4 class='norecord'>{{current_language_set?.common?.noRecordFound}}</h4>
+            </td>
+          </tr>
+        </tbody>
+        <tbody *ngIf="filteredDataList?.length > 0">
+          <tr *ngFor="let data of md2.data;let i=index;">
+            <td>{{ filteredDataList.indexOf(data)+1 }}</td>
+            <td *ngFor="let column of columnList">{{ data[column.keyName] }}</td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td [attr.colspan]=columnList.length+1>
+              <md2-pagination></md2-pagination>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </section>
+
+  </section>
+</div>

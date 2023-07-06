@@ -1,0 +1,8 @@
+<div class="row m-t-10">
+  <div class="col-xs-12">
+    <app-cancer-case-record *ngIf="showCancer" [caseRecordMode]="caseRecordMode" [findings]="findings" [currentVitals]="currentVitals" [pregnancyStatus]="pregnancyStatus"
+      [diagnosisForm]='patientCaseRecordForm'></app-cancer-case-record>
+    <app-general-case-record *ngIf="showGeneralOPD" [caseRecordMode]="caseRecordMode" [findings]="findings" [currentVitals]="currentVitals" [generalCaseRecordForm]='patientCaseRecordForm'
+      [visitCategory]='visitCategory'></app-general-case-record>
+  </div>
+</div>

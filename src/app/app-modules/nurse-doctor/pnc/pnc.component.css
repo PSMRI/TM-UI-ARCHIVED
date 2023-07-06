@@ -1,0 +1,39 @@
+h5 {
+  font-weight: bold;
+}
+
+.mat-form-field {
+  line-height: unset;
+}
+
+.mat-expansion-panel-header {
+  background: rgba(37, 55, 70, 0.2);
+}
+
+.input-full-width {
+  width: 100%;
+}
+
+.select-full-width {
+  width: 100%;
+}
+
+.mat-horizontal-content-container {
+  padding: 0px;
+}
+
+md-expansion-panel {
+  margin: 0.5%;
+}
+
+.box {
+  height: 60px;
+}
+
+.radio-btn {
+  margin-left: 20px;
+}
+
+.control-label {
+  font-weight: normal;
+}

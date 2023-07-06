@@ -1,0 +1,33 @@
+.input-full-width {
+  width: 100%;
+}
+
+md2-pagination {
+  text-align: right;
+}
+
+md-input-container {
+  width: 60%;
+}
+
+md-card {
+  min-height: 400px;
+  padding: 15px;
+}
+
+:host /deep/ .pagination {
+  margin: 0;
+}
+
+@media (max-width: 481px) {
+  md-input-container {
+    width: 100%;
+  }
+  #caseSheetButton {
+    width: 100%;
+  }
+}
+
+.norecord {
+  text-align: center;
+}

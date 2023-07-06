@@ -1,0 +1,92 @@
+<!--{{patientAdherenceForm.value | json}}-->
+<div [formGroup]="patientAdherenceForm">
+  <div class="row m-t-20">
+    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 box">
+      <label class="control-label" for="drug">{{currentLanguageSet?.nurseData?.adherenceDetails?.drugs}}</label>
+      <div class="clearfix"></div>
+      <md-radio-group
+        name="toDrugs"
+        formControlName="toDrugs"
+        (change)="checkDrugsDescription(toDrugs)"
+      >
+        <md-radio-button color="primary" class="radio-button" [value]="true"
+          >{{currentLanguageSet?.common?.yes}}</md-radio-button
+        >
+        <md-radio-button color="primary" class="radio-button" [value]="false"
+          >{{currentLanguageSet?.common?.no}}</md-radio-button
+        >
+      </md-radio-group>
+    </div>
+
+    <div
+      class="col-xs-12 col-sm-6 col-md-8 col-lg-8 box"
+      *ngIf="toDrugs != null && !toDrugs"
+    >
+      <md-form-field class="input-full-width" class="textarea-full-width">
+        <textarea
+          mdInput allowText="textAreaValidator"
+          defaultNull
+          mdTextareaAutosize
+          name="drugReason"
+          formControlName="drugReason"
+          maxlength="300"
+          placeholder="{{currentLanguageSet?.nurseData?.adherenceDetails?.reason}}"
+        ></textarea>
+      </md-form-field>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 box">
+      <label class="control-label" for="drug">{{currentLanguageSet?.nurseData?.adherenceDetails?.referral}}</label>
+      <div class="clearfix"></div>
+      <md-radio-group
+        name="toReferral"
+        formControlName="toReferral"
+        (change)="checkReferralDescription(toReferral)"
+      >
+        <md-radio-button color="primary" class="radio-button" [value]="true"
+          >{{currentLanguageSet?.common?.yes}}</md-radio-button
+        >
+        <md-radio-button color="primary" class="radio-button" [value]="false"
+          >{{currentLanguageSet?.common?.no}}</md-radio-button
+        >
+      </md-radio-group>
+    </div>
+
+    <div
+      class="col-xs-12 col-sm-6 col-md-8 col-lg-8 box"
+      *ngIf="toReferral != null && !toReferral"
+    >
+      <md-form-field class="input-full-width" class="textarea-full-width">
+        <textarea
+          mdInput allowText="textAreaValidator"
+          defaultNull
+          mdTextareaAutosize
+          name="referralReason"
+          maxlength="300"
+          formControlName="referralReason"
+          placeholder="{{currentLanguageSet?.nurseData?.adherenceDetails?.reason}}"
+        ></textarea>
+      </md-form-field>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 box">
+      <md-select
+        class="input-full-width"
+        name="progress"
+        formControlName="progress"
+        placeholder="{{currentLanguageSet?.nurseData?.adherenceDetails?.progress}}"
+      >
+        <md-option
+          *ngFor="let progress of adherenceProgressData"
+          [value]="progress"
+        >
+          {{ progress }}
+        </md-option>
+      </md-select>
+    </div>
+  </div>
+</div>

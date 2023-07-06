@@ -1,0 +1,84 @@
+h5 {
+    font-weight: bold;
+}
+
+.mat-expansion-panel-header {
+    background: rgba(37, 55, 70, 0.2);
+    padding: 0 15px;
+}
+
+.abnormal {
+    color: red
+}
+
+.cdk-overlay-container .cdk-overlay-pane .mat-autocomplete-panel {
+    min-width: 500px;
+    max-width: 500px;
+}
+
+.input-full-width {
+    width: 100%;
+}
+
+.input-half-width {
+    width: 50%;
+}
+
+.mat-form-field{
+    line-height: unset;
+}
+
+#textArea {
+    line-height: 11px;
+}
+
+md-expansion-panel {
+    margin: 0.5%;
+}
+
+.btn{
+    background: #0277bd !important;
+}
+
+
+.prescription {
+  overflow: scroll;
+}
+
+fieldset {
+  display: block;
+  -webkit-margin-start: 2px;
+  -webkit-margin-end: 2px;
+  -webkit-padding-before: 0.35em;
+  -webkit-padding-start: 0.75em;
+  -webkit-padding-end: 0.75em;
+  -webkit-padding-after: 0.625em;
+  min-width: -webkit-min-content;
+  border-width: 1px;
+  border-style: groove;
+  border-color: azure;
+  border-image: initial;
+}
+
+legend {
+  display: block;
+  width: unset;
+  -webkit-padding-start: 2px;
+  -webkit-padding-end: 2px;
+  border: unset;
+}
+
+.fieldset {
+  background-color: rgba(240, 245, 245, 0.5);
+}
+
+@media only screen and (min-width: 980px){
+  .right-padding-remove-desktop {
+    padding-right: 0 !important;
+  }
+
+}
+
+.box {
+  height: 60px;
+}

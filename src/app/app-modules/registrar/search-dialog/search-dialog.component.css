@@ -1,0 +1,51 @@
+.mat-select {
+    padding: 0;
+}
+
+.advanceSearch {
+    padding: 24px;
+}
+
+.padding15 {
+    padding: 15px;
+}
+
+.title_background {
+    background: #0277bd;
+    color: white;
+}
+
+.grayborder {
+    border-bottom: 1px solid lightgray;
+}
+
+#searchDialog {
+    z-index: 998 !important;
+}
+
+.margin {
+    margin: 15px;
+}
+
+.info {
+    background: #0277bd;
+}
+
+.title {
+    margin-left: -15px;
+    margin-right: -15px;
+    padding: 15px;
+    color: white;
+}
+
+.title h4 {
+    display: inline-block;
+}
+
+.close-btn {
+    color: white !important;
+}
+
+.box{
+    height: 60px;
+}

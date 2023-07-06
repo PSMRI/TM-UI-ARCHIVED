@@ -1,0 +1,38 @@
+.title .exit {
+    cursor: pointer;
+  }
+  
+  .title {
+    padding: 10px 24px 10px;
+    color: white;
+    font-size: 18px;
+    line-height: 32px;
+    font-weight: 400;
+    background: #0277bd;
+  }
+  
+  .title h4 {
+    display: inline-block;
+  }
+  .warn {
+    background-color: red;
+  }
+  .msg {
+    text-align: center;
+    font-size: 18px;
+    margin: 20px 0px 0px 0px;
+  }
+  .progressMsg
+  {
+    text-align: center;
+    font-size: 15px;
+    margin: 20px 0px 5px 0px;
+  }
+
+  .enable{
+    background-color: palevioletred
+  }
+
+  .disable{
+    background-color: grey
+  }

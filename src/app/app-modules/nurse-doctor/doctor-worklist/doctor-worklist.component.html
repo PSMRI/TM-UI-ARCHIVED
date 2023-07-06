@@ -1,0 +1,200 @@
+<div class="container-fluid">
+  <div class="row m-t-10">
+    <div class="col-xs-8 col-sm-6 col-md-4">
+      <div class="sw">
+        <input type="search" class="search" autocomplete="off"
+          placeholder="{{ currentLanguageSet?.common?.inTableSearch }}" name="filterTerm" [(ngModel)]="filterTerm"
+          (keyup)="filterBeneficiaryList(filterTerm)" />
+        <button class="go" (click)="filterBeneficiaryList(filterTerm)">
+          <span class="material-icons">search</span>
+        </button>
+      </div>
+    </div>
+    <div class="col-xs-4 col-sm-6 col-md-8">
+      <button md-button id="caseSheetButton" style="display:none;" [disabled]="true" class="btn btn-link pull-right">
+        {{currentLanguageSet?.bendetails?.emergencyCaseSheet}}
+      </button>
+      <button md-raised-button class="pull-right btn-green" color="primary" id="refresh" (click)="loadWorklist()">
+        {{ currentLanguageSet?.common?.refresh }}
+      </button>
+    </div>
+  </div>
+
+  <div class="row m-t-10 m-b-40">
+    <div class="col-sm-12">
+      <md-card>
+        <section class="table-responsive">
+          <table class="table table-striped " aria-describedby="EmergencyCaseSheetTbl">
+            <thead>
+              <tr>
+                <th id="sno">{{currentLanguageSet?.coreComponents?.sno}}</th>
+                <th id="beneficiaryID">{{ currentLanguageSet?.bendetails?.beneficiaryID }}</th>
+                <th id="beneficiaryName">{{ currentLanguageSet?.bendetails?.beneficiaryName }}</th>
+                <th id="gender">{{ currentLanguageSet?.bendetails?.gender }}</th>
+                <th id="age">{{ currentLanguageSet?.bendetails?.age }}</th>
+                <th id="visitCategory">{{currentLanguageSet?.bendetails?.visitCategory}}</th>
+                <th id="visitDate">{{currentLanguageSet?.bendetails?.visitDate}}</th>
+                <th id="beneficiaryArrived">{{currentLanguageSet?.bendetails?.beneficiaryArrived}}</th>
+                <th id="image">{{currentLanguageSet?.bendetails?.image}}</th>
+                <th colspan="3" style="text-align: center;" id="action">{{currentLanguageSet?.bendetails?.action}}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <ng-template [ngIf]="
+                  filteredBeneficiaryList && filteredBeneficiaryList.length == 0
+                ">
+                <tr *ngFor="let row of blankTable">
+                  <td colspan="12" *ngIf="row == 3">
+                    <h4 class="norecord">{{ curren_language_set?.common?.noRecordFound }}</h4>
+                  </td>
+                  <td *ngIf="row != 3">&nbsp;</td>
+                  <td *ngIf="row != 3">&nbsp;</td>
+                  <td *ngIf="row != 3">&nbsp;</td>
+                  <td *ngIf="row != 3">&nbsp;</td>
+                  <td *ngIf="row != 3">&nbsp;</td>
+                  <td *ngIf="row != 3">&nbsp;</td>
+                  <td *ngIf="row != 3">&nbsp;</td>
+                  <td *ngIf="row != 3">&nbsp;</td>
+                  <td *ngIf="row != 3">&nbsp;</td>
+                  <td colspan="3" *ngIf="row != 3">&nbsp;</td>
+                </tr>
+              </ng-template>
+              <tr *ngFor="let beneficiary of pagedList; let m = index" class="table-hover">
+                <td [ngClass]="{
+                    visitStatus: true,
+                    'p-f-c': beneficiary.statusCode == 1,
+                    'p-f-t': beneficiary.statusCode == 2,
+                    't-d': beneficiary.statusCode == 3,
+                    'c-d': beneficiary.statusCode == 9,
+                    'p-f-t-c': beneficiary.statusCode == 5,
+                    't-c-c': beneficiary.statusCode == 4,
+                    'a-f-t-p': beneficiary.statusCode == 10,
+                    'a-f-t-d': beneficiary.statusCode == 11
+                  }">
+                  {{ filteredBeneficiaryList.indexOf(beneficiary) + 1 }}
+                </td>
+              
+                <td (click)="loadDoctorExaminationPage(beneficiary)">
+                  {{ beneficiary?.beneficiaryID }}
+                </td>
+                <td (click)="loadDoctorExaminationPage(beneficiary)">
+                  {{ beneficiary?.benName | titlecase }}
+                </td>
+                <td (click)="loadDoctorExaminationPage(beneficiary)">
+                  {{ beneficiary.genderName | titlecase }}
+                </td>
+                <td (click)="loadDoctorExaminationPage(beneficiary)">
+                  {{ beneficiary.age }}
+                </td>
+                <td (click)="loadDoctorExaminationPage(beneficiary)">
+                  <span style="color:#a6a6a6">{{ beneficiary.VisitCategory }}
+                  </span>
+                  /
+                  <span style="color:#a6a6a6">{{
+                    beneficiary.benVisitNo
+                  }}</span>
+                </td>
+                <td (click)="loadDoctorExaminationPage(beneficiary)">
+                  {{ beneficiary.benVisitDate }}
+                </td>
+                <td class="centered">
+                  <md-checkbox class="control-label" [disabled]="
+                      beneficiary.statusCode == 1 ||
+                      beneficiary.statusCode == 2 ||
+                      beneficiary.statusCode == 3 ||
+                      beneficiary.statusCode == 9 ||
+                      beneficiary.statusCode == 4 ||
+                      beneficiary.statusCode == 10||
+                      beneficiary.statusCode == 11
+                    " (change)="
+                      toggleArrivalStatus($event, beneficiary.benFlowID, m)
+                    " [(ngModel)]="beneficiary.benArrivedFlag" placeholder="Confirm Whether Beneficiary has arrived"
+                    [value]="true"></md-checkbox>
+                   
+                </td>
+                <td (click)="patientImageView(beneficiary.beneficiaryRegID)" tooltip="{{currentLanguageSet?.tc?.image}}">
+                  <img src="assets/images/Avatar-Profile_30X30.png" alt=""/>
+                </td>
+                <td>
+                  <button md-raised-button (click)="cancelTCRequest(beneficiary)" tooltip="{{currentLanguageSet?.tc?.cancelTc}}" color="warn"
+                    [disabled]="beneficiary.specialist_flag != 1">
+                    {{currentLanguageSet?.common?.cancel}}
+                  </button>
+                </td>
+                <td>
+                  <button md-raised-button (click)="openScheduler(beneficiary)" tooltip="{{currentLanguageSet?.tc?.reschedule}}" color="primary"
+                    [disabled]="beneficiary.specialist_flag != 4">
+                    {{currentLanguageSet?.tc?.schedule}}
+                  </button>
+                </td>
+                <td>
+                  <button md-raised-button (click)="initiateTC(beneficiary)" tooltip="{{currentLanguageSet?.tc?.startTc}}" color="accent"
+                    [disabled]="
+                      beneficiary.specialist_flag != 1 &&
+                      !beneficiary.benArrivedFlag
+                    ">
+                    <span class="material-icons">voice_chat</span>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="12">
+                  <ul class="description" *ngIf="filteredBeneficiaryList.length > 0">
+                    <li>
+                      <div class=" marker-p-f-c "></div>
+                      <p>{{currentLanguageSet?.alerts?.info?.pendingForConsultation}}</p>
+                    </li>
+                    <li>
+                      <div class="marker-p-f-t-c "></div>
+                      <p>{{currentLanguageSet?.alerts?.info?.pendingForTC}}</p>
+                    </li>
+                    <li>
+                      <div class="marker-t-c-c "></div>
+                      <p>{{currentLanguageSet?.alerts?.info?.tCCancelled}}</p>
+                    </li>
+                    <li>
+                      <div class="marker-p-f-t "></div>
+                      <p>{{currentLanguageSet?.alerts?.info?.pendingforLabtestResult}}</p>
+                    </li>
+                    <li>
+                      <div class="marker-t-d "></div>
+                      <p>{{currentLanguageSet?.alerts?.info?.labtestDone}}</p>
+                    </li>
+                    <li>
+                      <div class="marker-c-d "></div>
+                      <p>{{currentLanguageSet?.alerts?.info?.consultationDone}}</p>
+                    </li>
+                    <li>
+                      <div class="marker-a-f-t-p "></div>
+                      <p>{{currentLanguageSet?.alerts?.info?.fetosenseTest_pending}}</p>
+                    </li>
+                    <li>
+                      <div class="marker-a-f-t-d"></div>
+                      <p>{{currentLanguageSet?.alerts?.info?.fetosenseTest_done}}</p>
+                    </li>
+                  </ul>
+                </td>
+              </tr>
+
+              <tr>
+                <td colspan="6">
+                  <div class="totalCount" *ngIf="filteredBeneficiaryList.length > 0">
+                    {{currentLanguageSet?.common?.totalCount}} : {{ filteredBeneficiaryList.length }}
+                  </div>
+                </td>
+                <td colspan="6">
+                  <pagination class="pull-right" [(ngModel)]="currentPage" [boundaryLinks]="true" (pageChanged)="pageChanged($event)"
+                    *ngIf="filteredBeneficiaryList.length" [totalItems]="filteredBeneficiaryList.length"
+                    [itemsPerPage]="rowsPerPage" [maxSize]="rowsPerPage" [rotate]="rotate" previousText="&lsaquo;"
+                    nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"></pagination>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </section>
+      </md-card>
+    </div>
+  </div>
+</div>

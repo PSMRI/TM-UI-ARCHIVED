@@ -1,0 +1,82 @@
+.input-full-width {
+    width: 100%;
+  }
+  
+  .m-t-30 {
+    margin-top: 30px;
+  }
+  
+  .container-fluid {
+    padding: 24px !important;
+  }
+  
+  .title {
+    margin: 0px 0px 10px;
+    padding: 15px 24px 15px;
+    color: white;
+    font-size: 18px;
+    line-height: 32px;
+    font-weight: 400;
+    background: #0277bd;
+  }
+  
+  .title h4 {
+    display: inline-block;
+  }
+  
+  .title .exit {
+    cursor: pointer;
+  }
+  
+  .progress {
+    width: 100%;
+  }
+  
+  .example-sidenav-content {
+    display: flex;
+    padding: 20px;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  @media screen and (max-width: 768px) {
+    .search-btn {
+      width: 100%;
+    }
+  }
+  
+  .overlay {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    z-index: 1001;
+    /* Sit on top */
+    left: 0;
+    top: 0;
+    background-color: rgb(0, 0, 0);
+    /* Black fallback color */
+    background-color: rgba(0, 0, 0, 0.3);
+    /* Black w/opacity */
+  }
+  
+  
+  /* Position the content inside the overlay */
+  
+  
+  /*.overlay-content {
+      position: relative;
+      top: 42%;  25% from the top 
+      left: 46%;
+      width: 100%;  100% width 
+  }*/
+  
+  .overlay:root {
+    padding: 0px;
+  }
+  
+  .loader-hidden {
+    display: none;
+  }

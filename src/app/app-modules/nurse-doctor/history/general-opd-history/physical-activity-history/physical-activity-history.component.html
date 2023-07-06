@@ -1,0 +1,24 @@
+<ng-container [formGroup]="physicalActivityHistory">
+  <div class="row text-right">
+    <label class="font-history-label m-t-10">{{currentLanguageSet?.historyData?.ncdPhysicalActivityHistory?.previousPhysicalActivityHistory}}</label>
+    <button type="button"  md-icon-button  mdTooltip="{{currentLanguageSet?.DurationData?.previousDetails}}" id='previousANCFamilyHistory' class="pull-right hbx"
+      color="primary" (click)="getPreviousPhysicalActivityHistory()">
+      <md-icon class="md-18">history</md-icon>
+    </button>
+  </div>
+  <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box hbx">
+    <label class="control-label" for="physicalActivityType">{{currentLanguageSet?.historyData?.ncdPhysicalActivityHistory?.physicalActivityType}}</label>
+    <div class="clearfix"></div>
+    <md-radio-group formControlName="physicalActivityType">
+      <md-radio-button color="primary" value="Sedentary">{{currentLanguageSet?.historyData?.ncdPhysicalActivityHistory?.sedentary}}</md-radio-button>
+      <md-radio-button color="primary" class="radio-button" value="Active">{{currentLanguageSet?.historyData?.ncdPhysicalActivityHistory?.active}}</md-radio-button>
+    </md-radio-group>
+  </div>
+  <div class="box col-xs-12 col-sm-6 col-md-6 col-lg-6">
+    <md-select style="width: 100%;" name="physicalActivitQuestions" formControlName="activityType"
+      placeholder="{{currentLanguageSet?.historyData?.ncdPhysicalActivityHistory?.physcialActivityQuestions}}" (change) = "calculateIDRSScore($event,physicalActivityHistory)" [required] ="age >=30">
+      <md-option *ngFor="let questions of physicalActivityQuestions" [value]="questions.activityType">
+        {{questions.activityType}}</md-option>
+    </md-select>
+  </div>
+</ng-container>

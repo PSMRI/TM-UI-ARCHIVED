@@ -1,0 +1,168 @@
+<div>
+  <div class="title info">
+    <h4 *ngIf = "((!healthIDMapping && !enablehealthIdOTPForm && !searchPopup) || (searchDetails !== undefined && searchDetails !== null && searchDetails.length > 0))">{{currentLanguageSet?.abhaDetails}}</h4>
+    <h4 *ngIf = "(healthIDMapping || enablehealthIdOTPForm) && !searchPopup">{{currentLanguageSet?.aBHACareContextMapping}}</h4>
+    <button class="pull-right close-btn" tooltip="{{currentLanguageSet?.common?.close}}" mdDialogClose (click)="closeDialog()" md-icon-button>
+      <md-icon class="md-24">close</md-icon>
+    </button>
+  </div>
+  <div class="overlay" *ngIf="showProgressBar">
+    <div class="overlay-content">
+      <md-spinner></md-spinner>
+    </div>
+  </div>
+<!--List the health ID details-->
+  <section class="message">
+    <section class="table-responsive vw100" *ngIf = "searchDetails !=undefined && searchDetails !=null && searchDetails.length >0">
+      <table [md2Data]="searchDetails" #md2="md2DataTable" [rowsPerPage]="4" class="table table-striped" aria-describedby="toShowHealthIDDetails">
+        <thead>
+          <tr class="column">
+            <th id="sno">{{currentLanguageSet?.coreComponents?.sno}}</th>
+            <th id="healthIDNo">{{currentLanguageSet?.abhaNumber}}</th>
+            <th id="healthID">{{currentLanguageSet?.abha}}</th>
+            <th id="createdDate">{{currentLanguageSet?.dateOfCreation}}</th>
+            <th id="healthIDMode">{{currentLanguageSet?.abhaMode}}</th>   
+                               
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="searchDetails == null || searchDetails?.length==0">
+            <td colspan="6" class="record-not-found">
+              {{currentLanguageSet?.casesheet?.noRecordFound}} 
+            </td>
+          </tr>
+          <tr *ngFor="let data of md2.data;let i = index">
+            <td >{{i+1}} </td>
+            <td >{{ data?.HealthIDNumber ? data?.HealthIDNumber : NA}} </td>
+            <td >{{ data?.HealthID ? data?.HealthID : NA}} </td>
+            <td >{{ data?.CreatedDate | date: 'yyyy-MM-dd hh:mm:ss a'}} </td>
+            <td >{{ data?.AuthenticationMode}} </td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="6">
+              <md2-pagination></md2-pagination>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </section>
+    <section class="table-responsive vw100" *ngIf = "!healthIDMapping && !enablehealthIdOTPForm && !searchPopup">
+      <table [md2Data]="healthIDArray" #md2="md2DataTable" [rowsPerPage]="4" class="table table-striped" aria-describedby="toShowHealthIDDetails">
+        <thead>
+          <tr class="column">
+            <th id="sno">{{currentLanguageSet?.coreComponents?.sno}}</th>
+            <th id="healthIDNo">{{currentLanguageSet?.aBHANumber}}</th>
+            <th id="healthID">{{currentLanguageSet?.aBHA}}</th>
+            <th id="createdDate">{{currentLanguageSet?.dateOfCreation}}</th>
+            <th id="healthIDMode">{{currentLanguageSet?.aBHAMode}}</th>   
+            <th id="action">{{currentLanguageSet?.bendetails?.action}}</th>                    
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="healthIDArray?.length==0">
+            <td colspan="6" class="record-not-found">
+              {{currentLanguageSet?.casesheet?.noRecordFound}} 
+            </td>
+          </tr>
+          <tr *ngFor="let data of md2.data;let i = index">
+            <td >{{healthIDArray.indexOf(data)+1}} </td>
+            <td >{{ data?.healthIdNumber ? data?.healthIdNumber : NA}} </td>
+            <td >{{ data?.healthId ? data?.healthId : NA}} </td>
+            <td >{{ data?.createdDate}} </td>
+            <td >{{ data?.authenticationMode}} </td>
+            <td>
+              <button md-icon-button  tooltip="{{currentLanguageSet?.printABHACard}}" (click)="printHealthIDCard(data)" class="pull-right  width-20px">
+                <md-icon>print</md-icon>
+              </button> 
+            </td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="6">
+              <md2-pagination></md2-pagination>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </section>
+    <!--Map health ID to care context-->
+    <section class="table-responsive vw100" *ngIf = "healthIDMapping && !enablehealthIdOTPForm  && !searchPopup">
+      <table [md2Data]="healthIDArray" #md2="md2DataTable" [rowsPerPage]="4" class="table table-striped" aria-describedby="mapHealthIDWithCC">
+        <thead>
+          <tr class="column">
+            <th id="sno">{{currentLanguageSet?.coreComponents?.sno}}</th>
+            <th id="healthIDNo">{{currentLanguageSet?.aBHANumber}}</th>
+            <th id="healthID">{{currentLanguageSet?.aBHA}}</th>
+            <th id="createdDate">{{currentLanguageSet?.dateOfCreation}}</th>
+            <th id="healthIDMode">{{currentLanguageSet?.aBHAMode}}</th>
+            <th id="rblMode"></th> 
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="healthIDArray?.length==0">
+            <td colspan="6" class="record-not-found">
+              {{currentLanguageSet?.casesheet?.noRecordFound}}
+            </td>
+          </tr>
+          <tr *ngFor="let data of md2.data;let i = index">
+            <td >{{healthIDArray.indexOf(data)+1}} </td>
+            <td >{{ data?.healthIdNumber ? data?.healthIdNumber : NA}} </td>
+            <td >{{ data?.healthId ? data?.healthId : NA}} </td>
+            <td >{{ data?.createdDate}} </td>
+            <td >{{ data?.authenticationMode}} </td>
+            <td>
+              <md-radio-group [(ngModel)]="chooseHealthID" >
+                <md-radio-button color="primary" class="radio-btnn" [value] = "data" (change)="onRadioChange(data)">
+                </md-radio-button>
+              </md-radio-group>
+            </td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="3">
+              <md2-pagination></md2-pagination>
+            </td>
+            <td colspan="3" *ngIf="healthIDArray?.length!==0">
+              <button md-raised-button class="pull-right" color='primary'  (click)="generateOtpForMapping()" 
+              [disabled]="(selectedHealthID === undefined || selectedHealthID === null)">{{currentLanguageSet?.generateOTP}}</button>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+      
+    </section>
+  </section>
+</div>
+<!-- Entering OTP for Health ID Generation-->
+<div *ngIf="enablehealthIdOTPForm   && !searchPopup" class="col-xs-12 col-sm-12" [formGroup]="healthIdOTPForm" >
+  <div class="row">
+    <div  class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <md-form-field [style.width]="'100%'" >
+        <input
+          defaultNull
+          autocomplete="off"
+          autofocus
+          required
+          mdInput 
+          type="text"
+          placeholder="{{currentLanguageSet?.enterOTP}}"
+          formControlName="otp"
+          minlength="6"
+          maxlength="6"
+          (keypress)="numberOnly($event)"
+        required
+        />
+        </md-form-field>
+    </div>
+    <div class="col-sm-12 step-btn m-b-20" style="text-align:right">
+      <button id="cancelButton" md-raised-button type="button" color="primary"
+      (click)="resendOtp()">{{currentLanguageSet?.resendOTP}}</button>
+          <button id="submitButton"  md-raised-button type="accent" color="accent"
+          [disabled]="!healthIdOTPForm.valid || !(checkOTP())"  (click)="verifyOtp()">{{currentLanguageSet?.common?.submit}}</button>
+    </div>
+  </div>
+</div>

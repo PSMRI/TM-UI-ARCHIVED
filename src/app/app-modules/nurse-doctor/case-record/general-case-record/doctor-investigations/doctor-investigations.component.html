@@ -1,0 +1,44 @@
+<!-- {{ generalDoctorInvestigationForm.value | json}} -->
+<div *ngIf="visit == 'NCD screening'">
+  <label *ngIf="diabetesSelected > 0 && RBSTestDoneInVitals == false && !rbsSelectedInInvestigation && !rbsTestDoneMMU" style="color: red;"> * {{current_language_set?.pleaseSelectRBSTest}}</label><br>
+  <label *ngIf="VisualAcuityMandatory && !VisualAcuityTestDone && !VisualAcuityTestDoneMMU" style="color: red;"> * {{current_language_set?.pleaseSelectVisualAcuityTest}} </label>
+</div>
+<div *ngIf="visit == 'ANC'">
+  <label *ngIf="((!RBSTestDoneInVitals && !rbsSelectedInInvestigation) || !hemoglobbinSelected)" style="color: red;"> * 
+    {{current_language_set?.pleaseSelectRBSTestAndHaemoglobinTest}} </label>
+</div>
+<div class="row" *ngIf="referredVisitcode !== 'undefined' && referredVisitcode !== undefined && referredVisitcode !== null">
+  <div class="col-sm-12 step-btn m-b-10">
+    <button md-raised-button color="primary" class="pull-right" (click)="loadMMUInvestigation()">{{current_language_set?.mmuInvestigationDetails}} </button>
+  </div>
+</div>
+
+<div class="row" [formGroup]='generalDoctorInvestigationForm'> 
+
+  <div class="col-xs-12 col-sm-6">
+    <md-select class="input-full-width" multiple placeholder="
+    {{current_language_set?.labTechnicianData?.testName}} "
+      name='labTest' formControlName='labTest' (change)="checkTestName($event)">
+      <md-option *ngFor="let nonRadiology of nonRadiologyMaster" [value]='nonRadiology'
+        [disabled]="canDisable(nonRadiology)">
+        {{nonRadiology.procedureName}}
+      </md-option>
+    </md-select>
+  </div>
+  <div class="col-xs-12 col-sm-6">
+    <md-select class="input-full-width" multiple
+      placeholder="{{current_language_set?.labTechnicianData?.radiologyimaging}} " name='radiologyTest'
+      formControlName='radiologyTest'>
+      <md-option *ngFor="let radiology of radiologyMaster" [value]='radiology' [disabled]="canDisable(radiology)">
+        {{radiology.procedureName}}
+      </md-option>
+    </md-select>
+  </div>
+  <div class="col-xs-12 m-t-20">
+    <md-form-field class="input-full-width">
+      <textarea mdInput allowText="textAreaValidator" defaultNull name='externalInvestigation' formControlName="externalInvestigations"
+        placeholder="{{current_language_set?.Investigationdetails?.externalinvestigations}} "
+        maxlength="300"> </textarea>
+    </md-form-field>
+  </div>
+</div>

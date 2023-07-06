@@ -1,0 +1,191 @@
+<!-- {{signsForm.value | json}} -->
+<div class="row m-t-10" [formGroup]="signsForm">
+  <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 custom-cell">
+    {{current_language_set?.ExaminationData?.cancerScreeningExamination?.symptoms?.shortnessofbreath}}
+  </div>
+  <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 custom-cell">
+    <md-radio-group name="shortnessOfBreath" formControlName="shortnessOfBreath">
+      <md-radio-button color="primary" class="form-radio-btn" [value]="true">{{current_language_set?.common?.yes}}</md-radio-button>
+      <md-radio-button color="primary" class="form-radio-btn" [value]="false">{{current_language_set?.common?.no}}</md-radio-button>
+    </md-radio-group>
+  </div>
+
+  <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 custom-cell" *ngIf="female">
+    {{current_language_set?.ExaminationData?.cancerScreeningExamination?.symptoms?.lumpinbreast}}
+  </div>
+  <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 custom-cell" *ngIf="female">
+    <md-radio-group name="lumpInTheBreast" id="lumpInTheBreast" formControlName="lumpInTheBreast">
+      <md-radio-button color="primary" class="form-radio-btn" [value]="true">{{current_language_set?.common?.yes}}</md-radio-button>
+      <md-radio-button color="primary" class="form-radio-btn" [value]="false">{{current_language_set?.common?.no}}</md-radio-button>
+    </md-radio-group>
+  </div>
+
+  <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 custom-cell">
+    {{current_language_set?.ExaminationData?.cancerScreeningExamination?.symptoms?.coughweeks}}
+  </div>
+  <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 custom-cell">
+    <md-radio-group name="coughgt2Weeks" formControlName="coughgt2Weeks">
+      <md-radio-button color="primary" class="form-radio-btn" [value]="true">{{current_language_set?.common?.yes}}</md-radio-button>
+      <md-radio-button color="primary" class="form-radio-btn" [value]="false">{{current_language_set?.common?.no}}</md-radio-button>
+    </md-radio-group>
+  </div>
+
+  <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 custom-cell" *ngIf="female">
+    {{current_language_set?.ExaminationData?.cancerScreeningExamination?.symptoms?.bloodstaineddischargefromnipple}}
+  </div>
+  <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 custom-cell" *ngIf="female">
+    <md-radio-group name="bloodStainedDischargeFromNipple" id="bloodStainedDischargeFromNipple" formControlName="bloodStainedDischargeFromNipple">
+      <md-radio-button color="primary" class="form-radio-btn" [value]="true">{{current_language_set?.common?.yes}}</md-radio-button>
+      <md-radio-button color="primary" class="form-radio-btn" [value]="false">{{current_language_set?.common?.no}}</md-radio-button>
+    </md-radio-group>
+  </div>
+
+  <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 custom-cell">
+    {{current_language_set?.ExaminationData?.cancerScreeningExamination?.symptoms?.bloodinsputum}}
+  </div>
+  <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 custom-cell">
+    <md-radio-group name="bloodInSputum" formControlName="bloodInSputum">
+      <md-radio-button color="primary" class="form-radio-btn" [value]="true">{{current_language_set?.common?.yes}}</md-radio-button>
+      <md-radio-button color="primary" class="form-radio-btn" [value]="false">{{current_language_set?.common?.no}}</md-radio-button>
+    </md-radio-group>
+  </div>
+
+  <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 custom-cell" *ngIf="female">
+    {{current_language_set?.ExaminationData?.cancerScreeningExamination?.symptoms?.changeinshapeandsizeofbreasts}}
+  </div>
+  <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 custom-cell" *ngIf="female">
+    <md-radio-group name="changeInShapeAndSizeOfBreasts" id="changeInShapeAndSizeOfBreasts" formControlName="changeInShapeAndSizeOfBreasts">
+      <md-radio-button color="primary" class="form-radio-btn" [value]="true">{{current_language_set?.common?.yes}}</md-radio-button>
+      <md-radio-button color="primary" class="form-radio-btn" [value]="false">{{current_language_set?.common?.no}}</md-radio-button>
+    </md-radio-group>
+  </div>
+
+  <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 custom-cell">
+    {{current_language_set?.ExaminationData?.cancerScreeningExamination?.symptoms?.difficultyinopeningmouth}}
+  </div>
+  <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 custom-cell">
+    <md-radio-group name="difficultyInOpeningMouth" formControlName="difficultyInOpeningMouth">
+      <md-radio-button color="primary" class="form-radio-btn" [value]="true">{{current_language_set?.common?.yes}}</md-radio-button>
+      <md-radio-button color="primary" class="form-radio-btn" [value]="false">{{current_language_set?.common?.no}}</md-radio-button>
+    </md-radio-group>
+  </div>
+
+  <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 custom-cell" *ngIf="female">
+    {{current_language_set?.ExaminationData?.cancerScreeningExamination?.symptoms?.vaginalbleedingbetweenperiods}}
+  </div>
+  <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 custom-cell" *ngIf="female">
+    <md-radio-group name="vaginalBleedingBetweenPeriods" id="vaginalBleedingBetweenPeriods" formControlName="vaginalBleedingBetweenPeriods">
+      <md-radio-button color="primary" class="form-radio-btn" [value]="true">{{current_language_set?.common?.yes}}</md-radio-button>
+      <md-radio-button color="primary" class="form-radio-btn" [value]="false">{{current_language_set?.common?.no}}</md-radio-button>
+    </md-radio-group>
+  </div>
+
+  <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 custom-cell">
+   {{current_language_set?.ExaminationData?.cancerScreeningExamination?.symptoms?.nonhealing}}
+  </div>
+  <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 custom-cell">
+    <md-radio-group name="nonHealingUlcerOrPatchOrGrowth" formControlName="nonHealingUlcerOrPatchOrGrowth">
+      <md-radio-button color="primary" class="form-radio-btn" [value]="true">{{current_language_set?.common?.yes}}</md-radio-button>
+      <md-radio-button color="primary" class="form-radio-btn" [value]="false">{{current_language_set?.common?.no}}</md-radio-button>
+    </md-radio-group>
+  </div>
+
+  <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 custom-cell" *ngIf="female30">
+    {{current_language_set?.ExaminationData?.cancerScreeningExamination?.symptoms?.vaginalbleedingaftermenopause}}
+  </div>
+  <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 custom-cell" *ngIf="female30">
+    <md-radio-group name="vaginalBleedingAfterMenopause" id="vaginalBleedingAfterMenopause" formControlName="vaginalBleedingAfterMenopause">
+      <md-radio-button color="primary" class="form-radio-btn" [value]="true">{{current_language_set?.common?.yes}}</md-radio-button>
+      <md-radio-button color="primary" class="form-radio-btn" [value]="false">{{current_language_set?.common?.no}}</md-radio-button>
+    </md-radio-group>
+  </div>
+
+  <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 custom-cell">
+    {{current_language_set?.ExaminationData?.cancerScreeningExamination?.symptoms?.changeInTheToneOfVoice}}
+  </div>
+  <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 custom-cell">
+    <md-radio-group name="changeInTheToneOfVoice" formControlName="changeInTheToneOfVoice">
+      <md-radio-button color="primary" class="form-radio-btn" [value]="true">{{current_language_set?.common?.yes}}</md-radio-button>
+      <md-radio-button color="primary" class="form-radio-btn" [value]="false">{{current_language_set?.common?.no}}</md-radio-button>
+    </md-radio-group>
+  </div>
+
+  <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 custom-cell">
+    {{current_language_set?.ExaminationData?.cancerScreeningExamination?.symptoms?.breastEnlargement}}
+  </div>
+  <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 custom-cell">
+    <md-radio-group name="breastEnlargement" formControlName="breastEnlargement">
+      <md-radio-button color="primary" class="form-radio-btn" [value]="true">{{current_language_set?.common?.yes}}</md-radio-button>
+      <md-radio-button color="primary" class="form-radio-btn" [value]="false">{{current_language_set?.common?.no}}</md-radio-button>
+    </md-radio-group>
+  </div>
+
+  <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 custom-cell" *ngIf="female">
+    {{current_language_set?.ExaminationData?.cancerScreeningExamination?.symptoms?.foulsmellingvaginaldischarge}}
+  </div>
+  <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 custom-cell" *ngIf="female">
+    <md-radio-group name="foulSmellingVaginalDischarge" id="foulSmellingVaginalDischarge" formControlName="foulSmellingVaginalDischarge">
+      <md-radio-button color="primary" class="form-radio-btn" [value]="true">{{current_language_set?.common?.yes}}</md-radio-button>
+      <md-radio-button color="primary" class="form-radio-btn" [value]="false">{{current_language_set?.common?.no}}</md-radio-button>
+    </md-radio-group>
+  </div>
+
+  <div class="col-xs-12">
+    <md-form-field class="form-textarea">
+      <textarea mdInput allowText="textAreaValidator" defaultNull maxlength="300" name="observation" formControlName="observation" mdTextareaAutosize placeholder="{{current_language_set?.ExaminationData?.cancerScreeningExamination?.symptoms?.briefHistory}}"></textarea>
+    </md-form-field>
+  </div>
+
+  <div class="col-xs-12 col-sm-6 col-md-3 m-t-10 custom-cell">
+    {{current_language_set?.ExaminationData?.cancerScreeningExamination?.symptoms?.lymphnodes}}
+  </div>
+  <div class="col-xs-12 col-sm-6 col-md-9 m-t-10 custom-cell">
+    <md-radio-group name="lymphNode_Enlarged" formControlName="lymphNode_Enlarged" (change)='checkLymph(lymphNode_Enlarged)'>
+      <md-radio-button color="primary" class="form-radio-btn" [value]=true>{{current_language_set?.common?.enlarged}}</md-radio-button>
+      <md-radio-button color="primary" class="form-radio-btn" [value]=false>{{current_language_set?.common?.notEnlarged}}</md-radio-button>
+    </md-radio-group>
+  </div>
+
+  <div class="col-xs-12 table-responsive">
+    <table class="table table-responsive lymph" formArrayName="lymphNodes" *ngIf="lymphNode_Enlarged" aria-describedby="signsFormTbl">
+      <tr>
+        <th id="left">{{current_language_set?.common?.left}}</th>
+        <th id="mobility">{{current_language_set?.ExaminationData?.cancerScreeningExamination?.symptoms?.mobility}}</th>
+        <th id="lymphnodes">{{current_language_set?.ExaminationData?.cancerScreeningExamination?.symptoms?.lymphnodes}}</th>
+        <th id="mobility">{{current_language_set?.ExaminationData?.cancerScreeningExamination?.symptoms?.mobility}}</th>
+        <th id="right">{{current_language_set?.common?.right}}</th>
+      </tr>
+      <tr *ngFor="let lymphNode of signsForm.controls.lymphNodes.controls; let i = index" [formGroupName]="i">
+        <td>
+          <md-button-toggle-group [attr.name]="'size_Left_' + i" formControlName="size_Left">
+            <md-button-toggle value="<3 cm">
+              < 3 </md-button-toggle>
+                <md-button-toggle value="3-6 cm"> 3-6 cm </md-button-toggle>
+                <md-button-toggle value=">6 cm"> >6 cm </md-button-toggle>
+          </md-button-toggle-group>
+        </td>
+        <td>
+          <md-button-toggle-group [attr.name]="'mobility_Left_' + i" formControlName="mobility_Left">
+            <md-button-toggle [value]="true"> + </md-button-toggle>
+            <md-button-toggle [value]="false"> - </md-button-toggle>
+          </md-button-toggle-group>
+        </td>
+        <td> {{ lymphNode.get('lymphNodeName').value }} </td>
+        <td>
+          <md-button-toggle-group [attr.name]="'mobility_Right_' + i" formControlName="mobility_Right">
+            <md-button-toggle [value]="true"> + </md-button-toggle>
+            <md-button-toggle [value]="false"> - </md-button-toggle>
+          </md-button-toggle-group>
+        </td>
+        <td>
+          <md-button-toggle-group [attr.name]="'size_Right_' + i" formControlName="size_Right">
+            <md-button-toggle value="<3 cm">
+              < 3 </md-button-toggle>
+                <md-button-toggle value="3-6 cm"> 3-6 cm </md-button-toggle>
+                <md-button-toggle value=">6 cm"> >6 cm </md-button-toggle>
+          </md-button-toggle-group>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>

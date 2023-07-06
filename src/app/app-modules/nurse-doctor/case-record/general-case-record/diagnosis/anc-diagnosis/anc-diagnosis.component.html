@@ -1,0 +1,219 @@
+<!-- {{ generalDiagnosisForm.value | json}} -->
+<div class="m-t-10" [formGroup]="generalDiagnosisForm">
+  <div class="col-xs-12 text-right"  *ngIf="visitCategory == 'ANC'">
+
+    <label *ngIf="showHRP == 'true' || complicationPregHRP == 'true'" style="color: red;"><h5><strong>** {{current_language_set?.highRiskPregnancy}} **</strong></h5></label><br>
+    
+  
+  </div>
+
+
+  <section>
+    <!-- First Row -->
+
+    <div class="row">
+      <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+        <md-form-field class="input-full-width">
+          <input
+            autocomplete="off"
+            mdInput
+            defaultNull
+            allowText="number"
+            maxlength="2"
+            name="gravida_G"
+            formControlName="gravida_G"
+            placeholder="{{ current_language_set?.casesheet?.gravida }}"
+            [readonly]="true"
+          />
+        </md-form-field>
+      </div>
+
+      <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+        <md-form-field class="input-full-width">
+          <input
+            autocomplete="off"
+            mdInput
+            defaultNull
+            name="duration"
+            formControlName="duration"
+            allowText="number"
+            placeholder="{{ current_language_set?.casesheet?.periodPreg }}"
+            allowMax="10"
+            [readonly]="true"
+          />
+        </md-form-field>
+      </div>
+      <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+        <md-select
+          class="select-full-width"
+          name="complicationOfCurrentPregnancyList"
+          formControlName="complicationOfCurrentPregnancyList"
+          placeholder="{{ current_language_set?.casesheet?.complications }}"
+          multiple
+          (change)="
+            resetOtherPregnancyComplication(
+              complicationOfCurrentPregnancyList,
+              0
+            );displayPositive(complicationOfCurrentPregnancyList);
+          "
+        >
+          <md-option
+            *ngFor="let complication of masterData?.pregComplicationTypes"
+            [value]="complication"
+            [disabled]="
+              !showAllPregComplication &&
+              ((disableNonePregnancyComplication &&
+                complication.pregComplicationType == 'None') ||
+                (!disableNonePregnancyComplication &&
+                  complication.pregComplicationType != 'None'))
+            "
+          >
+            {{ complication.pregComplicationType }}
+          </md-option>
+        </md-select>
+      </div>
+      <div
+        class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box"
+        *ngIf="showOtherPregnancyComplication"
+      >
+        <md-form-field class="input-full-width">
+          <input
+            autocomplete="off"
+            mdInput
+            defaultNull
+            placeholder="{{ current_language_set?.common?.otherComplication }}"
+            allowText="alphaspace"
+            maxlength="50"
+            name="otherCurrPregComplication"
+            formControlName="otherCurrPregComplication"
+          />
+        </md-form-field>
+      </div>
+    </div>
+    <!-- otherCurrPregComplication -->
+    <!-- Second Row -->
+
+    <div class="row">
+      <div class="col-xs-6 m-t-20">
+        <md-form-field class="input-full-width">
+          <textarea
+            mdInput allowText="textAreaValidator"
+            defaultNull
+            maxlength="300"
+            name="highRiskStatus"
+            formControlName="highRiskStatus"
+            placeholder="{{ current_language_set?.casesheet?.highStatus }}"
+          >
+          </textarea>
+        </md-form-field>
+      </div>
+
+      <div class="col-xs-6 m-t-20">
+        <md-form-field class="input-full-width">
+          <textarea
+            mdInput allowText="textAreaValidator"
+            defaultNull
+            maxlength="300"
+            name="highRiskCondition"
+            formControlName="highRiskCondition"
+            placeholder="{{ current_language_set?.casesheet?.highCondition }}"
+          >
+          </textarea>
+        </md-form-field>
+      </div>
+    </div>
+
+    <!-- Third Row -->
+
+    <div class="row">
+      <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+        <div class="form-group">
+          <label class="control-label" for="deathDuringANCCaseRecord">{{
+            current_language_set?.casesheet?.maternalDeath
+          }}</label>
+          <div class="clearfix"></div>
+          <md-radio-group
+            name="isMaternalDeath"
+            formControlName="isMaternalDeath"
+            (change)="checkWithDeathDetails()"
+          >
+            <md-radio-button color="primary" [value]="true">{{
+              current_language_set?.common?.yes
+            }}</md-radio-button>
+            <md-radio-button color="primary" [value]="false">{{
+              current_language_set?.common?.no
+            }}</md-radio-button>
+          </md-radio-group>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+        <header class="mat-expansion-panel-header">
+          <h4>
+            {{ current_language_set?.DiagnosisDetails?.specialistdignosis }}
+          </h4>
+        </header>
+        <md-form-field class="input-full-width">   
+          <textarea
+          mdInput allowText="textAreaValidator"
+          defaultNull 
+          mdTextareaAutosize
+          #notEditAble
+          maxlength="300"
+          name="specialistAdvice"
+          formControlName="specialistDiagnosis"
+          [readonly]="!specialist"
+          required
+        >
+        </textarea>
+        </md-form-field>
+      </div>
+    </div>
+
+    <!-- Fourth Row -->
+
+    <div class="row" *ngIf="generalDiagnosisForm.value.isMaternalDeath">
+      <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+        <md-form-field class="input-full-width">
+          <input
+            autocomplete="off"
+            mdInput
+            defaultNull
+            name="placeOfDeath"
+            allowText="alphaspace"
+            formControlName="placeOfDeath"
+            maxlength="50"
+            placeholder="{{ current_language_set?.casesheet?.placeOfDeath }}"
+          />
+        </md-form-field>
+      </div>
+
+      <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+        <md2-datepicker
+          [openOnFocus]="true"
+          name="dateOfDeath"
+          id="dateOfDeath"
+          formControlName="dateOfDeath"
+          placeholder="{{ current_language_set?.casesheet?.dateOfDeath }}"
+          [max]="today"
+          [min]="minimumDeathDate"
+          ng-readonly="true"
+        ></md2-datepicker>
+      </div>
+
+      <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+        <md-form-field class="input-full-width">
+          <input
+            autocomplete="off"
+            mdInput
+            defaultNull
+            allowText="alphaspace"
+            name="causeOfDeath"
+            formControlName="causeOfDeath"
+            maxlength="50"
+            placeholder="{{ current_language_set?.casesheet?.causeOfDeath }}"
+          />
+        </md-form-field>
+      </div>
+    </div>
+  </section>
+</div>

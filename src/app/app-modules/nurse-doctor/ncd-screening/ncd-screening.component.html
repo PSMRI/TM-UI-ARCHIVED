@@ -1,0 +1,801 @@
+<!-- {{NCDScreeningForm.value | json}} -->
+<div [formGroup]="NCDScreeningForm">
+  <md-expansion-panel expanded="true">
+    <md-expansion-panel-header>
+      <h5>
+        {{
+          currentLanguageSet?.vitalsDetails?.vitalsNCDScreening?.nCDScreening
+        }}
+      </h5>
+    </md-expansion-panel-header>
+    <div class="row m-t-20">
+      <div class="col-xs-12">
+        <div class="row m-t-10">
+          <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 box">
+            <md-select
+              multiple
+              class="select-full-width"
+              name="screeningCondition"
+              formControlName="ncdScreeningConditionList"
+              placeholder="{{
+                currentLanguageSet?.vitalsDetails?.vitalsNCDScreening
+                  ?.screeningCondition
+              }}"
+            >
+              <md-option
+                *ngFor="let screeningCondition of ncdScreeningConditions"
+                [value]="screeningCondition"
+              >
+                {{ screeningCondition.screeningCondition }}
+              </md-option>
+            </md-select>
+          </div>
+          <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 box">
+            <md-select
+              class="select-full-width"
+              name="reasonForScreening"
+              formControlName="reasonForScreening"
+              placeholder="{{
+                currentLanguageSet?.vitalsDetails?.vitalsNCDScreening
+                  ?.reasonforscreening
+              }}"
+            >
+              <md-option
+                *ngFor="let reasonForScreening of ncdScreeningReasons"
+                [value]="reasonForScreening"
+              >
+                {{ reasonForScreening.ncdScreeningReason }}
+              </md-option>
+            </md-select>
+          </div>
+          <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 box">
+            <md-form-field class="input-full-width">
+              <input
+                autocomplete="off"
+                mdInput
+                name="ncdScreeningVisitNo"
+                formControlName="ncdScreeningVisitNo"
+                placeholder="{{
+                  currentLanguageSet?.vitalsDetails?.vitalsNCDScreening
+                    ?.screeningVisitNo
+                }}"
+                readonly="readonly"
+              />
+            </md-form-field>
+          </div>
+          <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 box">
+            <md-select
+              class="select-full-width"
+              multiple
+              name="screeningTestList"
+              formControlName="labTestOrders"
+              placeholder="{{
+                currentLanguageSet?.vitalsDetails?.vitalsNCDScreening
+                  ?.screeningTest
+              }}"
+              (change)="checkScreeningTest()"
+            >
+              <md-option
+                *ngFor="let screeningTest of laboratoryList"
+                [value]="screeningTest"
+              >
+                {{ screeningTest.procedureName }}
+              </md-option>
+            </md-select>
+          </div>
+        </div>
+
+        <div class="row m-t-10">
+          <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 box">
+            <md-form-field class="input-full-width">
+              <input
+                autocomplete="off"
+                mdInput
+                defaultNull
+                placeholder="{{
+                  currentLanguageSet?.vitalsDetails
+                    ?.AnthropometryDataANC_OPD_NCD_PNC?.height
+                }}"
+                allowText="decimal"
+                allowMax="350"
+                maxlength="6"
+                name="height_cm"
+                formControlName="height_cm"
+                (change)="checkHeight()"
+                (blur)="calculateBMI()"
+                required
+              />
+            </md-form-field>
+          </div>
+          <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 box">
+            <md-form-field class="input-full-width">
+              <input
+                autocomplete="off"
+                mdInput
+                defaultNull
+                placeholder="{{
+                  currentLanguageSet?.vitalsDetails
+                    ?.AnthropometryDataANC_OPD_NCD_PNC?.weight
+                }}"
+                allowText="decimal"
+                allowMax="500"
+                maxlength="6"
+                name="weight_Kg"
+                formControlName="weight_Kg"
+                (change)="checkWeight()"
+                (blur)="calculateBMI()"
+                required
+              />
+              <button
+                tooltip="{{currentLanguageSet?.common?.startTest}}"
+                mdSuffix
+                (click)="openIOTWeightModel()"
+              >
+                <span class="glyphicon glyphicon-scale"></span >
+              </button>
+            </md-form-field>
+          </div>
+          <ng-template [ngIf]="age > 19">
+            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 box">
+              <md-form-field class="input-full-width">
+                <input
+                  autocomplete="off"
+                  mdInput
+                  defaultNull
+                  placeholder="{{
+                    currentLanguageSet?.vitalsDetails
+                      ?.AnthropometryDataANC_OPD_NCD_PNC?.BMI
+                  }}"
+                  allowText="decimal"
+                  name="bMI"
+                  [ngClass]="{ abnormal: !normalBMI }"
+                  formControlName="bMI"
+                  [ngClass]="{ abnormal: BMI < 18.5 || BMI > 24.9 }"
+                  [value]="BMI"
+                  readonly
+                />
+              </md-form-field>
+            </div>
+
+            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 box">
+              <div
+                class="marker"
+                *ngIf="BMI != null && BMI < 18.5"
+                style="color: red"
+              >
+                <em class="material-icons">brightness_1</em>
+                <span>{{
+                  currentLanguageSet?.vitalsDetails
+                    ?.AnthropometryDataANC_OPD_NCD_PNC?.underweight
+                }}</span>
+              </div>
+              <div
+                class="marker"
+                *ngIf="BMI != null && BMI >= 18.5 && BMI < 25"
+                style="color: green"
+              >
+                <em class="material-icons">brightness_1</em>
+                <span>{{
+                  currentLanguageSet?.vitalsDetails
+                    ?.AnthropometryDataANC_OPD_NCD_PNC?.normalWeight
+                }}</span>
+              </div>
+              <div
+                class="marker"
+                *ngIf="BMI != null && BMI >= 25 && BMI < 30"
+                style="color: darkorange"
+              >
+                <em class="material-icons">brightness_1</em>
+                <span>{{
+                  currentLanguageSet?.vitalsDetails
+                    ?.AnthropometryDataANC_OPD_NCD_PNC?.overweight
+                }}</span>
+              </div>
+              <div
+                class="marker"
+                *ngIf="BMI != null && BMI >= 30"
+                style="color: red"
+              >
+                <em class="material-icons">brightness_1</em>
+                <span>{{
+                  currentLanguageSet?.vitalsDetails
+                    ?.AnthropometryDataANC_OPD_NCD_PNC?.obesity
+                }}</span>
+              </div>
+            </div>
+          </ng-template>
+
+          <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 box">
+            <md-form-field class="input-full-width">
+              <input
+                autocomplete="off"
+                mdInput
+                defaultNull
+                placeholder="{{
+                  currentLanguageSet?.vitalsDetails?.vitalsCancerscreening_QC
+                    ?.waistCircumference
+                }}"
+                allowText="decimal"
+                maxlength="6"
+                allowMax="350"
+                (change)="checkWaist()"
+                [ngClass]="{ abnormal: !normalWaist }"
+                (blur)="hipWaistRatio()"
+                name="waistCircumference_cm"
+                formControlName="waistCircumference_cm"
+              />
+            </md-form-field>
+          </div>
+          <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 box">
+            <md-form-field class="input-full-width">
+              <input
+                autocomplete="off"
+                mdInput
+                defaultNull
+                placeholder="{{
+                  currentLanguageSet?.vitalsDetails
+                    ?.AnthropometryDataANC_OPD_NCD_PNC?.hipCircumference
+                }}"
+                allowText="decimal"
+                maxlength="6"
+                allowMax="300"
+                (change)="checkHip()"
+                [ngClass]="{ abnormal: !normalHip }"
+                (blur)="hipWaistRatio()"
+                name="hipCircumference_cm"
+                formControlName="hipCircumference_cm"
+              />
+            </md-form-field>
+          </div>
+          <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 box">
+            <md-form-field class="input-full-width">
+              <input
+                autocomplete="off"
+                mdInput
+                defaultNull
+                placeholder="{{
+                  currentLanguageSet?.vitalsDetails
+                    ?.AnthropometryDataANC_OPD_NCD_PNC?.waisttoHipRatio
+                }}"
+                [ngClass]="{ abnormal: !normalWaistHipRatio }"
+                name="waistHipRatio"
+                formControlName="waistHipRatio"
+                [readonly]="true"
+              />
+            </md-form-field>
+          </div>
+          <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 box">
+            <div
+              class="marker"
+              *ngIf="waistHipRatio != null && !female && waistHipRatio < 0.91"
+              style="color: #43760f"
+            >
+              <em class="material-icons">brightness_1</em>
+              <span>Normal</span>
+            </div>
+            <div
+              class="marker"
+              *ngIf="waistHipRatio != null && female && waistHipRatio < 0.81"
+              style="color: #43760f"
+            >
+              <em class="material-icons">brightness_1</em>
+              <span>Normal</span>
+            </div>
+            <div
+              class="marker"
+              *ngIf="
+                waistHipRatio > 0.9 &&
+                waistHipRatio != null &&
+                !female &&
+                waistHipRatio != null &&
+                !female &&
+                waistHipRatio < 0.96
+              "
+              style="color: #eaaa26"
+            >
+              <em class="material-icons">brightness_1</em>
+              <span>Moderate</span>
+            </div>
+            <div
+              class="marker"
+              *ngIf="
+                waistHipRatio != null &&
+                female &&
+                waistHipRatio > 0.8 &&
+                waistHipRatio != null &&
+                female &&
+                waistHipRatio < 0.86
+              "
+              style="color: #eaaa26"
+            >
+              <em class="material-icons">brightness_1</em>
+              <span>Moderate</span>
+            </div>
+            <div
+              class="marker"
+              *ngIf="waistHipRatio != null && !female && waistHipRatio > 0.95"
+              style="color: red"
+            >
+              <em class="material-icons">brightness_1</em>
+              <span>{{
+                current_language_set?.common?.higher}}</span>
+            </div>
+            <div
+              class="marker"
+              *ngIf="waistHipRatio != null && female && waistHipRatio > 0.85"
+              style="color: red"
+            >
+              <em class="material-icons">brightness_1</em>
+              <span>{{
+                current_language_set?.common?.higher}}</span>
+            </div>
+          </div>
+        </div>
+        <div class="row m-t-10" *ngIf="screeningTestList?.length > 0">
+          <div class="col-xs-12">
+            <h3>
+              <strong>{{
+                currentLanguageSet?.vitalsDetails?.vitalsNCDScreening
+                  ?.nCDScreeningOutcome
+              }}</strong>
+            </h3>
+          </div>
+        </div>
+        <div class="row m-t-10" *ngIf="checkBloodPressure">
+          <div class="col-xs-12">
+            <h4>
+              <strong>{{
+                currentLanguageSet?.vitalsDetails?.vitalsNCDScreening
+                  ?.bloodPressure
+              }}</strong>
+            </h4>
+
+            <div class="row m-t-5">
+              <div class="col-xs-12 ">
+                <h5>
+                  <strong>{{
+                    currentLanguageSet?.vitalsDetails?.vitalsNCDScreening
+                      ?.systolicBloodPressure
+                  }}</strong>
+                </h5>
+              </div>
+              <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 box">
+                <md-form-field class="input-full-width">
+                  <input
+                    autocomplete="off"
+                    mdInput
+                    defaultNull
+                    placeholder="{{
+                      currentLanguageSet?.vitalsDetails?.vitalsNCDScreening
+                        ?.systolicBP1
+                    }}"
+                    allowText="number"
+                    allowMax="400"
+                    name="systolicBP_1stReading"
+                    formControlName="systolicBP_1stReading"
+                    (change)="checkSystolicBP1()"
+                    (blur)="
+                      checkSystolicGreater1(
+                        systolicBP_1stReading,
+                        diastolicBP_1stReading
+                      )
+                    "
+                  />
+                  <button
+                    tooltip="{{currentLanguageSet?.common?.startTest}}"
+                    mdSuffix
+                    (click)="openIOTBP1Model()"
+                  >
+                    <span class="glyphicon glyphicon-scale"></span>
+                  </button>
+                </md-form-field>
+              </div>
+              <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 box">
+                <md-form-field class="input-full-width">
+                  <input
+                    autocomplete="off"
+                    mdInput
+                    defaultNull
+                    placeholder="{{
+                      currentLanguageSet?.vitalsDetails?.vitalsNCDScreening
+                        ?.systolicBP2
+                    }}"
+                    allowText="number"
+                    allowMax="400"
+                    name="systolicBP_2ndReading"
+                    formControlName="systolicBP_2ndReading"
+                    (change)="checkSystolicBP2()"
+                    (blur)="
+                      checkSystolicGreater2(
+                        systolicBP_2ndReading,
+                        diastolicBP_2ndReading
+                      )
+                    "
+                  />
+                  <button
+                    tooltip="{{currentLanguageSet?.common?.startTest}}"
+                    mdSuffix
+                    (click)="openIOTBP2Model()"
+                  >
+                    <span class="glyphicon glyphicon-scale"></span>
+                  </button>
+                </md-form-field>
+              </div>
+              <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 box">
+                <md-form-field class="input-full-width">
+                  <input
+                    autocomplete="off"
+                    mdInput
+                    defaultNull
+                    placeholder="{{
+                      currentLanguageSet?.vitalsDetails?.vitalsNCDScreening
+                        ?.systolicBP3
+                    }}"
+                    allowText="number"
+                    allowMax="400"
+                    name="systolicBP_3rdReading"
+                    formControlName="systolicBP_3rdReading"
+                    (change)="checkSystolicBP3()"
+                    (blur)="
+                      checkSystolicGreater3(
+                        systolicBP_3rdReading,
+                        diastolicBP_3rdReading
+                      )
+                    "
+                  />
+                  <button
+                    tooltip="{{currentLanguageSet?.common?.startTest}}"
+                    mdSuffix
+                    (click)="openIOTBP3Model()"
+                  >
+                    <span class="glyphicon glyphicon-scale"></span>
+                  </button>
+                </md-form-field>
+              </div>
+              <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 box">
+                <md-form-field class="input-full-width">
+                  <input
+                    autocomplete="off"
+                    mdInput
+                    defaultNull
+                    placeholder="{{
+                      currentLanguageSet?.vitalsDetails?.vitalsNCDScreening
+                        ?.averageSystolicBP
+                    }}"
+                    allowText="number"
+                    allowMax="400"
+                    name="averageSystolicBP_Reading"
+                    formControlName="averageSystolicBP_Reading"
+                    readonly
+                  />
+                </md-form-field>
+              </div>
+            </div>
+
+            <div class="row m-t-5">
+              <div class="col-xs-12">
+                <h5>
+                  <strong>{{
+                    currentLanguageSet?.vitalsDetails?.vitalsNCDScreening
+                      ?.diastolicBloodPressure
+                  }}</strong>
+                </h5>
+              </div>
+              <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 box">
+                <md-form-field class="input-full-width">
+                  <input
+                    autocomplete="off"
+                    mdInput
+                    defaultNull
+                    placeholder="{{
+                      currentLanguageSet?.vitalsDetails?.vitalsNCDScreening
+                        ?.diastolicBP1
+                    }}"
+                    allowText="number"
+                    allowMax="240"
+                    name="diastolicBP_1stReading"
+                    formControlName="diastolicBP_1stReading"
+                    (change)="checkDiastolicBP1()"
+                    (blur)="
+                      checkDiastolicLesser1(
+                        systolicBP_1stReading,
+                        diastolicBP_1stReading
+                      )
+                    "
+                  />
+                  <button
+                    tooltip="{{currentLanguageSet?.common?.startTest}}"
+                    mdSuffix
+                    (click)="openIOTBP1Model()"
+                  >
+                    <span class="glyphicon glyphicon-scale"></span>
+                  </button>
+                </md-form-field>
+              </div>
+              <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 box">
+                <md-form-field class="input-full-width">
+                  <input
+                    autocomplete="off"
+                    mdInput
+                    defaultNull
+                    placeholder="{{
+                      currentLanguageSet?.vitalsDetails?.vitalsNCDScreening
+                        ?.diastolicBP2
+                    }}"
+                    allowText="number"
+                    allowMax="240"
+                    name="diastolicBP_2ndReading"
+                    formControlName="diastolicBP_2ndReading"
+                    (change)="checkDiastolicBP2()"
+                    (blur)="
+                      checkDiastolicLesser2(
+                        systolicBP_2ndReading,
+                        diastolicBP_2ndReading
+                      )
+                    "
+                  />
+                  <button
+                    tooltip="{{currentLanguageSet?.common?.startTest}}"
+                    mdSuffix
+                    (click)="openIOTBP2Model()"
+                  >
+                    <span class="glyphicon glyphicon-scale"></span>
+                  </button>
+                </md-form-field>
+              </div>
+              <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 box">
+                <md-form-field class="input-full-width">
+                  <input
+                    autocomplete="off"
+                    mdInput
+                    defaultNull
+                    placeholder="{{
+                      currentLanguageSet?.vitalsDetails?.vitalsNCDScreening
+                        ?.diastolicBP3
+                    }}"
+                    allowText="number"
+                    allowMax="240"
+                    name="diastolicBP_3rdReading"
+                    formControlName="diastolicBP_3rdReading"
+                    (change)="checkDiastolicBP3()"
+                    (blur)="
+                      checkDiastolicLesser3(
+                        systolicBP_3rdReading,
+                        diastolicBP_3rdReading
+                      )
+                    "
+                  />
+                  <button
+                    tooltip="{{currentLanguageSet?.common?.startTest}}"
+                    mdSuffix
+                    (click)="openIOTBP3Model()"
+                  >
+                    <span class="glyphicon glyphicon-scale"></span>
+                  </button>
+                </md-form-field>
+              </div>
+              <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 box">
+                <md-form-field class="input-full-width">
+                  <input
+                    autocomplete="off"
+                    mdInput
+                    defaultNull
+                    placeholder="{{
+                      currentLanguageSet?.vitalsDetails?.vitalsNCDScreening
+                        ?.averageDiastolicBP
+                    }}"
+                    allowText="number"
+                    allowMax="240"
+                    name="averageDiastolicBP_Reading"
+                    formControlName="averageDiastolicBP_Reading"
+                    readonly
+                  />
+                </md-form-field>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row m-t-10" *ngIf="checkBloodGlucose">
+          <div class="col-xs-12 col-sm-12">
+            <h4>
+              <strong>{{
+                currentLanguageSet?.vitalsDetails?.vitalsCancerscreening_QC
+                  ?.bloodGlucose
+              }}</strong>
+            </h4>
+          </div>
+          <div class="col-xs-12 col-sm-6  col-md-3 col-lg-3 box">
+            <md-form-field class="input-full-width">
+              <input
+                autocomplete="off"
+                mdInput
+                defaultNull
+                placeholder="{{
+                  currentLanguageSet?.vitalsDetails?.vitalsCancerscreening_QC
+                    ?.fasting
+                }}"
+                allowText="number"
+                allowMax="900"
+                name="bloodGlucose_Fasting"
+                formControlName="bloodGlucose_Fasting"
+                [ngClass]="{ abnormal: bloodGlucose_Fasting > 100 }"
+                (change)="checkBloodSugarFasting()"
+              />
+              <button
+                tooltip="{{currentLanguageSet?.common?.startTest}}"
+                mdSuffix
+                (click)="openIOTBGFastingModel()"
+              >
+                <span class="glyphicon glyphicon-scale"></span>
+              </button>
+            </md-form-field>
+          </div>
+          <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 box">
+            <md-form-field class="input-full-width">
+              <input
+                autocomplete="off"
+                mdInput
+                defaultNull
+                placeholder="{{
+                  currentLanguageSet?.vitalsDetails?.vitalsCancerscreening_QC
+                    ?.random
+                }}"
+                allowText="number"
+                allowMax="900"
+                name="bloodGlucose_Random"
+                formControlName="bloodGlucose_Random"
+                [ngClass]="{ abnormal: bloodGlucose_Random > 140 }"
+                (change)="checkBloodSugarRandom()"
+              />
+              <button
+                tooltip="{{currentLanguageSet?.common?.startTest}}"
+                mdSuffix
+                (click)="openIOTBGRandomModel()"
+              >
+                <span class="glyphicon glyphicon-scale"></span>
+              </button>
+            </md-form-field>
+          </div>
+          <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 box">
+            <md-form-field class="input-full-width">
+              <input
+                autocomplete="off"
+                mdInput
+                defaultNull
+                placeholder="{{
+                  currentLanguageSet?.vitalsDetails?.vitalsCancerscreening_QC
+                    ?.postPrandial
+                }}"
+                allowText="number"
+                allowMax="900"
+                name="bloodGlucose_2hr_PP"
+                formControlName="bloodGlucose_2hr_PP"
+                [ngClass]="{ abnormal: bloodGlucose_2hr_PP > 140 }"
+                (change)="checkBloodSugar2HrPostPrandial()"
+              />
+              <button
+                tooltip="{{currentLanguageSet?.common?.startTest}}"
+                mdSuffix
+                (click)="openIOTBGPostPrandialModel()"
+              >
+                <span class="glyphicon glyphicon-scale"></span>
+              </button>
+            </md-form-field>
+          </div>
+          <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 box">
+            <md-form-field class="input-full-width">
+              <input
+                autocomplete="off"
+                mdInput
+                defaultNull
+                placeholder="{{
+                  currentLanguageSet?.vitalsDetails?.vitalsCancerscreening_QC
+                    ?.notSpecified
+                }}"
+                allowText="number"
+                allowMax="900"
+                name="bloodGlucose_NotSpecified"
+                formControlName="bloodGlucose_NotSpecified"
+                (change)="checkBloodSugarNotSpecified()"
+              />
+              <button
+                tooltip="{{currentLanguageSet?.common?.startTest}}"
+                mdSuffix
+                (click)="openIOTBGNotSpecifiedModel()"
+              >
+                <span class="glyphicon glyphicon-scale"></span>
+              </button>
+            </md-form-field>
+          </div>
+        </div>
+
+        <div class="row m-t-10">
+          <div
+            class="col-xs-12 col-sm-6 col-md-3 col-lg-3 box"
+            *ngIf="checkBloodPressure"
+          >
+            <md-select
+              class="select-full-width"
+              name="bloodPressureStatus"
+              formControlName="bloodPressureStatus"
+              placeholder="{{
+                currentLanguageSet?.vitalsDetails?.vitalsNCDScreening
+                  ?.bloodPressureStatus
+              }}"
+            >
+              <md-option
+                *ngFor="let bloodPressureStatus of bloodPressureStatus"
+                [value]="bloodPressureStatus"
+              >
+                {{ bloodPressureStatus.bpAndDiabeticStatus }}
+              </md-option>
+            </md-select>
+          </div>
+          <div
+            class="col-xs-12 col-sm-6 col-md-3 col-lg-3 box"
+            *ngIf="checkBloodGlucose"
+          >
+            <md-select
+              class="select-full-width"
+              name="diabeticStatus"
+              formControlName="diabeticStatus"
+              placeholder="{{
+                currentLanguageSet?.vitalsDetails?.vitalsNCDScreening
+                  ?.diabeticStatus
+              }}"
+            >
+              <md-option
+                *ngFor="let diabeticStatus of diabeticStatus"
+                [value]="diabeticStatus"
+              >
+                {{ diabeticStatus.bpAndDiabeticStatus }}
+              </md-option>
+            </md-select>
+          </div>
+          <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 box">
+            <md2-datepicker
+              class="input-full-width"
+              [openOnFocus]="true"
+              placeholder="{{
+                currentLanguageSet?.vitalsDetails?.vitalsNCDScreening
+                  ?.nextScreeningDate
+              }}"
+              [min]="nextScreeningDate"
+              name="nextScreeningDate"
+              formControlName="nextScreeningDate"
+            ></md2-datepicker>
+          </div>
+          <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 box">
+            <label class="control-label" for="drug"
+              >{{
+                currentLanguageSet?.vitalsDetails?.vitalsNCDScreening
+                  ?.screeningComplete
+              }}*</label
+            >
+            <div class="clearfix"></div>
+            <md-radio-group
+              name="isScreeningComplete"
+              placeholder="Screening Complete"
+              formControlName="isScreeningComplete"
+              [required]="true"
+            >
+              <md-radio-button
+                color="primary"
+                class="radio-button"
+                [value]="true"
+                >{{currentLanguageSet?.common?.yes}}</md-radio-button
+              >
+              <md-radio-button
+                color="primary"
+                class="radio-button"
+                [value]="false"
+                >{{currentLanguageSet?.common?.no}}</md-radio-button
+              >
+            </md-radio-group>
+          </div>
+        </div>
+      </div>
+    </div>
+  </md-expansion-panel>
+</div>

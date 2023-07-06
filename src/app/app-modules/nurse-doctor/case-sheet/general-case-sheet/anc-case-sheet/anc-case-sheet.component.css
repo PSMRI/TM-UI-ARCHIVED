@@ -1,0 +1,56 @@
+.container {
+  background: white;
+  padding-bottom: 50px;
+}
+
+.textarea {
+  min-height: 100px;
+  border: 1px solid black;
+  padding: 5px;
+}
+
+.table {
+  margin-bottom: 0px;
+}
+
+.table-no-border tr,
+th,
+.table-no-border tr td,
+.table-no-border thead tr th,
+.table-no-border tbody tr th,
+.table-no-border tbody tr td {
+  border: none;
+}
+
+.casesheet-table tr th,
+.casesheet-table tr td,
+.casesheet-table thead tr th,
+.casesheet-table tbody tr th,
+.casesheet-table tbody tr td {
+  width: 25%;
+}
+
+h4,
+h5 {
+  font-weight: bold;
+}
+
+@media print {
+  th,
+  strong {
+    font-weight: bold;
+    font-family: Cambria, Cochin, Georgia, Times, Times New Roman, serif
+  }
+  h4,
+  h5 {
+    font-weight: bold;
+    font-family: Cambria, Cochin, Georgia, Times, Times New Roman, serif
+  }
+  .page-break:last-child {
+    page-break-after: auto;
+  }
+}
+
+.previewCase {
+  columns: lg -10px;
+}

@@ -1,0 +1,518 @@
+<!-- {{ pastObstericHistoryForm.value | json }} -->
+<div class="row m-t-10 text-right">
+  <label class="font-history-label m-t-10">{{currentLanguageSet?.historyData?.obstetrichistory?.previousObstetricHist}}</label>
+  <button
+    type="button"
+    md-icon-button
+    mdTooltip="{{currentLanguageSet?.DurationData?.previousDetails}}"
+    id="previousANCPastObstetricHistory"
+    class="pull-right"
+    color="primary"
+    (click)="getPreviousObstetricHistory()"
+  >
+    <md-icon class="md-18">history</md-icon>
+  </button>
+</div>
+<div class="row" [formGroup]="pastObstericHistoryForm">
+  <div class="col-xs-12 col-sm-4 box">
+    <md-form-field class="input-full-width">
+      <input
+        autocomplete="off"
+        mdInput
+        defaultNull
+        placeholder="{{
+          currentLanguageSet?.historyData?.opd_NCD_PNCHistory?.obstetric
+            ?.totalNumberofPregnancies
+        }}"
+        name="totalNoOfPreg "
+        allowText="number"
+        allowMax="10"
+        [attr.readonly]="visitType == 'ANC' ? 'readonly' : null"
+        formControlName="totalNoOfPreg"
+        (blur)="checkTotalPregnancy(totalNoOfPreg)"
+      />
+    </md-form-field>
+  </div>
+
+  <div class="col-xs-12 col-sm-6" *ngIf="totalNoOfPreg > 0">
+    <label class="control-label">{{
+      currentLanguageSet?.historyData?.opd_NCD_PNCHistory?.obstetric
+        ?.orderofPregnancy
+    }}</label>
+    <div class="clearfix"></div>
+    <div class="checkbox-group" formArrayName="complicationPregList">
+      <ng-container
+        *ngFor="
+          let number of pastObstericHistoryForm.controls[
+            'complicationPregList'
+          ]['controls'];
+          let i = index;
+          trackBy: trackComplication
+        "
+        [formGroupName]="i"
+      >
+        <md-checkbox
+          formControlName="value"
+          class="checkbox"
+          color="primary"
+          (change)="togglePastObstericHistory($event, i + 1)"
+        >
+          {{ i + 1 }}
+        </md-checkbox>
+      </ng-container>
+    </div>
+  </div>
+
+  <div class="col-xs-12" formArrayName="pastObstericHistoryList">
+    <md-card
+      class="row"
+      *ngFor="
+        let pastObstericHistory of pastObstericHistoryForm.controls[
+          'pastObstericHistoryList'
+        ]['controls'];
+        let i = index
+      "
+    >
+      <ng-container [formGroupName]="i">
+        <md-card-content>
+          <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+            <md-form-field class="input-full-width">
+              <input
+                autocomplete="off"
+                mdInput
+                defaultNull
+                placeholder="{{
+                  currentLanguageSet?.historyData?.opd_NCD_PNCHistory?.obstetric
+                    ?.number
+                }}"
+                name="pregOrder"
+                formControlName="pregOrder"
+                [readonly]="true"
+              />
+            </md-form-field>
+          </div>
+
+          <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+            <md-select
+              class="select-full-width"
+              name="complicationDuringPregnancy"
+              formControlName="pregComplicationList"
+              placeholder="{{
+                currentLanguageSet?.historyData?.opd_NCD_PNCHistory?.obstetric
+                  ?.complicationduringPregnancy
+              }}"
+              (change)="resetOtherPregnancyComplication(pastObstericHistory, i);"
+              multiple
+            >
+              <ng-container
+                *ngFor="let complication of masterData?.pregComplicationTypes"
+              >
+                <md-option
+                  [value]="complication"
+                  [disabled]="
+                    !complicationOptionConstraints[i].showAllPregComplication &&
+                    ((complication?.pregComplicationType == 'None' &&
+                      complicationOptionConstraints[i]
+                        ?.disableNonePregnancyComplication) ||
+                      (complication?.pregComplicationType != 'None' &&
+                        !complicationOptionConstraints[i]
+                          .disableNonePregnancyComplication))
+                  "
+                >
+                  {{ complication.pregComplicationType }}
+                </md-option>
+              </ng-container>
+            </md-select>
+          </div>
+
+          <div
+            class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box"
+            *ngIf="
+              complicationOptionConstraints[i]?.showOtherPregnancyComplication
+            "
+          >
+            <md-form-field class="input-full-width">
+              <input
+                autocomplete="off"
+                mdInput
+                defaultNull
+                placeholder="{{
+                  currentLanguageSet?.historyData?.opd_NCD_PNCHistory?.obstetric
+                    ?.others
+                }}"
+                allowText="alphaspace"
+                maxlength="50"
+                name="others"
+                formControlName="otherPregComplication"
+              />
+            </md-form-field>
+          </div>
+
+          <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+            <md-select
+              class="select-full-width"
+              name="outcomeOfPregnancy"
+              formControlName="pregOutcome"
+              placeholder="{{
+                currentLanguageSet?.historyData?.opd_NCD_PNCHistory?.obstetric
+                  ?.outcomeofpregnancy
+              }}"
+              (change)="checkPregnancyOutcome(pastObstericHistory);"
+            >
+              <md-option
+                *ngFor="let outcome of masterData?.pregOutcomes"
+                [value]="outcome"
+              >
+                {{ outcome.pregOutcome }}
+              </md-option>
+            </md-select>
+          </div>
+
+          <ng-container *ngIf="pastObstericHistory.value.pregOutcome?.pregOutcome == 'Abortion'">
+                    
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+              <md-select class="select-full-width" name="typeOfAbortion" formControlName="abortionType"
+                placeholder="{{
+                  currentLanguageSet?.historyData?.opd_NCD_PNCHistory?.obstetric
+                    ?.typeOfAbortion
+                }}" [required]="pastObstericHistory.value.pregOutcome?.pregOutcome == 'Abortion'">
+                <md-option *ngFor="let abortion of masterData?.typeOfAbortion" (click)="onAbortionType(pastObstericHistory,abortion.complicationValue)"  [value]="abortion">
+                  {{ abortion.complicationValue}} </md-option>
+              </md-select>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box" *ngIf="pastObstericHistory.value.abortionType?.complicationValue == 'Induced'">              
+              <md-select class="select-full-width" name="typeofFacility" formControlName="typeofFacility"
+                placeholder="{{
+                  currentLanguageSet?.historyData?.opd_NCD_PNCHistory?.obstetric
+                    ?.typeofFacility
+                }}" [required]="pastObstericHistory.value.pregOutcome?.pregOutcome == 'Abortion' && pastObstericHistory.value.abortionType?.complicationValue == 'Induced'">
+                <md-option *ngFor="let type of masterData?.serviceFacilities" [value]="type">
+                  {{ type.facilityName}} </md-option>
+              </md-select>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+              <md-form-field class="input-full-width">
+                <input autocomplete="off" (change)="checkDurationType(pastObstericHistory)" mdInput placeholder="{{currentLanguageSet?.historyData?.opd_NCD_PNCHistory?.obstetric?.noOfcompletedWeeks}}" name="durationOfType" allowText="number"
+                  formControlName="pregDuration" [required]="pastObstericHistory.value.pregOutcome?.pregOutcome == 'Abortion'">
+              </md-form-field>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+              <md-select class="select-full-width" name="complicationPostAbortion" formControlName="postAbortionComplication"
+                placeholder="{{currentLanguageSet?.historyData?.opd_NCD_PNCHistory?.obstetric?.complicationPostAbortion}}" (change)="resetPostComplicationType(pastObstericHistory,i)" multiple [required]="pastObstericHistory.value.pregOutcome?.pregOutcome == 'Abortion'">
+                <md-option *ngFor="let complicationAbortion of masterData?.postAbortionComplications"
+                [disabled]="!(complicationOptionConstraints[i].showAllPostComplication) && ((complicationAbortion?.complicationValue == 'None' && complicationOptionConstraints[i]?.disableNonePostComplication) || (complicationAbortion?.complicationValue != 'None' && !(complicationOptionConstraints[i].disableNonePostComplication)))" [value]="complicationAbortion"
+                  > {{ complicationAbortion.complicationValue}} </md-option>
+              </md-select>
+            </div>
+          </ng-container>
+
+          <div
+            class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box"
+            *ngIf="
+              pastObstericHistory.value.pregOutcome?.pregOutcome != 'Abortion'
+            "
+          >
+            <md-select
+              class="select-full-width"
+              name="durationOfPregnancy"
+              formControlName="durationType"
+              placeholder="{{
+                currentLanguageSet?.historyData?.opd_NCD_PNCHistory?.obstetric
+                  ?.durationofPregnancy
+              }}"
+             
+            >
+              <md-option
+                *ngFor="let duration of masterData?.pregDuration"
+                [value]="duration"
+              >
+                {{ duration.durationType }}
+              </md-option>
+            </md-select>
+          </div>
+
+          <ng-container
+            *ngIf="
+              pastObstericHistory.value.pregOutcome?.pregOutcome != 'Abortion'
+            "
+          >
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+              <md-select
+                class="select-full-width"
+                name="placeOfDelivery"
+                formControlName="deliveryPlace"
+                placeholder="{{
+                  currentLanguageSet?.historyData?.opd_NCD_PNCHistory?.obstetric
+                    ?.placeofDelivery
+                }}"
+                (change)="resetOtherDeliveryPlace(pastObstericHistory)"
+              >
+                <md-option
+                  *ngFor="let place of masterData?.deliveryPlaces"
+                  [value]="place"
+                >
+                  {{ place.deliveryPlace }}
+                </md-option>
+              </md-select>
+            </div>
+
+            <div
+              class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box"
+              *ngIf="
+                pastObstericHistory.value.deliveryPlace?.deliveryPlace ==
+                'Other'
+              "
+            >
+              <md-form-field class="input-full-width">
+                <input
+                  autocomplete="off"
+                  mdInput
+                  defaultNull
+                  placeholder="{{
+                    currentLanguageSet?.historyData?.opd_NCD_PNCHistory?.obstetric
+                      ?.others
+                  }}"
+                  maxlength="50"
+                  allowText="alphaspace"
+                  name="otherPlaceOfDelivery"
+                  formControlName="otherDeliveryPlace"
+                />
+              </md-form-field>
+            </div>
+          </ng-container>
+
+          <div
+            class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box"
+            *ngIf="
+              pastObstericHistory.value.pregOutcome?.pregOutcome != 'Abortion'
+            "
+          >
+            <md-select
+              class="select-full-width"
+              name="typeOfDelivery"
+              formControlName="deliveryType"
+              placeholder="{{
+                currentLanguageSet?.historyData?.opd_NCD_PNCHistory?.obstetric
+                  ?.deliveryType
+              }}"
+              [disableFormControl]="!pastObstericHistory.value.deliveryPlace"
+            >
+              <ng-container *ngFor="let type of selectDeliveryTypes">
+                <md-option
+                  [disabled]="
+                    pastObstericHistory.value?.deliveryPlace?.deliveryPlace ==
+                      'Subcentre' &&
+                    type.deliveryType == 'Cesarean Section (LSCS)'
+                  "
+                  [value]="type"
+                >
+                  {{ type.deliveryType }}
+                </md-option>
+              </ng-container>
+            </md-select>
+          </div>
+
+          <ng-container
+            *ngIf="
+              pastObstericHistory.value.pregOutcome?.pregOutcome != 'Abortion'
+            "
+          >
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+              <md-select
+                class="select-full-width"
+                name="deliveryComplication"
+                formControlName="deliveryComplicationList"
+                placeholder="{{
+                  currentLanguageSet?.historyData?.opd_NCD_PNCHistory?.obstetric
+                    ?.deliveryComplication
+                }}"
+                (change)="
+                  resetOtherDeliveryComplication(pastObstericHistory, i)
+                "
+                multiple
+              >
+                <ng-container
+                  *ngFor="
+                    let complication of masterData?.deliveryComplicationTypes
+                  "
+                >
+                  <md-option
+                    [value]="complication"
+                    [disabled]="
+                      !complicationOptionConstraints[i]
+                        .showAllDeliveryComplication &&
+                      ((complication?.deliveryComplicationType == 'None' &&
+                        complicationOptionConstraints[i]
+                          ?.disableNoneDeliveryComplication) ||
+                        (complication?.deliveryComplicationType != 'None' &&
+                          !complicationOptionConstraints[i]
+                            .disableNoneDeliveryComplication))
+                    "
+                  >
+                    {{ complication.deliveryComplicationType }}
+                  </md-option>
+                </ng-container>
+              </md-select>
+            </div>
+
+            <div
+              class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box"
+              *ngIf="
+                complicationOptionConstraints[i]?.showOtherDeliveryComplication
+              "
+            >
+              <md-form-field class="input-full-width">
+                <input
+                  autocomplete="off"
+                  mdInput
+                  defaultNull
+                  placeholder="{{
+                    currentLanguageSet?.historyData?.opd_NCD_PNCHistory?.obstetric
+                      ?.others
+                  }}"
+                  maxlength="50"
+                  allowText="alphaspace"
+                  name="othersDeliveryComplication"
+                  formControlName="otherDeliveryComplication"
+                />
+              </md-form-field>
+            </div>
+          </ng-container>
+
+          <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+            <md-select
+              class="select-full-width"
+              name="postpartumComplication"
+              formControlName="postpartumComplicationList"
+              placeholder="{{
+                currentLanguageSet?.historyData?.opd_NCD_PNCHistory?.obstetric
+                  ?.postpartumComplication
+              }}"
+              (change)="
+                resetOtherPostpartumComplicationType(pastObstericHistory, i)
+              "
+              multiple
+            >
+              <ng-container
+                *ngFor="
+                  let complication of masterData?.postpartumComplicationTypes
+                "
+              >
+                <md-option
+                  [value]="complication"
+                  [disabled]="
+                    !complicationOptionConstraints[i]
+                      .showAllPostpartumComplication &&
+                    ((complication?.postpartumComplicationType == 'None' &&
+                      complicationOptionConstraints[i]
+                        ?.disableNonePostpartumComplication) ||
+                      (complication?.postpartumComplicationType != 'None' &&
+                        !complicationOptionConstraints[i]
+                          .disableNonePostpartumComplication))
+                  "
+                >
+                  {{ complication.postpartumComplicationType }}
+                </md-option>
+              </ng-container>
+            </md-select>
+          </div>
+
+          <div
+            class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box"
+            *ngIf="
+              complicationOptionConstraints[i]?.showOtherPostpartumComplication
+            "
+          >
+            <md-form-field class="input-full-width">
+              <input
+                autocomplete="off"
+                mdInput
+                defaultNull
+                placeholder="{{
+                  currentLanguageSet?.historyData?.opd_NCD_PNCHistory?.obstetric
+                    ?.others
+                }}"
+                maxlength="50"
+                allowText="alphaspace"
+                name="otherPostpartumComplication"
+                formControlName="otherPostpartumCompType"
+              />
+            </md-form-field>
+          </div>         
+
+          <div
+            class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box"
+            *ngIf="
+              pastObstericHistory.value.pregOutcome?.pregOutcome == 'Live Birth'
+            "
+          >
+            <md-select
+              class="select-full-width"
+              name="newBornComplications"
+              formControlName="newBornComplication"
+              placeholder="{{
+                currentLanguageSet?.historyData?.opd_NCD_PNCHistory?.obstetric
+                  ?.newBornComplication
+              }}"
+              (change)="resetOtherNewBornComplications(pastObstericHistory)"
+            >
+              <md-option
+                *ngFor="let complication of masterData?.newBornComplications"
+                [value]="complication"
+              >
+                {{ complication.complicationValue }}
+              </md-option>
+            </md-select>
+          </div>
+
+          <div
+            class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box"
+            *ngIf="
+              pastObstericHistory.value.newBornComplication
+                ?.complicationValue == 'Other'
+            "
+          >
+            <md-form-field class="input-full-width">
+              <input
+                autocomplete="off"
+                mdInput
+                defaultNull
+                placeholder="{{
+                  currentLanguageSet?.historyData?.opd_NCD_PNCHistory?.obstetric
+                    ?.others
+                }}"
+                maxlength="50"
+                allowText="alphaspace"
+                name="otherNewBornComplication"
+                formControlName="otherNewBornComplication"
+              />
+            </md-form-field>
+          </div>
+
+          <div
+            class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box"
+            *ngIf="
+              pastObstericHistory.value.pregOutcome?.pregOutcome == 'Live Birth'
+            "
+          >
+            <md-form-field class="input-full-width">
+              <input
+                autocomplete="off"
+                mdInput
+                defaultNull
+                placeholder="{{
+                  currentLanguageSet?.historyData?.opd_NCD_PNCHistory?.obstetric
+                    ?.congenitalAnomalies
+                }}"
+                maxlength="50"
+                allowText="alphaspace"
+                name="congenitalAnomalies"
+                formControlName="congenitalAnomalies"
+              />
+            </md-form-field>
+          </div>
+        </md-card-content>
+      </ng-container>
+    </md-card>
+  </div>
+</div>

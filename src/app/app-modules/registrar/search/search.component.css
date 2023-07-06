@@ -1,0 +1,155 @@
+  table {
+    width: 100%;
+  }
+
+  md2-pagination {
+    text-align: right;
+  }
+
+  .btn {
+    background: #0277bd !important;
+  }
+
+  .spacer {
+    height: 10px;
+  }
+
+  md-card {
+    min-height: 403px;
+    padding: 15px;
+  }
+
+  :host /deep/  .pagination {
+    margin: 0;
+  }
+
+  #topRow md-input-container {
+    width: 60%;
+  }
+
+  #quickSearch {
+    width: 40%;
+    float: right;
+  }
+
+  .adv-button {
+    margin: 0 3px;
+  }
+
+  .buttonGrp button {
+    margin-left: 5px;
+  }
+
+  /* .mat-button,
+  .mat-icon-button,
+  .mat-raised-button {
+      width: 30%;
+      margin: 0 1px 0 1px;
+      padding: 1px;
+  } */
+
+  .searchBox {
+    background: #fff;
+    min-height: 40px;
+    overflow: hidden;
+    border-radius: 2px;
+    border-width: 0px;
+    box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(0, 0, 0, 0.08);
+  }
+
+  .search_icon {
+    font-weight: bold;
+  }
+
+  .search_button {
+    padding: 0;
+    width: 40px;
+    min-height: 40px;
+    background: none;
+    border: none;
+    transform: scale(1);
+    transition: all 1s;
+    outline: none;
+  }
+
+  .search_button:active {
+    outline: none;
+    border: none;
+  }
+
+  .search_textbox {
+    width: 100%;
+    height: 40px;
+    border: none;
+    padding-left: 10px;
+  }
+
+  #search_type {
+    margin-bottom: -1px;
+  }
+
+  .search_button:hover {
+    transform: scale(1.5);
+    transition: all 1s;
+    outline: none;
+    border: none;
+  }
+
+  @media (max-width: 481px) {
+    .adv-button {
+      margin: 0;
+    }
+    #topRow>md-input-container {
+      width: 100%;
+    }
+    #quickSearch {
+      width: 100%;
+    }
+    .mat-button,
+    .mat-icon-button,
+    .mat-raised-button {
+      width: 100%;
+      margin: 0 1px 5px 1px;
+      padding: 1px;
+    }
+  }
+
+  .totalCount {
+    margin-top: 10px;
+  }
+
+  input::-webkit-input-placeholder {
+    color: gray !important;
+    opacity: 1;
+  }
+
+  input::placeholder {
+    /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: gray !important;
+    opacity: 1;
+  }
+
+  input:-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
+    color: gray !important;
+    opacity: 1;
+  }
+
+  input::-ms-input-placeholder {
+    /* Microsoft Edge */
+    color: gray !important;
+    opacity: 1;
+  }
+
+  .search-button-container {
+    padding: 0 20px;
+  }
+
+  @media only screen and (max-width: 991px) {
+    .search-button-container {
+      padding-top: 10px;
+    }
+    .norecord {
+      text-align: center;
+    }
+  }

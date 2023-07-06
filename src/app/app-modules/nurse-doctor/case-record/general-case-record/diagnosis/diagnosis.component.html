@@ -1,0 +1,9 @@
+<!-- {{ generalDiagnosisForm.value | json }} -->
+<section class="m-t-20">
+  <app-general-opd-diagnosis *ngIf="visitCategory == 'General OPD'" [caseRecordMode]="caseRecordMode" [generalDiagnosisForm]='generalDiagnosisForm'></app-general-opd-diagnosis>
+  <app-anc-diagnosis *ngIf="visitCategory == 'ANC'" [caseRecordMode]="caseRecordMode" [generalDiagnosisForm]='generalDiagnosisForm'></app-anc-diagnosis>
+  <app-pnc-diagnosis *ngIf="visitCategory == 'PNC'" [caseRecordMode]="caseRecordMode" [generalDiagnosisForm]='generalDiagnosisForm'></app-pnc-diagnosis>
+  <app-ncd-care-diagnosis *ngIf="visitCategory == 'NCD care'" [caseRecordMode]="caseRecordMode" [generalDiagnosisForm]='generalDiagnosisForm'></app-ncd-care-diagnosis>
+  <app-covid-diagnosis *ngIf="visitCategory == 'COVID-19 Screening'" [caseRecordMode]="caseRecordMode" [generalDiagnosisForm]='generalDiagnosisForm'></app-covid-diagnosis>
+  <app-ncd-screening-diagnosis *ngIf="visitCategory == 'NCD screening'" [caseRecordMode]="caseRecordMode" [generalDiagnosisForm]='generalDiagnosisForm'></app-ncd-screening-diagnosis>
+</section>

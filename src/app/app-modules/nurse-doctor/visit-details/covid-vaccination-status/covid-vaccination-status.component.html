@@ -1,0 +1,76 @@
+<div class="row m-t-20" [formGroup]="covidVaccineStatusForm">
+
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+      <md-select
+        class="input-full-width"
+        placeholder="{{ currentLanguageSet?.ageGroup }}"
+        formControlName="ageGroup"
+        name="ageGroup"
+        (change)="setIsApplicable()"
+      >
+      <md-option *ngFor="let ageGroups of ageGroupsList"  [value]="ageGroups">
+        {{ageGroups}}
+      </md-option>
+      </md-select>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+      <md-select
+        class="input-full-width"
+        placeholder="{{ currentLanguageSet?.isApplicableForVaccine }}"
+        formControlName="isApplicableForVaccine"
+        name="isApplicableForVaccine"
+      >
+      <md-option *ngFor="let applicableForVaccineStatus of applicableForVaccineStatusList"  [value]="applicableForVaccineStatus">
+        {{applicableForVaccineStatus}}
+      </md-option>
+      </md-select>
+    </div>
+  
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box"  *ngIf="enableVaccinationStatusFields">
+      <md-select
+        class="input-full-width"
+        placeholder="{{ currentLanguageSet?.vaccineStatus }}"
+        formControlName="vaccineStatus"
+        name="vaccineStatus"
+        (change)="enableVaccineTypeAndDoseTaken()"
+        [required]="enableVaccinationStatusFields === true"
+      >
+        <md-option value="YES">YES</md-option>
+        <md-option value="NO">NO</md-option>
+      </md-select>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box"  *ngIf="enableVaccineTypeAndDoseTakenFlag">
+      <md-select
+        class="input-full-width"
+        placeholder="{{ currentLanguageSet?.vaccineTypes }}"
+        formControlName="vaccineTypes"
+        name="vaccineTypes"
+        [required]="enableVaccineTypeAndDoseTakenFlag === true"
+        (change)="enableSaveButtonInForm()"
+      >
+      <md-option *ngFor="let vaccineType of vaccineTypeList"  [value]="vaccineType.covidVaccineTypeID">
+        {{vaccineType.vaccineType}}
+      </md-option>
+      </md-select>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box"  *ngIf="enableVaccineTypeAndDoseTakenFlag">
+      <md-select
+        class="input-full-width"
+        placeholder="{{ currentLanguageSet?.doseTaken }}"
+        formControlName="doseTaken"
+        name="doseTaken"
+        [required]="enableVaccineTypeAndDoseTakenFlag === true"
+        (change)="enableSaveButtonInForm()"
+      >
+      <md-option *ngFor="let doseType of doseTypeList"  [value]="doseType.covidDoseTypeID">
+        {{doseType.doseType}}
+      </md-option>
+      </md-select>
+    </div>
+
+  <div class="col-xs-12">
+    <button md-raised-button class="pull-right" (click)="saveBenCovidVaccinationDetails()" [disabled]="enableSaveButton" color="primary">
+      {{currentLanguageSet?.coreComponents?.save}}
+    </button>
+  </div>
+</div>

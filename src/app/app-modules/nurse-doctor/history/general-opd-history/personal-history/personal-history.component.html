@@ -1,0 +1,635 @@
+<!-- {{ generalPersonalHistoryForm.value | json }} -->
+<ng-container [formGroup]="generalPersonalHistoryForm">
+  <div class="row m-t-10 m-b-10">
+    <div
+      class="col-xs-4 text-right previous-history pull-right"
+      *ngIf="beneficiary?.ageVal >= 13"
+    >
+      <label class="font-history-label">{{
+        currentLanguageSet?.historyData?.ancHistory
+          ?.personalHistoryANC_OPD_NCD_PNC?.previousTobaccohistory
+      }}</label>
+      <button
+        type="button"
+        md-icon-button
+        mdTooltip="{{currentLanguageSet?.DurationData?.previousDetails}}"
+        id="previousTobaccoHistory"
+        class="pull-right"
+        color="primary"
+        (click)="getPreviousTobaccoHistory()"
+      >
+        <md-icon class="md-24">history</md-icon>
+      </button>
+    </div>
+    <div
+      class="col-xs-4 text-right previous-history pull-right"
+      *ngIf="beneficiary?.ageVal >= 13"
+    >
+      <label class="font-history-label">{{
+        currentLanguageSet?.historyData?.ancHistory
+          ?.personalHistoryANC_OPD_NCD_PNC?.previousAlcoholhistory
+      }}</label>
+      <button
+        type="button"
+        md-icon-button
+        mdTooltip="{{this.currentLanguageSet?.DurationData?.previousDetails}}"
+        id="previousAlcoholHistory"
+        class="pull-right"
+        color="primary"
+        (click)="getPreviousAlcoholHistory()"
+      >
+        <md-icon class="md-18">history</md-icon>
+      </button>
+    </div>
+    <div class="col-xs-4 text-right previous-history pull-right">
+      <label class="font-history-label">{{
+        currentLanguageSet?.historyData?.ancHistory
+          ?.personalHistoryANC_OPD_NCD_PNC?.previousAllergyhistory
+      }}</label>
+      <button
+        type="button"
+        md-icon-button
+        mdTooltip="{{this.currentLanguageSet?.DurationData?.previousDetails}}"
+        id="previousAllergyHistory"
+        class="pull-right"
+        color="primary"
+        (click)="getPreviousAllergyHistory()"
+      >
+        <md-icon class="md-18">history</md-icon>
+      </button>
+    </div>
+  </div>
+  <div class="row m-t-10">
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+      <label class="control-label" for="dietaryType">{{
+        currentLanguageSet?.historyData?.ancHistory
+          ?.personalHistoryANC_OPD_NCD_PNC?.dietaryType
+      }}</label>
+      <div class="clearfix"></div>
+      <md-radio-group formControlName="dietaryType">
+        <md-radio-button color="primary" value="Vegetarian">{{
+          currentLanguageSet?.historyData?.ancHistory
+            ?.personalHistoryANC_OPD_NCD_PNC?.vegetarian
+        }}</md-radio-button>
+        <md-radio-button
+          color="primary"
+          class="radio-button"
+          value="Non-Vegetarian"
+          >{{
+            currentLanguageSet?.historyData?.ancHistory
+              ?.personalHistoryANC_OPD_NCD_PNC?.nonVegetarian
+          }}</md-radio-button
+        >
+      </md-radio-group>
+    </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+      <label class="control-label" for="physicalActivityType">{{
+        currentLanguageSet?.historyData?.ancHistory
+          ?.personalHistoryANC_OPD_NCD_PNC?.physicalActivityType
+      }}</label>
+      <div class="clearfix"></div>
+      <md-radio-group formControlName="physicalActivityType">
+        <md-radio-button color="primary" value="Sedentary">{{
+          currentLanguageSet?.historyData?.ancHistory
+            ?.personalHistoryANC_OPD_NCD_PNC?.sedentary
+        }}</md-radio-button>
+        <md-radio-button color="primary" class="radio-button" value="Active">{{
+          currentLanguageSet?.historyData?.ancHistory
+            ?.personalHistoryANC_OPD_NCD_PNC?.active
+        }}</md-radio-button>
+      </md-radio-group>
+    </div>
+
+    <div
+      class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box"
+      *ngIf="beneficiary?.ageVal >= 18"
+    >
+      <label class="control-label" for="riskySexualPracticesStatus">{{
+        currentLanguageSet?.historyData?.ancHistory
+          ?.personalHistoryANC_OPD_NCD_PNC?.riskySexualPracticesStatus
+      }}</label>
+      <div class="clearfix"></div>
+      <md-radio-group formControlName="riskySexualPracticesStatus">
+        <md-radio-button color="primary" [value]="true">
+          {{ currentLanguageSet?.common?.yes }}
+        </md-radio-button>
+        <md-radio-button color="primary" class="radio-button" [value]="false">
+          {{ currentLanguageSet?.common?.no }}
+        </md-radio-button>
+      </md-radio-group>
+    </div>
+
+    <div
+      class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box"
+      *ngIf="beneficiary?.ageVal >= 13"
+    >
+      <md-select
+        class="select-full-width"
+        placeholder="{{
+          currentLanguageSet?.historyData?.ancHistory
+            ?.personalHistoryANC_OPD_NCD_PNC?.tobaccoData?.tobaccoUseStatus
+        }}"
+        formControlName="tobaccoUseStatus"
+        (change)="checkTobaccoStatus()"
+      >
+        <md-option value="Yes">Yes</md-option>
+        <md-option value="No">No</md-option>
+        <md-option value="Discontinued">Discontinued</md-option>
+      </md-select>
+    </div>
+
+    <div
+      class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box"
+      *ngIf="beneficiary?.ageVal >= 13"
+    >
+      <md-select
+        class="select-full-width"
+        placeholder="{{
+          currentLanguageSet?.historyData?.ancHistory
+            ?.personalHistoryANC_OPD_NCD_PNC?.alcoholData?.alcoholUseStatus
+        }}"
+        formControlName="alcoholIntakeStatus"
+        (change)="checkAlcoholStatus()"
+      >
+        <md-option value="Yes">Yes</md-option>
+        <md-option value="No">No</md-option>
+        <md-option value="Discontinued">Discontinued</md-option>
+      </md-select>
+    </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+      <md-select
+        class="select-full-width"
+        formControlName="allergyStatus"
+        placeholder="{{
+          currentLanguageSet?.historyData?.ancHistory
+            ?.personalHistoryANC_OPD_NCD_PNC?.allergicStatus?.allergicStatus
+        }}"
+        (change)="checkAllergicStatus()"
+      >
+        <md-option value="Yes">Yes</md-option>
+        <md-option value="No">No</md-option>
+        <md-option value="Discontinued">Don't Know</md-option>
+      </md-select>
+    </div>
+  </div>
+
+  <md-card
+    class="row m-t-10"
+    *ngIf=" (tobaccoUseStatus == 'Yes' || tobaccoUseStatus == 'Discontinued') && beneficiary?.ageVal >= 13"
+  >
+    <md-card-header>
+      <md-card-title>
+        <h4>
+          <strong>{{
+            currentLanguageSet?.historyData?.ancHistory
+              ?.personalHistoryANC_OPD_NCD_PNC?.tobaccoData?.tobacco
+          }}</strong>
+        </h4>
+      </md-card-title>
+    </md-card-header>
+    <md-card-content formArrayName="tobaccoList">
+      <div
+        class="row multi-row-select"
+        *ngFor="
+          let tobacco of generalPersonalHistoryForm.controls.tobaccoList[
+            'controls'
+          ];
+          let i = index;
+          let isLast = last;
+          let isOdd = odd
+        "
+        [ngClass]="{ odd: !isOdd }"
+      >
+        <ng-container [formGroupName]="i">
+          <div class="col-xs-12 col-sm-6 col-md-3 box">
+            <md-select
+              class="select-full-width"
+              placeholder="{{
+                currentLanguageSet?.historyData?.ancHistory
+                  ?.personalHistoryANC_OPD_NCD_PNC?.tobaccoData?.typeofTobaccoUse
+              }}"
+              formControlName="tobaccoUseType"
+              (change)="filterTobaccoList($event.value, i)"
+            >
+              <md-option
+                *ngFor="let tobacco of tobaccoSelectList[i]"
+                [value]="tobacco"
+              >
+                {{ tobacco.habitValue }}
+              </md-option>
+            </md-select>
+          </div>
+
+          <div
+            class="col-xs-12 col-sm-6 col-md-2 box"
+            *ngIf="tobacco.value.tobaccoUseType?.habitValue == 'Other'"
+          >
+            <md-form-field class="input-full-width">
+              <input
+                autocomplete="off"
+                mdInput
+                defaultNull
+                placeholder="{{
+                  currentLanguageSet?.historyData?.opd_NCD_PNCHistory?.obstetric
+                    ?.others
+                }}"
+                maxlength="50"
+                allowText="alphabet"
+                formControlName="otherTobaccoUseType"
+              />
+            </md-form-field>
+          </div>
+          
+          <div class="col-xs-12 col-sm-6 col-md-2 box">
+            <md-form-field class="input-full-width">
+              <input
+                autocomplete="off"
+                mdInput
+                defaultNull
+                placeholder="{{
+                  currentLanguageSet?.historyData?.ancHistory
+                    ?.personalHistoryANC_OPD_NCD_PNC?.tobaccoData?.number
+                }}"
+                maxlength="2"
+                allowText="number"
+                formControlName="number"
+                [disableFormControl]="!tobacco.value.tobaccoUseType"
+                (blur)="perDayChange()"
+              />
+            </md-form-field>
+          </div>
+
+          <div class="col-xs-12 col-sm-6 col-md-2 box" >
+            <md-radio-group formControlName="perDay" (change)="perDayChange()" [disableFormControl]="!tobacco.value.number">
+            <md-radio-button color="primary" class="radio-button"  [value]="true"
+              >
+              per day</md-radio-button
+            >
+            <md-radio-button color="primary" class="radio-button"  [value]="false"
+              >
+              per week</md-radio-button
+            >
+            </md-radio-group>
+          </div>
+          <div class="col-xs-12 col-sm-6 col-md-2 box">
+            <md-form-field class="input-full-width">
+              <input
+                autocomplete="off"
+                mdInput
+                defaultNull
+                placeholder="{{currentLanguageSet?.nurseData?.chiefComplaintsDetails?.duration}}"
+                maxlength="2"
+                allowText="number"
+                formControlName="duration"
+                (change)="validateDuration(tobacco)"
+                [disableFormControl]="!tobacco.value.number"
+              />
+            </md-form-field>
+          </div>
+
+          <div class="col-xs-10 col-sm-4 col-md-3 box">
+            <md-select
+              class="select-full-width"
+              placeholder="{{currentLanguageSet?.DurationData?.durationUnit}}"
+              formControlName="durationUnit"
+              (change)="validateDuration(tobacco)"
+              [disableFormControl]="!tobacco.value.duration"
+            >
+              <md-option value="Days">Day(s)</md-option>
+              <md-option value="Weeks">Week(s)</md-option>
+              <md-option value="Months">Month(s)</md-option>
+              <md-option value="Years">Year(s)</md-option>
+            </md-select>
+          </div>
+
+          <div
+            class="col-sm-2 col-md-2 box action-btn-container pull-right padding-0-left-right-al"
+          >
+            <button
+              md-mini-fab
+              color="warn"
+              *ngIf="i != 0 || (i == 0 && tobacco.touched)"
+              (click)="removeTobacco(i, tobacco)"
+            >
+              <md-icon class="md-18">close</md-icon>
+            </button>
+            <button
+              md-mini-fab
+              color="primary"
+              *ngIf="isLast"
+              [disabled]="checkTobaccoValidity(tobacco)"
+              (click)="addTobacco()"
+            >
+              <md-icon class="md-18">add</md-icon>
+            </button>
+          </div>
+        </ng-container>
+      </div>
+    </md-card-content>
+  </md-card>
+
+  <md-card
+    class="row m-t-10"
+    *ngIf="alcoholIntakeStatus == 'Yes' && beneficiary?.ageVal >= 13"
+  >
+    <md-card-header>
+      <md-card-title>
+        <h4>
+          <strong>{{
+            currentLanguageSet?.historyData?.ancHistory
+              ?.personalHistoryANC_OPD_NCD_PNC?.alcoholData?.alcohol
+          }}</strong>
+        </h4>
+      </md-card-title>
+    </md-card-header>
+    <md-card-content formArrayName="alcoholList">
+      <div
+        class="row multi-row-select"
+        *ngFor="
+          let alcohol of generalPersonalHistoryForm.controls.alcoholList[
+            'controls'
+          ];
+          let i = index;
+          let isLast = last;
+          let isOdd = odd
+        "
+        [ngClass]="{ odd: !isOdd }"
+      >
+        <ng-container [formGroupName]="i">
+          <div class="col-xs-12 col-sm-6 col-md-4 box padding-0-right">
+            <md-select
+              class="select-full-width"
+              formControlName="typeOfAlcohol"
+              placeholder="{{
+                currentLanguageSet?.historyData?.ancHistory
+                  ?.personalHistoryANC_OPD_NCD_PNC?.alcoholData?.typeofAlcohol
+              }}"
+              (change)="filterAlcoholList($event.value, i)"
+            >
+              <md-option
+                *ngFor="let alcohol of alcoholSelectList[i]"
+                [value]="alcohol"
+                >{{ alcohol.habitValue }}</md-option
+              >
+            </md-select>
+          </div>
+
+          <div
+            class="col-xs-12 col-sm-6 col-md-4 box"
+            *ngIf="alcohol.value.typeOfAlcohol == 'Other'"
+          >
+            <md-form-field class="input-full-width">
+              <input
+                autocomplete="off"
+                mdInput
+                defaultNull
+                placeholder="{{
+                  currentLanguageSet?.historyData?.opd_NCD_PNCHistory?.obstetric
+                    ?.others
+                }}"
+                maxlength="50"
+                allowText="alphabet"
+                formControlName="otherAlcoholType"
+              />
+            </md-form-field>
+          </div>
+
+          <div class="col-xs-12 col-sm-6 col-md-2 box padding-0-right">
+            <md-select
+              id="frequencyIntake"
+              class="select-full-width"
+              formControlName="alcoholIntakeFrequency"
+              placeholder="{{
+                currentLanguageSet?.historyData?.ancHistory
+                  ?.personalHistoryANC_OPD_NCD_PNC?.alcoholData?.freqofAlcohol
+              }}"
+              [disableFormControl]="!alcohol.value.typeOfAlcohol"
+            >
+              <md-option
+                *ngFor="let frequency of masterData?.frequencyOfAlcoholIntake"
+                [value]="frequency.habitValue"
+              >
+                {{ frequency.habitValue }}
+              </md-option>
+            </md-select>
+          </div>
+
+          <div class="col-xs-12 col-sm-6 col-md-2 box">
+            <md-select
+              class="select-full-width"
+              formControlName="avgAlcoholConsumption"
+              placeholder="{{
+                currentLanguageSet?.historyData?.ancHistory
+                  ?.personalHistoryANC_OPD_NCD_PNC?.alcoholData?.qtyofAlcoholintake
+              }}"
+              [disableFormControl]="!alcohol.value.alcoholIntakeFrequency"
+            >
+              <md-option
+                *ngFor="let quantity of masterData?.quantityOfAlcoholIntake"
+                [value]="quantity"
+              >
+                {{ quantity.habitValue }}
+              </md-option>
+            </md-select>
+          </div>
+
+          <div class="col-xs-12 col-sm-6 col-md-1 box padding-0-left-right">
+            <md-form-field class="input-full-width">
+              <input
+                autocomplete="off"
+                mdInput
+                defaultNull
+                placeholder="{{currentLanguageSet?.nurseData?.chiefComplaintsDetails?.duration}}"
+                maxlength="2"
+                allowText="number"
+                formControlName="duration"
+                (change)="validateDuration(alcohol)"
+                [disableFormControl]="!alcohol.value.avgAlcoholConsumption"
+              />
+            </md-form-field>
+          </div>
+
+          <div class="col-xs-10 col-sm-4 col-md-3 box">
+            <md-select
+              class="select-full-width"
+              placeholder="{{currentLanguageSet?.DurationData?.durationUnit}}"
+              formControlName="durationUnit"
+              (change)="validateDuration(alcohol)"
+              [disableFormControl]="!alcohol.value.duration"
+            >
+              <md-option value="Days">Day(s)</md-option>
+              <md-option value="Weeks">Week(s)</md-option>
+              <md-option value="Months">Month(s)</md-option>
+              <md-option value="Years">Year(s)</md-option>
+            </md-select>
+          </div>
+
+          <div
+            class="col-sm-2 col-md-2 box action-btn-container pull-right padding-0-left-right-al"
+          >
+            <button
+              md-mini-fab
+              color="warn"
+              *ngIf="i != 0 || (i == 0 && alcohol.touched)"
+              (click)="removeAlcohol(i, alcohol)"
+            >
+              <md-icon class="md-18">close</md-icon>
+            </button>
+            <button
+              md-mini-fab
+              color="primary"
+              *ngIf="isLast"
+              [disabled]="checkAlcoholValidity(alcohol)"
+              (click)="addAlcohol()"
+            >
+              <md-icon class="md-18">add</md-icon>
+            </button>
+          </div>
+        </ng-container>
+      </div>
+    </md-card-content>
+  </md-card>
+
+  <md-card class="row m-t-10" *ngIf="allergyStatus == 'Yes'">
+    <md-card-header>
+      <md-card-title>
+        <h4>
+          <strong>{{
+            currentLanguageSet?.historyData?.ancHistory
+              ?.personalHistoryANC_OPD_NCD_PNC?.allergicStatus?.allergy
+          }}</strong>
+        </h4>
+      </md-card-title>
+    </md-card-header>
+    <md-card-content formArrayName="allergicList">
+      <div
+        class="row multi-row-select"
+        *ngFor="
+          let allergy of generalPersonalHistoryForm.controls.allergicList[
+            'controls'
+          ];
+          let i = index;
+          let isLast = last;
+          let isOdd = odd
+        "
+        [ngClass]="{ odd: !isOdd }"
+      >
+        <ng-container [formGroupName]="i">
+          <div class="col-xs-12 col-sm-6 col-md-3 box">
+            <md-select
+              class="select-full-width"
+              formControlName="allergyType"
+              placeholder="{{
+                currentLanguageSet?.historyData?.ancHistory
+                  ?.personalHistoryANC_OPD_NCD_PNC?.allergicStatus?.allergyType
+              }}"
+              (change)="filterAlleryList($event.value, i)"
+            >
+              <md-option
+                *ngFor="let allergy of allerySelectList[i]"
+                [value]="allergy"
+                >{{ allergy.allergyType }}</md-option
+              >
+            </md-select>
+          </div>
+
+          <div class="col-xs-12 col-sm-6 col-md-3 box">
+            <md-form-field class="input-full-width" >
+              <input
+                autocomplete="off"
+                mdInput allowText="inputFieldValidator"
+                defaultNull
+                placeholder="{{
+                  currentLanguageSet?.historyData?.ancHistory
+                    ?.personalHistoryANC_OPD_NCD_PNC?.allergicStatus?.allergenName
+                }}"
+                maxlength="200"
+                formControlName="snomedTerm"               
+                (change)="removeSnomedCode(allergy, i)" 
+                [disableFormControl]="!allergy.value.allergyType"
+                (keyup.enter)="searchComponents(allergy.value.snomedTerm,i,allergy)" 
+              />
+              <md-icon class="search-btn cursorPointer" mdSuffix (click)="searchComponents(allergy.value.snomedTerm,i,allergy)" [class.toolbar-icon-disabled]="componentFlag"
+           >search</md-icon>
+            </md-form-field>
+          </div>
+          
+        <div class="clearfix"></div>
+        <div class="col-xs-12 col-sm-6 col-md-3 box" [hidden]="true">
+          <md-form-field class="input-full-width">
+            <input   maxlength="100" mdInput placeholder="{{currentLanguageSet?.historyData?.opd_NCD_PNCHistory?.otherVaccine?.sctCode}}" [style.width]="'100%'" formControlName="snomedCode" readonly >
+          </md-form-field>
+      </div>
+
+          <div class="col-xs-12 col-sm-6 col-md-3 box">
+            <md-select
+              class="select-full-width"
+              multiple
+              formControlName="typeOfAllergicReactions"
+              placeholder="{{
+                currentLanguageSet?.historyData?.ancHistory
+                  ?.personalHistoryANC_OPD_NCD_PNC?.allergicStatus?.typeofReaction
+              }}"
+              (change)="canEnableOtherAllergy(allergy)"
+              [disableFormControl]="!allergy.value.snomedTerm"
+            >
+              <md-option
+                *ngFor="
+                  let allergicReaction of masterData?.AllergicReactionTypes
+                "
+                [value]="allergicReaction"
+              >
+                {{ allergicReaction.name }}
+              </md-option>
+            </md-select>
+          </div>
+
+          <div
+            class="col-xs-10 col-sm-4 col-md-2 box"
+            *ngIf="allergy.value.enableOtherAllergy"
+          >
+            <md-form-field class="input-full-width">
+              <input
+                autocomplete="off"
+                mdInput
+                defaultNull
+                placeholder="{{
+                  currentLanguageSet?.historyData?.opd_NCD_PNCHistory?.obstetric
+                    ?.others
+                }}"
+                maxlength="50"
+                allowText="alphaspace"
+                formControlName="otherAllergicReaction"
+              />
+            </md-form-field>
+          </div>
+
+          <div
+            class="col-sm-2 col-md-2 box action-btn-container pull-right padding-0-left-right-al"
+          >
+            <button
+              md-mini-fab
+              color="warn"
+              *ngIf="i != 0 || (i == 0 && allergy.touched)"
+              (click)="removeAllergy(i, allergy)"
+            >
+              <md-icon class="md-18">close</md-icon>
+            </button>
+            <button
+              md-mini-fab
+              color="primary"
+              *ngIf="isLast && (generalPersonalHistoryForm.controls.allergicList['controls'].length < allergyMasterData.length)"
+              [disabled]="checkAllergyValidity(allergy)"
+              
+              (click)="addAllergy()"
+            >
+              <md-icon class="md-18">add</md-icon>
+            </button>
+          </div>
+        </ng-container>
+      </div>
+    </md-card-content>
+  </md-card>
+</ng-container>

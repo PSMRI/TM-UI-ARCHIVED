@@ -1,0 +1,35 @@
+<div class="row m-t-20" [formGroup]="patientCovidForm"> 
+  <div>
+    <h5 class="hbx">
+      {{currentLanguageSet?.covid?.cOVID19ContactHistory}}
+    </h5>
+    <br>
+  <label class="hbx">{{currentLanguageSet?.covid?.historyOfContactWithAPersonwho}}</label>
+  <br>
+  <br>
+<span *ngIf ="!contactFlag">
+  <md-select
+    class="input-full-width vox"
+    [multiple]="true" 
+    placeholder="{{currentLanguageSet?.covid?.historyOfContact}}"
+    name="contactStatus"
+    formControlName="contactStatus"
+    id="contactStatus"
+    (change)="contactSelected()"
+    required="{{contactReqiured}}" >
+    <md-option *ngFor="let contactStatus of contactData" [value]="contactStatus"
+      >{{contactStatus}}</md-option
+    >
+  </md-select>  
+  
+</span>
+  <br>
+  <span *ngIf = "contactFlag" class="box">    
+    <ul>
+      <li *ngFor="let history of contactResponseList">
+        {{ history }}  <strong>: {{currentLanguageSet?.covid?.yES}}. </strong>
+      </li>
+    </ul> 
+</span>
+</div>
+</div>

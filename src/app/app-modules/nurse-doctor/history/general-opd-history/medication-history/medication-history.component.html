@@ -1,0 +1,112 @@
+
+
+
+
+
+<!-- {{ medicationHistoryForm.value | json }} -->
+<div class="row m-t-10" [formGroup]="medicationHistoryForm">
+  <div class="col-xs-12" formArrayName="medicationHistoryList">
+    <div class="row text-right">
+      <label class="font-history-label m-t-10">{{
+        currentLanguageSet?.historyData?.ancHistory?.medicationANC_OPD_NCD_PNC
+          ?.PreviousHistory
+      }}</label>
+      <button
+        type="button"
+        md-icon-button
+        mdTooltip="{{currentLanguageSet?.DurationData?.previousDetails}}"
+        id="previousANCMedicationHistory"
+        class="pull-right"
+        color="primary"
+        (click)="getPreviousMedicationHistory()"
+      >
+        <md-icon class="md-18">history</md-icon>
+      </button>
+    </div>
+
+    <div
+      class="row multi-row-select"
+      *ngFor="
+        let medicationHistory of medicationHistoryForm.controls[
+          'medicationHistoryList'
+        ]['controls'];
+        let i = index;
+        let isLast = last;
+        let isOdd = odd
+      "
+      [ngClass]="{ odd: !isOdd }"
+    >
+      <ng-container [formGroupName]="i">
+        <div class="col-xs-12 col-sm-6 col-md-3">
+          <md-form-field class="input-full-width">
+            <input
+              autocomplete="off"
+              mdInput allowText="inputFieldValidator"
+              defaultNull
+              placeholder="{{
+                currentLanguageSet?.historyData?.ancHistory?.medicationANC_OPD_NCD_PNC
+                  ?.currentMedication
+              }}"
+              maxlength="50"
+              formControlName="currentMedication"
+              name="currentMedication"
+            />
+          </md-form-field>
+        </div>
+
+        <div class="col-xs-12 col-sm-6 col-md-3">
+          <md-form-field class="input-full-width">
+            <input
+              autocomplete="off"
+              mdInput
+              defaultNull
+              placeholder="{{currentLanguageSet?.nurseData?.chiefComplaintsDetails?.duration}}"
+              allowText="number"
+              maxlength="2"
+              formControlName="timePeriodAgo"
+              name="timePeriodAgo"
+              [disableFormControl]="!medicationHistory.value.currentMedication"
+              (change)="validateDuration(medicationHistory)"
+            />
+          </md-form-field>
+        </div>
+
+        <div class="col-xs-12 col-sm-6 col-md-3">
+          <md-select
+            class="select-full-width"
+            placeholder="{{currentLanguageSet?.DurationData?.durationUnit}}"
+            formControlName="timePeriodUnit"
+            name="timePeriodAgoUnit"
+            [disableFormControl]="!medicationHistory.value.timePeriodAgo"
+            (change)="validateDuration(medicationHistory)"
+          >
+            <md-option value="Days">Day(s)</md-option>
+            <md-option value="Weeks">Week(s)</md-option>
+            <md-option value="Months">Month(s)</md-option>
+            <md-option value="Years">Year(s)</md-option>
+          </md-select>
+        </div>
+
+        <div class="col-sm-2 col-md-2 box action-btn-container pull-right">
+          <button
+            md-mini-fab
+            color="warn"
+            *ngIf="i != 0 || (i == 0 && medicationHistory.touched)"
+            (click)="removeMedicationHistory(i, medicationHistory)"
+          >
+            <md-icon class="md-18">close</md-icon>
+          </button>
+          <button
+            md-mini-fab
+            color="primary"
+            *ngIf="isLast"
+            [disabled]="checkValidity(medicationHistory)"
+            (click)="addMedicationHistory()"
+          >
+            <md-icon class="md-18">add</md-icon>
+          </button>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>

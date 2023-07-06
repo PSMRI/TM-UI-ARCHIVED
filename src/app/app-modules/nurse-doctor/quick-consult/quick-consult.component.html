@@ -1,0 +1,533 @@
+<!-- {{ patientQuickConsultForm.value | json }} -->
+<div>
+  <md-accordion>
+    <md-expansion-panel expanded="true">
+      <md-expansion-panel-header>
+        <h5>{{currentLanguageSet?.historyData?.QuickConsultDetails?.quickconsult}}</h5>
+      </md-expansion-panel-header>
+
+      <div class="container-fluid" [formGroup]='patientQuickConsultForm'>
+
+        <header class="mat-expansion-panel-header m-t-5">
+          <h4>{{currentLanguageSet?.historyData?.QuickConsultDetails?.basicinformation}}</h4>
+        </header>
+        <ng-container formArrayName="chiefComplaintList">
+          <div class="row m-t-10" *ngIf="benChiefComplaints.length >= 1">
+            <div class="col-xs-12">
+              <table class="table table-bordered" aria-describedby="quickconsulttbl">
+                <thead>
+                  <tr>
+                    <th id="chiefcomplaint">{{currentLanguageSet?.Find?.chiefcomplaint}}</th>
+                    <th id="ConceptID">{{currentLanguageSet?.common?.ConceptID}}</th>
+                    <th id="description">{{currentLanguageSet?.nurseData?.chiefComplaintsDetails?.description}}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let complaint of benChiefComplaints">
+                    <ng-template [ngIf]="complaint.chiefComplaint">
+                      <td>{{ complaint.chiefComplaint}}</td>
+                      <td>{{ complaint.conceptID}}</td>
+                      <td>{{ complaint.description}}</td>
+                    </ng-template>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="row m-t-10"
+            *ngFor="let chiefComplaint of patientQuickConsultForm.controls['chiefComplaintList']['controls']; let i = index;  let isLast = last;">
+            <ng-container [formGroupName]="i">
+              <div class="col-xs-12 col-sm-3">
+                
+                <md-form-field class="input-full-width">
+                  <input autocomplete="off" type="text" mdInput
+                    placeholder="{{currentLanguageSet?.Find?.chiefcomplaint}}" name="chiefComplaint"
+                    formControlName='chiefComplaint' (keyup)="suggestChiefComplaintList(chiefComplaint, i)" #complaintType
+                    [mdAutocomplete]="auto">
+                </md-form-field>
+
+                <md-autocomplete #auto="mdAutocomplete" autoActiveFirstOption [displayWith]="displayChiefComplaint"
+                  (optionSelected)="filterComplaints($event.option.value, i)">
+                  <md-option *ngFor="let compl of suggestedChiefComplaintList[i]" [value]="compl">
+                    {{compl.chiefComplaint}}
+                  </md-option>
+                </md-autocomplete>
+              </div>
+
+              <div class="col-xs-12 col-sm-3" [hidden]="true">
+                <md-form-field class="input-full-width">
+                  <input mdInput defaultNull name='conceptID' formControlName="conceptID"
+                    placeholder="{{currentLanguageSet?.nurseData?.chiefComplaintsDetails?.SCTID}}" readonly>
+                </md-form-field>
+              </div>
+
+              <div class="col-xs-10 col-sm-4">
+                <md-form-field class="input-full-width">
+                  <input mdInput allowText="textAreaValidator" defaultNull name='description' formControlName="description" maxlength="300"
+                    placeholder="{{currentLanguageSet?.historyData?.QuickConsultDetails?.chiefcomplaintsdescription}}">
+                </md-form-field>
+              </div>
+
+              <div  class="col-sm-2 col-md-2 box action-btn-container pull-right">
+                <button type="button" md-mini-fab color="warn"
+                  [id]="'removeBtn' + i"
+                *ngIf="(i != 0 || (i == 0 && (patientQuickConsultForm.controls['chiefComplaintList'].controls.length == 1) && patientQuickConsultForm.controls['chiefComplaintList'].controls[i].controls.chiefComplaint.value !== null && patientQuickConsultForm.controls['chiefComplaintList'].controls[i].controls.chiefComplaint.value !== '') || ( i==0 && patientQuickConsultForm.controls['chiefComplaintList'].controls.length > 1))" (click)="deleteChiefComplaint(i, chiefComplaint) "
+              >
+                  <span class="material-icons">
+                    close</span>
+                </button>
+            
+                  <button  *ngIf="isLast"
+                    type="button" md-mini-fab color="primary"  [id]="'addBtn' + i"
+                   
+                    [disabled]="checkComplaintFormValidity(chiefComplaint)" (click)="addChiefComplaint()">
+                    <span class="material-icons">add</span>
+                  </button>
+                </div>
+              
+            </ng-container>
+          </div>
+
+         
+        </ng-container>
+
+        <header class="mat-expansion-panel-header m-t-10">
+          <h4>{{currentLanguageSet?.vitalsDetails?.vitalsDataANC_OPD_NCD_PNC?.vitals}}</h4>
+        </header>
+        <div class="row m-t-10">
+          <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+            <md-form-field class="input-full-width">
+              <input autocomplete="off" mdInput defaultNull
+                placeholder="{{currentLanguageSet?.vitalsDetails?.AnthropometryDataANC_OPD_NCD_PNC?.height}}"
+                allowText="number" name='height_cm' formControlName='height_cm'>
+            </md-form-field>
+          </div>
+
+          <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+            <md-form-field class="input-full-width">
+              <input autocomplete="off" mdInput defaultNull
+                placeholder="{{currentLanguageSet?.vitalsDetails?.AnthropometryDataANC_OPD_NCD_PNC?.weight}}"
+                allowText="number" name='weight_Kg' formControlName='weight_Kg'>
+            </md-form-field>
+          </div>
+
+          <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+            <md-form-field class="input-full-width">
+              <input autocomplete="off" mdInput defaultNull
+                placeholder="{{currentLanguageSet?.vitalsDetails?.AnthropometryDataANC_OPD_NCD_PNC?.BMI}}"
+                allowText="number" name='bMI' formControlName='bMI' [ngClass]="{'abnormal': bMI < 18.5 || bMI > 24.9 }">
+            </md-form-field>
+          </div>
+
+          <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+            <md-form-field class="input-full-width">
+              <input autocomplete="off" mdInput defaultNull
+                placeholder="{{currentLanguageSet?.vitalsDetails?.AnthropometryDataANC_OPD_NCD_PNC?.BodyTemperature}}"
+                allowText="decimal" name='temperature' formControlName='temperature'
+                [ngClass]="{'abnormal': (temperature < 96  || temperature > 100)}">
+            </md-form-field>
+          </div>
+
+          <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+            <md-form-field class="input-full-width">
+              <input autocomplete="off" mdInput defaultNull placeholder="{{currentLanguageSet?.casesheet?.pulseRate}}"
+                allowText="number" name='pulseRate' formControlName='pulseRate'
+                [ngClass]="{'abnormal':(pulseRate < 49 || pulseRate > 101)}">
+            </md-form-field>
+          </div>
+
+          <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+            <md-form-field class="input-full-width">
+              <input autocomplete="off" mdInput defaultNull placeholder="{{currentLanguageSet?.sPOTwoWithUnit}}" allowText="number" name='sPO2' formControlName='sPO2' [ngClass]="{abnormal: (sPO2 < 1 || sPO2 > 100)}">
+            </md-form-field>
+          </div>
+
+          <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+            <md-form-field class="input-full-width">
+              <input autocomplete="off" mdInput defaultNull
+                placeholder="{{currentLanguageSet?.vitalsDetails?.vitalsDataANC_OPD_NCD_PNC?.respiratoryRate}}"
+                allowText="number" name='respiratoryRate' formControlName='respiratoryRate'
+                [ngClass]="{'abnormal':(respiratoryRate < 11 || respiratoryRate > 19)}">
+            </md-form-field>
+          </div>
+
+          <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+            <md-form-field class="input-full-width">
+              <input autocomplete="off" mdInput defaultNull
+                placeholder="{{currentLanguageSet?.vitalsDetails?.vitalsDataANC_OPD_NCD_PNC?.systolicBP}}"
+                allowText="number" name='systolicBP_1stReading' formControlName='systolicBP_1stReading'
+                [ngClass]="{'abnormal': systolicBP_1stReading < 110 || systolicBP_1stReading > 140 }">
+            </md-form-field>
+          </div>
+
+          <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+            <md-form-field class="input-full-width">
+              <input autocomplete="off" mdInput defaultNull
+                placeholder="{{currentLanguageSet?.vitalsDetails?.vitalsDataANC_OPD_NCD_PNC?.diastolicBP}}"
+                allowText="number" name='diastolicBP_1stReading' formControlName='diastolicBP_1stReading'
+                [ngClass]="{'abnormal': diastolicBP_1stReading < 60 || diastolicBP_1stReading > 90 }">
+            </md-form-field>
+          </div>
+
+          <div class="col-xs-12 col-sm-6  col-md-3 col-lg-3">
+            <md-form-field class="input-full-width">
+              <input autocomplete="off" mdInput defaultNull
+                placeholder="{{currentLanguageSet?.vitalsDetails?.vitalsCancerscreening_QC?.BloodGlucoseFasting}}"
+                type="number" [min]="1" allowMax="199" name='bloodGlucose_Fasting'
+                formControlName='bloodGlucose_Fasting'
+                [ngClass]="{'abnormal': 'bloodGlucose_Fasting < 50' || 'bloodGlucose_Fasting > 700' }">
+            </md-form-field>
+          </div>
+
+          <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+            <md-form-field class="input-full-width">
+              <input autocomplete="off" mdInput defaultNull
+                placeholder="{{currentLanguageSet?.vitalsDetails?.vitalsCancerscreening_QC?.BloodGlucoseRandom}}"
+                type="number" [min]="1" allowMax="199" name='bloodGlucose_Random' formControlName='bloodGlucose_Random'
+                [ngClass]="{'abnormal': bloodGlucose_Random < 140 }">
+            </md-form-field>
+          </div>
+
+          <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+            <md-form-field class="input-full-width">
+              <input autocomplete="off" mdInput defaultNull
+                placeholder="{{currentLanguageSet?.vitalsDetails?.vitalsCancerscreening_QC?.BloodGlucosePP}}"
+                [min]="1" type="number" name='bloodGlucose_2hr_PP' formControlName='bloodGlucose_2hr_PP' allowMax="199"
+                [ngClass]="{'abnormal': bloodGlucose_2hr_PP < 140 }">
+            </md-form-field>
+          </div>
+
+          <div class="row m-t-10">
+            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3" style="margin-left: 15px;">
+              <strong>Random Glucose Test</strong>
+            </div>
+          </div>  
+          <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+            <md-form-field class="input-full-width" >
+              <input autocomplete="off" mdInput defaultNull placeholder="{{currentLanguageSet?.rbsTestResult}}" allowText="number" [disabled]="rbsResultChange()"
+                name='rbsTestResult' id='rbsTestResult'
+                formControlName='rbsTestResult' min="1" maxlength="4" (blur)="checkForRange()"
+                (change)="rbsResultChange();setRBSResultInReport()" [ngClass]="{abnormal: (rbsTestResult < 0 || rbsTestResult > 1000)}">
+              <button tooltip="{{currentLanguageSet?.common?.startTest}}" mdSuffix [disabled]="checkDiasableRBS()" (click)="openIOTRBSModel()"><span
+                  class="glyphicon glyphicon-scale" ></span></button>
+            </md-form-field>
+          </div>
+
+          <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+            <md-form-field class="input-full-width">
+              <input autocomplete="off" mdInput allowText="textAreaValidator" defaultNull placeholder="{{currentLanguageSet?.rbsTestRemarks}}" 
+                [ngClass]="" name='rbsTestRemarks' id='rbsTestRemarks' (change)="setRBSResultInReport()"
+                formControlName='rbsTestRemarks' maxlength="300" [disabled]="rbsResultChange()">
+            </md-form-field>
+          </div>
+
+
+        </div>
+
+        <header class="mat-expansion-panel-header m-t-10">
+          <h4>{{currentLanguageSet?.ExaminationData?.cancerScreeningExamination?.oral?.observations}}</h4>
+        </header>
+        <div class=" row m-t-10">
+          <div class="col-sm-12 col-md-12">
+            <md-form-field class="input-full-width">
+              <textarea mdInput defaultNull mdTextareaAutosize name='clinicalObservation'
+                formControlName="clinicalObservation" maxlength="500"
+                placeholder="{{currentLanguageSet?.casesheet?.clinicalObs}}" required> </textarea>
+            </md-form-field>
+          </div>
+
+          <header class="mat-expansion-panel-header m-t-10" style="margin-left:15px" >
+            <h4>
+              {{currentLanguageSet?.nurseData?.investigationsDetails?.investigations}}</h4>
+          </header>
+
+          <div class="row">
+            <div class="col-xs-12 col-sm-6 m-t-10">
+              <md-select class="input-full-width" multiple
+                placeholder="{{currentLanguageSet?.common?.SelectTestname}}" name='test' formControlName='test' (change)="checkTestName($event)">
+                <md-option *ngFor="let nonRadiology of nonRadiologyMaster" [value]='nonRadiology'
+                  [disabled]="canDisableTest(nonRadiology)">
+                  {{nonRadiology.procedureName}}
+                </md-option>
+              </md-select>
+            </div>
+
+            <div class="col-xs-12 col-sm-6 m-t-10">
+              <md-select class="input-full-width" multiple
+                placeholder="{{currentLanguageSet?.labTechnicianData?.radiologyimaging}}" name='radiology'
+                formControlName='radiology'>
+                <md-option *ngFor="let radiology of radiologyMaster" [value]='radiology'
+                  [disabled]="canDisableTest(radiology)">
+                  {{radiology.procedureName}}
+                </md-option>
+              </md-select>
+            </div>
+
+            <div class="col-sm-12 col-md-12 m-t-10">
+              <md-form-field class="input-full-width">
+                <textarea mdInput allowText="textAreaValidator" defaultNull mdTextareaAutosize name='externalInvestigation'
+                  formControlName="externalInvestigation" maxlength="300"
+                  placeholder="{{currentLanguageSet?.Investigationdetails?.externalinvestigations}}"> </textarea>
+              </md-form-field>
+            </div>
+
+            <div class="row m-t-10">
+              <div class="col-xs-12 col-sm-6">
+                <header class="mat-expansion-panel-header">
+                  <h4>{{currentLanguageSet?.DiagnosisDetails?.provisionaldiagnosis}}*</h4>
+                </header>
+                <ng-container formArrayName="provisionalDiagnosisList">
+                  <div
+                    *ngFor="let diagnosis of patientQuickConsultForm.controls['provisionalDiagnosisList']['controls']; let i = index; let isLast=last;">
+                    <ng-container [formGroupName]="i">
+                     
+                      <div class="col-xs-12 col-sm-9 m-t-10">
+                        <md-form-field class="input-full-width">
+                          <input mdInput allowText="inputFieldValidator" allowText="textAreaValidator" appDiagnosisSearch [diagnosisListForm]="diagnosis" required
+                            name="viewProvisionalDiagnosisProvided" formControlName="viewProvisionalDiagnosisProvided"
+                            maxlength="100" minlength="3"
+                            [previousSelected]="patientQuickConsultForm?.value?.provisionalDiagnosisList" required>
+                          <md-icon class="search-btn cursorPointer"
+                            *ngIf="!(diagnosis.controls['viewProvisionalDiagnosisProvided'].disabled)" mdSuffix
+                            appDiagnosisSearch [diagnosisListForm]="diagnosis"
+                            [previousSelected]="patientQuickConsultForm?.value?.provisionalDiagnosisList">
+                            search</md-icon>
+                        </md-form-field>
+                      </div>
+                      <div class="col-xs-12 col-sm-3 m-t-15 m-b-10">
+                        <button md-mini-fab type="button" class="pull-left" color="warn"
+                          *ngIf="((diagnosis.controls['viewProvisionalDiagnosisProvided'].disabled || (i != 0))) || (i==0 && patientQuickConsultForm.controls['provisionalDiagnosisList'].controls[i].controls.viewProvisionalDiagnosisProvided.value !== null && patientQuickConsultForm.controls['provisionalDiagnosisList'].controls[i].controls.viewProvisionalDiagnosisProvided.value !== '')"
+                          (click)="removeDiagnosisFromList(i, diagnosis)">
+                          <md-icon>
+                            close</md-icon>
+                        </button>
+                        <button md-mini-fab type="button" class="pull-right" color="primary" *ngIf="isLast"
+                          [disabled]="checkProvisionalDiagnosisValidity(diagnosis)" (click)="addDiagnosis()">
+                          <md-icon>
+                            add</md-icon>
+                        </button>
+                      </div>
+                    </ng-container>
+                  </div>
+                </ng-container>
+              </div>
+
+              <div class="col-xs-12 col-sm-6">
+                <header class="mat-expansion-panel-header">
+                  <h4>{{currentLanguageSet?.DiagnosisDetails?.specialistssdvice}}</h4>
+                </header>
+                <md-form-field class="input-full-width m-t-10">
+                  <textarea mdInput defaultNull mdTextareaAutosize name='instruction' formControlName="instruction"
+                    maxlength="300" [readonly]="!specialist" >
+              </textarea>
+                </md-form-field>
+              </div>
+            </div>
+
+            <header class="mat-expansion-panel-header m-t-10">
+              <h4>
+                {{currentLanguageSet?.casesheet?.prescribe}}</h4>
+            </header>
+            <form #prescriptionForm="ngForm" class="m-t-20">
+              <section class="row no-row">
+                <div class="col-md-3" style="padding-bottom: 8px;">   
+                  <div *ngIf="isStockAvalable == 'primary'">
+                    <md-icon style="background-color: green;color: white;font-size: 20px;height: 20px;width: 20px;" class="md-18">
+                      check
+                    </md-icon> <span style="color: green;padding-left: 1px;">{{currentLanguageSet?.stockAvailability}}</span>
+                  </div>
+                  <div *ngIf="isStockAvalable == 'warn'">
+                    <md-icon style="background-color: #c30d0d;color: white;font-size: 20px;height: 20px;width: 20px;" class="md-18">
+                      close
+                    </md-icon><span style="color: #c30d0d;padding-left: 5px;">{{currentLanguageSet?.stockAvailability}}</span>
+                  </div>
+                </div>
+              </section>
+              <section class="row no-row">
+                <div class="col-md-3">
+                  <md-select class="input-full-width" name="form" [(ngModel)]="tempform"
+                    placeholder=" {{currentLanguageSet?.casesheet?.form}}" (change)="getFormValueChanged()" required>
+                    <md-option *ngFor="let item of drugFormMaster" [value]="item">
+                      {{item.itemFormName}}
+                    </md-option>
+                  </md-select>
+
+                </div>
+                <div class="col-md-3">
+
+                  <md-form-field class="input-full-width">
+                    <input autocomplete="off" type="text" name="medicine" [disabled]="!currentPrescription.formID"
+                      mdInput [(ngModel)]="tempDrugName" (keyup)="filterMedicine(tempDrugName)"
+                      placeholder="{{currentLanguageSet?.Prescription?.medicine}}" (blur)="reEnterMedicine()" required
+                      [mdAutocomplete]="autoGroup">
+                    <md-autocomplete #autoGroup="mdAutocomplete" [displayWith]="displayFn">
+                      <md-option *ngFor="let item of subFilteredDrugMaster" [value]="item"
+                        (onSelectionChange)="selectMedicineObject($event)">
+                        {{item.itemName}} {{item.strength}}{{item.unitOfMeasurement}} {{item.quantityInHand?'('+item.quantityInHand+')':''}} 
+                      </md-option>
+                    </md-autocomplete>
+                  </md-form-field>
+                </div>
+                <div class="col-md-2">
+                  <md-select class="input-full-width" name="dose" [(ngModel)]="currentPrescription.dose"
+                    [disabled]="!currentPrescription.drugID"
+                    placeholder="{{currentLanguageSet?.Prescription?.dosage}}" required>
+                    <md-option *ngFor="let item of filteredDrugDoseMaster" [value]="item.drugDose">
+                      {{item.drugDose}}
+                    </md-option>
+                  </md-select>
+                </div>
+                <div class="col-md-4">
+                  <md-select class="input-full-width" name="frequency" [(ngModel)]="currentPrescription.frequency"
+                    [disabled]="!currentPrescription.drugID"
+                    placeholder="{{currentLanguageSet?.Prescription?.frequency}}" required>
+                    <md-option *ngFor="let item of drugFrequencyMaster" [value]="item.frequency">
+                      {{item.frequency}}
+                    </md-option>
+                  </md-select>
+                </div>
+
+
+              </section>
+              <section class="row no-row" style="margin-top:10px !important;">
+                <div class="col-md-3">
+
+                  <md-select class="input-full-width" name="duration" [(ngModel)]="currentPrescription.duration"
+                    [disabled]="!currentPrescription.drugID"
+                    placeholder="{{currentLanguageSet?.nurseData?.chiefComplaintsDetails?.duration}}" required>
+                    <md-option *ngFor="let item of drugDurationMaster" [value]="item">
+                      {{item}}
+                    </md-option>
+                  </md-select>
+                </div>
+                <div class="col-md-3">
+
+                  <md-select class="input-full-width" name="unit" [(ngModel)]="currentPrescription.unit"
+                    placeholder="{{currentLanguageSet?.Prescription?.unit}}" [disabled]="!currentPrescription.drugID"
+                    required>
+                    <md-option *ngFor="let item of drugDurationUnitMaster" [value]="item.drugDuration">
+                      {{item.drugDuration}}
+                    </md-option>
+                  </md-select>
+                </div>
+                <div class="col-md-2"
+                  *ngIf="currentPrescription.formID && currentPrescription.formID != '1' && currentPrescription.formID != '2'">
+                  <md-select class="input-full-width" name="quantity" [(ngModel)]="currentPrescription.qtyPrescribed"
+                    [disabled]="!currentPrescription.drugID"
+                    placeholder="{{currentLanguageSet?.Prescription?.quantity}}" required>
+                    <md-option *ngFor="let item of drugDurationMaster | slice:0:5" [value]="item">
+                      {{item}}
+                    </md-option>
+                  </md-select>
+                </div>
+                <div [ngClass]="{'col-md-6': (!currentPrescription.formID) || (currentPrescription.formID && currentPrescription.formID <= '2'),
+          'col-md-4': currentPrescription.formID && currentPrescription.formID > '2'}">
+
+                  <md-select class="input-full-width" name="route" [(ngModel)]="currentPrescription.route"
+                    placeholder="{{currentLanguageSet?.Prescription?.Route}}"
+                    [disabled]="!currentPrescription.drugID">
+                    <md-option *ngFor="let item of drugRouteMaster" [value]="item.routeName">
+                      {{item.routeName}}
+                    </md-option>
+                  </md-select>
+                </div>
+
+              </section>
+              <section class="row no-row" style="margin-top:10px !important;">
+                <div class="col-md-10">
+                  <md-form-field class="input-full-width">
+                    <textarea mdInput allowText="textAreaValidator" defaultNull mdTextareaAutosize name="instructions" maxlength="300"
+                      name='instructions' [disabled]="!currentPrescription.drugID"
+                      [(ngModel)]="currentPrescription.instructions"
+                      placeholder="{{currentLanguageSet?.Prescription?.instructions}}"> </textarea>
+                  </md-form-field>
+                </div>
+                <div class="col-md-2 centered-button">
+                  <button id="add-button" [disabled]="prescriptionForm.invalid" md-raised-button color="primary"
+                    type="button" (click)="submitForUpload()">
+                    {{currentLanguageSet?.common?.add}}</button>
+                </div>
+              </section>
+            </form>
+            <span *ngIf="drugPrescriptionForm.controls.prescribedDrugs.value.length > 0">
+              <hr />             
+              <div [formGroup]='drugPrescriptionForm'>
+                <div formArrayName="prescribedDrugs">
+                  <div class="col-md-12"
+                    *ngFor="let drug of drugPrescriptionForm?.controls.prescribedDrugs?.controls; let j=index">
+                    <ng-container [formGroupName]="j" *ngIf="j >= pageLimits[0] && j < pageLimits[1]">
+                      <fieldset class="m-b-20" [ngClass]="{'fieldset': drug.value.createdBy }">
+                        <legend>{{drug.value.drugName}} {{drug.value.drugStrength}} {{drug.value.isEDL ? '' : current_language_set?.nonEDLMedicine}}</legend>
+                        <div class="row">
+                          <div class="col-md-1 right-padding-remove-desktop">
+                            <md-form-field class="input-full-width">
+                              <input autocomplete="off" readonly="true" type="text" mdInput formControlName="formName"
+                                placeholder="{{currentLanguageSet?.Prescription?.form}}">
+                            </md-form-field>
+                            <!-- {{drug.value.formName}} -->
+                          </div>
+                          <div class="col-md-2">
+                            <md-form-field class="input-full-width">
+                              <input autocomplete="off" readonly="true" type="text" mdInput formControlName="dose"
+                                placeholder=" {{currentLanguageSet?.casesheet?.dose}}">
+                            </md-form-field>
+                          </div>
+                          <div class="col-md-2 p-a-0">
+                            <md-form-field class="input-full-width">
+                              <input autocomplete="off" readonly="true" type="text" mdInput formControlName="frequency"
+                                placeholder=" {{currentLanguageSet?.Prescription?.frequency}}">
+                            </md-form-field>
+                          </div>
+                          <div class="col-md-2  ">
+                            <md-form-field class="input-full-width">
+                              <input autocomplete="off" readonly="true" type="text" mdInput
+                                formControlName="durationView"
+                                placeholder="{{currentLanguageSet?.nurseData?.chiefComplaintsDetails?.duration}}">
+                            </md-form-field>
+                          </div>
+                          <div class="col-md-1 p-a-0">
+                            <md-form-field class="input-full-width">
+                              <input autocomplete="off" readonly="true" type="text" mdInput
+                                formControlName="qtyPrescribed"
+                                placeholder="{{currentLanguageSet?.Prescription?.quantity}}">
+                            </md-form-field>
+                          </div>
+                          <div class="col-md-3">
+                            <md-form-field class="input-full-width">
+                              <input autocomplete="off" readonly="true" type="text" mdInput allowText="textAreaValidator"
+                                formControlName="instructions"
+                                placeholder="{{currentLanguageSet?.Prescription?.instructions}}">
+                            </md-form-field>
+                          </div>
+                          <div class="col-md-1 centered-button">
+                            <button md-mini-fab id='deleteMedicine' (click)="deleteMedicine(j, drug.value.id)"
+                              color="warn">
+                              <span class="material-icons">close</span>
+                            </button>
+                          </div>
+                        </div>
+                      </fieldset>
+                    </ng-container>
+                  </div>
+                </div>
+              </div>
+              <md-paginator [length]="drugPrescriptionForm?.controls.prescribedDrugs?.value.length"
+                [pageSize]="pageSize" hidePageSize=true (page)="setLimits($event.pageIndex)">
+              </md-paginator>
+            </span>
+          </div>
+        </div>
+        </div>
+    </md-expansion-panel>
+    <md-expansion-panel class="m-t-10">
+      <md-expansion-panel-header>
+        <h5>
+          {{currentLanguageSet?.common?.report}}
+
+        </h5>
+      </md-expansion-panel-header>
+      <app-test-and-radiology></app-test-and-radiology>
+    </md-expansion-panel>
+  </md-accordion>
+</div>

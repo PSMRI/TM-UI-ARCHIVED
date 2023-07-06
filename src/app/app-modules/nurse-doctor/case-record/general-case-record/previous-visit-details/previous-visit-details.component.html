@@ -1,0 +1,99 @@
+<app-beneficiary-platform-history></app-beneficiary-platform-history>
+
+<div class="row m-t-20">
+  <div class="col-xs-12 col-sm-12 col-md-6">
+    <h4>{{current_language_set?.previousvisit?.currentvitals}}</h4>
+    <table class="table table-bordered table-responsive vitals-table" aria-describedby="visitTable">
+      <tr>
+        <td>{{current_language_set?.vitalsDetails?.AnthropometryDataANC_OPD_NCD_PNC?.weight}}: <span>{{ vitals?.weight_Kg }}</span></td>
+        <td>{{current_language_set?.vitalsDetails?.AnthropometryDataANC_OPD_NCD_PNC?.height}}: <span>{{ vitals?.height_cm }}</span></td>
+        <td>{{current_language_set?.vitalsDetails?.AnthropometryDataANC_OPD_NCD_PNC?.BMI}}(Kg/m<sup>2</sup>): <span [ngClass]="{'abnormal': calculateBMI() < 18.5 || calculateBMI() > 24.9 }">{{ calculateBMI() }}</span></td>
+      </tr>
+      <tr>
+        <td>{{current_language_set?.vitalsDetails?.vitalsDataANC_OPD_NCD_PNC?.temperature}}: <span [ngClass]="{'abnormal': (+(vitals?.temperature) < 96  || +(vitals?.temperature) > 100)}">{{ vitals?.temperature}}</span> </td>
+        <td>{{current_language_set?.common?.hR}}: <span [ngClass]="{'abnormal': (+(vitals?.pulseRate) < 49 ||  +(vitals?.pulseRate) > 101)}">{{ vitals?.pulseRate }}</span></td>
+        <td>{{current_language_set?.common?.rR}}: <span [ngClass]="{'abnormal': (+(vitals?.respiratoryRate) < 11 || +(vitals?.respiratoryRate) > 19 )}">{{ vitals?.respiratoryRate }}</span></td>
+      </tr>
+      <tr>
+        <td>{{current_language_set?.sPOTwoWithUnit}}: 
+          <span [ngClass]="{'abnormal':(vitals?.sPO2 < 1 || vitals?.sPO2 > 100)}">{{ vitals?.sPO2 }}</span>
+        </td>
+      </tr>
+      <tr>
+        <th colspan="3" id="bloodpressuremmhg"> {{current_language_set?.previousvisit?.bloodpressuremmhg}} </th>
+      </tr>
+      <tr>
+        <td colspan="3">
+          <div class="firstHalf">
+            {{current_language_set?.previousvisit?.systolic}}: <span [ngClass]="{'abnormal': +(vitals?.systolicBP_1stReading) > 80  || +(vitals?.systolicBP_1stReading) > 100}">{{ vitals?.systolicBP_1stReading }}</span>
+          </div>
+          <div class="secondHalf">
+            {{current_language_set?.previousvisit?.diastolic}}: <span [ngClass]="{'abnormal': +(vitals?.diastolicBP_1stReading) > 120  || +(vitals?.diastolicBP_1stReading) > 140}">{{ vitals?.diastolicBP_1stReading }}</span>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div class="col-xs-12 col-sm-12 col-md-6 p-t-10">
+    <div style="margin: 10px; display: block; max-height: 150px; vertical-align: bottom;" *ngIf="weightChartData.length && weightChartLabels.length">
+
+
+      <h5>{{current_language_set?.previousvisit?.bodyweighttrends}}</h5>
+
+
+      <canvas baseChart [datasets]="weightChartData" [labels]="weightChartLabels" [options]="lineChartOptions" [colors]="weightChartColors" [legend]="weightChartLegend" [chartType]="weightChartType" (chartClick)="chartClicked('bw')"></canvas>
+
+    </div>
+    <div class="no_records" *ngIf="!weightChartData.length">
+
+
+      <h4>{{current_language_set?.previousvisit?.nopreviousweightrecordsfound}}</h4>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="row m-t-30">
+
+  <div class="col-md-6 p-t-10">
+
+    <div style="margin: 10px; display: block; max-height: 150px; vertical-align: bottom; " *ngIf="bpChartData.length && bpChartLabels.length">
+
+      <h5>{{current_language_set?.previousvisit?.bloodPressureTrends}}</h5>
+      <canvas baseChart [datasets]="bpChartData" [labels]="bpChartLabels" [options]="lineChartOptions" [colors]="bpChartColors" [legend]="bpChartLegend" [chartType]="bpChartType" (chartClick)="chartClicked('bp')"></canvas>
+
+    </div>
+    <div class="no_records" *ngIf="!bpChartData.length">
+
+      <h4>{{current_language_set?.previousvisit?.previousbloodpressurerecordsfound}}</h4>
+    </div>
+
+  </div>
+
+  <div class="col-md-6 p-t-10">
+
+    <div style="margin: 10px; display: block; max-height: 150px; vertical-align: bottom; " *ngIf="bgChartData.length && bgChartLabels.length">
+
+
+      <h5>{{current_language_set?.previousvisit?.bloodGlucoseTrends}}</h5>
+
+
+      <canvas baseChart [datasets]="bgChartData" [labels]="bgChartLabels" [options]="lineChartOptions" [colors]="bgChartColors" [legend]="bgChartLegend" [chartType]="bgChartType" (chartClick)="chartClicked('bg')"></canvas>
+
+    </div>
+    <div class="no_records" *ngIf="!bgChartData.length">
+
+
+      <h4>{{current_language_set?.previousvisit?.previousbloodglucoserecordsfound}}</h4>
+    </div>
+
+  </div>
+
+
+
+
+</div>
+<div class="row p-t-30">
+
+</div>

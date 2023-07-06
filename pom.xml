@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<!-- @Author : Sunil K Sundaram @Date : 21-May-17 @Email : sunil.ks@gmail.com -->
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.iemr.tmui</groupId>
+	<artifactId>TM-ui</artifactId>
+	<version>1.0</version>
+	<name>TM-ui</name>
+	<description>Piramal - tm: Module ui</description>
+	<packaging>war</packaging>
+	<profiles>
+		<profile>
+			<id>dev</id>
+			<properties>
+				<old-api-url>10.208.122.38</old-api-url>
+				<new-api-url>10.208.122.32</new-api-url>
+			<environment>dev</environment>
+			</properties>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+		</profile>
+		<profile>
+			<id>uat</id>
+			<properties>
+				<old-api-url>10.208.122.38</old-api-url>
+				<new-api-url>deviemr.piramalswasthya.org</new-api-url>
+				<environment>uat</environment>
+			</properties>
+		</profile>
+		<profile>
+			<id>local</id>
+			<properties>
+				<old-api-url>10.208.122.38</old-api-url>
+				<new-api-url>localhost</new-api-url>
+				<environment>local</environment>
+			</properties>
+		</profile>
+		<profile>
+			<id>test</id>
+			<properties>
+				<old-api-url>10.208.122.32</old-api-url>
+				<new-api-url>10.208.122.38</new-api-url>
+				<environment>test</environment>
+			</properties>
+		</profile>
+	</profiles>
+	
+	<!-- we could create individual properties similar to variables -->
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<final-name>tmui-v1.0</final-name>
+		<build.timestamp>${maven.build.timestamp}</build.timestamp>
+        <maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
+		<hostname-dev>10.208.122.32</hostname-dev>
+		<port-dev>9990</port-dev>
+		<hostname-local>localhost</hostname-local>
+		<port-local>9990</port-local>
+		<hostname-uat>deviemr.piramalswasthya.org</hostname-uat>
+		<port-uat>9990</port-uat>
+		<hostname-test>10.208.122.38</hostname-test>
+		<port-test>9990</port-test>
+		<server-id>wildfly-${environment}</server-id>
+		<server-hostname>{hostname-${environment}}</server-hostname>
+		<server-port>{port-${environment}}</server-port>
+	</properties>
+	
+	<!-- install the necessary node_modules & compile in prod mode -->
+	<build>
+		<finalName>tmui-v1.0</finalName>
+		<plugins>
+			<plugin>
+				<artifactId>maven-clean-plugin</artifactId>
+				<version>3.0.0</version>
+				<configuration>
+					<filesets>
+						<fileset>
+							<directory>dist</directory>
+							<!-- if any that needs to be included or excluded -->
+							<!-- using name in both would be a crime - pls avoid! -->
+							<!-- <includes><include>**/*.tmp</include><include>**/*.log</include></includes><excludes><exclude>**/important.log</exclude><exclude>**/another-important.log</exclude></excludes> -->
+							<followSymlinks>false</followSymlinks>
+						</fileset>
+					</filesets>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>1.6.0</version>
+				<executions>
+					<execution>
+						<id>running npm install</id>
+						<phase>compile</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<tasks>
+								<echo>running npm install ---> ${build.timestamp}</echo>
+								<echo>exec-dir: ${project.build.directory}</echo>
+							</tasks>
+							<executable>npm</executable>
+							<arguments>
+								<argument>install</argument>
+								<!-- use save-dev or save if you understand the consequences, else -->
+								<!-- please leave them alone & add appropriate npm dependencies in 
+									package.json -->
+							</arguments>
+						</configuration>
+					</execution>
+					<execution>
+						<id>running ng build --${environment}</id>
+						<phase>compile</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<tasks>
+								<echo>running ng build --${environment} ---> ${build.timestamp}</echo>
+								<echo>exec-dir: ${project.build.directory}</echo>
+								<echo>dist-dir: ${project.build.outputDirectory}</echo>
+							</tasks>
+							<!-- incase working dir is different use below -->
+							<executable>npm</executable>
+							<arguments>
+								<argument>run</argument>
+								<argument>build-${environment}</argument>
+							</arguments>
+						</configuration>
+					</execution>
+				</executions> 
+			</plugin>
+			<!-- use following incase resources from other dirs -->			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.4.2</version>
+				<executions>
+					<execution>
+						<id>default-copy-resources</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<overwrite>true</overwrite>
+							<outputDirectory>${project.build.directory}/${project.artifactId}-${project.version}/WEB-INF/</outputDirectory>
+							<resources>
+								<resource>
+									<directory>${project.basedir}/dist</directory>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.4</version>
+				<configuration>
+					<failOnMissingWebXml>false</failOnMissingWebXml>
+					<webResources>
+						<resource>
+							<!-- this is relative to the pom.xml directory -->
+							<directory>dist</directory>
+						</resource>
+						<resource>		
+							<filtering>true</filtering>					
+							<directory>src/packaging/</directory>							
+						</resource>
+					</webResources>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.8</version>
+				<executions>
+					<execution>
+						<id>properties-updated 1</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<target>
+								<echo>replacing/updating urls ${project.basedir} 2</echo>
+								<replaceregexp match="${old-api-url}"
+									replace="${new-api-url}" flags="ig">
+									<fileset dir="${project.basedir}/dist"
+										includes="main.*.bundle.js" />
+								</replaceregexp>
+							</target>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		<!--	<plugin>
+				<groupId>org.wildfly.plugins</groupId>
+				<artifactId>wildfly-maven-plugin</artifactId>
+				<version>1.2.1.Final</version>
+				<configuration>
+					<id>${server-id}</id>
+					<hostname>$${server-hostname}</hostname>
+					<port>$${server-port}</port>
+					<username>admin</username>
+					<password>ad@min123</password>
+
+				</configuration>
+				<executions>
+					<execution>
+						<phase>install</phase>
+						<goals>
+							<goal>deploy</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin> -->
+		</plugins>
+	</build>
+</project>

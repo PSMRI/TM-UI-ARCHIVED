@@ -1,0 +1,107 @@
+<!-- {{obstetricExaminationForANCForm.value | json}} -->
+<div class="row m-t-20" [formGroup]='obstetricExaminationForANCForm'>
+  <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box m-t-10">
+    <md-select class="select-full-width" name='fundalHeight' formControlName="fundalHeight" placeholder="{{current_language_set?.ExaminationData?.ANC_OPD_PNCExamination?.systemic?.obstetric?.fundalHeight}}">
+      <md-option *ngFor="let fundalHeight of selectFundalHeight" [value]="fundalHeight.name">
+        {{fundalHeight.name}}
+      </md-option>
+    </md-select>
+  </div>
+
+  <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box m-t-10">
+    <md-select class="select-full-width" name='fHAndPOA_Status' formControlName="fHAndPOA_Status" placeholder="{{current_language_set?.ExaminationData?.ANC_OPD_PNCExamination?.systemic?.obstetric?.fHandPOAStatus}}">
+      <md-option *ngFor="let FHPOAStatus of selectFHPOAStatus" [value]="FHPOAStatus.name">
+        {{FHPOAStatus.name}}
+      </md-option>
+    </md-select>
+  </div>
+  <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box m-t-10">
+    <md-select class="select-full-width" name='fHAndPOA_Interpretation' formControlName="fHAndPOA_Interpretation" placeholder="{{current_language_set?.ExaminationData?.ANC_OPD_PNCExamination?.systemic?.obstetric?.interpretationFHandPOA}}">
+      <md-option *ngFor="let interpretationFHAndPOA of selectInterpretationFHAndPOA" [value]="interpretationFHAndPOA.name">
+        {{interpretationFHAndPOA.name}}
+      </md-option>
+    </md-select>
+  </div>
+
+  <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box m-t-10">
+    <label class="control-label" for="edema">{{current_language_set?.ExaminationData?.ANC_OPD_PNCExamination?.systemic?.obstetric?.fetalMovements}}</label>
+    <div class="clearfix"></div>
+    <md-radio-group name='fetalMovements' formControlName="fetalMovements" required>
+      <md-radio-button color='primary' class="radio-btn" value="Present">{{current_language_set?.common?.present}}</md-radio-button>
+      <md-radio-button color='primary' class="radio-btn" value="Absent">{{current_language_set?.common?.absent}}</md-radio-button>
+    </md-radio-group>
+  </div>
+
+  <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box m-t-10">
+    <label class="control-label" for="edema">{{current_language_set?.ExaminationData?.ANC_OPD_PNCExamination?.systemic?.obstetric?.fetalHeartsounds}}</label>
+    <div class="clearfix"></div>
+    <md-radio-group name='fetalHeartSounds' formControlName="fetalHeartSounds" (change)="resetFetalHeartRate($event)">
+      <md-radio-button color='primary' class="radio-btn" value="Audible">{{current_language_set?.common?.audible}}</md-radio-button>
+      <md-radio-button color='primary' class="radio-btn" value="Not Audible">{{current_language_set?.common?.notAudible}}</md-radio-button>
+    </md-radio-group>
+  </div>
+
+  <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box m-t-10" *ngIf="fetalHeartSounds == 'Audible'">
+    <md-select class="select-full-width" name='fetalHeartRate_BeatsPerMinute' formControlName="fetalHeartRate_BeatsPerMinute" placeholder="{{current_language_set?.ExaminationData?.ANC_OPD_PNCExamination?.systemic?.obstetric?.fetalHeartRate}}">
+      <md-option *ngFor="let fetalHeartRate of selectFetalHeartRate" [value]="fetalHeartRate.name">
+        {{fetalHeartRate.name}}
+      </md-option>
+    </md-select>
+  </div>
+
+  <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box m-t-10">
+    <md-select class="select-full-width" name='fetalPositionOrLie' formControlName="fetalPositionOrLie" placeholder="{{current_language_set?.ExaminationData?.ANC_OPD_PNCExamination?.systemic?.obstetric?.fetalposition}}">
+      <md-option *ngFor="let fetalPositionOrLie of selectFetalPositionOrLie" [value]="fetalPositionOrLie.name">
+        {{fetalPositionOrLie.name}}
+      </md-option>
+    </md-select>
+  </div>
+
+  <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box m-t-10">
+    <md-select class="select-full-width" name='fetalPresentation' formControlName="fetalPresentation" placeholder="{{current_language_set?.ExaminationData?.ANC_OPD_PNCExamination?.systemic?.obstetric?.fetalPresentation}}">
+      <md-option *ngFor="let fetalPresentation of selectFetalPresentation" [value]="fetalPresentation.name">
+        {{fetalPresentation.name}}
+      </md-option>
+    </md-select>
+  </div>
+
+  <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box m-t-10">
+    <md-select  class="select-full-width" name='abdominalScars' formControlName="abdominalScars" placeholder="{{current_language_set?.ExaminationData?.ANC_OPD_PNCExamination?.systemic?.obstetric?.abdominalScars}}">
+      <md-option *ngFor="let abdominalScars of selectAbdominalScars" [value]="abdominalScars.name">
+        {{abdominalScars.name}}
+      </md-option>
+    </md-select>
+  </div>
+
+  <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box m-t-10">
+    <md-form-field class="select-full-width">
+      <textarea mdInput mdTextareaAutosize name='sfh' formControlName="sfh" placeholder="{{current_language_set?.sfhCms}}" allowText="decimal" allowMax="100.0"></textarea>
+    </md-form-field>
+  </div>
+
+ 
+ 
+
+  <div class="col-xs-12">
+    <p style="text-align: right">
+      <strong>{{current_language_set?.poa}} :</strong> {{current_language_set?.ExaminationData?.ANC_OPD_PNCExamination?.systemic?.obstetric?.periodofAmenorrhea}}
+    </p>
+  </div>
+
+  <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box m-t-10">
+    
+    <div class="btn-group" *ngFor="let value of fetosenseTestMaster">
+      <button md-raised-button color="primary" [id]=value.fetosenseTestId [disabled]="checkTestPrescribed(value.fetosenseTestId)" (click)="sendTestDetails(value.fetosenseTestId,value.testName)">{{value.testName}}</button>
+ 
+    </div>
+
+  </div>
+
+  <div class="col-xs-12" *ngFor="let value of fetosenseTestMaster">
+    <p  style="text-align: left;color: green;">
+     <strong>{{checkTestPrescribed(value.fetosenseTestId)===true?"* " + value.testName + current_language_set?.testIsPrescribed :""}}</strong>
+    </p>
+  </div>
+
+
+</div>

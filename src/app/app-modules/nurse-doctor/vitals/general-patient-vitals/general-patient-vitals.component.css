@@ -1,0 +1,80 @@
+h5 {
+    font-weight: bold;
+}
+
+.mat-expansion-panel-header {
+    background: rgba(37, 55, 70, 0.2);
+}
+
+ul {
+    list-style: none;
+    padding: 0px;
+}
+
+ul li {
+    display: inline-block;
+    padding: 0 8px;
+}
+
+ul li div i, ul li p {
+    display: inline-block;
+}
+
+ul li div i {
+    height: 15px;
+    width: 15px;
+}
+
+.input-full-width {
+    width: 100%;
+}
+
+.abnormal {
+    color: red
+}
+
+.marker {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.marker span {
+    margin-left: 5px;
+}
+
+md-expansion-panel {
+    margin: 0.5%;
+}
+
+.description {
+    padding-top: 15px;
+}
+
+.m-l--160 {
+    margin-left: -160px;
+}
+
+.start-button {
+    /* background-color: #10df3d; */
+    background-color: #43a047;
+    margin:5px;
+    color: white;
+  }
+
+  .checkbox-group {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.checkbox-group md-checkbox {
+    margin-bottom: 5px;
+}
+
+.checkbox {
+    margin: 0 10px;
+}
+
+.valueCheck {
+    padding: 5px;
+}

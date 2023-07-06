@@ -1,0 +1,19 @@
+<!-- {{ generalDiagnosisForm.value | json}} -->
+<div class="row" [formGroup]='generalDiagnosisForm'>
+  <div class="col-xs-12 col-sm-6 m-t-6">
+    <header class="mat-expansion-panel-header">
+      <h4>{{current_language_set?.doctorDiagnosis}}*</h4>
+    </header>
+    <md-form-field class="input-full-width">
+      <textarea mdInput allowText="textAreaValidator" defaultNull mdTextareaAutosize maxlength="300" name='doctorDiagnosis' formControlName="doctorDiagnosis" [readonly]="specialist" required>{{doctorDiagnosis}} </textarea>
+    </md-form-field>
+  </div>
+  <div class="col-xs-12 col-sm-6 m-t-6">
+    <header class="mat-expansion-panel-header">
+      <h4>{{current_language_set?.DiagnosisDetails?.specialistssdvice}}</h4>
+    </header>
+    <md-form-field class="input-full-width">
+      <textarea mdInput defaultNull mdTextareaAutosize maxlength="300" name='specialistAdvice' formControlName="specialistDiagnosis" [readonly]="!specialist" > </textarea>
+    </md-form-field>
+  </div>
+</div>

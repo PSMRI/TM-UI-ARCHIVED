@@ -1,0 +1,115 @@
+<!-- {{ familyHistoryForm.value | json }} -->
+<div class="row m-t-10" [formGroup]="familyHistoryForm">
+  <div class="col-xs-12" formArrayName="familyDiseaseList">
+    <div class="row text-right">
+      <label class="font-history-label m-t-10">{{
+        currentLanguageSet?.historyData?.ancHistory?.familyHistoryDataANC_OPD_NCD_PNC
+        ?.previousFamilyHistory
+        }}</label>
+      <button type="button" md-icon-button mdTooltip="{{currentLanguageSet?.DurationData?.previousDetails}}"
+        id="previousANCFamilyHistory" class="pull-right" color="primary" (click)="getPreviousFamilyHistory()">
+        <md-icon class="md-18">
+          history</md-icon>
+      </button>
+    </div>
+    <div class="row multi-row-select" *ngFor="
+        let familyDisease of familyHistoryForm.controls.familyDiseaseList[
+          'controls'
+        ];
+        let i = index;
+        let isLast = last;
+        let isOdd = odd
+      " [ngClass]="{ odd: !isOdd }">
+      <ng-container [formGroupName]="i">
+        <div class="col-xs-12 col-sm-6 col-md-3 box">
+          <md-select class="select-full-width" name="diseaseType" formControlName="diseaseType" placeholder="{{
+              currentLanguageSet?.historyData?.ancHistory?.familyHistoryDataANC_OPD_NCD_PNC
+          ?.diseaseType
+            }}" (change)="filterFamilyDiseaseList($event.value, i, familyDisease)">
+            <md-option *ngFor="let disease of diseaseSelectList[i]" [value]="disease">
+              {{ disease.diseaseType }}
+            </md-option>
+          </md-select>
+        </div>
+
+        <div class="col-xs-12 col-sm-6 col-md-3 box" *ngIf="familyDisease.value.diseaseType?.diseaseType == 'Other'">
+          <md-form-field class="input-full-width">
+            <input autocomplete="off" mdInput defaultNull placeholder="{{currentLanguageSet?.pncData?.others}}"
+              maxlength="50" allowText="alphaspace" name="otherDiseaseType" formControlName="otherDiseaseType" />
+          </md-form-field>
+        </div>
+
+        <div class="col-xs-12 col-sm-6 col-md-3 box" [hidden]="true">
+          <md-form-field class="input-full-width">
+            <input maxlength="100" mdInput placeholder="{{currentLanguageSet?.historyData?.opd_NCD_PNCHistory?.otherVaccine?.sctCode}}" name="snomedCode" [style.width]="'100%'"
+              formControlName="snomedCode" readonly>
+          </md-form-field>
+        </div>
+
+        <div class="col-xs-12 col-sm-6 col-md-3 box">
+          <md-select class="select-full-width" multiple name="familyMembers" formControlName="familyMembers"
+            placeholder="{{
+              currentLanguageSet?.historyData?.ancHistory?.familyHistoryDataANC_OPD_NCD_PNC
+          ?.familyMember
+            }}" [disableFormControl]="
+              !familyDisease.value.diseaseType ||
+              familyDisease.value.diseaseType?.diseaseType == 'None'
+            ">
+            <md-option *ngFor="let member of familyMemeberMasterData" [value]="member.benRelationshipType">
+              {{ member.benRelationshipType }}
+            </md-option>
+          </md-select>
+        </div>
+
+        <div class="col-sm-6 col-md-3 box action-btn-container pull-right">
+          <button md-mini-fab color="warn" id="removeFamilyDisease" *ngIf="i != 0 || (i == 0 && familyDisease.touched)"
+            (click)="removeFamilyDisease(i, familyDisease)">
+            <md-icon class="md-18">close</md-icon>
+          </button>
+          <button md-mini-fab color="primary" *ngIf="isLast" [disabled]="checkValidity(familyDisease)"
+            id="addFamilyDisease" (click)="addFamilyDisease()">
+            <md-icon class="md-18">add</md-icon>
+          </button>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+
+  <div class="col-xs-12">
+    <div class="row m-t-10">
+      <div class="col-xs-12 col-sm-6 col-md-3 box">
+        <label class="control-label" for="geneticDisorders">{{
+          currentLanguageSet?.historyData?.ancHistory?.familyHistoryDataANC_OPD_NCD_PNC
+          ?.H_geneticDisorders
+          }}</label>
+        <div class="clearfix"></div>
+        <md-radio-group name="isGeneticDisorder" formControlName="isGeneticDisorder"
+          (change)="resetOtherGeneticOrder()">
+          <md-radio-button color="primary" [value]="true">{{currentLanguageSet?.common?.yes}}</md-radio-button>
+          <md-radio-button color="primary" [value]="false">{{currentLanguageSet?.common?.no}}</md-radio-button>
+        </md-radio-group>
+      </div>
+
+      <div class="col-xs-12 col-sm-6 col-md-3 box" *ngIf="isGeneticDisorder">
+        <md-form-field class="input-full-width">
+          <input autocomplete="off" mdInput allowText="inputFieldValidator " defaultNull placeholder="{{
+              currentLanguageSet?.historyData?.ancHistory?.familyHistoryDataANC_OPD_NCD_PNC
+          ?.geneticDisorders
+            }}" maxlength="50" name="geneticDisorder" formControlName="geneticDisorder" />
+        </md-form-field>
+      </div>
+
+      <div class="col-xs-12 col-sm-6 col-md-3 box">
+        <label class="control-label" for="consanguineousMarriage">{{
+          currentLanguageSet?.historyData?.ancHistory?.familyHistoryDataANC_OPD_NCD_PNC
+          ?.consanguineousMarriage
+          }}</label>
+        <div class="clearfix"></div>
+        <md-radio-group name="isConsanguineousMarrige" formControlName="isConsanguineousMarrige">
+          <md-radio-button color="primary" [value]="true">{{currentLanguageSet?.common?.yes}}</md-radio-button>
+          <md-radio-button color="primary" [value]="false">{{currentLanguageSet?.common?.no}}</md-radio-button>
+        </md-radio-group>
+      </div>
+    </div>
+  </div>
+</div>

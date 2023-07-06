@@ -1,0 +1,90 @@
+<!--{{oralExaminationForm.value | json}}-->
+<div class="row custom-table m-t-10" [formGroup]="oralExaminationForm">
+  <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+    <div class="col-xs-6 custom-cell">
+      <span>{{current_language_set?.ExaminationData?.cancerScreeningExamination?.oral?.limitedmouthopening}}</span>
+    </div>
+
+    <div class="col-xs-6 custom-cell">
+      <md-select floatPlaceholder="never" placeholder="{{current_language_set?.common?.select}}" name="limitedMouthOpening" formControlName="limitedMouthOpening">
+        <md-option value="none"> None </md-option>
+        <md-option value="+"> + </md-option>
+        <md-option value="++"> ++ </md-option>
+        <md-option value="+++"> +++ </md-option>
+      </md-select>
+    </div>
+
+    <div class="col-xs-6 custom-cell">
+      <span>{{current_language_set?.ExaminationData?.cancerScreeningExamination?.oral?.premalignantLesions}}</span>
+    </div>
+
+    <div class="col-xs-6 custom-cell">
+      <md-radio-group name="premalignantLesions" formControlName="premalignantLesions" (change)='checkWithPremalignantLesion()'>
+        <md-radio-button color="primary" class="form-radio-btn" [value]="true">{{current_language_set?.common?.yes}}</md-radio-button>
+        <md-radio-button color="primary" class="form-radio-btn" [value]="false">{{current_language_set?.common?.no}}</md-radio-button>
+      </md-radio-group>
+    </div>
+
+    <div class="col-xs-6 custom-cell" *ngIf="premalignantLesions.value">
+      <span>{{current_language_set?.ExaminationData?.cancerScreeningExamination?.oral?.typeofPremalignantLesions}}</span>
+    </div>
+
+    <div class="col-xs-6 custom-cell" *ngIf="premalignantLesions.value">
+      <md-select multiple floatPlaceholder="never" placeholder="{{current_language_set?.common?.select}}" name="preMalignantLesionTypeList" id="preMalignantLesionTypeList" formControlName="preMalignantLesionTypeList">
+        <md-option value="Leukoplakia"> Leukoplakia </md-option>
+        <md-option value="Sub muscus fibrosis"> Sub muscus fibrosis </md-option>
+        <md-option value="Melanoplakia"> Melanoplakia </md-option>
+        <md-option value="Erythroplakia"> Erythroplakia </md-option>
+        <md-option value="Non healing mouth ulcer(>2 weeks)"> Non healing mouth ulcer(>2 weeks)</md-option>
+        <md-option value="Any other lesion"> Any other lesion</md-option>
+      </md-select>
+    </div>
+
+    <div class="col-xs-6 custom-cell" *ngIf="(premalignantLesions.value) && showOther">
+      <span>{{current_language_set?.ExaminationData?.cancerScreeningExamination?.oral?.otherlesion}}</span>
+    </div>
+
+    <div class="col-xs-6 custom-cell other" *ngIf="(premalignantLesions.value) && showOther">
+      <md-form-field class="input-full-width">
+        <input autocomplete="off" mdInput allowText="inputFieldValidator" defaultNull maxlength="50" placeholder="{{current_language_set?.ExaminationData?.cancerScreeningExamination?.oral?.otherlesion}}" name="otherLesionType" id="otherLesionType" formControlName="otherLesionType">
+      </md-form-field>
+    </div>
+
+    <div class="col-xs-6 custom-cell">
+      <span>{{current_language_set?.ExaminationData?.cancerScreeningExamination?.oral?.prolongedirritation}}</span>
+    </div>
+
+    <div class="col-xs-6 custom-cell">
+      <md-radio-group name="prolongedIrritation" formControlName="prolongedIrritation">
+        <md-radio-button color="primary" class="form-radio-btn" [value]="true">{{current_language_set?.common?.yes}}</md-radio-button>
+        <md-radio-button color="primary" class="form-radio-btn" [value]="false">{{current_language_set?.common?.no}}</md-radio-button>
+      </md-radio-group>
+    </div>
+
+    <div class="col-xs-6 custom-cell">
+      <span>{{current_language_set?.ExaminationData?.cancerScreeningExamination?.oral?.chronicburningsensation}}</span>
+    </div>
+
+    <div class="col-xs-6 custom-cell">
+      <md-radio-group name="chronicBurningSensation" formControlName="chronicBurningSensation">
+        <md-radio-button color="primary" class="form-radio-btn" [value]="true">{{current_language_set?.common?.yes}}</md-radio-button>
+        <md-radio-button color="primary" class="form-radio-btn" [value]="false">{{current_language_set?.common?.no}}</md-radio-button>
+      </md-radio-group>
+    </div>
+
+  </div>
+
+  <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+    <div class="image-placeholder">
+      <small>{{current_language_set?.common?.kindlyMark}}</small>
+      <br>
+      <a (click)="annotateImage()" id="annotateOralImg" ><img #mouthImage src="assets/images/oralExamination.png" alt="oral examination"></a>
+    </div>
+  </div>
+
+  <div class="col-xs-12 textarea-full-height">
+    <md-form-field class="form-textarea col-xs-12">
+      <textarea mdInput allowText="textAreaValidator" defaultNull maxlength="500" mdTextareaAutosize name="observation" formControlName="observation" placeholder="{{current_language_set?.ExaminationData?.cancerScreeningExamination?.abdominal?.observation}}"></textarea>
+    </md-form-field>
+  </div>
+</div>

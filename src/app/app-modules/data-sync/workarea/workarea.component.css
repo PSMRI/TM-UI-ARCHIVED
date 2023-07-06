@@ -1,0 +1,134 @@
+.example-scrolling-content {
+  flex: auto;
+  /* overflow: auto; */
+  background: #f2f2f0 !important;
+  min-height: 500px;
+}
+
+.content {
+  padding: 20px 0px;
+}
+
+ul.description {
+  list-style: none;
+  padding: 10px 0px 0px;
+}
+
+ul.description li {
+  display: inline-block;
+  padding: 0 8px;
+}
+
+ul.description li div, ul li p {
+  display: inline-block;
+}
+
+ul.description li div {
+  height: 15px;
+  width: 15px;
+}
+
+.marker-p-f-c {
+  background: #0b69b2;
+}
+
+.marker-p-f-t {
+  background: #e44e4f;
+}
+
+.marker-t-d {
+  background: #eaaa26;
+}
+
+.marker-c-d {
+  background: #43760f;
+}
+
+.visitStatus {
+  position: relative;
+  text-align: center;
+}
+
+.visitStatus.p-f-c::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 1px;
+  width: 4px;
+  background: #0b69b2;
+}
+
+.visitStatus.p-f-t::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 1px;
+  width: 4px;
+  background: #e44e4f;
+}
+
+.visitStatus.t-d::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 1px;
+  width: 4px;
+  background: #eaaa26;
+}
+
+.visitStatus.c-d::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 1px;
+  width: 4px;
+  background: #43760f;
+}
+
+.totalCount, .description {
+  padding-top: 15px;
+}
+
+.viewGroup {
+  text-align: center;
+}
+
+.example-container {
+  /* height: 400px; */
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  /* margin: 2px 8px 2px 8px; */
+}
+
+.example-sidenav-content {
+  display: flex;
+  height: 100%;
+  padding: 20px;
+  align-items: center;
+  justify-content: center;
+}
+
+.example-sidenav {
+  padding: 20px;
+}
+
+.download-success h4 {
+  display: flex;
+  align-items: center;
+}
+
+.progress, .failedMaster {
+  width: 100%;
+}
+
+.download-success i {
+  color: green;
+  margin-left: 5px;
+}
+
+.m-b-30 {
+  margin-bottom: 40px;
+}

@@ -1,0 +1,316 @@
+<md-tab-group>
+  <md-tab label="{{current_language_set?.Reports?.labtestreports}}">
+    <div *ngIf="labResults?.length > 0" class="m-t-20">
+      <md-input-container id="filterbox" class="pull-right">
+        <input autocomplete="off" mdInput placeholder="{{current_language_set?.labTechnicianData?.testName}}"
+          #filterTerm (keyup)="filterProcedures(filterTerm.value)">
+        <md-icon mdSuffix>search</md-icon>
+      </md-input-container>
+    </div>
+
+    <div class="clearfix"></div>
+
+    <section class="m-t-20 overflow">
+      <table class="table table-responsive table-bordered" aria-describedby="LabPagedtbl">
+        <thead>
+          <tr>
+            <th style="width: 20%;" id="date">{{current_language_set?.common?.date}}</th>
+            <th style="width: 20%;" id="testName">{{current_language_set?.labTechnicianData?.testName}}</th>
+            <th style="width: 20%;" id="componentName">{{current_language_set?.labTechnicianData?.componentName}}</th>
+            <th style="width: 10%;" id="result">{{current_language_set?.common?.result}}</th>
+            <th style="width: 10%;" id="measurementUnit">{{current_language_set?.labTechnicianData?.measurementUnit}}</th>
+            <th style="width: 20%;" id="remarks">{{current_language_set?.common?.remarks}}</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="filteredLabResults?.length==0">
+          <tr>
+            <td colspan="6">
+              <h4 class='norecord'>{{current_language_set?.Reports?.notestresultsfound}}</h4>
+            </td>
+          </tr>
+        </tbody>
+        <tbody *ngIf="filteredLabResults?.length > 0">
+          <ng-container *ngFor="let test of currentLabPagedList; let i = index">
+            <tr>
+              <td [attr.rowspan]="test?.componentList.length + 1"
+                style="max-width:100px;vertical-align:middle;border:1px solid #ddd">{{test?.createdDate | date:
+                'dd/MM/yyyy, h:mm a'}}</td>
+              <td [attr.rowspan]="test?.componentList.length + 1"
+                style="max-width:200px; word-break: normal; vertical-align:middle;border:1px solid #ddd">
+                {{test?.procedureName}}</td>
+            </tr>
+            <tr *ngFor="let component of test?.componentList">
+              <td style="width:300px;max-width:120px; word-break: normal; vertical-align:middle">
+                {{component?.componentName}}</td>
+              <td style="width:110px; word-break: normal; vertical-align:middle ">{{component?.testResultValue}}</td>
+              <td style="width:150px; word-break: normal; vertical-align:middle">{{component?.testResultUnit}}</td>
+              <td style="max-width:150px; word-break: normal; vertical-align:middle">{{component?.remarks }}</td>
+            </tr>
+          </ng-container>
+        </tbody>
+        <tfoot>
+          <tr *ngIf="filteredLabResults?.length> 0">
+            <td colspan="2">
+              <div class="totalCount"> {{current_language_set?.common?.totalCount}} : {{ filteredLabResults.length }}
+              </div>
+            </td>
+            <td colspan="7">
+              <pagination class="pull-right" [boundaryLinks]="true" (pageChanged)="currentLabPageChanged($event)"
+                *ngIf="filteredLabResults.length" [totalItems]="filteredLabResults.length"
+                [itemsPerPage]="currentLabRowsPerPage" [maxSize]="currentLabRowsPerPage" [rotate]="rotate"
+                previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"></pagination>
+
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </section>
+  </md-tab>
+
+  <md-tab *ngIf="visitCategory == 'ANC'" label="FetoSense Reports">
+    <div class="m-t-20 overflow">
+      <table class="table table-responsive table-bordered" aria-describedby="fetosensetbl">
+        <tr>
+          <th style="width: 20%;" id="testdate">{{current_language_set?.testDate}}</th>
+          <th style="width: 20%;" id="testName">{{current_language_set?.labTechnicianData.testName}}</th>
+          <th style="width: 20%;" id="visitcode">{{current_language_set?.Reports?.visitcode}}</th>
+          <th style="width: 20%;" id="view">{{current_language_set?.Reports?.view}}</th>
+        </tr>
+        <tbody *ngIf='fetosenseData?.length == 0'>
+          <tr>
+            <td colspan="3">
+              <h4 class='norecord'>{{current_language_set?.common?.noRecordFound}}</h4>
+            </td>
+          </tr>
+        </tbody>
+        <tbody *ngIf='fetosenseData?.length > 0'>
+          <tr *ngFor='let fetosenseDataToShow of fetosenseData'>
+            <td>{{fetosenseDataToShow.testTime}}</td>
+            <td>{{fetosenseDataToShow.testName}}</td>
+            <td>{{fetosenseDataToShow.visitCode}}</td>
+            <td>
+              <em class="material-icons cursorPointer" (click)="showFetosenseReport(fetosenseDataToShow)">visibility</em>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="clearfix"></div>
+      
+    </div>
+    <div *ngIf="enableFetosenseView">
+
+      <div class="m-t-20">
+        <div class="clearfix"></div>
+        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4" *ngIf="fetosenseView?.length > 0">
+          
+          <h4>{{fetosenseTestName}}</h4>
+        </div>
+      </div>
+      <div class="clearfix"></div>
+      <section class="m-t-20 overflow">
+        <table class="table table-responsive table-bordered" aria-describedby="fetosenseViewTbl">    
+          <tbody *ngIf='fetosenseView?.length > 0'>
+            <tr *ngFor='let fetosenseViewToShow of fetosenseView'>
+              <th style="width: 20%;" id="name">{{fetosenseViewToShow.name}}</th>
+              <td style="width: 20%;">{{fetosenseViewToShow.value}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+      <div class="m-t-20">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          
+          <button *ngIf="imgUrl == undefined || imgUrl == null" md-raised-button color='primary'
+          (click)="showFetosenseGraph()">{{current_language_set?.clickToViewGraph}}</button>
+          
+            <embed [src]="imgUrl" 
+            type="application/pdf" *ngIf="imgUrl">
+          
+        </div>
+      </div>
+    </div>
+  </md-tab>
+
+  <md-tab label="{{current_language_set?.Reports?.radiologyreports}}">
+    <div class="m-t-20 overflow">
+      <table class="table table-responsive table-bordered" aria-describedby="radiologyResultTbl">
+        <tr>
+          <th style="width: 20%;" id="testName">{{current_language_set?.labTechnicianData?.testName}}</th>
+          <th style="width: 20%;" id="componentName">{{current_language_set?.labTechnicianData?.componentName}}</th>
+          <th style="width: 20%;" id="remarks">{{current_language_set?.common?.remarks}}</th>
+          <th style="width: 20%;" id="report">{{current_language_set?.common?.report}}</th>
+        </tr>
+        <tbody *ngIf='radiologyResults?.length == 0'>
+          <tr>
+            <td colspan="4">
+              <h4 class='norecord'>{{current_language_set?.Reports?.noradiologyreportsfound}}</h4>
+            </td>
+          </tr>
+        </tbody>
+        <tbody *ngIf='radiologyResults?.length > 0'>
+          <ng-container *ngFor='let radiologyReport of radiologyResults; let i = index'>
+            <tr>
+              <td [attr.rowspan]="radiologyReport?.componentList.length + 1">{{radiologyReport.procedureName}}</td>
+            </tr>
+            <tr *ngFor='let test of radiologyReport?.componentList'>
+              <td style="width:300px;max-width:120px; word-break: normal; vertical-align:middle">{{test?.componentName}}
+              </td>
+              <td style="max-width:150px; word-break: normal; vertical-align:middle">{{test?.remarks }}</td>
+              <td style="max-width:150px; word-break: normal; vertical-align:middle">
+                <button md-raised-button color='primary'
+                  (click)="showTestResult(test.fileIDs)">{{current_language_set?.nurseData?.visitDetailsForm?.viewFiles}}</button>
+              </td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+    </div>
+  </md-tab>
+
+  <md-tab label="{{current_language_set?.Reports?.archivedreports}}">
+
+    <div class="m-t-20 overflow">
+      <table class="table table-responsive table-bordered" aria-describedby="archivedResultstbl">
+        <tr>
+          <th id="date">{{current_language_set?.casesheet?.date}}</th>
+          <th id="visitcode">{{current_language_set?.Reports?.visitcode}}</th>
+          <th id="view">{{current_language_set?.Reports?.view}}</th>
+        </tr>
+        <tbody *ngIf='archivedResults?.length == 0'>
+          <tr>
+            <td colspan="3">
+              <h4 class='norecord'>{{current_language_set?.Reports?.noarchivedreportsfound}}</h4>
+            </td>
+          </tr>
+        </tbody>
+        <tbody *ngIf='archivedResults?.length > 0'>
+          <tr *ngFor='let archivedReport of archivedResults'>
+            <td>{{archivedReport.date | date: 'dd/MM/yyyy'}}</td>
+            <td>{{archivedReport.visitCode}}</td>
+            <td>
+              <em class="material-icons cursorPointer" (click)="showArchivedTestResult(archivedReport)">visibility</em>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div *ngIf=enableArchiveView>
+
+      <div class="m-t-20">
+        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+          <header>
+            <h4><strong> {{current_language_set?.Reports?.labreport}}</strong> </h4>
+          </header>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4" *ngIf="archivedLabResults?.length > 0">
+          <h4> <strong> {{current_language_set?.Reports?.visitcode}}: </strong>{{visitCode}} </h4>
+        </div>
+
+        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 pull-right">
+          <md-input-container id="filterbox" class="pull-right">
+            <input autocomplete="off" mdInput placeholder="{{current_language_set?.labTechnicianData.testName}}"
+              #filterTerm (keyup)="filterArchivedProcedures(filterTerm.value)">
+            <md-icon mdSuffix>search</md-icon>
+          </md-input-container>
+        </div>
+      </div>
+
+      <div class="clearfix"></div>
+
+      <section class="m-t-20 overflow">
+        <table class="table table-responsive table-bordered" aria-describedby="LabPagedListTbl">
+          <thead>
+            <tr>
+              <th style="width: 20%;" id="date1">{{current_language_set?.common?.date}}</th>
+              <th style="width: 20%;" id="testName1"> {{current_language_set?.labTechnicianData?.testName}}</th>
+              <th style="width: 20%;" id="componentName1"> {{current_language_set?.labTechnicianData?.componentName}}</th>
+              <th style="width: 10%;" id="result1">{{current_language_set?.common?.result}}</th>
+              <th style="width: 10%;" id="measurementUnit1">{{current_language_set?.labTechnicianData?.measurementUnit}}</th>
+              <th style="width: 20%;" id="remarks1">{{current_language_set?.common?.remarks}}</th>
+            </tr>
+          </thead>
+          <tbody *ngIf="filteredArchivedLabResults?.length==0">
+            <tr>
+              <td colspan="6">
+                <h4 class='norecord'>{{current_language_set?.Reports?.notestresultsfound}}</h4>
+              </td>
+            </tr>
+          </tbody>
+          <tbody *ngIf="filteredArchivedLabResults?.length > 0">
+            <ng-container *ngFor="let test of previousLabPagedList; let i = index">
+              <tr>
+                <td [attr.rowspan]="test?.componentList.length + 1"
+                  style="max-width:100px;vertical-align:middle;border:1px solid #ddd">{{test?.createdDate | date:
+                  'dd/MM/yyyy, h:mm a'}}</td>
+                <td [attr.rowspan]="test?.componentList.length + 1"
+                  style="max-width:200px; word-break: normal; vertical-align:middle;border:1px solid #ddd">
+                  {{test?.procedureName}}</td>
+              </tr>
+              <tr *ngFor="let component of test?.componentList">
+                <td style="width:300px;max-width:120px; word-break: normal; vertical-align:middle">
+                  {{component?.componentName}}</td>
+                <td style="width:110px; word-break: normal; vertical-align:middle ">{{component?.testResultValue}}</td>
+                <td style="width:150px; word-break: normal; vertical-align:middle">{{component?.testResultUnit}}</td>
+                <td style="max-width:150px; word-break: normal; vertical-align:middle">{{component?.remarks }}</td>
+              </tr>
+            </ng-container>
+          </tbody>
+          <tfoot>
+            <tr *ngIf="filteredArchivedLabResults.length> 0">
+              <td colspan="2">
+                <div class="totalCount"> {{current_language_set?.common?.totalCount}} : {{
+                  filteredArchivedLabResults.length }}</div>
+              </td>
+              <td colspan="7">
+                <pagination class="pull-right" [boundaryLinks]="true" (pageChanged)="previousLabPageChanged($event)"
+                  *ngIf="filteredArchivedLabResults.length" [totalItems]="filteredArchivedLabResults.length"
+                  [itemsPerPage]="previousLabRowsPerPage" [maxSize]="previousLabRowsPerPage" [rotate]="rotate"
+                  previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"></pagination>
+
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+      </section>
+      <div>
+        <div class="m-t-20">
+          <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+            <header>
+              <h4><strong>{{current_language_set?.Reports?.radiologyreport}}</strong>
+              </h4>
+            </header>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4" *ngIf='archivedRadiologyResults.length > 0'>
+            <h4><strong> {{current_language_set?.Reports?.visitcode}} : </strong>{{visitCode}} </h4>
+          </div>
+
+        </div>
+        <div class="clearfix"></div>
+        <div class="m-t-20 overflow">
+          <table class="table table-responsive table-bordered" aria-describedby="archivedRadiologyResultTbl">
+            <tr>
+              <th id="testName3">{{current_language_set?.labTechnicianData?.testName}}</th>
+              <th id="report3">{{current_language_set?.common?.report}}</th>
+            </tr>
+            <tbody *ngIf='archivedRadiologyResults.length == 0'>
+              <tr>
+                <td colspan="2">
+                  <h4 class='norecord'>{{current_language_set?.Reports?.noradiologyreportsfound}}</h4>
+                </td>
+              </tr>
+            </tbody>
+            <tbody *ngIf='archivedRadiologyResults.length > 0'>
+              <tr *ngFor='let radiologyReport of archivedRadiologyResults'>
+                <td>{{radiologyReport.procedureName}}</td>
+                <td>
+                  <em class="material-icons" (click)="showArchivedRadiologyTestResult(radiologyReport)">visibility</em>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </md-tab>
+
+</md-tab-group>

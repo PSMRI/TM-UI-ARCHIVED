@@ -1,0 +1,37 @@
+<!-- {{patientANCDetailsForm.value | json}} -->
+<div [formGroup]="patientANCDetailsForm" class="row m-t-20">
+  <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+    <label class="control-label" for="pregnancyStatus">{{current_language_set?.ancData?.ancDataDetails?.primiGravida}}*</label>
+    <div class="clearfix"></div>
+    <md-radio-group name='primiGravida' formControlName="primiGravida" (change)="checkGravidaStatus(primiGravida)" required>
+      <md-radio-button color="primary" [value]="true">{{current_language_set?.common?.yes}}</md-radio-button>
+      <md-radio-button color="primary" class="radio-btn" [value]="false">{{current_language_set?.common?.no}}</md-radio-button>
+    </md-radio-group>
+  </div>
+
+  <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+    <md2-datepicker [openOnFocus]="true" style="width:100%" name='lmpDate' formControlName="lmpDate" placeholder="{{current_language_set?.ancData?.ancDataDetails?.lastMenstrualPeriod}}" [max]='today' [min]='dob' (change)="checkupLMP(lmpDate)" ng-readonly="true" required></md2-datepicker>
+  </div>
+
+  <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+    <md-form-field class="input-full-width">
+      <input autocomplete="off" mdInput defaultNull name='gestationalAgeOrPeriodofAmenorrhea_POA' formControlName="gestationalAgeOrPeriodofAmenorrhea_POA" [readonly]="true" placeholder="{{current_language_set?.ancData?.ancDataDetails?.currentGestationalAge}}">
+    </md-form-field>
+  </div>
+
+  <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+    <md2-datepicker style="width:100%" name='expDelDt' formControlName="expDelDt" placeholder="{{current_language_set?.ancData?.ancDataDetails?.eDD}}" [disabled]='true'></md2-datepicker>
+  </div>
+
+  <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+    <md-form-field class="input-full-width">
+      <input autocomplete="off" mdInput defaultNull name='duration' formControlName="duration" allowText='number' allowMax='9' placeholder="{{current_language_set?.ancData?.ancDataDetails?.periodofPregnancy}}" (change)='checkPeriodOfPregnancy(patientANCDetailsForm.value.duration)'>
+    </md-form-field>
+  </div>
+
+  <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 box">
+    <md-form-field class="input-full-width">
+      <input autocomplete="off" mdInput defaultNull name='trimesterNumber' formControlName="trimesterNumber" [readonly]="true" placeholder="{{current_language_set?.ancData?.ancDataDetails?.trimesterNumber}}">
+    </md-form-field>
+  </div>
+</div>

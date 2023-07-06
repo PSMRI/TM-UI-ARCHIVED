@@ -1,0 +1,10 @@
+<div class="container-fluid">
+  <md-tab-group (focusChange)="tabChanged($event)">
+    <md-tab label="{{currentLanguageSet?.tabs?.current}}">
+      <app-tc-specialist-worklist [getChangedTab]='getChangedTab'></app-tc-specialist-worklist>
+    </md-tab>
+    <md-tab label="{{currentLanguageSet?.tabs?.future}}">
+      <app-tc-specialist-future-worklist></app-tc-specialist-future-worklist>
+    </md-tab>
+  </md-tab-group>
+</div>

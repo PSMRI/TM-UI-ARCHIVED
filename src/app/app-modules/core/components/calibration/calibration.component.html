@@ -1,0 +1,66 @@
+<div class="title">
+  <h4>{{current_language_set?.coreComponents?.selectCallibrationStrip}}</h4>
+  <button md-icon-button  tooltip="{{current_language_set?.coreComponents?.close}}" class="pull-right exit width-20px" (click)="close()">
+    <md-icon>close</md-icon>
+  </button>
+</div>
+<div class="container-fluid">
+
+  
+  <md-dialog-content>
+    <md-input-container>
+      <input autocomplete="off" mdInput placeholder="{{current_language_set?.coreComponents?.inTableSearchStripCode}}" #filterTerm (keyup)="filterPreviousData(filterTerm.value)">
+      <md-icon mdSuffix>search</md-icon>
+    </md-input-container>
+    <div class="table-responsive">
+      <table class="table table-striped" [md2Data]="components" #md2="md2DataTable" aria-describedby="CallibrationStripTbl">
+        <thead>
+          <tr>
+            <th id="sno">{{current_language_set?.coreComponents?.sno}}</th>
+            <th id="SCode">{{current_language_set?.coreComponents?.stripCode}}</th>
+            <th id="ExpiryDate">{{current_language_set?.coreComponents?.expiryDate}}</th>
+
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="components.length == 0" >
+            <td colspan="5" class="text-center" style="text-align: center;">{{message}}</td>
+          </tr>
+          <tr *ngFor="let item of md2.data;let i=index;" (click)="goToLink(item)" class="element-row" >
+            <td data-title="SNo">{{i+1}} </td>
+            <td data-title="Strip Code">{{ item?.stripCode}} </td>
+            <td data-title="Expiry Date">{{(item.expiryDate!=undefined && item.expiryDate!=null) ? (item.expiryDate| date:'dd-MM-yyyy'):'NA'}}</td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="6" class="text-right">
+             
+              <div *ngIf="components.length != 0" class="pull-left m-t-40">{{current_language_set?.coreComponents?.totalPages}}: {{pageCount}}</div>
+              <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+                <li [ngClass]="{disabled:pager.currentPage <= 0}">
+                  <a (click)="checkPager(pager,0)">
+                    <<</a>
+                </li>
+                <li [ngClass]="{disabled:pager.currentPage <= 0}">
+                  <a (click)="setPage(pager.currentPage - 1)">
+                    <</a>
+                </li>
+                <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+                  <a (click)="setPage(page)">{{page + 1}}</a>
+                </li>
+                <li [ngClass]="{disabled:pager.currentPage >= pager.totalPages - 1}">
+                  <a (click)="setPage(pager.currentPage + 1)">></a>
+                </li>
+                <li [ngClass]="{disabled:pager.currentPage >= pager.totalPages - 1}">
+                  <a (click)="checkPager(pager, pager.totalPages - 1)">>></a>
+                </li>
+              </ul>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>    
+  </md-dialog-content>
+
+</div>  
