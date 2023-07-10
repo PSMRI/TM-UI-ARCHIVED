@@ -1,10 +1,10 @@
 name: Static Code Analysis and Package Prod
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "master"]
     
 jobs:
-  CodeQL:
+  sast-and-package-prod:
     runs-on: ubuntu-latest
     permissions:
       actions: read
@@ -37,55 +37,27 @@ jobs:
       with:
           node-version: 16
           
-    - name: Build with NPM 
-      run: |
-            npm config set legacy-peer-deps true
-            npm install -g @angular/cli
-            npm install typescript@2.7.2 --save-dev
-            npm install ng2-smart-table@1.2.1
-            npm install node-sass
-            npm install --force
-            npm run build
-            
-
    
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v2
       with:
           languages: javascript,typescript 
           
-  Packaging:
-    needs: codeql
-    runs-on: ubuntu-latest
-    steps:
-    
-    - name: Checkout code
-      uses: actions/checkout@v3
-      
-    - name: Setup JDK 8
-      uses: actions/setup-java@v2
-      with:
-        java-version: 8
-        distribution: 'adopt'
-        
-    - name: Set up Node.js
-      uses: actions/setup-node@v2
-      with:
-          node-version: 16
+ 
           
-    - name: Build with NPM and Maven
+    - name: Build with NPM 
       run: |
             npm config set legacy-peer-deps true
             npm install -g @angular/cli
+            npm install -g grunt-cli
             npm install typescript@2.7.2 --save-dev
             npm install ng2-smart-table@1.2.1
-            npm install node-sass
+            npm install node-sass --force
             npm install --force
-            npm run build
-            mvn clean install -Denvironment=prod   
-        
+            
+            
     - name: Create WAR file 
-      run: mvn -B package --file pom.xml
+      run: npm run ng build --prod --aot && grunt
       
     - name: Upload WAR file as artifact
       uses: actions/upload-artifact@v2 
