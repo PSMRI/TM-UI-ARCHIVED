@@ -562,14 +562,14 @@ export class GeneralUtils {
     return this.fb.group({
       conceptID: [null, Validators.required],
       term: [null, Validators.required],
-      viewProvisionalDiagnosisProvided: [null, Validators.required],
+      viewProvisionalDiagnosisProvided: [null],
     })
   }
   initConfirmatoryDiagnosisList() {
     return this.fb.group({
       conceptID: [null, Validators.required],
       term: [null, Validators.required],
-      viewConfirmatoryDiagnosisProvided: [null, Validators.required],
+      viewConfirmatoryDiagnosisProvided: [null],
     })
   }
 
