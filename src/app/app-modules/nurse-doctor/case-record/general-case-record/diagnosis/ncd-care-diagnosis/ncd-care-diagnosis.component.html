@@ -83,7 +83,7 @@
             <div class="col-xs-12 col-sm-9">
               <md-form-field class="input-full-width">
                 <input mdInput allowText="inputFieldValidator" appDiagnosisSearch [diagnosisListForm]="diagnosis"  name="viewDiagnosisProvided" formControlName="viewProvisionalDiagnosisProvided"
-                  maxlength="100" minlength="3" [previousSelected]="generalDiagnosisForm?.value?.provisionalDiagnosisList" required >
+                  maxlength="100" minlength="3" [previousSelected]="generalDiagnosisForm?.value?.provisionalDiagnosisList" >
                 <md-icon class="search-btn cursorPointer" *ngIf="!(diagnosis.controls['viewProvisionalDiagnosisProvided'].disabled)" mdSuffix
                   appDiagnosisSearch [diagnosisListForm]="diagnosis" [previousSelected]="generalDiagnosisForm?.value?.provisionalDiagnosisList">search</md-icon>
               </md-form-field>
