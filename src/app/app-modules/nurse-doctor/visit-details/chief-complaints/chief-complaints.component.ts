@@ -9,6 +9,7 @@ import { VisitDetailUtils } from '../../shared/utility/visit-detail-utility';
 import { VisitDetailsComponent } from 'app/app-modules/nurse-doctor/visit-details/visit-details.component';
 import { HttpServiceService } from 'app/app-modules/core/services/http-service.service';
 import { SetLanguageComponent } from 'app/app-modules/core/components/set-language.component';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'patient-chief-complaints',
@@ -202,6 +203,7 @@ export class ChiefComplaintsComponent implements OnInit, DoCheck {
        flag=true;
        break;
        }
+       if(environment.isMMUOffline) {
        if(this.benChiefComplaints[i] !=undefined && 
         this.benChiefComplaints[i] !=null && this.benChiefComplaints[i].chiefComplaint !=undefined && this.benChiefComplaints[i].chiefComplaint !=null && 
         (this.benChiefComplaints[i].chiefComplaint.toLowerCase().includes("fever") || this.benChiefComplaints[i].chiefComplaint.toLowerCase().includes("cough") || 
@@ -213,6 +215,7 @@ export class ChiefComplaintsComponent implements OnInit, DoCheck {
         this.enableLungAssessment=true;
        break;
        }
+      }
     }
   }
   if(flag)
@@ -307,6 +310,7 @@ export class ChiefComplaintsComponent implements OnInit, DoCheck {
         this.enableProvisionalDiag = true;
         if(val !=undefined && val !=null && val.chiefComplaint !=undefined && val.chiefComplaint !=null && val.chiefComplaint.toLowerCase() === "fever")
         flag=true;
+        if(environment.isMMUOffline) {
         if(val !=undefined && val !=null && val.chiefComplaint !=undefined && val.chiefComplaint !=null && 
           (val.chiefComplaint.toLowerCase().includes("fever") || val.chiefComplaint.toLowerCase().includes("cough") || 
           val.chiefComplaint.toLowerCase().includes("congestion") || val.chiefComplaint.toLowerCase().includes("breathing difficulty") ||
@@ -314,6 +318,7 @@ export class ChiefComplaintsComponent implements OnInit, DoCheck {
           val.chiefComplaint.toLowerCase().includes("influenza") || val.chiefComplaint.toLowerCase().includes("pneumonia") ||
           val.chiefComplaint.toLowerCase().includes("tuberculosis") || val.chiefComplaint.toLowerCase().includes("lung cancer")))
         this.enableLungAssessment=true;
+        }
       })
     }
     if(flag)
@@ -387,6 +392,7 @@ export class ChiefComplaintsComponent implements OnInit, DoCheck {
         this.enableProvisionalDiag = true;
         if(val !=undefined && val !=null && val.chiefComplaint !=undefined && val.chiefComplaint !=null && val.chiefComplaint.toLowerCase() === "fever")
         flag=true;
+        if(environment.isMMUOffline) {
         if(val !=undefined && val !=null && val.chiefComplaint !=undefined && val.chiefComplaint !=null && 
           (val.chiefComplaint.toLowerCase().includes("fever") || val.chiefComplaint.toLowerCase().includes("cough") || 
             val.chiefComplaint.toLowerCase().includes("congestion") || val.chiefComplaint.toLowerCase().includes("breathing problems") ||
@@ -394,6 +400,7 @@ export class ChiefComplaintsComponent implements OnInit, DoCheck {
             val.chiefComplaint.toLowerCase().includes("influenza") || val.chiefComplaint.toLowerCase().includes("pneumonia") ||
             val.chiefComplaint.toLowerCase().includes("tuberculosis") || val.chiefComplaint.toLowerCase().includes("lung cancer")))
         this.enableLungAssessment=true;
+        }
       })
     }
     if(flag)
