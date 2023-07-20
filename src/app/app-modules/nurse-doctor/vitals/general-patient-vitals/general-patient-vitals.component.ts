@@ -89,6 +89,7 @@ export class GeneralPatientVitalsComponent implements OnInit {
   painInChestChecked: any;
   shortnessOfBreathChecked: any;
   enableLungAssessment: boolean = false;
+  hideLungAssessment: boolean = false;
 
   constructor(
     private dialog: MdDialog,
@@ -162,6 +163,11 @@ export class GeneralPatientVitalsComponent implements OnInit {
     
     this.idrsscore.diabetesSelectedFlag$.subscribe(response => this.diabetesSelected = response);
     this.getGender();
+    if(environment.isTMOffline) {
+      this.hideLungAssessment = true;
+    } else {
+      this.hideLungAssessment = false;
+    }
     this.nurseService.enableLAssessment$.subscribe(
       (response) => {
         if(response == true) {

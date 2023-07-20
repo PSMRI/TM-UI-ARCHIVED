@@ -36,6 +36,7 @@ const mmuUICasesheet = `${tmUI_IP}tmui-v1.0`;
 
 export const environment = {
   production: true,
+  isTMOffline: false,
 
   app: `MMU`,
   RBSTest:`RBS Test`,

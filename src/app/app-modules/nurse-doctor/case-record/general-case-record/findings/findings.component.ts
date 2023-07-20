@@ -10,6 +10,7 @@ import { ConfirmationService } from '../../../../core/services/confirmation.serv
 import { GeneralUtils } from '../../../shared/utility/general-utility';
 import { HttpServiceService } from 'app/app-modules/core/services/http-service.service';
 import { SetLanguageComponent } from 'app/app-modules/core/components/set-language.component';
+import { environment } from 'environments/environment';
 @Component({
   selector: 'app-findings',
   templateUrl: './findings.component.html',
@@ -312,6 +313,7 @@ export class FindingsComponent implements OnInit {
             flag = true;
             break;
           }
+          if(environment.isTMOffline) {
           if (
             chiefComplaintForm.value[i].chiefComplaint.chiefComplaint.toLowerCase().includes("fever") ||
             chiefComplaintForm.value[i].chiefComplaint.chiefComplaint.toLowerCase().includes("cough") ||
@@ -327,6 +329,7 @@ export class FindingsComponent implements OnInit {
             flag = true;
             break;
           }
+        }
         }
       }
     }
