@@ -163,7 +163,7 @@ export class GeneralPatientVitalsComponent implements OnInit {
     
     this.idrsscore.diabetesSelectedFlag$.subscribe(response => this.diabetesSelected = response);
     this.getGender();
-    if(environment.isMMUOffline) {
+    if(environment.isTMOffline) {
       this.hideLungAssessment = true;
     } else {
       this.hideLungAssessment = false;

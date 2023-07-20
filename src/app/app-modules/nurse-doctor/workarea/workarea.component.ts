@@ -1268,7 +1268,7 @@ this.resetSpinnerandEnableTheSubmitButton();
       this.patientMedicalForm.controls["patientANCForm"]
     );
     const required = [];
-    if(environment.isMMUOffline) {
+    if(environment.isTMOffline) {
     if(this.enableLungAssessment === true && this.beneficiaryAge >= 18 && this.nurseService.isAssessmentDone === false) {
       required.push("Please perform Lung Assessment");
     }
@@ -2045,7 +2045,7 @@ this.resetSpinnerandEnableTheSubmitButton();
         "physicalActivityHistory"
       ]
     );
-    if(environment.isMMUOffline) {
+    if(environment.isTMOffline) {
     if(this.enableLungAssessment === true && this.beneficiaryAge >= 18 && this.nurseService.isAssessmentDone === false) {
       required.push("Please perform Lung Assessment");
     }

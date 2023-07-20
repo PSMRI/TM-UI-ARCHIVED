@@ -203,7 +203,7 @@ export class ChiefComplaintsComponent implements OnInit, DoCheck {
        flag=true;
        break;
        }
-       if(environment.isMMUOffline) {
+       if(environment.isTMOffline) {
        if(this.benChiefComplaints[i] !=undefined && 
         this.benChiefComplaints[i] !=null && this.benChiefComplaints[i].chiefComplaint !=undefined && this.benChiefComplaints[i].chiefComplaint !=null && 
         (this.benChiefComplaints[i].chiefComplaint.toLowerCase().includes("fever") || this.benChiefComplaints[i].chiefComplaint.toLowerCase().includes("cough") || 
@@ -310,7 +310,7 @@ export class ChiefComplaintsComponent implements OnInit, DoCheck {
         this.enableProvisionalDiag = true;
         if(val !=undefined && val !=null && val.chiefComplaint !=undefined && val.chiefComplaint !=null && val.chiefComplaint.toLowerCase() === "fever")
         flag=true;
-        if(environment.isMMUOffline) {
+        if(environment.isTMOffline) {
         if(val !=undefined && val !=null && val.chiefComplaint !=undefined && val.chiefComplaint !=null && 
           (val.chiefComplaint.toLowerCase().includes("fever") || val.chiefComplaint.toLowerCase().includes("cough") || 
           val.chiefComplaint.toLowerCase().includes("congestion") || val.chiefComplaint.toLowerCase().includes("breathing difficulty") ||
@@ -392,7 +392,7 @@ export class ChiefComplaintsComponent implements OnInit, DoCheck {
         this.enableProvisionalDiag = true;
         if(val !=undefined && val !=null && val.chiefComplaint !=undefined && val.chiefComplaint !=null && val.chiefComplaint.toLowerCase() === "fever")
         flag=true;
-        if(environment.isMMUOffline) {
+        if(environment.isTMOffline) {
         if(val !=undefined && val !=null && val.chiefComplaint !=undefined && val.chiefComplaint !=null && 
           (val.chiefComplaint.toLowerCase().includes("fever") || val.chiefComplaint.toLowerCase().includes("cough") || 
             val.chiefComplaint.toLowerCase().includes("congestion") || val.chiefComplaint.toLowerCase().includes("breathing problems") ||

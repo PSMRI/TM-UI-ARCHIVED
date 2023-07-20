@@ -313,7 +313,7 @@ export class FindingsComponent implements OnInit {
             flag = true;
             break;
           }
-          if(environment.isMMUOffline) {
+          if(environment.isTMOffline) {
           if (
             chiefComplaintForm.value[i].chiefComplaint.chiefComplaint.toLowerCase().includes("fever") ||
             chiefComplaintForm.value[i].chiefComplaint.chiefComplaint.toLowerCase().includes("cough") ||
