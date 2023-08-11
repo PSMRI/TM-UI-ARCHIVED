@@ -1,5 +1,5 @@
 /* 
-* AMRIT – Accessible Medical Records via Integrated Technology 
+* AMRIT ï¿½ Accessible Medical Records via Integrated Technology 
 * Integrated EHR (Electronic Health Records) Solution 
 *
 * Copyright (C) "Piramal Swasthya Management and Research Institute" 
@@ -221,9 +221,9 @@ export const environment = {
   updateANCHistoryDetailsUrl: `${TM_API}ANC/update/historyScreen`,
   updateANCExaminationDetailsUrl: `${TM_API}ANC/update/examinationScreen`,
 
-   /**ANC Fetosense API URLs */
-   savefetosenseTestDetailsUrl: `${TM_API}/fetosense/sendMotherTestDetailsToFetosense`,
-   getPrescribedFetosenseTests: `${TM_API}/fetosense/fetch/fetosenseDetails/`,
+   /**ANC FoetalMonitor API URLs */
+   savefetosenseTestDetailsUrl: `${TM_API}/foetalMonitor/sendMotherTestDetailsToFoetalMonitor`,
+   getPrescribedFetosenseTests: `${TM_API}/foetalMonitor/fetch/foetalMonitorDetails/`,
 
   /**
    * CANCER SCREENING API URLs
@@ -349,7 +349,7 @@ export const environment = {
   previousFeedingHistory: `${TM_API}common/getBenFeedingHistory`,
   /* */
   archivedReportsUrl: `${TM_API}labTechnician/get/labResultForVisitcode`,
-  ReportsBase64Url: `${TM_API}fetosense/fetch/reportGraphBase64`,
+  ReportsBase64Url: `${TM_API}foetalMonitor/fetch/reportGraphBase64`,
   previousMMUHistoryUrl: `${MMU_API}common/getBeneficiaryCaseSheetHistory`,
   previousTMHistoryUrl: `${TM_API}common/getBeneficiaryCaseSheetHistory`,
   previousMCTSHistoryUrl: `${COMMON_API}mctsOutboundHistoryController/getMctsCallHistory`,
