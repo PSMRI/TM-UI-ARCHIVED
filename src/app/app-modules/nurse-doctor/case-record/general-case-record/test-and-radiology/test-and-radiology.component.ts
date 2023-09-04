@@ -1,5 +1,5 @@
 /* 
-* AMRIT – Accessible Medical Records via Integrated Technology 
+* AMRIT ï¿½ Accessible Medical Records via Integrated Technology 
 * Integrated EHR (Electronic Health Records) Solution 
 *
 * Copyright (C) "Piramal Swasthya Management and Research Institute" 
@@ -590,7 +590,7 @@ export class TestAndRadiologyComponent implements OnInit {
     this.fetosenseView.push({ name: "Test ID", value: fetosenseDataToshow.testId });
     this.fetosenseView.push({ name: "Device ID", value: fetosenseDataToshow.deviceId });
   }
-  getTestName(fetosenseTestID) {
+  getTestName(foetalMonitorTestId) {
 
   }
   showFetosenseGraph() {
