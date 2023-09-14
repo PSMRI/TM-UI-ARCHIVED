@@ -32,8 +32,9 @@
         <md-menu #knowAboutUs x-position="before"  class="m-t-40">
           <md-list class="p-t-0">
             <md-list-item (click)='showVersionAndCommitDetails()'>{{currentLanguageSet?.version}}:{{versionUI}}</md-list-item>
-            <md-list-item><a target="_blank" href={{license}}>{{currentLanguageSet?.licenseInfo}}.</a>
-            </md-list-item>
+            <md-list-item>
+              <a target="_blank" rel="noopener noreferrer" href={{license}}>{{currentLanguageSet?.licenseInfo}}</a>
+        </md-list-item>        
           </md-list>
         </md-menu>
         <li *ngIf="userName && isAuthenticated" tooltip="{{currentLanguageSet?.coreComponents?.user}}">
