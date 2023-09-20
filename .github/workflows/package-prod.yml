@@ -1,0 +1,52 @@
+name: Package Prod
+on:
+  push:
+    branches: [ "master"]
+    
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+
+    strategy:
+      fail-fast: false
+    steps:
+      
+    - name: Checkout code
+      uses: actions/checkout@v3
+        
+
+    - name: Set up Java
+      uses: actions/setup-java@v3
+      with:
+          java-version: '8'
+          distribution: 'adopt'
+
+          
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+          node-version: 16
+          
+    - name: Build with NPM 
+      run: |
+            npm config set legacy-peer-deps true
+            npm install -g @angular/cli
+            npm install -g grunt-cli
+            npm install typescript@2.7.2 --save-dev
+            npm install ng2-smart-table@1.2.1
+            npm install node-sass --force
+            npm install --force
+            
+            
+    - name: Create WAR file 
+      run: npm run ng build --prod --aot && grunt
+      
+    - name: Upload WAR file as artifact
+      uses: actions/upload-artifact@v2 
+      with:
+        name: TM-UI
+        path: target/tmui-v1.0.war
