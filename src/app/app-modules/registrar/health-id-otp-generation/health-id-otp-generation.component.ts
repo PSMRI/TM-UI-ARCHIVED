@@ -139,7 +139,7 @@ export class HealthIdOtpGenerationComponent implements OnInit {
       reqObj = {
         'aadhaar': this.data.aadharNumber
       }
-      if(this.data.aadharNumber !== undefined || this.data.aadharNumber !== null){
+      if(this.data.aadharNumber !== undefined && this.data.aadharNumber !== null){
         this.aadharNum =  this.data.aadharNumber;
       }
     }
