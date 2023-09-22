@@ -1,5 +1,5 @@
 /* 
-* AMRIT – Accessible Medical Records via Integrated Technology 
+* AMRIT ï¿½ Accessible Medical Records via Integrated Technology 
 * Integrated EHR (Electronic Health Records) Solution 
 *
 * Copyright (C) "Piramal Swasthya Management and Research Institute" 
@@ -49,6 +49,7 @@ export class HealthIdOtpGenerationComponent implements OnInit {
   showProgressBar: Boolean = false;
   password: any;
   // mobileLinkedOtp: any;
+  aadharNum: any;
 
   constructor(private fb: FormBuilder,public dialogRef: MdDialogRef<HealthIdOtpGenerationComponent>,
     public httpServiceService: HttpServiceService,@Inject(MD_DIALOG_DATA) public data: any,
@@ -137,6 +138,9 @@ export class HealthIdOtpGenerationComponent implements OnInit {
     else if (this.healthIdMode == "AADHAR"){
       reqObj = {
         'aadhaar': this.data.aadharNumber
+      }
+      if(this.data.aadharNumber !== undefined && this.data.aadharNumber !== null){
+        this.aadharNum =  this.data.aadharNumber;
       }
     }
     this.registrarService.generateOTP(reqObj,this.healthIdMode)
@@ -247,6 +251,9 @@ export class HealthIdOtpGenerationComponent implements OnInit {
       this.registrarService.generateHealthIdWithUID(reqObj)
         .subscribe((res) => {
           if (res.statusCode == 200 && res.data) {
+            this.registrarService.abhaGenerateData = res.data;
+            this.registrarService.aadharNumberNew = this.aadharNum;
+            this.registrarService.getabhaDetail(true);
             let dialogRefSuccess = this.dialog.open(HealthIdOtpSuccessComponent, {
               height: '300px',
               width: '420px',

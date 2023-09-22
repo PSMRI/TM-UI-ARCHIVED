@@ -67,3 +67,7 @@ font-weight: bolder;
     font-size: 10px;
     color: grey;
 }
+
+    #govtID ::ng-deep.mat-form-field-wrapper {
+        padding-bottom: 20px !important;
+  }

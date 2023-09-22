@@ -1,5 +1,5 @@
 /* 
-* AMRIT – Accessible Medical Records via Integrated Technology 
+* AMRIT ï¿½ Accessible Medical Records via Integrated Technology 
 * Integrated EHR (Electronic Health Records) Solution 
 *
 * Copyright (C) "Piramal Swasthya Management and Research Institute" 
@@ -49,6 +49,13 @@ export class RegistrarService {
   healthIdMobVerificationValue: any = null;
   healthIdMobVerification = new BehaviorSubject(this.healthIdMobVerificationValue);
   healthIdMobVerificationCheck$ = this.healthIdMobVerification.asObservable();
+
+  abhaGenerateData: any ;
+  aadharNumberNew: any;
+
+  abhaDetail: any= null ;
+  abhaDetailData = new BehaviorSubject<any>(this.abhaDetail);
+  abhaDetailDetails$ = this.abhaDetailData.asObservable();
 
   public dialogData = new BehaviorSubject<any>(null);
   dialogResult$ = this.dialogData.asObservable();
@@ -287,4 +294,10 @@ export class RegistrarService {
   updateBenDetailsInMongo(amritID) {
     return this.http.post(environment.updateAmritIDInMongo,amritID).map((res) => res.json());
   }
+
+  getabhaDetail(abhaDetailDetails){
+    this.abhaDetail = abhaDetailDetails;
+    this.abhaDetailData.next(this.abhaDetail);
+  }
+  
 }

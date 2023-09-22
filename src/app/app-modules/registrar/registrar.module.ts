@@ -1,5 +1,5 @@
 /* 
-* AMRIT – Accessible Medical Records via Integrated Technology 
+* AMRIT ï¿½ Accessible Medical Records via Integrated Technology 
 * Integrated EHR (Electronic Health Records) Solution 
 *
 * Copyright (C) "Piramal Swasthya Management and Research Institute" 
@@ -47,6 +47,8 @@ import { HealthIdOtpGenerationComponent, HealthIdOtpSuccessComponent } from './h
 import { QuickSearchComponent } from './quick-search/quick-search.component';
 import { GenerateMobileOtpGenerationComponent } from './generate-mobile-otp-generation/generate-mobile-otp-generation.component';
 import { SetPasswordForAbhaComponent } from './set-password-for-abha/set-password-for-abha.component';
+import { GenerateAbhaComponent } from './generate-abha/generate-abha.component';
+import { BiometricAuthenticationComponent } from './biometric-authentication/biometric-authentication.component';
 
 @NgModule({
   imports: [
@@ -60,7 +62,7 @@ import { SetPasswordForAbhaComponent } from './set-password-for-abha/set-passwor
     DatepickerModule.forRoot()
   ],
   entryComponents: [SearchDialogComponent,HealthIdOtpGenerationComponent,HealthIdOtpSuccessComponent,HealthIdValidateComponent,QuickSearchComponent,ViewHealthIdCardComponent,
-    GenerateMobileOtpGenerationComponent,SetPasswordForAbhaComponent],
+    GenerateMobileOtpGenerationComponent,SetPasswordForAbhaComponent, GenerateAbhaComponent, BiometricAuthenticationComponent],
   providers: [ 
     RegistrarService 
   ],
@@ -78,7 +80,9 @@ import { SetPasswordForAbhaComponent } from './set-password-for-abha/set-passwor
     ViewHealthIdCardComponent,
     QuickSearchComponent,
     GenerateMobileOtpGenerationComponent,
-    SetPasswordForAbhaComponent
+    SetPasswordForAbhaComponent,
+    GenerateAbhaComponent,
+    BiometricAuthenticationComponent
     
   ],
 })

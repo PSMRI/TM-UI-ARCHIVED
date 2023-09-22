@@ -1,5 +1,5 @@
 /* 
-* AMRIT – Accessible Medical Records via Integrated Technology 
+* AMRIT ï¿½ Accessible Medical Records via Integrated Technology 
 * Integrated EHR (Electronic Health Records) Solution 
 *
 * Copyright (C) "Piramal Swasthya Management and Research Institute" 
@@ -44,6 +44,7 @@ import { HttpServiceService } from 'app/app-modules/core/services/http-service.s
 import { HealthIdOtpGenerationComponent } from '../health-id-otp-generation/health-id-otp-generation.component';
 import { HealthIdDisplayModalComponent } from 'app/app-modules/core/components/health-id-display-modal/health-id-display-modal.component';
 import { SetLanguageComponent } from 'app/app-modules/core/components/set-language.component';
+import { GenerateAbhaComponent } from '../generate-abha/generate-abha.component';
 
 @Component({
   selector: 'app-registration',
@@ -143,7 +144,7 @@ export class RegistrationComponent implements OnInit, AfterViewChecked, OnDestro
   }
 
   setHealthIdAfterGeneration(result) {
-    (<FormGroup>this.beneficiaryRegistrationForm.controls['otherDetailsForm']).patchValue({ healthId: result.healthId });
+    (<FormGroup>this.beneficiaryRegistrationForm.controls['otherDetailsForm']).patchValue({ healthId: result.healthIdNumber });
     (<FormGroup>this.beneficiaryRegistrationForm.controls['otherDetailsForm']).patchValue({ healthIdNumber: result.healthIdNumber });
 
     (<FormGroup>this.beneficiaryRegistrationForm.controls['otherDetailsForm']).controls['healthId'].disable();
@@ -615,6 +616,15 @@ export class RegistrationComponent implements OnInit, AfterViewChecked, OnDestro
         return true;
       }
     }
+  }
+  generateAbhaCard(){
+    let dialogRef = this.dialog.open(GenerateAbhaComponent, {
+      height: '250px',
+      width: '420px',
+      disableClose: true,
+      
+    });
+    
   }
 
   generateABHACard() {
@@ -1365,7 +1375,7 @@ else
     dialogRef.afterClosed().subscribe(result => {
       console.log('result', result)
       if (result) {
-        (<FormGroup>this.beneficiaryRegistrationForm.controls['otherDetailsForm']).patchValue({ healthId: result.healthId });
+        (<FormGroup>this.beneficiaryRegistrationForm.controls['otherDetailsForm']).patchValue({ healthId: result.healthIdNumber });
         (<FormGroup>this.beneficiaryRegistrationForm.controls['otherDetailsForm']).patchValue({ healthIdNumber: result.healthIdNumber });
 
         (<FormGroup>this.beneficiaryRegistrationForm.controls['otherDetailsForm']).controls['healthId'].disable();
@@ -1411,7 +1421,7 @@ else
     healthIdSearch(){
       let dialogRef = this.dialog.open(HealthIdValidateComponent, {
         height: '250px',
-        width: '420px',
+        width: '450px',
         disableClose: true,
         data: {
           "healthId": "NO",
@@ -1444,9 +1454,9 @@ else
       this.healthIdSearch();
     }
 
-    openHealthIDSearch() {
-      this.genrateHealthIDCard = false;
-      this.healthIdSearch();
-    }
+    // openHealthIDSearch() {
+    //   this.genrateHealthIDCard = false;
+    //   this.healthIdSearch();
+    // }
     
 }

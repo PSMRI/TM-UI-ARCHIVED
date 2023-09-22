@@ -1,5 +1,5 @@
 /* 
-* AMRIT – Accessible Medical Records via Integrated Technology 
+* AMRIT ï¿½ Accessible Medical Records via Integrated Technology 
 * Integrated EHR (Electronic Health Records) Solution 
 *
 * Copyright (C) "Piramal Swasthya Management and Research Institute" 
@@ -134,6 +134,41 @@ export class RegisterOtherDetailsComponent implements OnInit, OnDestroy {
     // this.httpServiceService.currentLangugae$.subscribe(response =>this.currentLanguageSet = response);
     //console.log(this.currentLanguageSet);
     //  console.log(this.patientRevisit,'revisit others');
+
+    this.registrarService.abhaDetailDetails$.subscribe((result) => {
+      if(result === true){
+        this.patchDetails(); 
+      }
+      else if(!result){
+        this.otherDetailsForm.reset();
+      }
+    })
+  }
+
+  patchDetails(){
+    
+    // this.otherDetailsForm.controls['healthId'].setValue(this.registrarService.abhaGenerateData.healthIdNumber);
+    const id = <FormArray>this.otherDetailsForm.controls["govID"];
+    let govIdValue = this.govIDMaster[0].govIdEntityMaster
+    let aadharId:any;
+    console.log(govIdValue);
+    if(govIdValue !=undefined && govIdValue != null){
+      for(let i = 0;i< govIdValue.length;i++) {
+        if(govIdValue[i].identityType === "Aadhar"){
+          aadharId = govIdValue[i].govtIdentityTypeID
+          break;
+        }
+      }
+    }
+    
+    const formGroupIndexed = <FormGroup>id.at(0);
+    formGroupIndexed.patchValue({
+      type: aadharId,
+      idValue: this.registrarService.aadharNumberNew,
+      allow: this.getAllowedGovChars(aadharId),
+    });
+    // this.loadMasterDataObservable();
+    // this.otherDetailsForm.controls.govID.value[0].idValue.setValue(this.registrarService.aadharNumberNew);
   }
 
   ngDoCheck() {
@@ -155,6 +190,9 @@ export class RegisterOtherDetailsComponent implements OnInit, OnDestroy {
     if (this.patientRevisit && this.revisitDataSubscription) {
       this.revisitDataSubscription.unsubscribe();
     }
+    this.registrarService.abhaGenerateData = null;
+    this.registrarService.aadharNumberNew = null;
+    this.registrarService.getabhaDetail(false);
   }
   alerting(control) {
     console.log(control, "a");

@@ -1710,7 +1710,8 @@
         "passwordDoesNotMatch" :"Password does not match",
         "minCharPassRequired": "Please provide atleast 8 character",
         "proceedWithOutPassword": "Do you want to proceed further without setting password for ABHA?",
-        "benPreviousVisitDetails": "Beneficiary previous visit details"
+        "benPreviousVisitDetails": "Beneficiary previous visit details",
+        "downloadAbhaCard":"Download ABHA Card"
 
   }
 }
