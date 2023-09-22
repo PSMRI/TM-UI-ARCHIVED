@@ -1,0 +1,55 @@
+.bioImage {
+    width: 70%;
+    height: 50%;
+    margin-left: 80px;
+}
+
+.img {
+    margin: 3%;
+    position: relative;
+}
+
+.info {
+    background: #0277bd !important;
+    font-weight: bold;
+    letter-spacing: 0.05em;
+}
+
+.close-btn {
+    color: white !important;
+}
+
+.title {
+    margin: 0px;
+    padding: 15px 24px 15px;
+    color: white;
+    font-size: 18px;
+    line-height: 32px;
+    font-weight: 400;
+}
+
+.title h4 {
+    display: inline-block;
+}
+
+/*This CSS code is defining the styles for a container that holds text*/
+.text-container {
+    position: absolute;
+    /* color: rgb(255, 255, 255); */
+    color: aqua;
+    left: 12rem;
+    top: 18rem;
+    background-color: rgb(41, 41, 41, -0.2);
+    padding: 0 1rem;
+}
+/* 
+md-dialog-content {
+    display: flex;
+} */
+
+.textBio {
+    margin-bottom: 15px;
+    letter-spacing: 0.05em;
+    font-size: 18px;
+    text-align: center;
+}

@@ -1,0 +1,41 @@
+<div class="title info">
+  <h4>Generate ABHA CARD</h4>
+  <button class="pull-right close-btn"  mdDialogClose (click)="closeDialog()" md-icon-button>
+      <md-icon class="md-24">close</md-icon>
+  </button>
+</div>
+  <br>
+    <div class="col-xs-12 col-sm-12" [formGroup]="abhaGenerateForm">
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 p-b-10" >
+          <label class="control-label" for="modeofAbhaHealthID">Abha Generation Mode*</label>     
+          <md-radio-group formControlName="modeofAbhaHealthID">
+            <md-radio-button color="primary" value="BIOMETRIC">Biometric</md-radio-button>
+            <md-radio-button color="primary" class="radio-button" value="AADHAR">Aadhar</md-radio-button>
+          </md-radio-group>
+        </div>
+
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 p-t-10">
+          <md-form-field [style.width]="'100%'">
+            <!-- <label class="control-label">Enter Aadhar Number*</label>    -->
+            <input  defaultNull autocomplete="off"  autofocus mdInput myMobileNumber
+              type="text"  required formControlName="aadharNumber"
+              minlength="4" maxlength="12" placeholder="Enter Aadhar Number" />
+          </md-form-field>
+        </div>
+
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" style="margin-left: -15px;">
+          <!-- <p class="align-Para">Note*: {{currentLanguageSet?.aBHA}}- xxx{{abhaSuffix}}, xxx.xx{{abhaSuffix}} <br>
+            {{currentLanguageSet?.aBHANumber}} - xxxxxxxxxxxxxx, xx-xxxx-xxxx-xxxx  
+          </p> -->
+        </div>
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" style="margin-left: 15px;">
+          <button (click)="generateABHACard()" md-raised-button color="primary"
+              class="pull-right font-regular f-s-18 m-t-8" [disabled]="!abhaGenerateForm.valid">
+               Generate
+            </button>
+        </div>
+        </div>
+      </div>
+    </div>

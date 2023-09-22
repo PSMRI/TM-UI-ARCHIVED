@@ -1,0 +1,25 @@
+<div class="title info">
+  <h4>Biometric Device Connection</h4>
+  <button class="pull-right close-btn"  mdDialogClose (click)="closeDialog()" md-icon-button>
+      <md-icon class="md-24">close</md-icon>
+  </button>
+  </div>
+<!-- <md-dialog-content> -->
+  <div class="col-xs-12 col-sm-12" >
+  <div class="row" style="padding: 62px;" *ngIf="!enableImage">
+  <h4 class="textBio">Please plug the device and click on proceed to connect device</h4>
+  <button md-raised-button color="primary" class="pull-right m-t-8 f-s-18" style="margin-top: 50px !important;" (click)="connectDevice()">Proceed</button>
+  <button md-raised-button color="primary"  class="pull-right m-t-8 f-s-18" style="margin: 10px; margin-top: 50px !important;" (click)="mdDialogRef.close()">Cancel</button>
+</div>
+
+    <!-- <img class="bioImage" src="/assets/images/fingerprint-biometrics-scaled.jpg" alt="scanning"> -->
+
+    <div class="img row" *ngIf="enableImage">
+      <img class="bioImage" src="/assets/images/fingerprint-biometrics-scaled.jpg" alt="scanning">
+      <div class="text-container">
+          <h2 style="font-size: 14px;">{{messageInfo}}</h2>
+      </div>
+    </div>
+
+  </div>
+<!-- </md-dialog-content> -->
