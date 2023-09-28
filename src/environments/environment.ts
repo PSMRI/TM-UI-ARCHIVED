@@ -471,4 +471,6 @@ export const environment = {
     getResultStatusURL: `${COMMON_API}lungAssessment/startAssesment`,
     getAssessmentUrl: `${COMMON_API}lungAssessment/getAssesment`,
     getAssessmentIdUrl: `${COMMON_API}lungAssessment/getAssesmentDetails`,
+
+    getdeviceRDServiceUrl: `${COMMON_API}biometric/getBiometricData/`
 };

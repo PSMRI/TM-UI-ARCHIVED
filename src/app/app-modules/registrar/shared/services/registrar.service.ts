@@ -300,4 +300,8 @@ export class RegistrarService {
     this.abhaDetailData.next(this.abhaDetail);
   }
   
+  getBiometricData(pid: any) {
+    return this.http.get(environment.getdeviceRDServiceUrl + pid);
+  }
+
 }
