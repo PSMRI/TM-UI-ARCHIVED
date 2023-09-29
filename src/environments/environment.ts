@@ -65,8 +65,7 @@ const ADMIN_API = `${adminIP}/adminapi-v1.0`;
 const biologicalScreeningDeviceAPI = `${ADMIN_API}/diagnostics/biologicalScreeningDevice`; 
 
  const FHIR_API = `${FHIRIP}/fhirapi-v1.0/`;
-//const FHIR_API = `http://localhost:8080/`;http://14.98.169.68:8080/
-// 
+
 export const environment = {
   production: false,
   isTMOffline: false,
