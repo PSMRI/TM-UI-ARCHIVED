@@ -196,27 +196,6 @@
 					</execution>
 				</executions>
 			</plugin>
-		<!--	<plugin>
-				<groupId>org.wildfly.plugins</groupId>
-				<artifactId>wildfly-maven-plugin</artifactId>
-				<version>1.2.1.Final</version>
-				<configuration>
-					<id>${server-id}</id>
-					<hostname>$${server-hostname}</hostname>
-					<port>$${server-port}</port>
-					<username>admin</username>
-					<password>ad@min123</password>
-
-				</configuration>
-				<executions>
-					<execution>
-						<phase>install</phase>
-						<goals>
-							<goal>deploy</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin> -->
 		</plugins>
 	</build>
 </project>

@@ -221,9 +221,9 @@ export const environment = {
   updateANCHistoryDetailsUrl: `${TM_API}ANC/update/historyScreen`,
   updateANCExaminationDetailsUrl: `${TM_API}ANC/update/examinationScreen`,
 
-   /**ANC Fetosense API URLs */
-   savefetosenseTestDetailsUrl: `${TM_API}/fetosense/sendMotherTestDetailsToFetosense`,
-   getPrescribedFetosenseTests: `${TM_API}/fetosense/fetch/fetosenseDetails/`,
+   /**ANC FoetalMonitor API URLs */
+   savefetosenseTestDetailsUrl: `${TM_API}/foetalMonitor/sendMotherTestDetailsToFoetalMonitor`,
+   getPrescribedFetosenseTests: `${TM_API}/foetalMonitor/fetch/foetalMonitorDetails/`,
 
   /**
    * CANCER SCREENING API URLs
@@ -349,7 +349,7 @@ export const environment = {
   previousFeedingHistory: `${TM_API}common/getBenFeedingHistory`,
   /* */
   archivedReportsUrl: `${TM_API}labTechnician/get/labResultForVisitcode`,
-  ReportsBase64Url: `${TM_API}fetosense/fetch/reportGraphBase64`,
+  ReportsBase64Url: `${TM_API}foetalMonitor/fetch/reportGraphBase64`,
   previousMMUHistoryUrl: `${MMU_API}common/getBeneficiaryCaseSheetHistory`,
   previousTMHistoryUrl: `${TM_API}common/getBeneficiaryCaseSheetHistory`,
   previousMCTSHistoryUrl: `${COMMON_API}mctsOutboundHistoryController/getMctsCallHistory`,
@@ -380,10 +380,10 @@ export const environment = {
   beneficiaryTCRequestStatusUrl: `${TM_API}tc/check/benTCRequestStatus`,
   swymedUrl: `${SWYMED_IP}`,
   saveSpecialistCancerObservationUrl: `${TM_API}CS-cancerScreening/update/doctorData`,
-  getSwymedMailLoginUrl: `${TM_API}swymed/login/`,
-  invokeSwymedCallUrl: `${TM_API}swymed/call/`,
-  invokeSwymedCallSpecialistUrl: `${TM_API}swymed/callvan/`,
-  getSwymedLogoutUrl: `${TM_API}swymed/logout`,
+  getSwymedMailLoginUrl: `${TM_API}videoConsultation/login/`,
+  invokeSwymedCallUrl: `${TM_API}videoConsultation/call/`,
+  invokeSwymedCallSpecialistUrl: `${TM_API}videoConsultation/callvan/`,
+  getSwymedLogoutUrl: `${TM_API}videoConsultation/logout`,
   updateTCStartTimeUrl: `${TM_API}tc/startconsultation`,
   snomedCTRecordListURL: `${TM_API}snomed/getSnomedCTRecordList`,
   getServiceOnStateUrl: `${COMMON_API}service/serviceList`,
@@ -458,8 +458,8 @@ export const environment = {
       previousCovidVaccinationUrl: `${COMMON_API}covid/getCovidVaccinationDetails`,
 
     /* SWAASA Urls*/ 
-    getResultStatusURL: `${COMMON_API}swaasa/startAssesment`,
-    getAssessmentUrl: `${COMMON_API}swaasa/getAssesment`,
-    getAssessmentIdUrl: `${COMMON_API}swaasa/getAssesmentDetails`,
+    getResultStatusURL: `${COMMON_API}lungAssessment/startAssesment`,
+    getAssessmentUrl: `${COMMON_API}lungAssessment/getAssesment`,
+    getAssessmentIdUrl: `${COMMON_API}lungAssessment/getAssesmentDetails`,
 
 };
