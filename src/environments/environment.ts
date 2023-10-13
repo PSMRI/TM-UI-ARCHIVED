@@ -1,3 +1,26 @@
+/* 
+* AMRIT � Accessible Medical Records via Integrated Technology 
+* Integrated EHR (Electronic Health Records) Solution 
+*
+* Copyright (C) "Piramal Swasthya Management and Research Institute" 
+*
+* This file is part of AMRIT.
+*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this program.  If not, see https://www.gnu.org/licenses/.
+*/
+
+
 // The file contents for the current environment will overwrite these during build.
 // The build system defaults to the dev environment which uses `environment.ts`, but if you do
 // `ng build --env=prod` then `environment.prod.ts` will be used instead.
@@ -26,26 +49,26 @@ const SWYMED_IP = "swymed://14.143.13.109";
 // const SCHEDULER_API = `http://${IP}:8080/apiman-gateway/IEMR/Scheduling/1.0/`;
 
 // Without API MAN Configuration
-const COMMON_API_OPEN = `${commonIP}/commonapi-v1.2/`;
-const COMMON_API = `${commonIP}/commonapi-v1.2/`;
+const COMMON_API_OPEN = `${commonIP}/commonapi-v1.1/`;
+const COMMON_API = `${commonIP}/commonapi-v1.1/`;
 // const COMMON_API_OPEN = `http://localhost:8080/`;  
 // const COMMON_API = `http://localhost:8080/`;  
 const TM_API = `${tmIP}/tmapi-v1.1/`;
 const API104 = `${IP104}/104api-v1.0/`;
 // const TM_API = `http://localhost:8082/`;   
 const MMU_API = `${mmuIP}/mmuapi-v1.0/`;
-const COMMON_API_OPEN_SYNC = `http://${SERVER_IP}:8080/commonapi-v1.2/`;
+const COMMON_API_OPEN_SYNC = `http://${SERVER_IP}:8080/commonapi-v1.1/`;
 const SCHEDULER_API = `${schedulerIP}/schedulerapi-v1.1/`;
 const mmuUICasesheet = "http://localhost:4200/";
 const ADMIN_API = `${adminIP}/adminapi-v1.0`;
 
-const IOT_API = 'http://localhost:8085/ezdx-hub-connect-srv';
+const biologicalScreeningDeviceAPI = `${ADMIN_API}/diagnostics/biologicalScreeningDevice`; 
 
  const FHIR_API = `${FHIRIP}/fhirapi-v1.0/`;
-//const FHIR_API = `http://localhost:8080/`;http://14.98.169.68:8080/
-// 
+
 export const environment = {
   production: false,
+  isTMOffline: false,
   app: `MMU`,
   RBSTest:`RBS Test`,
   visualAcuityTest:`Visual Acuity Test`,
@@ -202,9 +225,9 @@ export const environment = {
   updateANCHistoryDetailsUrl: `${TM_API}ANC/update/historyScreen`,
   updateANCExaminationDetailsUrl: `${TM_API}ANC/update/examinationScreen`,
 
-  /**ANC Fetosense API URLs */
-  savefetosenseTestDetailsUrl: `${TM_API}/fetosense/sendMotherTestDetailsToFetosense`,
-  getPrescribedFetosenseTests: `${TM_API}/fetosense/fetch/fetosenseDetails/`,
+  /**ANC FoetalMonitor API URLs */
+  savefetosenseTestDetailsUrl: `${TM_API}/foetalMonitor/sendMotherTestDetailsToFoetalMonitor`,
+  getPrescribedFetosenseTests: `${TM_API}/foetalMonitor/fetch/foetalMonitorDetails/`,
 
   /**
    * CANCER SCREENING API URLs
@@ -331,7 +354,7 @@ export const environment = {
   previousReferredHistoryUrl: `${TM_API}common/getBenPreviousReferralHistoryDetails`,
   /* */
   archivedReportsUrl: `${TM_API}labTechnician/get/labResultForVisitcode`,
-  ReportsBase64Url: `${TM_API}fetosense/fetch/reportGraphBase64`,
+  ReportsBase64Url: `${TM_API}foetalMonitor/fetch/reportGraphBase64`,
   previousMMUHistoryUrl: `${MMU_API}common/getBeneficiaryCaseSheetHistory`,
   previousTMHistoryUrl: `${TM_API}common/getBeneficiaryCaseSheetHistory`,
   previousMCTSHistoryUrl: `${COMMON_API}mctsOutboundHistoryController/getMctsCallHistory`,
@@ -358,10 +381,10 @@ export const environment = {
   beneficiaryTCRequestStatusUrl: `${TM_API}tc/check/benTCRequestStatus`,
   swymedUrl: `${SWYMED_IP}`,
   saveSpecialistCancerObservationUrl: `${TM_API}CS-cancerScreening/update/doctorData`,
-  getSwymedMailLoginUrl: `${TM_API}swymed/login/`,
-  invokeSwymedCallUrl: `${TM_API}swymed/call/`,
-  invokeSwymedCallSpecialistUrl: `${TM_API}swymed/callvan/`,
-  getSwymedLogoutUrl: `${TM_API}swymed/logout`,
+  getSwymedMailLoginUrl: `${TM_API}videoConsultation/login/`,
+  invokeSwymedCallUrl: `${TM_API}videoConsultation/call/`,
+  invokeSwymedCallSpecialistUrl: `${TM_API}videoConsultation/callvan/`,
+  getSwymedLogoutUrl: `${TM_API}videoConsultation/logout`,
   updateTCStartTimeUrl: `${TM_API}tc/startconsultation`,
   snomedCTRecordListURL: `${TM_API}snomed/getSnomedCTRecordList`,
   getServiceOnStateUrl: `${COMMON_API}service/serviceList`,
@@ -375,11 +398,11 @@ export const environment = {
   //file upload
   saveFile: `${COMMON_API}kmfilemanager/addFile`,
   viewFileData: `${TM_API}common/getKMFile`,
-  ioturl: `${IOT_API}`,
-  deviceStatusurl: `${IOT_API}/api/v1/bluetooth/hub/connection_status`,
-  deviceDisconnectUrl:`${IOT_API}/api/v1/bluetooth/hub/disconnect`,
-  deviceBluetoothurl: `${IOT_API}/api/v1/bluetooth/service_discovery`,
-  connectdeviceBluetoothurl: `${IOT_API}/api/v1/bluetooth/hub_connection`,
+  ioturl: `${biologicalScreeningDeviceAPI}`,
+  deviceStatusurl: `${biologicalScreeningDeviceAPI}/api/v1/bluetooth/hub/connection_status`,
+  deviceDisconnectUrl:`${biologicalScreeningDeviceAPI}/api/v1/bluetooth/hub/disconnect`,
+  deviceBluetoothurl: `${biologicalScreeningDeviceAPI}/api/v1/bluetooth/service_discovery`,
+  connectdeviceBluetoothurl: `${biologicalScreeningDeviceAPI}/api/v1/bluetooth/hub_connection`,
 
   startWeighturl: "/api/v1/physical_tests/weight",
   startTempurl: "/api/v1/physical_tests/temperature",
@@ -444,7 +467,7 @@ export const environment = {
     previousCovidVaccinationUrl: `${COMMON_API}covid/getCovidVaccinationDetails`,
 
     /* SWAASA Urls*/ 
-    getResultStatusURL: `${COMMON_API}swaasa/startAssesment`,
-    getAssessmentUrl: `${COMMON_API}swaasa/getAssesment`,
-    getAssessmentIdUrl: `${COMMON_API}swaasa/getAssesmentDetails`,
+    getResultStatusURL: `${COMMON_API}lungAssessment/startAssesment`,
+    getAssessmentUrl: `${COMMON_API}lungAssessment/getAssesment`,
+    getAssessmentIdUrl: `${COMMON_API}lungAssessment/getAssesmentDetails`,
 };

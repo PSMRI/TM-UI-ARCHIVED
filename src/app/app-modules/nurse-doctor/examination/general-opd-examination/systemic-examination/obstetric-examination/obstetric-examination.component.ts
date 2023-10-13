@@ -1,3 +1,26 @@
+/* 
+* AMRIT � Accessible Medical Records via Integrated Technology 
+* Integrated EHR (Electronic Health Records) Solution 
+*
+* Copyright (C) "Piramal Swasthya Management and Research Institute" 
+*
+* This file is part of AMRIT.
+*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this program.  If not, see https://www.gnu.org/licenses/.
+*/
+
+
 import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { BeneficiaryDetailsService, ConfirmationService } from 'app/app-modules/core/services';
@@ -275,7 +298,7 @@ export class ObstetricExaminationComponent implements OnInit {
         'testTime':todayDate,
         'motherLMPDate':newLmpDate,
         'motherName':this.beneficiary.beneficiaryName,
-        'fetosenseTestId':testId,
+        'foetalMonitorTestId':testId,
         'testName':testName,
         'vanID' : JSON.parse(localStorage.getItem('serviceLineDetails')).vanID,
         'ProviderServiceMapID':parseInt(localStorage.getItem('providerServiceID')),
@@ -338,7 +361,7 @@ export class ObstetricExaminationComponent implements OnInit {
 
   checkTestPrescribed(testValue) {
 
-   return this.prescribedTestArray.some((item) => item.fetosenseTestId === testValue)
+   return this.prescribedTestArray.some((item) => item.foetalMonitorTestId === testValue)
 
   }
 

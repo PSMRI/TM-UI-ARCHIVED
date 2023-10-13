@@ -1,3 +1,26 @@
+/* 
+* AMRIT � Accessible Medical Records via Integrated Technology 
+* Integrated EHR (Electronic Health Records) Solution 
+*
+* Copyright (C) "Piramal Swasthya Management and Research Institute" 
+*
+* This file is part of AMRIT.
+*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this program.  If not, see https://www.gnu.org/licenses/.
+*/
+
+
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MdDialog, MdDialogRef, MD_DIALOG_DATA } from '@angular/material';
@@ -26,6 +49,7 @@ export class HealthIdOtpGenerationComponent implements OnInit {
   showProgressBar: Boolean = false;
   password: any;
   // mobileLinkedOtp: any;
+  aadharNum: any;
 
   constructor(private fb: FormBuilder,public dialogRef: MdDialogRef<HealthIdOtpGenerationComponent>,
     public httpServiceService: HttpServiceService,@Inject(MD_DIALOG_DATA) public data: any,
@@ -114,6 +138,9 @@ export class HealthIdOtpGenerationComponent implements OnInit {
     else if (this.healthIdMode == "AADHAR"){
       reqObj = {
         'aadhaar': this.data.aadharNumber
+      }
+      if(this.data.aadharNumber !== undefined && this.data.aadharNumber !== null){
+        this.aadharNum =  this.data.aadharNumber;
       }
     }
     this.registrarService.generateOTP(reqObj,this.healthIdMode)
@@ -224,6 +251,9 @@ export class HealthIdOtpGenerationComponent implements OnInit {
       this.registrarService.generateHealthIdWithUID(reqObj)
         .subscribe((res) => {
           if (res.statusCode == 200 && res.data) {
+            this.registrarService.abhaGenerateData = res.data;
+            this.registrarService.aadharNumberNew = this.aadharNum;
+            this.registrarService.getabhaDetail(true);
             let dialogRefSuccess = this.dialog.open(HealthIdOtpSuccessComponent, {
               height: '300px',
               width: '420px',

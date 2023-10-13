@@ -1,3 +1,26 @@
+/* 
+* AMRIT � Accessible Medical Records via Integrated Technology 
+* Integrated EHR (Electronic Health Records) Solution 
+*
+* Copyright (C) "Piramal Swasthya Management and Research Institute" 
+*
+* This file is part of AMRIT.
+*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this program.  If not, see https://www.gnu.org/licenses/.
+*/
+
+
 import { RegisterDemographicDetailsComponent } from './register-demographic-details/register-demographic-details.component';
 import {
   Component, OnInit, ChangeDetectorRef, ViewChild, ElementRef, AfterViewChecked,
@@ -21,6 +44,7 @@ import { HttpServiceService } from 'app/app-modules/core/services/http-service.s
 import { HealthIdOtpGenerationComponent } from '../health-id-otp-generation/health-id-otp-generation.component';
 import { HealthIdDisplayModalComponent } from 'app/app-modules/core/components/health-id-display-modal/health-id-display-modal.component';
 import { SetLanguageComponent } from 'app/app-modules/core/components/set-language.component';
+import { GenerateAbhaComponent } from '../generate-abha/generate-abha.component';
 
 @Component({
   selector: 'app-registration',
@@ -120,7 +144,7 @@ export class RegistrationComponent implements OnInit, AfterViewChecked, OnDestro
   }
 
   setHealthIdAfterGeneration(result) {
-    (<FormGroup>this.beneficiaryRegistrationForm.controls['otherDetailsForm']).patchValue({ healthId: result.healthId });
+    (<FormGroup>this.beneficiaryRegistrationForm.controls['otherDetailsForm']).patchValue({ healthId: result.healthIdNumber });
     (<FormGroup>this.beneficiaryRegistrationForm.controls['otherDetailsForm']).patchValue({ healthIdNumber: result.healthIdNumber });
 
     (<FormGroup>this.beneficiaryRegistrationForm.controls['otherDetailsForm']).controls['healthId'].disable();
@@ -592,6 +616,15 @@ export class RegistrationComponent implements OnInit, AfterViewChecked, OnDestro
         return true;
       }
     }
+  }
+  generateAbhaCard(){
+    let dialogRef = this.dialog.open(GenerateAbhaComponent, {
+      height: '250px',
+      width: '420px',
+      disableClose: true,
+      
+    });
+    
   }
 
   generateABHACard() {
@@ -1342,7 +1375,7 @@ else
     dialogRef.afterClosed().subscribe(result => {
       console.log('result', result)
       if (result) {
-        (<FormGroup>this.beneficiaryRegistrationForm.controls['otherDetailsForm']).patchValue({ healthId: result.healthId });
+        (<FormGroup>this.beneficiaryRegistrationForm.controls['otherDetailsForm']).patchValue({ healthId: result.healthIdNumber });
         (<FormGroup>this.beneficiaryRegistrationForm.controls['otherDetailsForm']).patchValue({ healthIdNumber: result.healthIdNumber });
 
         (<FormGroup>this.beneficiaryRegistrationForm.controls['otherDetailsForm']).controls['healthId'].disable();
@@ -1388,7 +1421,7 @@ else
     healthIdSearch(){
       let dialogRef = this.dialog.open(HealthIdValidateComponent, {
         height: '250px',
-        width: '420px',
+        width: '450px',
         disableClose: true,
         data: {
           "healthId": "NO",
@@ -1421,9 +1454,9 @@ else
       this.healthIdSearch();
     }
 
-    openHealthIDSearch() {
-      this.genrateHealthIDCard = false;
-      this.healthIdSearch();
-    }
+    // openHealthIDSearch() {
+    //   this.genrateHealthIDCard = false;
+    //   this.healthIdSearch();
+    // }
     
 }

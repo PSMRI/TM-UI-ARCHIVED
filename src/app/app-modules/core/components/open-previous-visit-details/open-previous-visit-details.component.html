@@ -27,7 +27,7 @@
             <th style="width: 15%" id="vitalDetails">
               Vital Details
             </th>
-            <th style="width: 15%" id="diagnosis">
+            <th style="width: 20%" id="diagnosis">
               Diagnosis
             </th>
             <th style="width: 30%" id="investigations">
@@ -340,14 +340,15 @@
           </ng-container>
         </tbody>
         <tfoot>
-          <tr *ngIf="previousVisitData?.length > 0">
+          <tr *ngIf="previousHistoryPagedList?.length > 0">
             <td colspan="2">
               <div class="totalCount">
                 {{ currentLanguageSet?.common?.totalCount }} :
-                {{ previousVisitData.length }}
+                {{ previousHistoryPagedList.length }}
               </div>
             </td>
-            <td colspan="6">
+            </tr>
+            <!-- <td colspan="6">
               <pagination
                 class="pull-right"
                 [boundaryLinks]="true"
@@ -362,8 +363,8 @@
                 firstText="&laquo;"
                 lastText="&raquo;"
               ></pagination>
-            </td>
-          </tr>
+            </td> -->
+          <!-- </tr> -->
         </tfoot>
       </table>
       </div>

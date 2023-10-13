@@ -23,7 +23,7 @@
                     mdInput allowText="inputFieldValidator"
                     appDiagnosisSearch
                     [diagnosisListForm]="diagnosis"
-                    required
+                    
                     name="viewProvisionalDiagnosisProvided"
                     formControlName="viewProvisionalDiagnosisProvided"
                     maxlength="100"
@@ -31,7 +31,7 @@
                     [previousSelected]="
                       generalDiagnosisForm?.value?.provisionalDiagnosisList
                     "
-                    required
+                    
                   />
                   <md-icon
                     class="search-btn"
@@ -101,7 +101,7 @@
                     mdInput
                     appConfirmatoryDiagnosis
                     [diagnosisListForm]="confirmatoryDiagnosis"
-                    required
+                    
                     name="viewConfirmatoryDiagnosisProvided"
                     formControlName="viewConfirmatoryDiagnosisProvided"
                     maxlength="100"

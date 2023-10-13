@@ -5,13 +5,16 @@
       </span>{{currentLanguageSet?.ro?.registration}}</h3>
       <button style="margin: 5px;" *ngIf="patientRevisit" class="pull-right m-r-5" id="viewHealthID"  md-raised-button color='primary' type="accent"
       (click)="viewHealthIdData()">{{currentLanguageSet?.aBHADetails}}</button>
-      <button *ngIf="!patientRevisit" id="healthIDSearch" style="margin: 5px;" md-raised-button color="primary" class="pull-right m-r-5"
-      (click)='openHealthIDSearch()'>{{currentLanguageSet?.aBHASearch}}</button>
+      <!-- <button *ngIf="!patientRevisit" id="healthIDSearch" style="margin: 5px;" md-raised-button color="primary" class="pull-right m-r-5"
+      (click)='openHealthIDSearch()'>{{currentLanguageSet?.aBHASearch}}</button> -->
     <button id="moveToSearch" style="margin: 5px;" md-raised-button color="primary" class="pull-right m-r-5"
       (click)='confirmFormReset(false)'>{{currentLanguageSet?.common?.search}}</button>
+      <!-- <button id="moveToPrintHealthIDCard" style="margin: 5px;" md-raised-button color="primary" class="pull-right m-r-5"
+      (click)='printHealthIDCard()'>{{currentLanguageSet?.generateABHACard}}</button> -->
       <button id="moveToPrintHealthIDCard" style="margin: 5px;" md-raised-button color="primary" class="pull-right m-r-5"
-      (click)='printHealthIDCard()'>{{currentLanguageSet?.generateABHACard}}</button>
-
+      (click)='printHealthIDCard()'>{{currentLanguageSet?.downloadAbhaCard}}</button>
+      <button id="moveToPrintHealthIDCard" style="margin: 5px;" md-raised-button color="primary" class="pull-right m-r-5"
+      (click)='generateAbhaCard()'>Generate Abha Card</button>
   </div>
 </div>
 <form [formGroup]='beneficiaryRegistrationForm'>
@@ -46,9 +49,9 @@
 
 <div class="row m-t-20" style="margin-bottom:30px;">
   <div class="col-sm-12 step-btn m-b-20" style="text-align: right;">
-    <button id="generateOtpButton" class="btn-green" md-raised-button color='primary' type="accent"
+    <!-- <button id="generateOtpButton" class="btn-green" md-raised-button color='primary' type="accent"
     [disabled]="disableGenerateOTP" (click)="generateABHACard()">
-    {{currentLanguageSet?.generateABHA}}</button>
+    {{currentLanguageSet?.generateABHA}}</button> -->
     <button id="cancelButton" *ngIf="patientRevisit" md-raised-button type="button"
       (click)="cancelBeneficiaryChanges()">{{currentLanguageSet?.common?.cancel}}</button>
     <button id="resetButton" *ngIf="!patientRevisit" md-raised-button color="primary" type="reset"
