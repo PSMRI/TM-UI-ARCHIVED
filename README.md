@@ -25,7 +25,7 @@ Telemedicine plays a crucial role in the services provided by Health and Wellnes
 
 This microservice is built using Java and the Spring Boot framework, with MySQL as the underlying database. Before building the TM module, ensure you have the following prerequisites:
 
-- JDK 1.8
+- JDK 17
 - Maven
 - NPM/YARN
 - Spring Boot V2
@@ -40,8 +40,22 @@ To build the TM module from source, follow these steps:
    - Run the command `mvn clean install`.
    - Run the command `npm start`.
 3. Open your browser and access `http://localhost:4200/#/login` to view the login page of module.
+
 ## Usage
 
 All the features of the TM module have been exposed as REST endpoints. For detailed information on how to use the service, refer to the SWAGGER API specification.
 
 With the TM module, you can efficiently manage all aspects of your telemedicine application, ensuring seamless remote healthcare services for patients and collaboration among healthcare professionals.
+
+## Building war files
+
+To build deployable war files
+```bash
+mvn -B package --file pom.xml -P <profile_name>
+```
+
+The available profiles include dev, local, test, and ci.
+Refer to `src/environments/environment.ci.template` file and ensure that the right environment variables are set for the build.
+
+Packing with `ci` profile calls `build-ci` script in `package.json`.
+It creates a `environment.ci.ts` file with all environment variables used in the generated build.
