@@ -26,36 +26,20 @@
 // `ng build --env=prod` then `environment.prod.ts` will be used instead.
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
-const commonIP = 'http://10.208.122.38:8080/';
-const tmIP = 'http://10.208.122.38:8080/';
-const mmuIP = 'http://10.208.122.38:8080/';
-const schedulerIP = 'http://10.208.122.38:8080/';
-const tmUI_IP = 'http://10.208.122.38:8080/';
-const schedulerUI_IP = 'http://10.208.122.38:8080/';
-const inventoryUI_IP = 'http://10.208.122.38:8080/';
-const SERVER_IP = 'dataSYNCIP';
-const SWYMED_IP = 'swymed://14.143.13.109';
-const adminIP = "http://10.208.122.38:8080";
-const FHIRIP = "http://10.208.122.38:8080";
-
-// With API MAN Configuration
-// const COMMON_API_OPEN = `http://${IP}:8080/apiman-gateway/IEMR/Common/open/`;
-//const TM_API = `http://${IP}:8080/apiman-gateway/IEMR/TM/1.0/`;
-// const COMMON_API = `http://${IP}:8080/apiman-gateway/IEMR/Common/open/`;
-// const MMU_API = `http://${IP}:8080/apiman-gateway/IEMR/MMU/1.0/`;
-//  const SCHEDULER_API = `http://${IP}:8080/apiman-gateway/IEMR/Scheduling/1.0/`;
-
-// Without API MAN Configuration
-const COMMON_API_OPEN = `${commonIP}commonapi-v1.0/`;
-const COMMON_API = `${commonIP}commonapi-v1.0/`;
-const TM_API = `${tmIP}tmapi-v1.0/`;
-const MMU_API = `${mmuIP}mmuapi-v1.0/`
-const COMMON_API_OPEN_SYNC = `${SERVER_IP}commonapi-v1.0/`;
-const SCHEDULER_API = `${schedulerIP}schedulerapi-v1.0/`;
-const ADMIN_API = `${adminIP}/adminapi-v1.0`;
+const SERVER_IP = '<%= SERVER_IP %>';
+const SWYMED_IP = '<%= SWYMED_IP %>';
+const COMMON_API_OPEN = '<%= COMMON_API_BASE %>';
+const COMMON_API = '<%= COMMON_API_BASE %>';
+const TM_API = '<%= TM_API_BASE %>';
+const MMU_API =  '<%= MMU_API_BASE %>';
+const COMMON_API_OPEN_SYNC = '<%= COMMON_API_OPEN_SYNC %>';
+const SCHEDULER_API =  '<%= SCHEDULER_API_BASE %>';
+const ADMIN_API = '<%= ADMIN_API_BASE %>';
 const biologicalScreeningDeviceAPI = `${ADMIN_API}/diagnostics/biologicalScreeningDevice`;
-const FHIR_API = `${FHIRIP}/fhirapi-v1.0/`;
-const mmuUICasesheet = `${tmUI_IP}tmui-v1.0`;
+const FHIR_API = '<%= FHIR_API_BASE %>';
+const mmuUICasesheet = '<%= TM_API_BASE %>';
+const SCHEDULER_UI =  '<%= SCHEDULER_UI_BASE %>';
+const INVENTORY_UI =  '<%= INVENTORY_UI_BASE %>';
 
 export const environment = {
   production: true,
@@ -68,11 +52,11 @@ export const environment = {
   abhaExtension: `@abdm`,
   parentAPI: `${TM_API}`,
 
-  INVENTORY_URL: `${inventoryUI_IP}/inventory-ui-v1.0/#/redirin?`,
+  INVENTORY_URL: `${INVENTORY_UI}/#/redirin?`,
   fallbackUrl: `/pharmacist/redirfallback`,
   redirInUrl: `/pharmacist/redirin`,
 
-  TELEMEDICINE_URL: `${schedulerUI_IP}/schedulerui-v1.0/#/?`,
+  TELEMEDICINE_URL: `${SCHEDULER_UI}/#/?`,
   fallbackMMUUrl: `/logout-tm`,
   redirInMMUUrl: `/common/tcspecialist-worklist`,
 
@@ -378,7 +362,7 @@ export const environment = {
   cancelBeneficiaryTCRequestUrl: `${TM_API}tc/cancel/benTCRequest`,
   scheduleTCUrl: `${TM_API}tc/create/benTCRequestWithVisitCode`,
   beneficiaryTCRequestStatusUrl: `${TM_API}tc/check/benTCRequestStatus`,
-  swymedUrl: `${SWYMED_IP}`,
+  swymedUrl: `swymed://${SWYMED_IP}`,
   saveSpecialistCancerObservationUrl: `${TM_API}CS-cancerScreening/update/doctorData`,
   getSwymedMailLoginUrl: `${TM_API}videoConsultation/login/`,
   invokeSwymedCallUrl: `${TM_API}videoConsultation/call/`,
