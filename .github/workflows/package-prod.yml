@@ -40,7 +40,7 @@ jobs:
 
 
     - name: Create WAR file
-      run: npm run ng build --prod --aot && grunt
+      run: mvn -B package --file pom.xml
 
     - name: Upload WAR file as artifact
       uses: actions/upload-artifact@v2
