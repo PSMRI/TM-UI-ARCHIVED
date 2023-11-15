@@ -5,7 +5,9 @@
   <meta charset="utf-8">
   <title>Tele-Medicine</title>
   <script>
-    document.write('<base href="' + encodeURIComponent(document.location) + '" />');
+    var baseTag = document.createElement('base');
+    baseTag.href = document.location.href;
+    document.head.appendChild(baseTag);
     window.console.log = function() {}
     window.console.warn = function() {}
   </script>
