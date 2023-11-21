@@ -13,6 +13,7 @@
       "node_modules/@types"
     ],
     "types": [
+      "node",
       "hammerjs"
     ],
     "lib": [
