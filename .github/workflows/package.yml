@@ -29,13 +29,12 @@ jobs:
       with:
           node-version: 16
 
-    - name: Build with NPM and Maven
+    - name: Build with NPM
       run: |
             npm config set legacy-peer-deps true
             npm install -g @angular/cli
             npm install
             npm run build
-            mvn clean install
 
     - name: Create WAR file
       run: mvn -B package --file pom.xml
