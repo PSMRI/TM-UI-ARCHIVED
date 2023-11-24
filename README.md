@@ -25,7 +25,7 @@ Telemedicine plays a crucial role in the services provided by Health and Wellnes
 
 This microservice is built using Java and the Spring Boot framework, with MySQL as the underlying database. Before building the TM module, ensure you have the following prerequisites:
 
-- JDK 1.8
+- JDK 17
 - Maven
 - NPM/YARN
 - Spring Boot V2
@@ -40,41 +40,22 @@ To build the TM module from source, follow these steps:
    - Run the command `mvn clean install`.
    - Run the command `npm start`.
 3. Open your browser and access `http://localhost:4200/#/login` to view the login page of module.
+
 ## Usage
 
 All the features of the TM module have been exposed as REST endpoints. For detailed information on how to use the service, refer to the SWAGGER API specification.
 
 With the TM module, you can efficiently manage all aspects of your telemedicine application, ensuring seamless remote healthcare services for patients and collaboration among healthcare professionals.
 
+## Building war files
 
+To build deployable war files
+```bash
+mvn -B package --file pom.xml -P <profile_name>
+```
 
-<!-- # MMUUI
+The available profiles include dev, local, test, and ci.
+Refer to `src/environments/environment.ci.template` file and ensure that the right environment variables are set for the build.
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.1.0-rc.0.
-
-## Development server
-
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-Before running the tests make sure you are serving the app via `ng serve`.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
-
--->
+Packing with `ci` profile calls `build-ci` script in `package.json`.
+It creates a `environment.ci.ts` file with all environment variables used in the generated build.
