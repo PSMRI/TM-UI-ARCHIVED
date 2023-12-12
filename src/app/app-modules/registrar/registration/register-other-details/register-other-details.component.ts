@@ -141,6 +141,11 @@ export class RegisterOtherDetailsComponent implements OnInit, OnDestroy {
       }
       else if(!result){
         this.otherDetailsForm.reset();
+        this.otherDetailsForm.patchValue({
+          checked: true,
+          checked1: true,
+          checked2: true,
+        });
       }
     })
   }
