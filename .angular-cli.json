@@ -39,7 +39,9 @@
     "environments": {
       "dev": "environments/environment.ts",
       "prod": "environments/environment.prod.ts",
-       "test": "environments/environment.test.ts"
+      "test": "environments/environment.test.ts",
+      "ci": "environments/environment.ci.ts",
+      "local": "environments/environment.local.ts"
     }
   }],
   "e2e": {

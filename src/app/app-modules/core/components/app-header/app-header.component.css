@@ -38,7 +38,7 @@ li a {
 li.logout a span.logoutIcon {
     height: 21px;
     width: 24px;
-    display: inline-block;
+    display: inline-block !important;
     vertical-align: middle;
     background: url(../../../../../assets/images/logoutIcon.png) no-repeat;
 }
@@ -109,4 +109,10 @@ button.mat-button {
 .alignWord {
     margin: 8px 10px;
 
+}
+
+@media (min-width: 1200px) {
+.hidden-lg  {
+    display: inline-block !important;
+}
 }
