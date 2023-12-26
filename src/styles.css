@@ -220,3 +220,9 @@ hr {
   transition: opacity 400ms cubic-bezier(0.25, 0.8, 0.25, 1);
   opacity: 0;
 }
+
+@media (min-width: 1200px) {
+  .hidden-lg .hidden-md .hidden-sm {
+      display: inline-block !important;
+  }
+  }
