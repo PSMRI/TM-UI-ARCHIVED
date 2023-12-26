@@ -5,7 +5,7 @@
 /tmp
 /out-tsc
 /target
-package-lock.json
+
 yarn-error.log
 yarn.lock
 /src/assets/git-version.json
@@ -47,9 +47,10 @@ testem.log
 .DS_Store
 Thumbs.db
 
-#other 
+#other
 debug.log
 karmareport.txt
-npm-debug.log.1070014420 
-report.20200406.125006.663436.0.001.json
+npm-debug.log.*
 yarn-error.log
+src/environments/environment.local.ts
+src/environments/environment.ci.ts

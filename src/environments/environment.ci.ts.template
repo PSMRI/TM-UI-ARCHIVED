@@ -1,8 +1,8 @@
-/* 
-* AMRIT � Accessible Medical Records via Integrated Technology 
-* Integrated EHR (Electronic Health Records) Solution 
+/*
+* AMRIT � Accessible Medical Records via Integrated Technology
+* Integrated EHR (Electronic Health Records) Solution
 *
-* Copyright (C) "Piramal Swasthya Management and Research Institute" 
+* Copyright (C) "Piramal Swasthya Management and Research Institute"
 *
 * This file is part of AMRIT.
 *
@@ -26,35 +26,20 @@
 // `ng build --env=prod` then `environment.prod.ts` will be used instead.
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
-const commonIP = 'http://10.208.122.38:8080/';
-const tmIP = 'http://10.208.122.38:8080/';
-const mmuIP = 'http://10.208.122.38:8080/';
-const schedulerIP = 'http://10.208.122.38:8080/';
-const tmUI_IP = 'http://10.208.122.38:8080/';
-const schedulerUI_IP = 'http://10.208.122.38:8080/';
-const inventoryUI_IP = 'http://10.208.122.38:8080/';
-const SERVER_IP = 'dataSYNCIP';
-const SWYMED_IP = 'swymed://14.143.13.109';
-const adminIP = "http://10.208.122.38:8080";
-const FHIRIP = "http://10.208.122.38:8080";
-// With API MAN Configuration
-// const COMMON_API_OPEN = `http://${IP}:8080/apiman-gateway/IEMR/Common/open/`;
-//const TM_API = `http://${IP}:8080/apiman-gateway/IEMR/TM/1.0/`;
-// const COMMON_API = `http://${IP}:8080/apiman-gateway/IEMR/Common/open/`;
-// const MMU_API = `http://${IP}:8080/apiman-gateway/IEMR/MMU/1.0/`;
-//  const SCHEDULER_API = `http://${IP}:8080/apiman-gateway/IEMR/Scheduling/1.0/`;
-
-// Without API MAN Configuration
-const COMMON_API_OPEN = `${commonIP}commonapi-v1.0/`;
-const COMMON_API = `${commonIP}commonapi-v1.0/`;
-const TM_API = `${tmIP}tmapi-v1.0/`;
-const MMU_API = `${mmuIP}mmuapi-v1.0/`
-const COMMON_API_OPEN_SYNC = `${SERVER_IP}commonapi-v1.0/`;
-const SCHEDULER_API = `${schedulerIP}schedulerapi-v1.0/`;
-const ADMIN_API = `${adminIP}/adminapi-v1.0`;
-const biologicalScreeningDeviceAPI = `${ADMIN_API}/diagnostics/biologicalScreeningDevice`; 
-const FHIR_API = `${FHIRIP}/fhirapi-v1.0/`;
-const mmuUICasesheet = `${tmUI_IP}tmui-v1.0`;
+const SERVER_IP = '<%= SERVER_IP %>';
+const SWYMED_IP = '<%= SWYMED_IP %>';
+const COMMON_API_OPEN = '<%= COMMON_API_BASE %>';
+const COMMON_API = '<%= COMMON_API_BASE %>';
+const TM_API = '<%= TM_API_BASE %>';
+const MMU_API =  '<%= MMU_API_BASE %>';
+const COMMON_API_OPEN_SYNC = '<%= COMMON_API_OPEN_SYNC %>';
+const SCHEDULER_API =  '<%= SCHEDULER_API_BASE %>';
+const ADMIN_API = '<%= ADMIN_API_BASE %>';
+const biologicalScreeningDeviceAPI = `${ADMIN_API}/diagnostics/biologicalScreeningDevice`;
+const FHIR_API = '<%= FHIR_API_BASE %>';
+const mmuUICasesheet = '<%= TM_API_BASE %>';
+const SCHEDULER_UI =  '<%= SCHEDULER_UI_BASE %>';
+const INVENTORY_UI =  '<%= INVENTORY_UI_BASE %>';
 
 export const environment = {
   production: true,
@@ -67,11 +52,11 @@ export const environment = {
   abhaExtension: `@abdm`,
   parentAPI: `${TM_API}`,
 
-  INVENTORY_URL: `${inventoryUI_IP}/inventory-ui-v1.0/#/redirin?`,
+  INVENTORY_URL: `${INVENTORY_UI}/#/redirin?`,
   fallbackUrl: `/pharmacist/redirfallback`,
   redirInUrl: `/pharmacist/redirin`,
 
-  TELEMEDICINE_URL: `${schedulerUI_IP}/schedulerui-v1.0/#/?`,
+  TELEMEDICINE_URL: `${SCHEDULER_UI}/#/?`,
   fallbackMMUUrl: `/logout-tm`,
   redirInMMUUrl: `/common/tcspecialist-worklist`,
 
@@ -87,9 +72,9 @@ export const environment = {
   getSubDistrictName: `${COMMON_API}location/taluks/`,
   getCountryName: `${TM_API}location/get/countryMaster`,
   getCityName: `${TM_API}location/get/countryCityMaster/`,
+  getNCDScreeningIDRSDetails : `${TM_API}NCD/getBenIdrsDetailsFrmNurse`,
+  updateNCDScreeningIDRSDetailsUrl :`${TM_API}NCD/update/idrsScreen`,
   saveDoctorNCDScreeningDetails: `${TM_API}NCD/save/doctorData`,
-
-
   /**
    * Login and Logout Urls
    */
@@ -125,7 +110,7 @@ export const environment = {
   /**
    * Master Data Urls
    */
-  previousVisitDataUrl:`${TM_API}common/getBenSymptomaticQuestionnaireDetails`,
+
   getDistrictListUrl: `${TM_API}location/get/districtMaster/`,
   getSubDistrictListUrl: `${TM_API}location/get/districtBlockMaster/`,
   getVillageListUrl: `${TM_API}location/get/villageMasterFromBlockID/`,
@@ -157,7 +142,7 @@ export const environment = {
   radiologistWorklist: `${TM_API}common/getRadiologist-worklist-New/`,
   oncologistWorklist: `${TM_API}common/getOncologist-worklist-New/`,
   pharmacistWorklist: `${TM_API}common/getPharma-worklist-New/`,
-
+  mmuNurseWorklist: `${TM_API}common/getMmuNurseWorklistNew/`,
 
   // New API
   getBeneficiaryDetail: `${TM_API}registrar/get/benDetailsByRegIDForLeftPanelNew`,
@@ -186,17 +171,11 @@ export const environment = {
    */
   postNCDScreeningDetails: `${TM_API}NCD/save/nurseData`,
   // getNCDScreeningVisitDetails: `${TM_API}CS-cancerScreening/getBenDataFrmNurseToDocVisitDetailsScreen`,
+  updateNCDVitalsDetailsUrl:`${TM_API}NCD/update/vitalScreen`,
   getNCDScreeningVisitDetails: `${TM_API}NCD/getBenVisitDetailsFrmNurseNCDScreening`,
   getNCDScreeningDetails: `${TM_API}NCD/get/nurseData`,
   updateNCDScreeningDetails: `${TM_API}NCD/update/nurseData`,
-  getNCDScreeningIDRSDetails : `${TM_API}NCD/getBenIdrsDetailsFrmNurse`,
-  updateNCDVitalsDetailsUrl:`${TM_API}NCD/update/vitalScreen`,
   updateNCDScreeningHistoryDetailsUrl :`${TM_API}NCD/update/historyScreen`,
-  getNCDScreeningHistoryDetails : `${TM_API}NCD/getBenHistoryDetails`,
-  getNCDSceeriningVitalDetails : `${TM_API}NCD/getBenVitalDetailsFrmNurse`,
-  updateNCDScreeningIDRSDetailsUrl :`${TM_API}NCD/update/idrsScreen`,
-
-  
 
   /**
    * GENERAL OPD QUICK CONSULT API URLs
@@ -281,9 +260,9 @@ export const environment = {
   getNCDCareVisitDetailsUrl: `${TM_API}NCDCare/getBenVisitDetailsFrmNurseNCDCare`,
   getNCDCareHistoryDetailsUrl: `${TM_API}NCDCare/getBenNCDCareHistoryDetails`,
   getNCDCareVitalDetailsUrl: `${TM_API}NCDCare/getBenVitalDetailsFrmNurseNCDCare`,
-  mmuNurseWorklist: `${TM_API}common/getMmuNurseWorklistNew/`,
 
-  /**
+
+/**
    * Covid-19 API Urls
    */
   saveNurseCovidDetails: `${TM_API}pandemic/covid/save/nurseData`,
@@ -318,7 +297,7 @@ export const environment = {
   /*
   */
   getPreviousSignificiantFindingUrl: `${TM_API}common/getDoctorPreviousSignificantFindings`,
-
+  previousVisitDataUrl:`${TM_API}common/getBenSymptomaticQuestionnaireDetails`,
   getCancerScreeningDoctorDetails: `${TM_API}CS-cancerScreening/getBenCaseRecordFromDoctorCS`,
   getNCDScreeningDoctorDetails: `${TM_API}NCD/getBenCaseRecordFromDoctorNCDScreening`,
   getGeneralOPDQuickConsultDoctorDetails: `${TM_API}genOPD-QC-quickConsult/getBenCaseRecordFromDoctorQuickConsult`,
@@ -326,7 +305,7 @@ export const environment = {
   getGeneralOPDDoctorDetails: `${TM_API}generalOPD/getBenCaseRecordFromDoctorGeneralOPD`,
   getNCDCareDoctorDetails: `${TM_API}NCDCare/getBenCaseRecordFromDoctorNCDCare`,
   getPNCDoctorDetails: `${TM_API}PNC/getBenCaseRecordFromDoctorPNC`,
-
+  getNCDSceeriningVitalDetails : `${TM_API}NCD/getBenVitalDetailsFrmNurse`,
   updateCancerScreeningDoctorDetails: `${TM_API}CS-cancerScreening/update/doctorData`,
   updateNCDScreeningDoctorDetails: `${TM_API}/NCD/update/doctorData`,
   updateGeneralOPDQuickConsultDoctorDetails: `${TM_API}genOPD-QC-quickConsult/update/doctorData`,
@@ -334,7 +313,7 @@ export const environment = {
   updateGeneralOPDDoctorDetails: `${TM_API}generalOPD/update/doctorData`,
   updateNCDCareDoctorDetails: `${TM_API}NCDCare/update/doctorData`,
   updatePNCDoctorDetails: `${TM_API}PNC/update/doctorData`,
-
+  getNCDScreeningHistoryDetails : `${TM_API}NCD/getBenHistoryDetails`,
   getTMCasesheetDataUrl: `${TM_API}common/get/Case-sheet/printData`,
   getMMUCasesheetDataUrl: `${MMU_API}common/get/Case-sheet/printData`,
 
@@ -352,9 +331,6 @@ export const environment = {
   previousPerinatalHistory: `${TM_API}common/getBenPerinatalHistory`,
   previousDevelopmentHistory: `${TM_API}common/getBenDevelopmentHistory`,
   previousFeedingHistory: `${TM_API}common/getBenFeedingHistory`,
-  previousPhyscialactivityHistoryUrl : `${TM_API}common/getBenPhysicalHistory`,
-  previousDiabetesHistoryUrl: `${TM_API}common/getBenPreviousDiabetesHistoryDetails`,
-  previousReferredHistoryUrl: `${TM_API}common/getBenPreviousReferralHistoryDetails`,
   /* */
   archivedReportsUrl: `${TM_API}labTechnician/get/labResultForVisitcode`,
   ReportsBase64Url: `${TM_API}foetalMonitor/fetch/reportGraphBase64`,
@@ -364,6 +340,9 @@ export const environment = {
   previous104HistoryUrl: `${COMMON_API}beneficiary/get104BenMedHistory`,
   patientMCTSCallHistoryUrl: `${COMMON_API}mctsOutboundHistoryController/getMctsCallResponse`,
   drugDeleteUrl: `${TM_API}common/doctor/delete/prescribedMedicine`,
+  previousPhyscialactivityHistoryUrl : `${TM_API}common/getBenPhysicalHistory`,
+  previousDiabetesHistoryUrl: `${TM_API}common/getBenPreviousDiabetesHistoryDetails`,
+  previousReferredHistoryUrl: `${TM_API}common/getBenPreviousReferralHistoryDetails`,
   newTaburl: `${mmuUICasesheet}`,
 
   getDataSYNCGroupUrl: `${TM_API}dataSyncActivity/getSyncGroupDetails`,
@@ -383,7 +362,7 @@ export const environment = {
   cancelBeneficiaryTCRequestUrl: `${TM_API}tc/cancel/benTCRequest`,
   scheduleTCUrl: `${TM_API}tc/create/benTCRequestWithVisitCode`,
   beneficiaryTCRequestStatusUrl: `${TM_API}tc/check/benTCRequestStatus`,
-  swymedUrl: `${SWYMED_IP}`,
+  swymedUrl: `swymed://${SWYMED_IP}`,
   saveSpecialistCancerObservationUrl: `${TM_API}CS-cancerScreening/update/doctorData`,
   getSwymedMailLoginUrl: `${TM_API}videoConsultation/login/`,
   invokeSwymedCallUrl: `${TM_API}videoConsultation/call/`,
@@ -395,7 +374,7 @@ export const environment = {
   licenseUrl: `${COMMON_API}license.html`,
   apiVersionUrl: `${TM_API}version`,
   snomedCTRecordListURL1: `${COMMON_API}snomed/getSnomedCTRecordList`,
-  
+
   ioturl: `${biologicalScreeningDeviceAPI}`,
   deviceStatusurl:`${biologicalScreeningDeviceAPI}/api/v1/bluetooth/hub/connection_status`,
   deviceDisconnectUrl:`${biologicalScreeningDeviceAPI}/api/v1/bluetooth/hub/disconnect`,
@@ -409,15 +388,14 @@ export const environment = {
   startHemoglobinurl: "/api/v1/wbpoct_tests/hemoglobin",
   startBloodGlucoseurl: "/api/v1/wbpoct_tests/blood_glucose",
   startRBSurl: '/api/v1/wbpoct_tests/blood_glucose',
-
- //file upload
+   //file upload
   saveFile: `${COMMON_API}kmfilemanager/addFile`,
   viewFileData: `${TM_API}common/getKMFile`,
 
   /*Doctor signature download */
   downloadSignUrl: `${COMMON_API}signature1/`,
   getLanguageList:`${COMMON_API}beneficiary/getLanguageList`,
-  
+
     /*Load MMU Provider Specific Data */
     loadMMUDataUrl:`${TM_API}common/getProviderSpecificData`,
 
@@ -432,7 +410,7 @@ export const environment = {
   verifyOTPUrl: `${FHIR_API}/healthIDWithUID/verifyOTP`,
   checkAndGenerateMobileOTPUrl: `${FHIR_API}healthIDWithUID/checkAndGenerateMobileOTP`,
   verifyMobileOTPUrl: `${FHIR_API}healthIDWithUID/verifyMobileOTP`,
-  
+
    /*Health ID - care context Mapping*/
    careContextGenerateOtpUrl: `${FHIR_API}careContext/generateOTPForCareContext`,
    verifyOtpForMappingContextUrl:`${FHIR_API}careContext/validateOTPAndCreateCareContext`,
@@ -446,9 +424,8 @@ export const environment = {
 
   /*Get Patient CBAC details*/
   getBenCBACDetails: `${COMMON_API}doortodoorapp/getSuspectedData_HRP_TB_NCD`,
-  
+
   updateAmritIDInMongo: `${FHIR_API}higher/health/facility/update/bengenid`,
-  
   /*Get patient higher health facility previous clinical records */
   higherHealthFacilityPreviousVisitDeatilsUrl: `${FHIR_API}higher/health/facility/get/clinical/data`,
    /*Calculate BMI for minors */
@@ -464,15 +441,9 @@ export const environment = {
       saveCovidVaccinationDetailsUrl: `${COMMON_API}covid/saveCovidVaccinationDetails`,
       previousCovidVaccinationUrl: `${COMMON_API}covid/getCovidVaccinationDetails`,
 
-    /* SWAASA Urls*/ 
+    /* SWAASA Urls*/
     getResultStatusURL: `${COMMON_API}lungAssessment/startAssesment`,
     getAssessmentUrl: `${COMMON_API}lungAssessment/getAssesment`,
     getAssessmentIdUrl: `${COMMON_API}lungAssessment/getAssesmentDetails`,
-    
-    /*Biometric with Health ID*/ 
-    getdeviceRDServiceUrl: `${COMMON_API}biometric/getBiometricData/`,
-    confirmAadharBio:`${FHIR_API}healthIDWithBio/confirmWithAadhaarBio`,
 
-    generateABHAForBio: `${FHIR_API}healthIDWithBio/verifyBio`,
-    generateABHAForBioMobileOTP: `${FHIR_API}healthIDWithBio/generateMobileOTP`,
 };

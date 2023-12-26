@@ -130,9 +130,9 @@ export class RegisterOtherDetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.setcheckBoxEnabledByDefault();
     this.assignSelectedLanguage();
     this.setErrorMessageForID();
-    this.setcheckBoxEnabledByDefault();
     this.loadMasterDataObservable();
     // this.httpServiceService.currentLangugae$.subscribe(response =>this.currentLanguageSet = response);
     //console.log(this.currentLanguageSet);
@@ -144,6 +144,11 @@ export class RegisterOtherDetailsComponent implements OnInit, OnDestroy {
       }
       else if(!result){
         this.otherDetailsForm.reset();
+        this.otherDetailsForm.patchValue({
+          checked: true,
+          checked1: true,
+          checked2: true,
+        });
       }
     })
   }
@@ -391,6 +396,7 @@ export class RegisterOtherDetailsComponent implements OnInit, OnDestroy {
     this.isFatherRequired = true;
     this.isCommunityRequired = true;
     this.isGidRequired = true;
+    
     this.otherDetailsForm.patchValue({
       checked: true,
       checked1: true,

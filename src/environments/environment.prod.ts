@@ -1,8 +1,8 @@
-/* 
-* AMRIT � Accessible Medical Records via Integrated Technology 
-* Integrated EHR (Electronic Health Records) Solution 
+/*
+* AMRIT � Accessible Medical Records via Integrated Technology
+* Integrated EHR (Electronic Health Records) Solution
 *
-* Copyright (C) "Piramal Swasthya Management and Research Institute" 
+* Copyright (C) "Piramal Swasthya Management and Research Institute"
 *
 * This file is part of AMRIT.
 *
@@ -37,7 +37,7 @@ const SERVER_IP = 'dataSYNCIP';
 const SWYMED_IP = 'swymed://14.143.13.109';
 const adminIP = "http://10.208.122.38:8080";
 const FHIRIP = "http://10.208.122.38:8080";
-const IOT_API = 'http://localhost:8085/ezdx-hub-connect-srv';
+
 // With API MAN Configuration
 // const COMMON_API_OPEN = `http://${IP}:8080/apiman-gateway/IEMR/Common/open/`;
 //const TM_API = `http://${IP}:8080/apiman-gateway/IEMR/TM/1.0/`;
@@ -53,7 +53,7 @@ const MMU_API = `${mmuIP}mmuapi-v1.0/`
 const COMMON_API_OPEN_SYNC = `${SERVER_IP}commonapi-v1.0/`;
 const SCHEDULER_API = `${schedulerIP}schedulerapi-v1.0/`;
 const ADMIN_API = `${adminIP}/adminapi-v1.0`;
-
+const biologicalScreeningDeviceAPI = `${ADMIN_API}/diagnostics/biologicalScreeningDevice`;
 const FHIR_API = `${FHIRIP}/fhirapi-v1.0/`;
 const mmuUICasesheet = `${tmUI_IP}tmui-v1.0`;
 
@@ -390,12 +390,12 @@ export const environment = {
   licenseUrl: `${COMMON_API}license.html`,
   apiVersionUrl: `${TM_API}version`,
   snomedCTRecordListURL1: `${COMMON_API}snomed/getSnomedCTRecordList`,
-  
-  ioturl: `${IOT_API}`,
-  deviceStatusurl:`${IOT_API}/api/v1/bluetooth/hub/connection_status`,
-  deviceDisconnectUrl:`${IOT_API}/api/v1/bluetooth/hub/disconnect`,
-  deviceBluetoothurl:`${IOT_API}/api/v1/bluetooth/service_discovery`,
-  connectdeviceBluetoothurl:`${IOT_API}/api/v1/bluetooth/hub_connection`,
+
+  ioturl: `${biologicalScreeningDeviceAPI}`,
+  deviceStatusurl:`${biologicalScreeningDeviceAPI}/api/v1/bluetooth/hub/connection_status`,
+  deviceDisconnectUrl:`${biologicalScreeningDeviceAPI}/api/v1/bluetooth/hub/disconnect`,
+  deviceBluetoothurl:`${biologicalScreeningDeviceAPI}/api/v1/bluetooth/service_discovery`,
+  connectdeviceBluetoothurl:`${biologicalScreeningDeviceAPI}/api/v1/bluetooth/hub_connection`,
 
   startWeighturl: "/api/v1/physical_tests/weight",
   startTempurl: "/api/v1/physical_tests/temperature",
@@ -426,7 +426,7 @@ export const environment = {
   verifyOTPUrl: `${FHIR_API}/healthIDWithUID/verifyOTP`,
   checkAndGenerateMobileOTPUrl: `${FHIR_API}healthIDWithUID/checkAndGenerateMobileOTP`,
   verifyMobileOTPUrl: `${FHIR_API}healthIDWithUID/verifyMobileOTP`,
-  
+
    /*Health ID - care context Mapping*/
    careContextGenerateOtpUrl: `${FHIR_API}careContext/generateOTPForCareContext`,
    verifyOtpForMappingContextUrl:`${FHIR_API}careContext/validateOTPAndCreateCareContext`,
@@ -457,7 +457,7 @@ export const environment = {
       saveCovidVaccinationDetailsUrl: `${COMMON_API}covid/saveCovidVaccinationDetails`,
       previousCovidVaccinationUrl: `${COMMON_API}covid/getCovidVaccinationDetails`,
 
-    /* SWAASA Urls*/ 
+    /* SWAASA Urls*/
     getResultStatusURL: `${COMMON_API}lungAssessment/startAssesment`,
     getAssessmentUrl: `${COMMON_API}lungAssessment/getAssesment`,
     getAssessmentIdUrl: `${COMMON_API}lungAssessment/getAssesmentDetails`,
