@@ -462,4 +462,10 @@ export const environment = {
     getAssessmentUrl: `${COMMON_API}lungAssessment/getAssesment`,
     getAssessmentIdUrl: `${COMMON_API}lungAssessment/getAssesmentDetails`,
 
+    /*Biometric with Health ID*/ 
+    getdeviceRDServiceUrl: `${COMMON_API}biometric/getBiometricData/`,
+    confirmAadharBio:`${FHIR_API}healthIDWithBio/confirmWithAadhaarBio`,
+
+    generateABHAForBio: `${FHIR_API}healthIDWithBio/verifyBio`,
+    generateABHAForBioMobileOTP: `${FHIR_API}healthIDWithBio/generateMobileOTP`,
 };

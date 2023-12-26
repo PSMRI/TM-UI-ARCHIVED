@@ -1,0 +1,194 @@
+body
+{
+    font-family: 'Segoe UI';
+    background-color: #DDDDDD;
+    margin: 0px 5px 5px 5px;
+    padding: 0px 5px 5px 5px;
+    color: #555;
+    font-size: 12px;
+}
+.panel
+{
+    background-color: #FFFFFF;
+    -moz-user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    margin: 12px 12px;
+    padding: 6px 12px;
+}
+.btn
+{
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    -moz-user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+.form-control
+{
+    display: block;
+    width: 100%;
+    height: 24px;
+    padding: 3px 6px !important;
+    font-size: 12px; /*line-height: 1.42857;*/
+    color: #555;
+    background-color: #FFF;
+    background-image: none;
+    border: 1px solid #bdbdbd;
+    border-radius: 4px;
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset;
+    transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+}
+textarea.form-control
+{
+    height: auto;
+}
+.text-bold
+{
+    font-weight: bold;
+}
+.img
+{
+    min-width: 125px;
+    min-height: 155px;
+    width: 125px;
+    height: 155px;
+    border: 1px solid #CCC;
+    border-radius: 4px;
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset;
+    background-color: #FFFFFF;
+}
+
+.navbar-right h2 {
+    color: #fff;
+    margin: 20px 20px;
+}
+
+.mtop {
+    margin: 20px 0 0;
+}
+
+.mbottom {
+    margin-bottom: 30px;
+}
+
+.box-shadow {
+    box-shadow: 0 2px 5px rgba(105, 108, 109, 0.7), 0 0 8px 5px rgba(208, 223, 226, 0.4) /*inset*/;
+}
+
+textarea {
+    resize: none;
+}
+
+.overlay {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0, 0.9);
+    overflow-x: hidden;
+    transition: 0.5s;
+}
+
+.overlay-content {
+    position: relative;
+    top: 25%;
+    width: 100%;
+    text-align: center;
+    margin-top: 30px;
+}
+
+.overlay a {
+    padding: 8px;
+    text-decoration: none;
+    font-size: 36px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+}
+
+    .overlay a:hover, .overlay a:focus {
+        color: #f1f1f1;
+    }
+
+.overlay .closebtn {
+    position: absolute;
+    top: 20px;
+    right: 45px;
+    font-size: 60px;
+}
+
+@media (max-width:1200px) {
+    .btn-200 {
+        width: 150px !important;
+        margin-bottom: 10px;
+    }
+}
+
+
+@media (max-width:768px) {
+    .btn-200 {
+        width: 100% !important;
+        margin-bottom: 10px;
+    }
+}
+
+@media screen and (max-height: 450px) {
+    .overlay a {
+        font-size: 20px;
+    }
+
+    .overlay .closebtn {
+        font-size: 40px;
+        top: 15px;
+        right: 35px;
+    }
+}
+
+.btn-50 {
+    width: 50px;
+}
+
+.btn-100 {
+    width: 100px;
+}
+
+.btn-150 {
+    width: 150px;
+}
+
+.btn-200 {
+    width: 205px;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.btn-primary {
+    color: #FFF;
+    background-color: #0277bd !important;
+    border-color: #357EBD;
+}
+
+    .btn-primary:hover {
+        color: #FFF;
+        background-color: #0277bd !important;
+        border-color: #428BCA;
+    }
+
+    .panel-default>.panel-heading {
+        background-color: rgba(37, 55, 70, 0.2) !important; 
+    }

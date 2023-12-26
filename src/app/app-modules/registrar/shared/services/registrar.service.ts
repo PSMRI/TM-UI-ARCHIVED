@@ -52,6 +52,7 @@ export class RegistrarService {
 
   abhaGenerateData: any ;
   aadharNumberNew: any;
+  abhaAuthMethod: any;
 
   abhaDetail: any= null ;
   abhaDetailData = new BehaviorSubject<any>(this.abhaDetail);
@@ -270,6 +271,19 @@ export class RegistrarService {
   generateHealthIDCard(healthID) {
     return this.http.post(environment.generateOTPForHealthIDCard,healthID).map((res) => res.json());
   }
+
+  confirmAadhar(healthID) {
+    return this.http.post(environment.confirmAadharBio,healthID).map((res) => res.json());
+  }
+
+  generateABHAForBiometric(aadhaarBio) {
+    return this.http.post(environment.generateABHAForBio,aadhaarBio).map((res) => res.json());
+  }
+
+  generateABHAForBiometricMobileOTP(bioMobileOTP) {
+    return this.http.post(environment.generateABHAForBioMobileOTP,bioMobileOTP).map((res) => res.json());
+  }
+
   verifyOTPForHealthIDCard(reqObjForValidateOTP) {
     return this.http.post(environment.verifyOTPAndGenerateHealthCard,reqObjForValidateOTP)
     .map((res) => res.json());
@@ -303,5 +317,4 @@ export class RegistrarService {
   getBiometricData(pid: any) {
     return this.http.get(environment.getdeviceRDServiceUrl + pid);
   }
-
 }

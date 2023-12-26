@@ -1,0 +1,19 @@
+<div class="title info">
+  <h4>ABHA Authmode Selection</h4>
+  <button class="pull-right close-btn"  mdDialogClose (click)="closeDialogAuth()" md-icon-button>
+      <md-icon class="md-24">close</md-icon>
+  </button>
+</div>
+  <br>
+  <div class="col-xs-12 col-sm-12" [formGroup]="abhaAuthMethodForm">
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 p-b-10" >
+        <label class="control-label" for="modeofAuthMethod">Abha Authmode*</label>
+        <md-radio-group formControlName="modeofAuthMethod" (change)="getAbhaAuthMethod()">
+          <md-radio-button color="primary" value="AADHAAR_OTP">Aadhar</md-radio-button>
+          <md-radio-button color="primary" value="AADHAAR_BIO">Biometric</md-radio-button>
+          <md-radio-button color="primary" value="MOBILE_OTP">Mobile</md-radio-button>
+        </md-radio-group>
+      </div>
+    </div>
+  </div>
