@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MdDialogRef } from '@angular/material/dialog';
+import { RegistrarService } from '../shared/services/registrar.service';
+import { ConfirmationService } from 'app/app-modules/core/services';
 
 @Component({
   selector: 'app-biometric-authentication',
@@ -12,7 +14,9 @@ export class BiometricAuthenticationComponent implements OnInit {
   messageInfo: any;
 
   constructor(
-    public mdDialogRef: MdDialogRef<BiometricAuthenticationComponent>
+    public mdDialogRef: MdDialogRef<BiometricAuthenticationComponent>,
+    private registrarService: RegistrarService,
+    private confirmationService: ConfirmationService
   ) { }
 
   ngOnInit() {
@@ -22,17 +26,27 @@ export class BiometricAuthenticationComponent implements OnInit {
 
   connectDevice(){
     this.enableImage = true;
-    this.messageInfo = "Connecting Device..."
+    this.messageInfo = "Please wait while connecting to the device"
   //call the method to connect device discover ADVM
-  let res : any;
-  if(res !== undefined && res !== null && res.toLowerCase() == "ready"){
-    this.enableImage = true;
-    this.messageInfo = "Please place your finger on the device to authenticate"
-  }
-  else{
-    this.enableImage = true;
-    this.messageInfo = "Issue in connecting with the device"
-  }
+  let pidValue = "P";
+  this.registrarService.getBiometricData(pidValue).subscribe((res: any) => {
+    this.messageInfo = "Please place your finger on the device to authenticate";
+    if(res !== undefined && res !== null && res.statusCode == 200){
+      console.log("DATA STATUS", res);
+      this.enableImage = true;
+      this.messageInfo = "Fingerprint captured successfully";
+    }
+    else if(res.statusCode != 200){
+      this.enableImage = true;
+      this.messageInfo = "Issue in capturing fingerprint"
+    } else {
+      this.enableImage = true;
+      this.messageInfo = "Issue in connecting with device"
+    }
+  }, (err: any) => {
+    this.enableImage = false;
+    this.confirmationService.alert("Capture timed out", err.error);
+  }) 
   //Second method calling 
   // let resposne = "success"
   // if(resposne == "success"){

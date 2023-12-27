@@ -1,5 +1,5 @@
 /* 
-* AMRIT – Accessible Medical Records via Integrated Technology 
+* AMRIT ï¿½ Accessible Medical Records via Integrated Technology 
 * Integrated EHR (Electronic Health Records) Solution 
 *
 * Copyright (C) "Piramal Swasthya Management and Research Institute" 
@@ -29,6 +29,7 @@ import { RegistrationComponent } from './registration/registration.component';
 import { SearchComponent } from './search/search.component';
 
 import { CanDeactivateGuardService } from '../../app-modules/core/services/can-deactivate-guard.service';
+import { RdservicebioComponent } from './rdservice-client/rdservicebio/rdservicebio.component';
 
 const routes: Routes = [
   {
@@ -51,7 +52,10 @@ const routes: Routes = [
       }, {
         path: 'search/:beneficiaryID',
         component: RegistrationComponent
-      }
+      },{
+        path: 'rdServiceBio',
+        component: RdservicebioComponent
+      },
     ]
   }
 ];

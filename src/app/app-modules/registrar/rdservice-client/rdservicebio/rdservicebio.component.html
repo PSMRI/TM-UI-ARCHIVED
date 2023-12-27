@@ -1,0 +1,207 @@
+<div class="container-fluid" >
+    <div class="row" style="margin-left: 2%;">
+        <h3 class="modal-title"><strong>RD Service Client</strong></h3>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 mbottom">
+            <div class="col-lg-12 mtop ">
+                <div>
+                    <h4 class="col-md-2">Initialized Framework</h4>
+                    <div class="form-group">
+                        <button type="button" style="margin: 5px;" md-raised-button color="primary" (click)="discoverAvdm();" value="Discover AVDM" class="btn btn-200 btn-primary">Discover AVDM</button>
+                        <button type="button" style="margin: 5px;" md-raised-button color="primary" (click)="deviceInfoAvdm();" value="Device Info" class="btn btn-200 btn-primary">Device Info</button>
+                        <button type="button" style="margin: 5px;" md-raised-button color="primary" (click)="captureData();" value="Capture" class="btn btn-200 btn-primary">Capture</button>
+                        <!-- <button type="button" style="margin: 5px;" md-raised-button color="primary" (click)="reset();" value="Reset" class="btn btn-200 btn-primary">Reset</button> -->
+                        &nbsp;&nbsp;
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel panel-default box-shadow">
+                <div class="panel-heading">
+                    Select Option to Capture
+                </div>
+                <div class="panel-body ">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label>AVDM</label>
+                                <select id="ddlAVDM" class="form-control">
+                                    <option></option>
+                                </select>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Timeout</label>
+                                        <select id="Timeout" class="form-control">
+                                            <option>10000</option>
+                                            <option>10000</option>
+                                            <option>20000</option>
+                                            <option>30000</option>
+                                            <option>40000</option>
+                                            <option>50000</option>
+                                            <option>60000</option>
+                                            <option>70000</option>
+                                            <option>80000</option>
+                                            <option>90000</option>
+                                            <option>100000</option>
+                                            <option>0</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>PidVer</label>
+                                        <select id="Pidver" class="form-control">
+                                            <option>2.0</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Env</label>
+                                        <select id="Env" class="form-control">
+                                            <option>S</option>
+                                            <option selected="true">PP</option>
+                                            <option>P</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>PTimeout</label>
+                                        <select id="pTimeout" class="form-control">
+                                            <option>10000</option>
+                                            <option selected="selected">20000</option>
+                                            <option>30000</option>
+                                            <option>40000</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>PGCount</label>
+                                        <select id="pgCount" class="form-control">
+                                            <option>1</option>
+                                            <option selected="selected">2</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-1">
+                            <div class="form-group">
+                                <label>DataType</label>
+                                <select id="Dtype" class="form-control">
+                                    <option value="0">X</option>
+                                    <option value="1">P</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Client Key</label>
+                                <input id="txtCK" class="form-control" type="text" placeholder="Enter text">
+                            </div>
+                            <div class="form-group">
+                                <label>OTP</label>
+                                <input id="txtotp" class="form-control" type="text" placeholder="Enter text">
+                            </div>
+                        </div>
+
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Wadh</label>
+                                <textarea id="txtWadh" rows="3" class="form-control"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Finger Count</label>
+                                        <select id="Fcount" class="form-control">
+                                            <option>0</option>
+                                            <option selected="selected">1</option>
+                                            <option>2</option>
+                                            <option>3</option>
+                                            <option>4</option>
+                                            <option>5</option>
+                                            <option>6</option>
+                                            <option>7</option>
+                                            <option>8</option>
+                                            <option>9</option>
+                                            <option>10</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Iris Count</label>
+                                        <select id="Icount" class="form-control">
+                                            <option>0</option>
+                                            <option>1</option>
+                                            <option>2</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Face Count</label>
+                                        <select id="Pcount" class="form-control">
+                                            <option>0</option>
+                                            <option>1</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Finger Type</label>
+                                        <select id="Ftype" class="form-control">
+                                            <option value="0">FMR</option>
+                                            <option value="1">FIR</option>
+                                            <option value="2">BOTH</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Iris Type </label>
+                                        <select id="Itype" class="form-control">
+                                            <option>SELECT</option>
+                                            <option>ISO</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Face Type</label>
+                                        <select id="Ptype" class="form-control">
+                                            <option>SELECT</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel-heading">
+                    AVDM / Device Info
+                </div>
+                <div class="panel-body ">
+                    <div class="form-group">
+                        <textarea rows="5" id="txtDeviceInfo" class="form-control"></textarea>
+                    </div>
+                </div>
+
+                <div class="panel-heading">
+                    Pid Data
+                </div>
+                <div class="panel-body ">
+                    <div class="form-group">
+                        <textarea id="txtPidData" rows="7" class="form-control"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

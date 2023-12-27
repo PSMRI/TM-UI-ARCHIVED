@@ -6,7 +6,7 @@
     <label><strong>{{currentLanguageSet?.aBHANumber}}:</strong> {{succdata.healthIdNumber}}</label><br><br>
     <label class="userConsent">{{currentLanguageSet?.doYouWantToDownloadABHACard}}</label></div>
   <div class="action">
-    <button md-button md-dialog-close>{{currentLanguageSet?.common?.no}}</button>
+    <button md-button md-dialog-close (click)="clearPIDData()">{{currentLanguageSet?.common?.no}}</button>
     <button md-button  class="background-primary" cdkFocusInitial (click)="fetchOtp(succdata.healthId, succdata.healthIdNumber)">{{currentLanguageSet?.common?.yes}}</button>
   </div>
 </div>
