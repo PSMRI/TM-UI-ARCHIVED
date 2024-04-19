@@ -1,5 +1,5 @@
 /* 
-* AMRIT – Accessible Medical Records via Integrated Technology 
+* AMRIT ï¿½ Accessible Medical Records via Integrated Technology 
 * Integrated EHR (Electronic Health Records) Solution 
 *
 * Copyright (C) "Piramal Swasthya Management and Research Institute" 
@@ -1116,11 +1116,12 @@ export class WorkareaComponent implements OnInit, CanComponentDeactivate {
               .subscribe(
                 (res: any) => {
                   if (res.statusCode == 200 && res.data != null) {
-                    this.confirmationService.alert(
-                      this.current_language_set.alerts.info
-                        .datafillSuccessfully,
-                      "success"
-                    );
+                    this.confirmationService.alert(res.data.response, 'success');
+                    // this.confirmationService.alert(
+                    //   this.current_language_set.alerts.info
+                    //     .datafillSuccessfully,
+                    //   "success"
+                    // );
                     this.navigateToNurseWorklist();
                   } else if (res.statusCode == 9999) {
                     this.navigateToNurseWorklist();
@@ -2345,10 +2346,11 @@ this.resetSpinnerandEnableTheSubmitButton();
         .subscribe(
           (res) => {
             if (res.statusCode == 200 && res.data != null) {
-              this.confirmationService.alert(
-                this.current_language_set.alerts.info.datafillSuccessfully,
-                "success"
-              );
+              this.confirmationService.alert(res.data.response, 'success');
+              // this.confirmationService.alert(
+              //   this.current_language_set.alerts.info.datafillSuccessfully,
+              //   "success"
+              // );
               this.navigateToNurseWorklist();
             } else {
               this.resetSpinnerandEnableTheSubmitButton();
@@ -2708,10 +2710,11 @@ this.resetSpinnerandEnableTheSubmitButton();
         .subscribe(
           (res: any) => {
             if (res.statusCode == 200 && res.data != null) {
-              this.confirmationService.alert(
-                this.current_language_set.alerts.info.datafillSuccessfully,
-                "success"
-              );
+              this.confirmationService.alert(res.data.response, 'success');
+              // this.confirmationService.alert(
+              //   this.current_language_set.alerts.info.datafillSuccessfully,
+              //   "success"
+              // );
               this.navigateToNurseWorklist();
             } else {
               this.resetSpinnerandEnableTheSubmitButton();
@@ -2783,10 +2786,11 @@ this.resetSpinnerandEnableTheSubmitButton();
         .subscribe(
           (res: any) => {
             if (res.statusCode == 200 && res.data != null) {
-              this.confirmationService.alert(
-                this.current_language_set.alerts.info.datafillSuccessfully,
-                "success"
-              );
+              this.confirmationService.alert(res.data.response, 'success');
+              // this.confirmationService.alert(
+              //   this.current_language_set.alerts.info.datafillSuccessfully,
+              //   "success"
+              // );
               this.navigateToNurseWorklist();
             } else {
               this.resetSpinnerandEnableTheSubmitButton();
@@ -2816,10 +2820,11 @@ this.resetSpinnerandEnableTheSubmitButton();
         .subscribe(
           (res: any) => {
             if (res.statusCode == 200 && res.data != null) {
-              this.confirmationService.alert(
-                this.current_language_set.alerts.info.datafillSuccessfully,
-                "success"
-              );
+              this.confirmationService.alert(res.data.response, 'success');
+              // this.confirmationService.alert(
+              //   this.current_language_set.alerts.info.datafillSuccessfully,
+              //   "success"
+              // );
               this.navigateToNurseWorklist();
             } else {
               this.resetSpinnerandEnableTheSubmitButton();
@@ -2849,10 +2854,11 @@ this.resetSpinnerandEnableTheSubmitButton();
         .subscribe(
           (res) => {
             if (res.statusCode == 200 && res.data != null) {
-              this.confirmationService.alert(
-                this.current_language_set.alerts.info.datafillSuccessfully,
-                "success"
-              );
+              this.confirmationService.alert(res.data.response, 'success');
+              // this.confirmationService.alert(
+              //   this.current_language_set.alerts.info.datafillSuccessfully,
+              //   "success"
+              // );
               this.navigateToNurseWorklist();
             } else {
               this.resetSpinnerandEnableTheSubmitButton();
@@ -3023,10 +3029,12 @@ this.resetSpinnerandEnableTheSubmitButton();
         .subscribe(
           (res: any) => {
             if (res.statusCode == 200 && res.data != null) {
-              this.confirmationService.alert(
-                this.current_language_set.alerts.info.datafillSuccessfully,
-                "success"
-              );
+              // this.confirmationService.alert(
+              //   this.current_language_set.alerts.info.datafillSuccessfully,
+               
+              //   "success"
+              // );
+              this.confirmationService.alert(res.data.response, 'success');
               this.navigateToNurseWorklist();
             } else {
               this.resetSpinnerandEnableTheSubmitButton();
