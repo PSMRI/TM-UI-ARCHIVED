@@ -2995,10 +2995,11 @@ this.resetSpinnerandEnableTheSubmitButton();
         .subscribe(
           (res: any) => {
             if (res.statusCode == 200 && res.data != null) {
-              this.confirmationService.alert(
-                this.current_language_set.alerts.info.datafillSuccessfully,
-                "success"
-              );
+              // this.confirmationService.alert(
+              //   this.current_language_set.alerts.info.datafillSuccessfully,
+              //   "success"
+              // );
+              this.confirmationService.alert(res.data.response, 'success');
               this.navigateToNurseWorklist();
             } else {
               this.resetSpinnerandEnableTheSubmitButton();
