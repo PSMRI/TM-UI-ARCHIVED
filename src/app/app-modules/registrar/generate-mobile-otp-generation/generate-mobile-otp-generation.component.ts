@@ -1,5 +1,5 @@
 /* 
-* AMRIT – Accessible Medical Records via Integrated Technology 
+* AMRIT ï¿½ Accessible Medical Records via Integrated Technology 
 * Integrated EHR (Electronic Health Records) Solution 
 *
 * Copyright (C) "Piramal Swasthya Management and Research Institute" 
@@ -42,6 +42,8 @@ export class GenerateMobileOtpGenerationComponent implements OnInit {
   txnId: any;
   // mobileNumber: any = this.data.mobileNumber;
   enableMobileOTPForm: boolean = false;
+  bioVal: boolean = false;
+  verifyBioMobileOtp: boolean = false;
   // mobileLinkedOTP: boolean = false;
   
   constructor(private fb: FormBuilder,
@@ -58,6 +60,7 @@ export class GenerateMobileOtpGenerationComponent implements OnInit {
   ngOnInit() {
     this.assignSelectedLanguage();
     this.txnId = this.data.transactionId;
+    this.bioVal = this.data.bioValue;
     // this.mobileLinkedOTP = this.data.mobileLinked;
     // if(this.mobileLinkedOTP === false) {
     //   this.enableMobileOTPForm = true;
@@ -91,7 +94,7 @@ export class GenerateMobileOtpGenerationComponent implements OnInit {
   //while clicking on submit after entering the mobile number
   onSubmitOfMobileNo()
   {
-    if(this.enableMobileOTPForm === false) {
+    if(this.enableMobileOTPForm === false && (this.bioVal == null || this.bioVal == undefined || this.bioVal === false)) {
     this.showProgressBar = true;
       let reqObj = {
         "mobile": this.generateMobileOTPForm.controls.mobileNo.value,
@@ -105,9 +108,11 @@ export class GenerateMobileOtpGenerationComponent implements OnInit {
               this.confirmationService.confirm('info', this.currentLanguageSet.enterOTPToVerify).subscribe((responseData) => {
                 if(responseData === false) {
                   this.enableMobileOTPForm = false;
+                  this.verifyBioMobileOtp = false;
                 }
                 else {
                   this.enableMobileOTPForm = true;
+                  this.verifyBioMobileOtp = false;
                 }
               });
             } else{
@@ -121,7 +126,27 @@ export class GenerateMobileOtpGenerationComponent implements OnInit {
           this.showProgressBar = false;
           this.confirmationService.alert(this.currentLanguageSet.issueInGettingBeneficiaryABHADetails, 'error');
         })
-      }
+      } else if(this.enableMobileOTPForm === false && this.bioVal === true) {
+        this.showProgressBar = true;
+        let reqObj = {
+          "mobile": this.generateMobileOTPForm.controls.mobileNo.value,
+          "txnId": this.txnId
+        };
+        this.registrarService.generateABHAForBiometricMobileOTP(reqObj)
+        .subscribe((res) => {
+          if(res.statusCode ==  200 && res.data.tnxId) {
+            this.showProgressBar = false;
+            this.enableMobileOTPForm = true;
+            this.verifyBioMobileOtp = true;
+          } else {
+            this.showProgressBar = false;
+            this.confirmationService.alert(res.errorMessage, 'error');
+          }
+        }, err => {
+          this.showProgressBar = false;
+          this.confirmationService.alert(this.currentLanguageSet.issueInGettingBeneficiaryABHADetails, 'error');
+        })
+      } 
   }
 
   resendOTP()
@@ -149,8 +174,9 @@ export class GenerateMobileOtpGenerationComponent implements OnInit {
 
   //entering OTP for mobile verification
   verifyMobileOtp() {
-    if(this.enableMobileOTPForm === true) {
+    if(this.enableMobileOTPForm === true && this.verifyBioMobileOtp === true) {
     let reqObj = null;
+    this.showProgressBar = true;
         reqObj = {
           "otp": this.generateMobileOTPForm.controls['mobileOtp'].value,
           "txnId": this.txnId,
@@ -158,11 +184,25 @@ export class GenerateMobileOtpGenerationComponent implements OnInit {
         this.registrarService.verifyMobileOTPForAadhar(reqObj)
         .subscribe((res) => {
           if(res.statusCode ==  200) {
-            this.dialogSucRef.close(res.data);
+            this.dialogSucRef.close(res.data.tnxId);
         } else{
           this.confirmationService.alert(res.errorMessage, "error");
         }
       })
+    } else if(this.enableMobileOTPForm === true) {
+      let reqObj = null;
+      reqObj = {
+        "otp": this.generateMobileOTPForm.controls['mobileOtp'].value,
+        "txnId": this.txnId,
+      }
+      this.registrarService.verifyMobileOTPForAadhar(reqObj)
+      .subscribe((res) => {
+        if(res.statusCode ==  200) {
+          this.dialogSucRef.close(res.data);
+      } else{
+        this.confirmationService.alert(res.errorMessage, "error");
+      }
+    })
     }
   }
 

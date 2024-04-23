@@ -26,16 +26,16 @@
 // `ng build --env=prod` then `environment.prod.ts` will be used instead.
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
-const commonIP = 'http://10.208.122.38:8080/';
-const tmIP = 'http://10.208.122.38:8080/';
-const IP104 = 'http://10.208.122.38:8080/';
+const commonIP = 'http://10.208.122.69:8080/';
+const tmIP = 'http://10.208.122.69:8080/';
+const IP104 = 'http://10.208.122.69:8080/';
 // const tmIP = 'http://localhost:8080/';
-const mmuIP = 'http://10.208.122.38:8080/';
-const schedulerIP = 'http://10.208.122.38:8080/';
-const adminIP = 'http://10.208.122.38:8080/';
-const FHIRIP ='http://10.208.122.38:8080/';
+const mmuIP = 'http://10.208.122.69:8080/';
+const schedulerIP = 'http://10.208.122.69:8080/';
+const adminIP = 'http://10.208.122.69:8080/';
+const FHIRIP ='https://amritwprdev.piramalswasthya.org/';
 
-// const SERVER_IP = '10.208.122.38';
+// const SERVER_IP = '10.208.122.69';
 
 const SERVER_IP = "10.208.122.39";
 
@@ -49,16 +49,16 @@ const SWYMED_IP = "swymed://14.143.13.109";
 // const SCHEDULER_API = `http://${IP}:8080/apiman-gateway/IEMR/Scheduling/1.0/`;
 
 // Without API MAN Configuration
-const COMMON_API_OPEN = `${commonIP}/commonapi-v1.1/`;
-const COMMON_API = `${commonIP}/commonapi-v1.1/`;
+const COMMON_API_OPEN = `${commonIP}/commonapi-v1.0/`;
+const COMMON_API = `${commonIP}/commonapi-v1.0/`;
 // const COMMON_API_OPEN = `http://localhost:8080/`;  
 // const COMMON_API = `http://localhost:8080/`;  
-const TM_API = `${tmIP}/tmapi-v1.1/`;
+const TM_API = `${tmIP}/tmapi-v1.0/`;
 const API104 = `${IP104}/104api-v1.0/`;
 // const TM_API = `http://localhost:8082/`;   
 const MMU_API = `${mmuIP}/mmuapi-v1.0/`;
-const COMMON_API_OPEN_SYNC = `http://${SERVER_IP}:8080/commonapi-v1.1/`;
-const SCHEDULER_API = `${schedulerIP}/schedulerapi-v1.1/`;
+const COMMON_API_OPEN_SYNC = `http://${SERVER_IP}:8080/commonapi-v1.0/`;
+const SCHEDULER_API = `${schedulerIP}/schedulerapi-v1.0/`;
 const mmuUICasesheet = "http://localhost:4200/";
 const ADMIN_API = `${adminIP}/adminapi-v1.0`;
 
@@ -470,4 +470,11 @@ export const environment = {
     getResultStatusURL: `${COMMON_API}lungAssessment/startAssesment`,
     getAssessmentUrl: `${COMMON_API}lungAssessment/getAssesment`,
     getAssessmentIdUrl: `${COMMON_API}lungAssessment/getAssesmentDetails`,
+
+    /*Biometric with Health ID*/ 
+    getdeviceRDServiceUrl: `${COMMON_API}biometric/getBiometricData/`,
+    confirmAadharBio:`${FHIR_API}healthIDWithBio/confirmWithAadhaarBio`,
+
+    generateABHAForBio: `${FHIR_API}healthIDWithBio/verifyBio`,
+    generateABHAForBioMobileOTP: `${FHIR_API}healthIDWithBio/generateMobileOTP`,
 };

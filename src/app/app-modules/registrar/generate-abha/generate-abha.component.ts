@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { RegistrationUtils } from '../shared/utility/registration-utility';
-import { MdDialog, MdDialogRef } from '@angular/material';
+import { MD_DIALOG_DATA, MdDialog, MdDialogRef } from '@angular/material';
 import { HttpServiceService } from 'app/app-modules/core/services/http-service.service';
 import { RegistrarService } from '../shared/services/registrar.service';
 import { SetLanguageComponent } from 'app/app-modules/core/components/set-language.component';
 import { HealthIdOtpGenerationComponent } from '../health-id-otp-generation/health-id-otp-generation.component';
-import { BiometricAuthenticationComponent } from '../biometric-authentication/biometric-authentication.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-generate-abha',
@@ -28,6 +28,7 @@ export class GenerateAbhaComponent implements OnInit {
     private dialog: MdDialog,
     public httpServiceService: HttpServiceService,
     private registrarService: RegistrarService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -76,15 +77,8 @@ export class GenerateAbhaComponent implements OnInit {
       this.generateHealthIDCard();
       this.getOTP(); 
     } else if (this.modeofAbhaHealthID==="BIOMETRIC"){
-      let mdDialogRef: MdDialogRef<BiometricAuthenticationComponent> = this.dialog.open(BiometricAuthenticationComponent,
-        {
-          width:"500px",
-          height:"320px",
-          disableClose: true,
-        }
-      );
-     mdDialogRef.afterClosed().subscribe((res) => {
-     });
+      this.aadharNumber=this.abhaGenerateForm.controls["aadharNumber"].value;
+      this.router.navigate(['/registrar/rdServiceBio/', {aadharNumber: this.aadharNumber}]);
     }
   }
 
@@ -114,5 +108,43 @@ export class GenerateAbhaComponent implements OnInit {
         this.disableGenerateOTP=true;
       }
   })
+  }
+}
+
+  @Component({
+    selector: 'auth-method',
+    templateUrl: './auth-method.html',
+    styleUrls: ['./generate-abha.component.css']
+  })
+  export class authMethodComponent implements OnInit {
+    authOption: boolean = false;
+    modeofAuthMethod: any;
+    abhaAuthMethodForm: FormGroup;
+
+    constructor(
+      private fb: FormBuilder,
+      public dialogRef: MdDialogRef<authMethodComponent>,
+      private registerService: RegistrarService,
+    ) {}
+
+  ngOnInit(): void {
+    this.abhaAuthMethodForm = this.createAbhaAuthMethod();
+  }
+  
+  createAbhaAuthMethod() {
+    return this.fb.group({
+      modeofAuthMethod: null,
+    });
+  }
+
+  closeDialogAuth() {
+    this.dialogRef.close();
+    this.modeofAuthMethod = null;
+  }
+
+  getAbhaAuthMethod(){
+    this.modeofAuthMethod=this.abhaAuthMethodForm.controls["modeofAuthMethod"].value;
+    this.dialogRef.close(this.modeofAuthMethod);
+    console.log("AUTH METHOD", this.modeofAuthMethod);
   }
 }

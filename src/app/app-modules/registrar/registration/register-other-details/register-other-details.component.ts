@@ -47,6 +47,9 @@ import { ViewHealthIdCardComponent } from "./view-health-id-card/view-health-id-
 import { SetLanguageComponent } from "app/app-modules/core/components/set-language.component";
 import { HealthIdOtpSuccessComponent } from "../../health-id-otp-generation/health-id-otp-generation.component";
 import { environment } from "environments/environment";
+import { BiometricAuthenticationComponent } from "../../biometric-authentication/biometric-authentication.component";
+import { Router } from "@angular/router";
+import { RddeviceService } from "../../shared/services/rddevice.service";
 @Component({
   selector: "register-other-details",
   templateUrl: "./register-other-details.component.html",
@@ -1179,6 +1182,8 @@ export class HealthIdValidateComponent implements OnInit {
   idErrorText: string;
   patternID: RegExp;
   address: any;
+  pidRes: any;
+
   abhaSuffix = environment.abhaExtension;
   constructor(
     public dialogRef: MdDialogRef<HealthIdValidateComponent>,
@@ -1187,7 +1192,9 @@ export class HealthIdValidateComponent implements OnInit {
     private fb: FormBuilder,
     public httpServiceService: HttpServiceService,
     private registrarService: RegistrarService,
-    private confirmationValService: ConfirmationService
+    private confirmationValService: ConfirmationService,
+    private router: Router,
+    private rdservice: RddeviceService
   ) {
     console.log("popupdata");
   }
@@ -1323,19 +1330,20 @@ export class HealthIdValidateComponent implements OnInit {
       modeofhealthID: null,
     });
  
+    let downloadABHACard: boolean = false;
 
     if (this.data.generateHealthIDCard) {
       if (
         this.healthIdMode !== undefined &&
         this.healthIdMode !== null &&
         this.healthIdMode === "AADHAR"
-      )
+      ){
         this.healthIdMode = "AADHAAR";
-      this.showProgressBar = true;
-      let reqObj = {
-        authMethod: this.healthIdMode + "_OTP",
-        healthid: this.valhealthId,
-      };
+        this.showProgressBar = true;
+        let reqObj = {
+          authMethod: this.healthIdMode + "_OTP",
+          healthid: this.valhealthId,
+        };
       this.registrarService.generateHealthIDCard(reqObj).subscribe(
         (res) => {
           if (res.statusCode == 200 && Object.keys(res.data).length > 0) {
@@ -1354,7 +1362,7 @@ export class HealthIdValidateComponent implements OnInit {
               );
           } else {
             this.showProgressBar = false;
-            this.confirmationValService.alert(res.status, "error");
+            this.confirmationValService.alert(this.currentLanguageSet.issueInGettingBeneficiaryABHADetails, "error");
           }
         },
         (err) => {
@@ -1362,8 +1370,84 @@ export class HealthIdValidateComponent implements OnInit {
           this.confirmationValService.alert(this.currentLanguageSet.issueInGettingBeneficiaryABHADetails, "error");
         }
       );
+      } else if (this.healthIdMode !== undefined &&
+        this.healthIdMode !== null &&
+        this.healthIdMode === "BIOMETRIC"){ {
+          this.healthIdMode = "AADHAAR_BIO";
+          this.showProgressBar = true;
+          this.dialogRef.close();
+          let reqObj = {
+            authMethod: this.healthIdMode,
+            healthid: this.valhealthId,
+          };
+          this.registrarService.generateHealthIDCard(reqObj).subscribe(
+            (res) => {
+              if (res.statusCode == 200 && Object.keys(res.data).length > 0) {
+                this.showProgressBar = false;
+                this.transactionId = res.data.txnId;
+                downloadABHACard = true;
+                this.router.navigate(['/registrar/rdServiceBio/']);
+                this.rdservice.pidDetailDetails$.subscribe((piddata) => {
+                  if(piddata != null && piddata != undefined) {
+                    this.pidRes = piddata;
+                  }
+                if(this.pidRes != null && this.pidRes !== undefined && downloadABHACard === true) {
+                let requestObj = {
+                  pid: this.pidRes ? this.pidRes : null,
+                  txnId: this.transactionId,
+                  authType: "FINGERSCAN",
+                  bioType: "FMR",
+                 }
+                   this.registrarService.confirmAadhar(requestObj).subscribe((res)=> {
+                     if(res.statusCode == 200 && res.data != null ){
+                      this.healthIDCard = res.data;
+                      this.dialog.open(ViewHealthIdCardComponent, {
+                        height: "530px",
+                        width: "800px",
+                        data: {
+                          imgBase64: this.healthIDCard,
+                        },
+                      });
+            
+                      this.dialogRef.close();
+                      // this.rdservice.getpidDetail(null);
+                    } else {
+                      this.showProgressBar = false;
+                      // this.rdservice.getpidDetail(null);
+                      this.confirmationValService.alert(
+                        this.currentLanguageSet.aBHACardNotAvailable,
+                        "error"
+                      );
+                     }
+                   },
+                   (err) => {
+                     this.showProgressBar = false;
+                    //  this.rdservice.getpidDetail(null);
+                     downloadABHACard = false;
+                     this.confirmationValService.alert(err.errorMessage, "error");
+                   }
+                   )
+                  }
+                });
+              } else {
+                downloadABHACard = false;
+                // this.rdservice.getpidDetail(null);
+                this.showProgressBar = false;
+                this.confirmationValService.alert(res.errorMessage, "error");
+              }
+              },
+              (err) => {
+                this.showProgressBar = false;
+                // this.rdservice.getpidDetail(null);
+                downloadABHACard = false;
+                this.confirmationValService.alert(err.errorMessage, "error");
+              }
+            );
+        }
+      }
     } else {
       this.showProgressBar = true;
+      downloadABHACard = false;
       let reqObj = {
         healthID: this.valhealthId,
         isValidate: true,
@@ -1384,7 +1468,7 @@ export class HealthIdValidateComponent implements OnInit {
                 this.currentLanguageSet.OTPSentToAadharLinkedNo,
                 "success"
               );
-
+ 
             this.transactionId = res.data.txnId;
           } else {
             this.showProgressBar = false;
@@ -1392,7 +1476,7 @@ export class HealthIdValidateComponent implements OnInit {
               clearHealthID: true,
             };
             this.dialogRef.close(dat);
-            this.confirmationValService.alert(res.status, "error");
+            this.confirmationValService.alert(this.currentLanguageSet.issueInGettingBeneficiaryABHADetails, "error");
           }
         },
         (err) => {
@@ -1425,13 +1509,13 @@ export class HealthIdValidateComponent implements OnInit {
         this.healthIdMode !== undefined &&
         this.healthIdMode !== null &&
         this.healthIdMode === "AADHAR"
-      )
+      ) {
         this.healthIdMode = "AADHAAR";
-      this.showProgressBar = true;
-      let reqObj = {
-        authMethod: this.healthIdMode + "_OTP",
-        healthid: this.valhealthId,
-      };
+        this.showProgressBar = true;
+        let reqObj = {
+          authMethod: this.healthIdMode + "_OTP",
+          healthid: this.valhealthId,
+        };
       this.registrarService.generateHealthIDCard(reqObj).subscribe(
         (res) => {
           if (res.statusCode == 200 && Object.keys(res.data).length > 0) {
@@ -1458,6 +1542,38 @@ export class HealthIdValidateComponent implements OnInit {
           this.confirmationValService.alert(this.currentLanguageSet.issueInGettingBeneficiaryABHADetails, "error");
         }
       );
+      } else if (
+        this.healthIdMode !== undefined &&
+        this.healthIdMode !== null &&
+        (this.healthIdMode === "AADHAAR_BIO" || this.healthIdMode === "BIOMETRIC")
+      ) {
+        this.showProgressBar = true;
+        let reqObj = {
+          authMethod: this.healthIdMode,
+          healthid: this.valhealthId,
+        };
+        this.registrarService.generateHealthIDCard(reqObj).subscribe(
+          (res) => {
+            if (res.statusCode == 200 && Object.keys(res.data).length > 0) {
+              this.showProgressBar = false;
+              this.transactionId = res.data.txnId;
+  
+              if (this.healthIdMode == "AADHAAR_BIO")
+                this.confirmationValService.alert(
+                  this.currentLanguageSet.OTPSentToRegMobNo,
+                  "success"
+                );
+            } else {
+              this.showProgressBar = false;
+              this.confirmationValService.alert(res.status, "error");
+            }
+          },
+          (err) => {
+            this.showProgressBar = false;
+            this.confirmationValService.alert(this.currentLanguageSet.issueInGettingBeneficiaryABHADetails, "error");
+          }
+        );
+      }
     } else {
       this.showProgressBar = true;
       let reqObj = {
